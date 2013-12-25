@@ -252,7 +252,7 @@ function get_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 
-	windower.send_command('input /macro book 14;wait .1;input /macro set 4')
+	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
 	gearswap_binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
