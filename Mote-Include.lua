@@ -206,7 +206,11 @@ function _MoteInclude.precast(spell,action)
 			end
 
 		elseif sets.precast[spell.type] then
-			equip(sets.precast[spell.type])
+			if sets.precast[spell.type][spell.english] then
+				equip(sets.precast[spell.type][spell.english])
+			else
+				equip(sets.precast[spell.type])
+			end
 		end
 	end
 	
