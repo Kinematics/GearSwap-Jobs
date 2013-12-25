@@ -209,15 +209,20 @@ function get_sets()
 	-- Defense sets
 	sets.defense = {}
 
-	sets.defense.PDT = {main=staffs.PDT,sub="Achaq Grip",
-		head="Gendewitha Caubeen",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1=leftDarkRing,ring2=rightDarkRing,
-		back="Umbra Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+	sets.defense.Evasion = {
+		head="Whirlpool Mask",neck="Torero Torque",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
+		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
-	sets.defense.MDT = {main=staffs.PDT,sub="Achaq Grip",
-		head="Nahtirah Hat",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1=leftDarkRing,ring2="Shadow Ring",
-		back="Engulfer Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+	sets.defense.PDT = {ammo="Iron Gobbet",
+		head="Whirlpool Mask",neck="Twilight Torque",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
+		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+
+	sets.defense.MDT = {ammo="Demonry Stone",
+		head="Whirlpool Mask",neck="Twilight Torque",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 
 	-- Engaged sets
