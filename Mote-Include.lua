@@ -17,7 +17,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 12/25/2013 2:44:37 AM
+-- Last Modified: 12/25/2013 5:48:52 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
@@ -109,6 +109,7 @@ function _MoteInclude.init_include()
 
 
 	-- Other general vars.  Set whatever's convenient for your job luas.
+	
 	staffs = {}
 	staffs.HMP = 'Chatoyant Staff'
 	staffs.PDT = 'Earth Staff'
@@ -159,7 +160,7 @@ function _MoteInclude.precast(spell,action)
 
 	local preHandled = false
 
-	-- Allow jobs to override this code
+	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
 		preHandled, useMidcastGear = job_precast(spell, action, spellMap)
 	end
@@ -250,6 +251,7 @@ function _MoteInclude.precast(spell,action)
 	-- Reset CustomClass after every pass.
 	classes.CustomClass = nil
 end
+
 
 -- Called when a player starts casting a spell.
 function _MoteInclude.midcast(spell,action)
