@@ -99,6 +99,8 @@ function get_sets()
 		body="Bokwus Robe",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
+	sets.precast.Skillchain = {hands="Charis Bangles +2"}
+	
 	
 	-- Midcast Sets
 	sets.midcast = {}
@@ -180,6 +182,9 @@ function get_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 
+	skillchainPending = false
+	
+	
 	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
 	gearswap_binds_on_load()
 
@@ -208,6 +213,17 @@ function job_precast(spell, action, spellMap)
 
 end
 
+function job_post_precast(spell, action, spellMap)
+	if spell.type == "Weaponskill" then
+		if skillchainPending then
+			equip(sets.precast.Skillchain)
+		else
+			skillchainPending = true
+			send_command('wait 7;gs c clear skillchainPending')
+		end
+	end
+end
+
 
 -- Return true if we handled the midcast work.  Otherwise it will fall back
 -- to the general midcast() code in Mote-Include.
@@ -218,6 +234,17 @@ end
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action)
+	if not spell.interrupted then
+		if spell.english == "Wild Flourish" then
+			skillchainPending = true
+			send_command('wait 7;gs c clear skillchainPending')
+		end
+	end
+	
+	if spell.type == "Weaponskill" then
+		skillchainPending = false
+	end
+	
 	return false
 end
 
@@ -230,6 +257,9 @@ function customize_idle_set(idleSet)
 
 end
 
+function customize_melee_set(meleeSet)
+
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
@@ -254,7 +284,9 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-
+	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
+		skillchainPending = false
+	end
 end
 
 
