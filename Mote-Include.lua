@@ -397,7 +397,7 @@ function _MoteInclude.get_current_melee_set()
 	meleeSet = apply_kiting(meleeSet)
 
 	if customize_melee_set then
-		idleSet = customize_melee_set(meleeSet)
+		meleeSet = customize_melee_set(meleeSet)
 	end
 
 	--if _global.debug_mode then print_set(meleeSet, 'Melee set') end
