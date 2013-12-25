@@ -224,6 +224,7 @@ function get_sets()
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
+	sets.Kiting = {feet="Skadi's Jambeaux +1"}
 
 	-- Engaged sets
 

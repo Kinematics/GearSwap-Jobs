@@ -187,6 +187,7 @@ function get_sets()
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',--[[ring2="Shadow Ring",
 		back="Engulfer Cape",]]waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
+	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 
 	-- Engaged sets
 

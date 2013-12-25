@@ -232,6 +232,7 @@ function get_sets()
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1=leftDarkRing,ring2="Shadow Ring",
 		back="Engulfer Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
+	sets.Kiting = {feet="Herald's Gaiters"}
 
 	-- Engaged sets
 
