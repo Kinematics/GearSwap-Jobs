@@ -4,7 +4,7 @@
 
 -- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
 
--- Last Modified: 12/25/2013 5:55:14 AM
+-- Last Modified: 12/25/2013 6:17:03 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -80,7 +80,7 @@ function get_sets()
 		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
 
-	
+	add_to_chat(123,'1')
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Exenterator'] = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Houyi's Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -88,6 +88,7 @@ function get_sets()
 		back="Atheling Mangle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist="Thunder Belt"})
+	add_to_chat(123,'2')
 
 	sets.precast.WS['Pyrrhic Kleos'] = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -109,7 +110,6 @@ function get_sets()
 		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist="Soil Belt"})
-
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
@@ -379,7 +379,7 @@ end
 function buff_change(buff,gain_or_loss)
 	-- If we gain or lose any haste buffs, adjust which gear set we target.
 	if S{'haste','march','embrava','haste samba'}[buff:lower()] then
-		determine_haste_set()
+		determine_haste_group()
 		handle_equipping_gear(player.status)
 	elseif buff == 'Saber Dance' or buff == 'Climactic Flourish' then
 		handle_equipping_gear(player.status)
@@ -396,7 +396,7 @@ function job_self_command(cmdParams)
 	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
 		skillchainPending = false
 	elseif cmdParams[1] == 'update' then
-		determine_haste_set()
+		determine_haste_group()
 	end
 end
 
@@ -500,7 +500,7 @@ function refine_waltz(spell, action, spellMap)
 	return wasCancelled, wasChanged
 end
 
-function determine_haste_set()
+function determine_haste_group()
 	-- We have three groups of DW in gear: Charis body, Charis neck + DW earrings, and Patentia Sash.
 
 	-- For high haste, we want to be able to drop one of the 10% groups (body, preferably).
