@@ -130,11 +130,32 @@ end
 function _MoteInclude.precast(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
 
+	-- First allow for spell changes before we consider changing the target.
+	-- This is a job-specific matter.
+	if job_handle_spell_changes and not spellWasChanged and not targetWasChanged then
+		local spellCancelled, spellChanged = job_handle_spell_changes(spell,action,spellMap)
+		
+		if spellCancelled then
+			if spellChanged then
+				spellWasChanged = true
+			end
+			return
+		end
+	end
+	
+	spellWasChanged = false
+	
+	
 	-- Handle optional target conversion (t to stpc/etc).  If we changed target, exit so this can be called
 	-- after proper target selection was done.
-	if convert_target(spell,action,spellMap) then
-		return
+	if not targetWasChanged then
+		if convert_target(spell,action,spellMap) then
+			targetWasChanged = true
+			return
+		end
 	end
+	
+	targetWasChanged = false
 
 	local preHandled = false
 
