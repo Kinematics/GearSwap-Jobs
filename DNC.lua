@@ -37,51 +37,43 @@ function get_sets()
 	
 	-- Precast sets to enhance JAs
 	sets.precast.JA = {}
+
+	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
 	
-	sets.precast.JA.Benediction = {feet="Cleric's Briault +2"}
 
 	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {
-		head="Nahtirah Hat",ear1="Roundel Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",
-		back="Refraction Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+	sets.precast.Waltz = {ammo="Sonia's Plectrum",
+		head="Etoile Tiara +2",ear1="Roundel Earring",
+		body="Maxixi Casaque",hands="Buremte Gloves",
+		back="Iximulew Cape",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
+		
+	-- Don't need any special gear for Healing Waltz.
+	sets.precast.Waltz['Healing Waltz'] = {}
 	
+	sets.precast.Samba = {head="Charis Tiara +2"}
+
+	sets.precast.Jig = {legs="Etoile Tights +2", feet="Maxixi Toeshoes"}
+
+	sets.precast.Step = {}
+	sets.precast.Step['Feather Step'] = {feet="Charis Shoes +2"}
+
+	sets.precast.Flourish1 = {}
+	sets.precast.Flourish1['Violent Flourish'] = {body="Etoile Casaque +2"}
+	sets.precast.Flourish1['Desperate Flourish'] = {} -- acc gear
+
+	sets.precast.Flourish2 = {}
+	sets.precast.Flourish2['Reverse Flourish'] = {hands="Charis Bangles +2"}
+
+	sets.precast.Flourish3 = {}
+	sets.precast.Flourish3['Striking Flourish'] = {body="Charis Casaque +2"}
+	sets.precast.Flourish3['Climactic Flourish'] = {head="Charis Tiara +2"}
+
 	-- Fast cast sets for spells
 	
-	-- default fast cast
-	sets.precast.FC = {head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
-		
-	sets.precast.FC.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
-		head="Theophany Cap",neck="Aceso's Choker",ear1="Orison Earring",ear2="Loquacious Earring",
-		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Cure Clogs"}
+	sets.precast.FC = {ear2="Loquacious Earring",
+		hands="Thaumas Gloves"}
 
-	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
-
-	sets.precast.FC.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
-
-	sets.precast.FC.CureMelee = {ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Aceso's Choker",ear1="Orison Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
-
-	sets.precast.FC.EnhancingMagic = {head="Nahtirah Hat",neck="Orison Locket",ear2="Loquac. Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
-
-	sets.precast.FC.HealingMagic = {main="Beneficus",sub="Genbu's Shield",
-		neck="Colossus's Torque",
-		body="Orison Bliaud +2",hands="Healer's Mitts",ring1="Sirona's Ring",ring2="Ephedra Ring",
-		back="Tempered Cape",legs="Cleric's Pantaloons +2"}
-		
+	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
        
 	-- Magian staves with cast time reduction, by element
