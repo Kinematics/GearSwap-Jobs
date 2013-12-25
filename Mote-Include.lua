@@ -22,6 +22,7 @@
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
 
+
 -------------------------------------------------------------------------------------------------------------------
 -- Initialization function that defines variables to be used.
 -- These are accessible at the including job lua script's scope.
@@ -332,7 +333,7 @@ end
 
 
 -- Called when the player's status changes.
-function status_change(newStatus, oldStatus)
+function _MoteInclude.status_change(newStatus, oldStatus)
 	local preHandled = false
 
 	-- Allow jobs to override this code
