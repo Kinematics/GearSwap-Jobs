@@ -96,9 +96,16 @@ function _MoteInclude.init_include()
 		'aht urhgan whitegate','tavanazian safehold','nashmau',
 		'selbina','mhaura','norg','eastern adoulin','western adoulin'}
 
-	-- A table to indicate whether midcast gear was used on precast, and for what spell.
-	-- 
+	-- Flag to indicate whether midcast gear was used on precast.
 	precastUsedMidcastGear = false
+	-- Flag whether the job lua changed the spell to be used.
+	spellWasChanged = false
+	-- Flag whether we changed the target of the spell.
+	targetWasChanged = false
+
+	-- Vars for use in melee set construction.
+	TPWeapon = 'Normal'
+	CustomMeleeGroup = 'Normal'
 
 
 	-- Other general vars.  Set whatever's convenient for your job luas.
