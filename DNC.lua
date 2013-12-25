@@ -184,10 +184,8 @@ function get_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main=staffs.HMP, 
-		head="Nefer Khat +1",
-		body="Heka's Kalasiris",hands="Serpentes Cuffs",
-		waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
+	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
+		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
