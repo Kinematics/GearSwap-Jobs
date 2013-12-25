@@ -272,36 +272,13 @@ end
 -- to the general precast() code in Mote-Include.
 function job_precast(spell, action, spellMap)
 
-	if spell.english == "Paralyna" and buffactive.Paralyzed then
-		-- no gear swaps if we're paralyzed, to avoid blinking while trying to remove it.
-		return true
-	end
-
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end
 
-
-function job_post_precast(spell, action, spellMap, useMidcastGear)
-	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
-	if useMidcastGear and spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
-		equip(sets.midcast['Divine Caress'])
-	end
-end
 
 -- Return true if we handled the midcast work.  Otherwise it will fall back
 -- to the general midcast() code in Mote-Include.
 function job_midcast(spell, action, spellMap)
-	-- Always use FastRecast as the base layer
-	equip(sets.midcast.FastRecast)
-	
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
-end
 
-function job_post_midcast(spell, action, spellMap)
-	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
-	if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
-		equip(sets.midcast['Divine Caress'])
-	end
 end
 
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
@@ -316,11 +293,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
-	if player.mpp < 90 and state.IdleMode == "Normal" and state.Defense.Active == false then
-		idleSet = set_combine(idleSet, sets.Owleyes)
-	end
-	
-	return idleSet
+
 end
 
 
@@ -330,25 +303,14 @@ end
 
 -- Called when the player's status changes.
 function status_change(newStatus,oldStatus)
-	-- Disable weapon swaps when engaged
-	if newStatus == 'Engaged' then
-		disable('main','sub')
-	elseif oldStatus == 'Engaged' then
-		enable('main','sub')
-	end
+
 end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain_or_loss == 'gain' or 'loss', depending on the buff state change
 function buff_change(buff,gain_or_loss)
-	if buff == 'Afflatus Solace' then
-		if gain_or_loss == 'gain' then
-			afflatusSolace = true
-		else
-			afflatusSolace = false
-		end
-	end
+
 end
 
 
@@ -358,54 +320,17 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-	if cmdParams[1] == 'update' and cmdParams[2] == 'user' then
-		if not buffactive['Afflatus Solace'] then
-			windower.send_command('input /ja "Afflatus Solace" <me>')
-		elseif not (buffactive['Light Arts'] or buffactive['Addendum: White']) then
-			windower.send_command('input /ja "Light Arts" <me>')
-		end
-	end
-	return false
+
 end
 
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state()
-	local defMode = state.Defense.PhysicalMode
-	if state.Defense.Type == 'Magical' then
-		defMode = state.Defense.MagicalMode
-	end
-	
-	add_to_chat(121,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..
-		'Defense ['..state.Defense.Type..'/'..defMode..']:'..on_off_names[state.Defense.Active]:upper()..', '..
-		'Melee ['..state.OffenseMode..'/'..state.DefenseMode..']')
 
-	return true
 end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_spell_class(spell, action, spellMap)
-	if action.type == 'Magic' then
-		if spell.skill == "EnfeeblingMagic" then
-			if spell.type == "WhiteMagic" then
-				return "MndEnfeebles"
-			else
-				return "IntEnfeebles"
-			end
-		else
-			if spellMap == "Cure" or spellMap == "Curaga" then
-				if player.status == 'Engaged' then
-					return "CureMelee"
-				elseif afflatusSolace and spellMap == 'Cure' then
-					return "CureSolace"
-				end
-			end
-		end
-	end
-	
-	return nil
-end
