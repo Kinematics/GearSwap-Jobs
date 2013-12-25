@@ -485,6 +485,11 @@ function _MoteInclude.self_command(cmd)
 	end
 
 	if not preHandled then
+		-- Quick custom commands
+		if splitCmd[1]:lower() == 'showtpset' then
+			equip(get_current_melee_set())
+			return
+		end
 		
 		-- Of the original command message passed in, remove the first word from
 		-- the list (it will be used to determine which function to call), and
