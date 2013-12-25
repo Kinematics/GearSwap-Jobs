@@ -271,6 +271,8 @@ function get_sets()
 
 	skillchainPending = false
 	
+	waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
+	
 	
 	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
 	gearswap_binds_on_load()
@@ -293,6 +295,16 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Handle spell changes before attempting any precast stuff.
+-- Returns two values on completion:
+-- 1) bool of whether the original spell was cancelled
+-- 2) bool of whether the spell was changed to something new
+function job_handle_spell_change(spell, action, spellMap)
+	if spell.type = 'Waltz' then
+		return refine_waltz(spell, action, spellMap)
+	end
+end
 
 -- Return true if we handled the precast work.  Otherwise it will fall back
 -- to the general precast() code in Mote-Include.
@@ -345,7 +357,11 @@ function customize_idle_set(idleSet)
 end
 
 function customize_melee_set(meleeSet)
-
+	if buffactive['saber dance'] and not state.Defense.Active then
+		meleeSet = set_combine(meleeSet, sets.engaged['Saber Dance'])
+	elseif buffactive['climactic flourish'] and not state.Defense.Active then
+		meleeSet = set_combine(meleeSet, sets.engaged['Climactic Flourish'])
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -361,7 +377,13 @@ end
 -- buff == buff gained or lost
 -- gain_or_loss == 'gain' or 'loss', depending on the buff state change
 function buff_change(buff,gain_or_loss)
-
+	-- If we gain or lose any haste buffs, adjust which gear set we target.
+	if S{'haste','march','embrava','haste samba'}[buff:lower()] then
+		determine_haste_set()
+		handle_equipping_gear(player.status)
+	elseif buff == 'Saber Dance' or buff == 'Climactic Flourish' then
+		handle_equipping_gear(player.status)
+	end
 end
 
 
@@ -373,6 +395,8 @@ end
 function job_self_command(cmdParams)
 	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
 		skillchainPending = false
+	elseif cmdParams[1] == 'update' then
+		determine_haste_set()
 	end
 end
 
@@ -386,4 +410,123 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Handle spell changes before attempting any precast stuff.
+-- Returns two values on completion:
+-- 1) bool of whether the original spell was cancelled
+-- 2) bool of whether the spell was changed to something new
+function refine_waltz(spell, action, spellMap)
+	local newWaltz = ''
+	local tpCost = 0
+	local wasCancelled = false
+	local wasChanged = false
+
+	-- Don't modify anything for Healing Waltz or Divine Waltzes
+	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
+		return wasCancelled, wasChanged
+	end
+	
+	
+	-- Can only calculate healing amounts for ourself.
+	if spell.target.type == "SELF" then
+		local missingHP = player.max_hp - player.hp
+		
+		if missingHP < 40 then
+			add_to_chat(122,'Full HP!')
+		elseif missingHP < 200 then
+			newWaltz = 'Curing Waltz'
+		elseif missingHP < 500 then
+			newWaltz = 'Curing Waltz II'
+		elseif missingHP < 900 then
+			newWaltz = 'Curing Waltz III'
+		elseif missingHP < 1200 then
+			newWaltz = 'Curing Waltz IV'
+		else
+			newWaltz = 'Curing Waltz V'
+		end
+		
+		if newWaltz ~= '' then
+			add_to_chat(122,'Using '..newWaltz..' for ['..tostring(missingHP)..' HP]')
+			
+			if newWaltz ~= spell.english then
+				wasChanged = true
+			end
+		end
+	end
+	
+	if newWaltz ~= '' then
+		tpCost = waltzTPCost[newWaltz]
+	end
+	
+	-- Downgrade the spell to what we can afford
+	if player.tp < tpCost and not buffactive.trance and newWaltz ~= '' then
+		--[[ Costs:
+			Curing Waltz:     20 TP
+			Curing Waltz II:  35 TP
+			Curing Waltz III: 50 TP
+			Curing Waltz IV:  65 TP
+			Curing Waltz V:   80 TP
+			Divine Waltz:     40 TP
+			Divine Waltz II:  80 TP
+		]]
+		
+		if player.tp < 20 then
+			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Cancelling.')
+		elseif player.tp < 35 then
+			newWaltz = 'Curing Waltz'
+		elseif player.tp < 50 then
+			newWaltz = 'Curing Waltz II'
+		elseif player.tp < 65 then
+			newWaltz = 'Curing Waltz III'
+		elseif player.tp < 80 then
+			newWaltz = 'Curing Waltz IV'
+		end
+		
+		if newWaltz ~= '' then
+			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz)
+			
+			if newWaltz ~= spell.english then
+				wasChanged = true
+				send_command('wait 0.05;input /ja "'..newWaltz..'" '..spell.target.raw)
+			end
+		end
+	end
+	
+	if newWaltz ~= spell.english then
+		cancel_spell()
+		wasCancelled = true
+	end
+	
+	return wasCancelled, wasChanged
+end
+
+function determine_haste_set()
+	-- We have three groups of DW in gear: Charis body, Charis neck + DW earrings, and Patentia Sash.
+
+	-- For high haste, we want to be able to drop one of the 10% groups (body, preferably).
+	-- High haste buffs:
+	-- 2x Marches + Haste
+	-- 2x Marches + Haste Samba
+	-- 1x March + Haste + Haste Samba
+	-- Embrava + any other haste buff
+	
+	-- For max haste, we probably need to consider dropping all DW gear.
+	-- Max haste buffs:
+	-- Embrava + Haste/March + Haste Samba
+	-- 2x March + Haste + Haste Samba
+	
+	if buffactive.embrava and (buffactive.haste or buffactive.march) and buffactive['haste samba'] then
+		CustomMeleeGroup = 'MaxHaste'
+	elseif buffactive.march == 2 and buffactive.haste and buffactive['haste samba'] then
+		CustomMeleeGroup = 'MaxHaste'
+	elseif buffactive.embrava and (buffactive.haste or buffactive.march or buffactive['haste samba']) then
+		CustomMeleeGroup = 'HighHaste'
+	elseif buffactive.march == 1 and buffactive.haste and buffactive['haste samba'] then
+		CustomMeleeGroup = 'HighHaste'
+	elseif buffactive.march == 2 and (buffactive.haste or buffactive['haste samba']) then
+		CustomMeleeGroup = 'HighHaste'
+	else
+		CustomMeleeGroup = 'Normal'
+	end
+end
 
