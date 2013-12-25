@@ -399,25 +399,49 @@ end
 function _MoteInclude.get_current_melee_set()
 	local meleeSet = {}
 	
-	if sets.engaged[TPWeapon] then
-		meleeSet = sets.engaged[TPWeapon]
-		
-		if meleeSet[state.OffenseMode] then
-			meleeSet = meleeSet[state.OffenseMode]
-		end
-		
-		if meleeSet[state.DefenseMode] then
-			meleeSet = meleeSet[state.DefenseMode]
+	if sets.engaged[CustomMeleeGroup] then
+		if sets.engaged[CustomMeleeGroup][TPWeapon] then
+			meleeSet = sets.engaged[CustomMeleeGroup][TPWeapon]
+			
+			if meleeSet[state.OffenseMode] then
+				meleeSet = meleeSet[state.OffenseMode]
+			end
+			
+			if meleeSet[state.DefenseMode] then
+				meleeSet = meleeSet[state.DefenseMode]
+			end
+		else
+			meleeSet = sets.engaged[CustomMeleeGroup]
+	
+			if meleeSet[state.OffenseMode] then
+				meleeSet = meleeSet[state.OffenseMode]
+			end
+			
+			if meleeSet[state.DefenseMode] then
+				meleeSet = meleeSet[state.DefenseMode]
+			end
 		end
 	else
-		meleeSet = sets.engaged
-
-		if meleeSet[state.OffenseMode] then
-			meleeSet = meleeSet[state.OffenseMode]
-		end
-		
-		if meleeSet[state.DefenseMode] then
-			meleeSet = meleeSet[state.DefenseMode]
+		if sets.engaged[TPWeapon] then
+			meleeSet = sets.engaged[TPWeapon]
+			
+			if meleeSet[state.OffenseMode] then
+				meleeSet = meleeSet[state.OffenseMode]
+			end
+			
+			if meleeSet[state.DefenseMode] then
+				meleeSet = meleeSet[state.DefenseMode]
+			end
+		else
+			meleeSet = sets.engaged
+	
+			if meleeSet[state.OffenseMode] then
+				meleeSet = meleeSet[state.OffenseMode]
+			end
+			
+			if meleeSet[state.DefenseMode] then
+				meleeSet = meleeSet[state.DefenseMode]
+			end
 		end
 	end
 	
