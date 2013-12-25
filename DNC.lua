@@ -76,10 +76,6 @@ function get_sets()
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
        
-	-- Magian staves with cast time reduction, by element
-	--sets.precast.FC.Thunder = {main='Apamajas I'}
-	--sets.precast.FC.Fire = {main='Atar I'}
-	
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
@@ -108,69 +104,15 @@ function get_sets()
 	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
-		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Goliard Saio",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
+		head="Whirlpool Mask",ear2="Loquacious Earring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",
+		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 		
 	-- Specific spells
-	sets.midcast.Cursna = {
-		head="Orison Cap +2",neck="Malison Medallion",
-		hands="Hieros Mittens",ring1="Ephedra Ring",
-		legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
-
-	sets.midcast.Stoneskin = {
-		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",
-		back="Swith Cape",waist="Siegel Sash",feet="Gendewitha Galoshes"}
-
-	sets.midcast.Auspice = {feet="Orison Duckbills +2"}
-
-	-- Spell classes
-	sets.midcast.Barspell = {main="Beneficus",sub="Genbu's Shield",
-		head="Orison Cap +2",neck="Colossus's Torque",
-		body="Orison Bliaud +2",hands="Orison Mitts +2",
-		waist="Cascade Belt",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
-
-	sets.midcast.Regen = {
-		body="Cleric's Briault",hands="Orison Mitts +2",
-		legs="Theophany Pantaloons"}
-
-	sets.midcast.StatusRemoval = {
-		head="Orison Cap +2",legs="Orison Pantaloons +2"}
-
-	sets.midcast['Divine Caress'] = {hands="Orison Mitts +2"}
-
-	sets.midcast.Protectra = {ring1="Sheltered Ring"}
-
-	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Cleric's Pantaloons +2"}
-
-	-- Spell skill categories
-	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
-		neck="Colossus's Torque",
-		body="Manasa Chasuble",hands="Ayao's Gages",
-		waist="Cascade Belt",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
-
-	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
-		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Theophany Pantaloons +2",feet="Orison Duckbills +2"}
-
-	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
-		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Portent Pants",feet="Bokwus Boots"}
-
-
-	-- Custom spell classes
-	sets.midcast.MndEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
-		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Gendewitha Spats",feet="Bokwus Boots"}
-
-	sets.midcast.IntEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
-		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Orvail Pants",feet="Bokwus Boots"}
+	sets.midcast.Utsusemi = {
+		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
+		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	
 	-- Sets to return to when not performing an action.
