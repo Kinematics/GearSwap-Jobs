@@ -46,7 +46,7 @@ function get_sets()
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
 		
-	sets.precast.FC.BardSong = {main="Felibre's Dague",
+	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
 		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Aoidos' Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
