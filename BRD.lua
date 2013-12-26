@@ -229,7 +229,7 @@ end
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	windower.send_command('unbind ^`')
-	--spellcast_binds_on_unload()	
+	spellcast_binds_on_unload()	
 end
 
 
