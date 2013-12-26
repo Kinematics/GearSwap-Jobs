@@ -131,7 +131,7 @@ end
 -- Define the set to be equipped at this point in time based on the type of action.
 function _MoteInclude.precast(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
-
+	
 	-- First allow for spell changes before we consider changing the target.
 	-- This is a job-specific matter.
 	if job_handle_spell_changes and not spellWasChanged and not targetWasChanged then
@@ -146,7 +146,7 @@ function _MoteInclude.precast(spell,action)
 	end
 	
 	spellWasChanged = false
-	
+
 	
 	-- Handle optional target conversion (t to stpc/etc).  If we changed target, exit so this can be called
 	-- after proper target selection was done.
@@ -1002,8 +1002,8 @@ end
 
 
 function _MoteInclude.convert_target(spell, action, spellMap)
-	-- If the original command already used a target selection, skip this section
-	if spell.target.raw:find('<st') or spell.target.raw:find('<lastst>') then
+	-- If the original command already used a target selection, or is explicitly <me>, return.
+	if spell.target.raw:find('<st') or spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
 	end
 	
@@ -1017,39 +1017,42 @@ function _MoteInclude.convert_target(spell, action, spellMap)
 			
 
 	local canUseOnPC = spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC
+
+	local newTarget = ''
 	
 	-- Check if we want to adjust targetting for player characters
 	if canUseOnPC then
 		if state.PCTargetMode == 'stal' then
 			-- Limit choice based on what the valid targets of the spell are.
 			if spell.validtarget.Ally then
-				change_target('<stal>')
+				newTarget = '<stal>'
 			elseif spell.validtarget.Party then
-				change_target('<stpt>')
+				newTarget = '<stpt>'
 			elseif spell.validtarget.Self then
-				change_target('<me>')
+				newTarget = '<me>'
 			end
 		elseif state.PCTargetMode == 'stpt' then
 			-- Limit choice based on what the valid targets of the spell are.
 			if spell.validtarget.Ally or spell.validtarget.Party then
-				change_target('<stpt>')
+				newTarget = '<stpt>'
 			elseif spell.validtarget.Self then
-				change_target('<me>')
+				newTarget = '<me>'
 			end
 		elseif state.PCTargetMode == 'stpc' then
 			-- Limit choice based on what the valid targets of the spell are.
 			if spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC then
-				change_target('<stpc>')
+				newTarget = '<stpc>'
 			elseif spell.validtarget.Self then
-				change_target('<me>')
+				newTarget = '<me>'
 			end
 		end
-		
-		return true
 	-- Check if we want to adjust targtting for enemies
 	elseif state.SelectNPCTargets and spell.validtarget.Enemy then
-		change_target('<stnpc>')
-		
+		newTarget = '<stnpc>'
+	end
+	
+	if newTarget ~= '' and newTarget ~= spell.target.raw then
+		change_target(newTarget)
 		return true
 	end
 end
