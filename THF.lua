@@ -60,9 +60,6 @@ function get_sets()
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 	
-	sets.precast.Step = sets.TreasureHunter
-	sets.precast.Flourish1 = sets.TreasureHunter
-
 	-- Fast cast sets for spells
 	
 	sets.precast.FC = {ear2="Loquacious Earring",hands="Thaumas Gloves",ring1="Prolix Ring",legs="Enif Cosciales"}
