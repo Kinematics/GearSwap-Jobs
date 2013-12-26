@@ -44,10 +44,11 @@ function get_sets()
 	sets.precast.JA['Accomplice'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Flee'] = {feet="Pillager's Poulaines"}
 	sets.precast.JA['Hide'] = {body="Rogue's Vest +1"}
-	sets.precast.JA['Conspirator'] = {body="Raider's Vest +2"}
+	sets.precast.JA['Conspirator'] = {} -- {body="Raider's Vest +2"}
 	sets.precast.JA['Steal'] = {head="Assassin's Bonnet +2",hands="Pillager's Armlets",feet="Pillager's Poulaines"}
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
 	sets.precast.JA['Perfect Dodge'] = {hands="Assassin's Armlets +2"}
+	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
 	
 
 	-- Waltz set (chr and vit)
