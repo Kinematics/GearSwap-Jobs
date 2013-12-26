@@ -245,12 +245,15 @@ function _MoteInclude.precast(spell,action)
 	end
 	
 	-- Allow followup code to add to what was done here
+	local holdCustomClass = false
 	if job_post_precast then
-		job_post_precast(spell, action, spellMap, useMidcastGear)
+		holdCustomClass = job_post_precast(spell, action, spellMap, useMidcastGear)
 	end
 
 	-- Reset CustomClass after every pass.
-	classes.CustomClass = nil
+	if not holdCustomClass then
+		classes.CustomClass = nil
+	end
 end
 
 
@@ -299,11 +302,14 @@ function _MoteInclude.midcast(spell,action)
 	end
 	
 	-- Allow followup code to add to what was done here
+	local holdCustomClass = false
 	if job_post_midcast then
-		job_post_midcast(spell, action, spellMap)
+		holdCustomClass = job_post_midcast(spell, action, spellMap)
 	end
 
-	classes.CustomClass = nil
+	if not holdCustomClass then
+		classes.CustomClass = nil
+	end
 end
 
 
