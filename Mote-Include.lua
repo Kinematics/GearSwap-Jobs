@@ -982,6 +982,8 @@ end
 -- Invert a table such that the keys are values and the values are keys.
 -- Use this to look up the index value of a given entry.
 function _MoteInclude.invert_table(t)
+	if t == nil then add_to_chat(123,'Attempting to invert table, received nil.') end
+	
 	local i={}
 	for k,v in pairs(t) do 
 		i[v] = k
