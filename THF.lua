@@ -280,7 +280,7 @@ function job_post_precast(spell, action, spellMap)
 			equip(sets.TreasureHunter)
 		end
 	elseif (spell.english=='Sneak Attack' or spell.english=='Trick Attack') and
-		(state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime') then
+		(state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th) then
 		equip(sets.TreasureHunter)
 	end
 end
