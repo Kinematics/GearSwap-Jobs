@@ -289,18 +289,19 @@ end
 
 -- Called when the player's status changes.
 function job_status_change(newStatus,oldStatus)
-	-- Disable weapon swaps when engaged
-	if newStatus == 'Engaged' then
-		disable('main','sub')
-	elseif oldStatus == 'Engaged' then
-		enable('main','sub')
-	end
+	return false
 end
 
 -- Called for direct player commands.
 function job_self_command(cmd)
 	if cmd[1]:lower() == 'update' then
 		pick_tp_weapon()
+
+		if player.equipment.main == 'Izhiikoh' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
 	end
 end
 
