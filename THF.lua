@@ -14,7 +14,7 @@ function get_sets()
 	init_include()
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Crit'}
+	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
