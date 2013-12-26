@@ -835,7 +835,7 @@ end
 function _MoteInclude.handle_update(cmdParams)
 	local preHandled = false
 	if job_update then
-		preHandled = jobUpdate(cmdParams)
+		preHandled = job_update(cmdParams)
 	end
 	
 	if not preHandled then
