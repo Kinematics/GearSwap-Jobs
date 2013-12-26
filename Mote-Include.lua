@@ -833,7 +833,14 @@ end
 -- Where [option] can be 'user' to display current state.
 -- Otherwise, generally refreshes current gear used.
 function _MoteInclude.handle_update(cmdParams)
-	handle_equipping_gear(player.status)
+	local preHandled = false
+	if job_update then
+		preHandled = jobUpdate(cmdParams)
+	end
+	
+	if not preHandled then
+		handle_equipping_gear(player.status)
+	end
 	
 	if cmdParams[1] == 'user' then
 		display_current_state()
