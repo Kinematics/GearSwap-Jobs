@@ -303,6 +303,24 @@ function job_aftercast(spell, action)
 	-- Don't let aftercast revert gear set for SA/TA/Feint
 	if S{'Sneak Attack', 'Trick Attack', 'Feint'}[spell.english] and not spell.interrupted then
 		return true
+	-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
+	elseif buffactive['sneak attack'] then
+		equip(sets.precast.JA['Sneak Attack'])
+		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+			equip(sets.TreasureHunter)
+		end
+		return true
+	elseif buffactive['trick attack'] then
+		equip(sets.precast.JA['Trick Attack'])
+		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+			equip(sets.TreasureHunter)
+		end
+		return true
+	elseif buffactive['feint'] then
+		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+			equip(sets.TreasureHunter)
+		end
+		return true
 	elseif spell.target then
 		if spell.target.type == 'Enemy' and not spell.interrupted then
 			tag_with_th = false
