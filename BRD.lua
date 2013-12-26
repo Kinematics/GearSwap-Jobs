@@ -279,8 +279,12 @@ end
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action)
-	if spell.type == 'BardSong' and spell.target.type:upper() == 'SELF' then
-		adjust_Timers(spell, action)
+	if spell.type == 'BardSong' then
+		if spell.target then
+			if spell.target.type and spell.target.type:upper() == 'SELF' then
+				adjust_Timers(spell, action)
+			end
+		end
 	end
 	
 	return false
