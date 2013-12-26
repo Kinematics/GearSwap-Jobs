@@ -875,6 +875,13 @@ function _MoteInclude.get_mode_table(field)
 	elseif field == 'Target' then
 		modeTable = options.TargetModes
 		currentValue = state.PCTargetMode
+	elseif job_get_mode_table then
+		-- Allow job scripts to expand the mode table lists
+		modeTable, currentValue, err = job_get_mode_table(field)
+		if err then
+			if _global.debug_mode then add_to_chat(123,'Attempt to query unknown state field: '..field) end
+			return nil
+		end
 	else
 		if _global.debug_mode then add_to_chat(123,'Attempt to query unknown state field: '..field) end
 		return nil
@@ -903,6 +910,11 @@ function _MoteInclude.set_mode(field, val)
 		state.Defense.MagicalMode = val
 	elseif field == 'Target' then
 		state.PCTargetMode = val
+	elseif job_set_mode then
+		-- Allow job scripts to expand the mode table lists
+		if not job_set_mode(field, val) then
+			if _global.debug_mode then add_to_chat(123,'Attempt to set unknown state field: '..field) end
+		end
 	else
 		if _global.debug_mode then add_to_chat(123,'Attempt to set unknown state field: '..field) end
 	end
