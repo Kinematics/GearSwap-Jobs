@@ -53,9 +53,15 @@ function get_sets()
 	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
 	
 
-	sets.precast.JA['Sneak Attack'] = {}
+	sets.precast.JA['Sneak Attack'] = {ammo="Qirmiz Tathlum",
+		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Manibozho Jerkin",hands="Raider's Armlets +2",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Twilight Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 
-	sets.precast.JA['Trick Attack'] = {}
+	sets.precast.JA['Trick Attack'] = {ammo="Qirmiz Tathlum",
+		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Manibozho Jerkin",hands="Pillager's Armlets",ring1="Stormsoul Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 
 	-- Waltz set (chr and vit)
