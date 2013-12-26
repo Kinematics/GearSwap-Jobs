@@ -24,6 +24,10 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'Evasion'
 	
+	-- TH mode handling
+	options.THModes = {'None','Tag','SATA','Fulltime'}
+	state.THMode = 'Tag'
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -338,6 +342,31 @@ function buff_change(buff,gain_or_loss)
 	if S{'haste','march','embrava','haste samba'}[buff:lower()] then
 		determine_haste_group()
 		handle_equipping_gear(player.status)
+	end
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Hooks for TH mode handling.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Request job-specific mode tables.
+-- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+function job_get_mode_table(field)
+	if field == 'TH' then
+		return options.THModes, state.THMode
+	end
+	
+	-- Return an error if we don't recognize the field requested.
+	return nil, nil, true
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_mode(field, val)
+	if field == 'TH' then
+		state.THMode = val
+		return true
 	end
 end
 
