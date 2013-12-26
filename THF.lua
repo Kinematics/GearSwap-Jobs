@@ -28,6 +28,8 @@ function get_sets()
 	options.THModes = {'None','Tag','SATA','Fulltime'}
 	state.THMode = 'Tag'
 	
+	tp_on_engage = 0
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -50,6 +52,11 @@ function get_sets()
 	sets.precast.JA['Perfect Dodge'] = {hands="Assassin's Armlets +2"}
 	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
 	
+
+	sets.precast.JA['Sneak Attack'] = {}
+
+	sets.precast.JA['Trick Attack'] = {}
+
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
@@ -312,10 +319,13 @@ end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap)
-	if spell.type == 'Step' or spell.type='Flourish1' then
+	if spell.type == 'Step' or spell.type == 'Flourish1' then
 		if state.THMode ~= 'None' then
 			equip(sets.TreasureHunter)
 		end
+	elseif (spell.english=='Sneak Attack' or spell.english=='Trick Attack') and
+		(state.THMode == 'SATA' or state.THMode == 'Fulltime') then
+		equip(sets.TreasureHunter)
 	end
 end
 
@@ -334,7 +344,24 @@ end
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action)
-
+	-- Don't let aftercast revert gear set for SA/TA/Feint
+	if S{'Sneak Attack', 'Trick Attack', 'Feint'}[spell.english] and not spell.interrupted then
+		return true
+	elseif spell.target then
+		if spell.target.type == 'Enemy' and not spell.interrupted then
+			tag_with_th = false
+			
+			if spell.type == 'Weaponskill' and (buffactive['sneak attack'] or buffactive['trick attack']) then
+				-- Wait a half-second to update so that apparent buffs disappear.
+				-- Note that this may not be necessary; haven't tested yet.
+				add_to_chat(123,'Used weaponskill but still have SA/TA buff active.')
+				windower.send_command('wait 0.6;gs c update')
+			end
+		end
+	elseif spell.type == 'Waltz' and tag_with_th then
+		-- Update current TP if we spend TP before we actually hit the mob
+		tp_on_engage = player.tp
+	end
 end
 
 
@@ -351,7 +378,7 @@ function customize_idle_set(idleSet)
 end
 
 function customize_melee_set(meleeSet)
-	if state.THMode == 'Fulltime' then
+	if state.THMode == 'Fulltime' or tag_with_th then
 		meleeSet = set_combine(meleeSet, sets.TreasureHunter)
 	end
 	
@@ -364,16 +391,31 @@ end
 
 -- Called when the player's status changes.
 function status_change(newStatus,oldStatus)
-
+	-- If SA/TA/Feint are active, don't change gear sets
+	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
+		return 'handled'
+	end
+	
+	if newStatus == 'engaged' and state.THMode ~= 'None' then
+		equip(sets.TreasureHunter)
+		tag_with_th = true
+		tp_on_engage = player.tp
+	end
 end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain_or_loss == 'gain' or 'loss', depending on the buff state change
 function buff_change(buff,gain_or_loss)
-	-- If we gain or lose any haste buffs, adjust which gear set we target.
-	if S{'haste','march','embrava','haste samba'}[buff:lower()] then
-		determine_haste_group()
+	-- If SA/TA/Feint drop, revert to standard gear
+	if S{'sneak attack', 'trick attack', 'feint'}[buff:lower()] and gain_or_loss == 'loss' then
+		handle_equipping_gear(player.status)
+	-- If any other buff changes while we still have SA/TA/Feint up, don't change gear
+	elseif not (buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint']) then
+		-- If we gain or lose any haste buffs, adjust which gear set we target.
+		if S{'haste','march','embrava','haste samba'}[buff:lower()] then
+			determine_haste_group()
+		end
 		handle_equipping_gear(player.status)
 	end
 end
@@ -410,9 +452,21 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-	if cmdParams[1] == 'update' then
-		determine_haste_group()
+
+end
+
+-- Called by the 'update' self-command.
+function job_update(cmdParams)
+	if tag_with_th and player.tp ~= tp_on_engage then
+		tag_with_th = false
 	end
+	
+	-- Don't trigger equipping gear if SA/TA/Feint is active.
+	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
+		return 'no gear change'
+	end
+
+	determine_haste_group()
 end
 
 
