@@ -126,7 +126,7 @@ function get_sets()
 	sets.precast.WS['Mandalic Stab'].TA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",neck="Light Gorget",hands="Pillager's Armlets"})
 	sets.precast.WS['Mandalic Stab'].SATA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",neck="Light Gorget",hands="Pillager's Armlets"})
 
-	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
+	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
@@ -157,17 +157,17 @@ function get_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {}
 
-	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
+	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Mantle",waist="Patentia Sash",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 	
-	sets.idle.Field = {ammo="Charis Feather",
+	sets.idle.Field = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 
-	sets.idle.Weak = {ammo="Charis Feather",
+	sets.idle.Weak = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
@@ -200,7 +200,7 @@ function get_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {ammo="Charis Feather",
+	sets.engaged = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
@@ -277,6 +277,11 @@ function get_sets()
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 
+
+	-- Ranged gaer
+	sets.ranged = {head="Whirlpool Mask",neck="Peacock Charm",
+		body="Iuitl Vest",hands="Assassin's Armlets +2",
+		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 
 	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
