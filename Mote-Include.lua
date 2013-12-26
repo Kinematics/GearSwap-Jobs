@@ -17,7 +17,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 12/25/2013 5:48:52 AM
+-- Last Modified: 12/25/2013 5:48:50 PM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
@@ -1096,6 +1096,7 @@ function _MoteInclude.get_spell_mappings()
 		-- Status Removal doesn't include Esuna or Sacrifice, since they work differently than the rest
 		['Poisona']='StatusRemoval',['Paralyna']='StatusRemoval',['Silena']='StatusRemoval',['Blindna']='StatusRemoval',['Cursna']='StatusRemoval',
 		['Stona']='StatusRemoval',['Viruna']='StatusRemoval',['Erase']='StatusRemoval',
+		['Utsusemi: Ichi']='Utsusemi',['Utsusemi: Ni']='Utsusemi',
 	}
 
 	return mappings
