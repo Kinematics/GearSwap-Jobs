@@ -943,14 +943,18 @@ function _MoteInclude.display_current_state()
 	end
 	
 	if not preHandled then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
+		local defenseString = ''
+		if state.Defense.Active then
+			local defMode = state.Defense.PhysicalMode
+			if state.Defense.Type == 'Magical' then
+				defMode = state.Defense.MagicalMode
+			end
+	
+			defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 		end
 
-		add_to_chat(122,'Current: ['..state.OffenseMode..'/'..state.DefenseMode..'] Melee,'..
-			' ['..state.Defense.Type..'/'..defMode..'] Defense '..on_off_names[state.Defense.Active]..
-			',  Kiting '..on_off_names[state.Kiting]..', Targeting [PC:'..state.PCTargetMode..'/NPC:'..on_off_names[state.SelectNPCTargets]..']')
+		add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', '..defenseString..
+			'Kiting: '..on_off_names[state.Kiting]..', Select target: '..state.PCTargetMode..' (PC) / '..on_off_names[state.SelectNPCTargets]..' (NPC)')
 	end
 end
 
