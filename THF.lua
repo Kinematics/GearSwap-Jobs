@@ -27,7 +27,8 @@ function get_sets()
 	-- TH mode handling
 	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
 	state.TreasureMode = 'Tag'
-	
+
+	tag_with_th = false	
 	tp_on_engage = 0
 	
 	--------------------------------------
