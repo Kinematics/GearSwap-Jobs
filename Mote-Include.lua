@@ -17,7 +17,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 12/25/2013 5:48:50 PM
+-- Last Modified: 12/26/2013 1:10:02 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
