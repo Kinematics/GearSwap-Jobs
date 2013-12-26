@@ -461,6 +461,12 @@ function job_update(cmdParams)
 		tag_with_th = false
 	end
 	
+	if player.equipment.range ~= 'empty' then
+		disable('range', 'ammo')
+	else
+		enable('range', 'ammo')
+	end
+	
 	-- Don't trigger equipping gear if SA/TA/Feint is active.
 	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
 		return 'no gear change'
