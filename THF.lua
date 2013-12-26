@@ -398,16 +398,20 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function status_change(newStatus,oldStatus)
-	-- If SA/TA/Feint are active, don't change gear sets
-	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
-		return 'handled'
-	end
-	
-	if newStatus == 'engaged' and state.TreasureMode ~= 'None' then
+function job_status_change(newStatus,oldStatus)
+	if newStatus == 'Engaged' and state.TreasureMode ~= 'None' then
 		equip(sets.TreasureHunter)
 		tag_with_th = true
 		tp_on_engage = player.tp
+		windower.send_command('wait 3;gs c update th')
+	elseif oldStatus == 'Engaged' then
+		tag_with_th = false
+		tp_on_engage = 0
+	end
+
+	-- If SA/TA/Feint are active, don't change gear sets
+	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
+		return 'handled'
 	end
 end
 
@@ -464,6 +468,9 @@ end
 function job_update(cmdParams)
 	if tag_with_th and player.tp ~= tp_on_engage then
 		tag_with_th = false
+		tp_on_engage = 0
+	elseif cmdParams[1] == 'th' and player.status == 'Engaged' then
+		windower.send_command('wait 3;gs c update th')
 	end
 	
 	if player.equipment.range ~= 'empty' then
