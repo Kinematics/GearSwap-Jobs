@@ -301,8 +301,9 @@ function get_sets()
 	gearswap_binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
+	windower.send_command('bind !- gs c cycle targetmode')
 
+	windower.send_command('bind ^= gs c cycle thmode')
 	windower.send_command('bind ^` input /ja "Flee" <me>')
 end
 
