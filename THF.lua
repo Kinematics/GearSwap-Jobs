@@ -324,13 +324,7 @@ function job_aftercast(spell, action)
 	elseif spell.target then
 		if spell.target.type == 'Enemy' and not spell.interrupted then
 			tag_with_th = false
-			
-			if spell.type == 'Weaponskill' and (buffactive['sneak attack'] or buffactive['trick attack']) then
-				-- Wait a half-second to update so that apparent buffs disappear.
-				-- Note that this may not be necessary; haven't tested yet.
-				add_to_chat(123,'Used weaponskill but still have SA/TA buff active.')
-				windower.send_command('wait 0.6;gs c update')
-			end
+			tp_on_engage = 0
 		end
 	elseif spell.type == 'Waltz' and tag_with_th then
 		-- Update current TP if we spend TP before we actually hit the mob
