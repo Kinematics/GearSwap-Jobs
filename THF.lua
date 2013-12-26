@@ -25,8 +25,8 @@ function get_sets()
 	state.Defense.PhysicalMode = 'Evasion'
 	
 	-- TH mode handling
-	options.THModes = {'None','Tag','SATA','Fulltime'}
-	state.THMode = 'Tag'
+	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
+	state.TreasureMode = 'Tag'
 	
 	tp_on_engage = 0
 	
@@ -303,7 +303,7 @@ function get_sets()
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind !- gs c cycle targetmode')
 
-	windower.send_command('bind ^= gs c cycle thmode')
+	windower.send_command('bind ^= gs c cycle treasuremode')
 	windower.send_command('bind ^` input /ja "Flee" <me>')
 end
 
@@ -327,11 +327,11 @@ end
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap)
 	if spell.type == 'Step' or spell.type == 'Flourish1' then
-		if state.THMode ~= 'None' then
+		if state.TreasureMode ~= 'None' then
 			equip(sets.TreasureHunter)
 		end
 	elseif (spell.english=='Sneak Attack' or spell.english=='Trick Attack') and
-		(state.THMode == 'SATA' or state.THMode == 'Fulltime') then
+		(state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime') then
 		equip(sets.TreasureHunter)
 	end
 end
@@ -385,7 +385,7 @@ function customize_idle_set(idleSet)
 end
 
 function customize_melee_set(meleeSet)
-	if state.THMode == 'Fulltime' or tag_with_th then
+	if state.TreasureMode == 'Fulltime' or tag_with_th then
 		meleeSet = set_combine(meleeSet, sets.TreasureHunter)
 	end
 	
@@ -403,7 +403,7 @@ function status_change(newStatus,oldStatus)
 		return 'handled'
 	end
 	
-	if newStatus == 'engaged' and state.THMode ~= 'None' then
+	if newStatus == 'engaged' and state.TreasureMode ~= 'None' then
 		equip(sets.TreasureHunter)
 		tag_with_th = true
 		tp_on_engage = player.tp
@@ -435,8 +435,8 @@ end
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_table(field)
-	if field:upper() == 'TH' then
-		return options.THModes, state.THMode
+	if field == 'Treasure' then
+		return options.TreasureModes, state.TreasureMode
 	end
 	
 	-- Return an error if we don't recognize the field requested.
@@ -446,8 +446,8 @@ end
 -- Set job-specific mode values.
 -- Return true if we recognize and set the requested field.
 function job_set_mode(field, val)
-	if field:upper() == 'TH' then
-		state.THMode = val
+	if field == 'Treasure' then
+		state.TreasureMode = val
 		return true
 	end
 end
@@ -496,8 +496,8 @@ function display_current_job_state()
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
 	
-	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', '..
-		defenseString..'Kiting: '..on_off_names[state.Kiting]..', TH mode: '..state.THMode)
+	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..
+		defenseString..'Kiting: '..on_off_names[state.Kiting]..', Traesure mode: '..state.TreasureMode)
 
 	return true
 end
