@@ -435,7 +435,7 @@ end
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_table(field)
-	if field == 'TH' then
+	if field:upper() == 'TH' then
 		return options.THModes, state.THMode
 	end
 	
@@ -446,7 +446,7 @@ end
 -- Set job-specific mode values.
 -- Return true if we recognize and set the requested field.
 function job_set_mode(field, val)
-	if field == 'TH' then
+	if field:upper() == 'TH' then
 		state.THMode = val
 		return true
 	end
