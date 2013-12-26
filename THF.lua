@@ -284,7 +284,7 @@ function get_sets()
 		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 
-	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
+	windower.send_command('input /macro book 5;wait .1;input /macro set 2')
 	gearswap_binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
