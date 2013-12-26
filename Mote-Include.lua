@@ -56,13 +56,13 @@ function _MoteInclude.init_include()
 	-- Vars for tracking valid modes
 	options = {}
 	options.OffenseModes = {'Normal', 'Acc','Crit'}
-	options.DefenseModes = {'Normal', 'PDT','Evasion','Counter'}
-	options.WeaponskillModes = {'Normal', 'PDT','Evasion','Counter'}
+	options.DefenseModes = {'Normal', 'PDT', 'Evasion','Counter'}
+	options.WeaponskillModes = {'Normal', 'PDT', 'Evasion','Counter'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT','Evasion'}
-	options.MagicalDefenseModes = {'MDT','Resist'}
+	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
+	options.MagicalDefenseModes = {'MDT', 'Resist'}
 
 	-- General cast delay value to be sure gear that's equipped on precast
 	-- actually takes effect.  Adjust to suit.
