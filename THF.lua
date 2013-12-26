@@ -259,10 +259,6 @@ function get_sets()
 
 
 
-	sets.engaged['Saber Dance'] = {legs="Etoile Tights +2"}
-	sets.engaged['Climactic Flourish'] = {legs="Charis Tiara +2"}
-
-
 	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
 	gearswap_binds_on_load()
 
@@ -377,9 +373,7 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
-		skillchainPending = false
-	elseif cmdParams[1] == 'update' then
+	if cmdParams[1] == 'update' then
 		determine_haste_group()
 	end
 end
