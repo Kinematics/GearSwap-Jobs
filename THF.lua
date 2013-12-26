@@ -420,9 +420,6 @@ function buff_change(buff,gain_or_loss)
 	-- If any other buff changes while we still have SA/TA/Feint up, don't change gear
 	elseif not (buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint']) then
 		-- If we gain or lose any haste buffs, adjust which gear set we target.
-		if S{'haste','march','embrava','haste samba'}[buff:lower()] then
-			determine_haste_group()
-		end
 		handle_equipping_gear(player.status)
 	end
 end
@@ -478,8 +475,6 @@ function job_update(cmdParams)
 	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
 		return 'no gear change'
 	end
-
-	determine_haste_group()
 end
 
 
@@ -506,34 +501,4 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-
-function determine_haste_group()
-	-- We have three groups of DW in gear: Charis body, Charis neck + DW earrings, and Patentia Sash.
-
-	-- For high haste, we want to be able to drop one of the 10% groups (body, preferably).
-	-- High haste buffs:
-	-- 2x Marches + Haste
-	-- 2x Marches + Haste Samba
-	-- 1x March + Haste + Haste Samba
-	-- Embrava + any other haste buff
-	
-	-- For max haste, we probably need to consider dropping all DW gear.
-	-- Max haste buffs:
-	-- Embrava + Haste/March + Haste Samba
-	-- 2x March + Haste + Haste Samba
-	
-	if buffactive.embrava and (buffactive.haste or buffactive.march) and buffactive['haste samba'] then
-		CustomMeleeGroup = 'MaxHaste'
-	elseif buffactive.march == 2 and buffactive.haste and buffactive['haste samba'] then
-		CustomMeleeGroup = 'MaxHaste'
-	elseif buffactive.embrava and (buffactive.haste or buffactive.march or buffactive['haste samba']) then
-		CustomMeleeGroup = 'HighHaste'
-	elseif buffactive.march == 1 and buffactive.haste and buffactive['haste samba'] then
-		CustomMeleeGroup = 'HighHaste'
-	elseif buffactive.march == 2 and (buffactive.haste or buffactive['haste samba']) then
-		CustomMeleeGroup = 'HighHaste'
-	else
-		CustomMeleeGroup = 'Normal'
-	end
-end
 
