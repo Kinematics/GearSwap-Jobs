@@ -215,21 +215,28 @@ function _MoteInclude.precast(spell,action)
 				equip(sets.precast.JA[spell.english])
 			end
 		elseif spell.type == 'Weaponskill' then
+			local modeToUse = state.WeaponskillMode
+			if state.WeaponskillMode == 'Normal' then
+				if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
+					modeToUse = state.OffenseMode
+				end
+			end
+			
 			if sets.precast.WS[spell.english] then
-				if sets.precast.WS[spell.english][state.WeaponskillMode] then
-					equip(sets.precast.WS[spell.english][state.WeaponskillMode])
+				if sets.precast.WS[spell.english][modeToUse] then
+					equip(sets.precast.WS[spell.english][modeToUse])
 				else
 					equip(sets.precast.WS[spell.english])
 				end
 			elseif classes.CustomClass and sets.precast.WS[classes.CustomClass] then
-				if sets.precast.WS[classes.CustomClass][state.WeaponskillMode] then
-					equip(sets.precast.WS[classes.CustomClass][state.WeaponskillMode])
+				if sets.precast.WS[classes.CustomClass][modeToUse] then
+					equip(sets.precast.WS[classes.CustomClass][modeToUse])
 				else
 					equip(sets.precast.WS[classes.CustomClass])
 				end
 			else
-				if sets.precast.WS[state.WeaponskillMode] then
-					equip(sets.precast.WS[state.WeaponskillMode])
+				if sets.precast.WS[modeToUse] then
+					equip(sets.precast.WS[modeToUse])
 				else
 					equip(sets.precast.WS)
 				end
