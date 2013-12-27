@@ -424,7 +424,7 @@ function _MoteInclude.get_current_idle_set()
 		idleSet = customize_idle_set(idleSet)
 	end
 
-	--if _global.debug_mode then print_set(idleSet, 'Idle Set') end
+	--if _global.debug_mode then print_set(idleSet, 'Final Idle Set') end
 	
 	return idleSet
 end
