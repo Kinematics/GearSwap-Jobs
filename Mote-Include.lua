@@ -1141,6 +1141,7 @@ function _MoteInclude.get_spell_mappings()
 		['Poisona']='StatusRemoval',['Paralyna']='StatusRemoval',['Silena']='StatusRemoval',['Blindna']='StatusRemoval',['Cursna']='StatusRemoval',
 		['Stona']='StatusRemoval',['Viruna']='StatusRemoval',['Erase']='StatusRemoval',
 		['Utsusemi: Ichi']='Utsusemi',['Utsusemi: Ni']='Utsusemi',
+		['Burn']='ElementalEnfeeble',['Frost']='ElementalEnfeeble',['Choke']='ElementalEnfeeble',['Rasp']='ElementalEnfeeble',['Shock']='ElementalEnfeeble',['Drown']='ElementalEnfeeble',
 	}
 
 	return mappings
