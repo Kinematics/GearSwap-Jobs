@@ -17,7 +17,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 12/27/2013 6:00:17 AM
+-- Last Modified: 12/27/2013 11:41:00 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
@@ -259,14 +259,8 @@ function _MoteInclude.precast(spell,action)
 	end
 	
 	-- Allow followup code to add to what was done here
-	local holdCustomClass = false
 	if job_post_precast then
-		holdCustomClass = job_post_precast(spell, action, spellMap, useMidcastGear)
-	end
-
-	-- Reset CustomClass after every pass.
-	if not holdCustomClass then
-		classes.CustomClass = nil
+		job_post_precast(spell, action, spellMap, useMidcastGear)
 	end
 end
 
@@ -324,13 +318,8 @@ function _MoteInclude.midcast(spell,action)
 	end
 	
 	-- Allow followup code to add to what was done here
-	local holdCustomClass = false
 	if job_post_midcast then
-		holdCustomClass = job_post_midcast(spell, action, spellMap)
-	end
-
-	if not holdCustomClass then
-		classes.CustomClass = nil
+		job_post_midcast(spell, action, spellMap)
 	end
 end
 
@@ -357,6 +346,9 @@ function _MoteInclude.aftercast(spell,action)
 	if job_post_aftercast then
 		job_post_aftercast(spell, action)
 	end
+	
+	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
+	classes.CustomClass = nil
 end
 
 
