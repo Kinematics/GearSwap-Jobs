@@ -367,6 +367,7 @@ end
 -- @param status : The current or new player status that determines what sort of gear to equip. (string)
 function _MoteInclude.handle_equipping_gear(status)
 	-- Assume idle status if the status value is blank (eg: after first logging in)
+	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..status..']') end
 	if status == 'Idle' or status == '' then
 		equip(get_current_idle_set())
 	elseif status == 'Engaged' then
@@ -389,6 +390,8 @@ function _MoteInclude.get_current_idle_set()
 		idleScope = 'Field'
 	end
 	
+	if _global.debug_mode then add_to_chat(123,'Debug: Idle scope for ['..world.area..'] is ['..idleScope..']') end
+
 	if sets.idle[idleScope] then
 		if sets.idle[idleScope][state.IdleMode] then
 			idleSet = sets.idle[idleScope][state.IdleMode]
