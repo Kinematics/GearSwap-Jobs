@@ -213,7 +213,7 @@ function get_sets()
 		back="Umbra Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
 	sets.idle.Weak = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",
+		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Meridian Ring",
 		back="Umbra Cape",waist="Witful Belt",legs="Nares Trews",feet="Gendewitha Galoshes"}
 	
