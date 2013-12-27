@@ -296,10 +296,6 @@ function job_midcast(spell, action, spellMap)
 	if action.type == 'Magic' then
 		equip(sets.midcast.FastRecast)
 	end
-
-	if spell.skill == 'ElementalMagic' then
-		classes.CustomClass = get_nuke_class(spell, action, spellMap)
-	end
 end
 
 -- Run after the general midcast() is done.
