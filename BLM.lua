@@ -4,7 +4,7 @@
 
 -- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
 
--- Last Modified: 12/27/2013 6:00:36 AM
+-- Last Modified: 12/27/2013 7:07:13 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -319,11 +319,11 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
-	return set_combine(idleSet, sets.Buff.Use)
+	return idleSet
 end
 
 function customize_melee_set(meleeSet)
-	return set_combine(idleSet, sets.Buff.Use)
+	return meleeSet
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -351,9 +351,10 @@ end
 function buff_change(buff,gain_or_loss)
 	if buff == "Mana Wall" then
 		if gain_or_loss == 'gain' then
-			sets.Buff.Use = sets.Buff['Mana Wall']
+			equip(sets.Buff['Mana Wall'])
+			disable('feet')
 		else
-			sets.Buff.Use = {}
+			enable('feet')
 		end
 	end
 		
