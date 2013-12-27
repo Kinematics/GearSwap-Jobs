@@ -352,7 +352,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
-
+	return idleSet
 end
 
 function customize_melee_set(meleeSet)
@@ -362,6 +362,8 @@ function customize_melee_set(meleeSet)
 	if buffactive['climactic flourish'] and not state.Defense.Active then
 		meleeSet = set_combine(meleeSet, sets.Buff['Climactic Flourish'])
 	end
+	
+	return meleeSet
 end
 
 -------------------------------------------------------------------------------------------------------------------
