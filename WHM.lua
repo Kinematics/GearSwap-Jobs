@@ -253,6 +253,7 @@ function get_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
+	sets.Buff = {}
 	
 	sets.Buff['Divine Caress'] = {hands="Orison Mitts +2"}
 
