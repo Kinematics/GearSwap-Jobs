@@ -379,7 +379,7 @@ function display_current_job_state()
 		defMode = state.Defense.MagicalMode
 	end
 	
-	add_to_chat(121,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..
+	add_to_chat(122,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..
 		'Defense ['..state.Defense.Type..'/'..defMode..']:'..on_off_names[state.Defense.Active]:upper()..', '..
 		'Melee ['..state.OffenseMode..'/'..state.DefenseMode..']')
 
