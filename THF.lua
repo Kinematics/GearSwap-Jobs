@@ -460,7 +460,7 @@ function display_current_job_state()
 	end
 	
 	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..
-		defenseString..'Kiting: '..on_off_names[state.Kiting]..', Traesure mode: '..state.TreasureMode)
+		defenseString..'Kiting: '..on_off_names[state.Kiting]..', Treasure mode: '..state.TreasureMode)
 
 	return true
 end
