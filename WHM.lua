@@ -366,14 +366,18 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-	if cmdParams[1] == 'update' and cmdParams[2] == 'user' then
+
+end
+
+-- Called by the 'update' self-command.
+function job_update(cmdParams)
+	if cmdParams[1] == 'user' then
 		if not buffactive['Afflatus Solace'] then
 			windower.send_command('input /ja "Afflatus Solace" <me>')
 		elseif not (buffactive['Light Arts'] or buffactive['Addendum: White']) then
 			windower.send_command('input /ja "Light Arts" <me>')
 		end
 	end
-	return false
 end
 
 
