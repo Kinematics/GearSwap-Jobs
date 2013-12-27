@@ -126,6 +126,12 @@ function get_sets()
 	
 	sets.midcast.Aspir = sets.midcast.Drain
 
+	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
+		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants",feet="Bokwus Boots"}
+
+
 	-- Elemental Magic sets are default for handling low-tier nukes.
 	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
