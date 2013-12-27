@@ -633,11 +633,11 @@ function _MoteInclude.handle_activate(cmdParams)
 		if activateState == 'physicaldefense' then
 			state.Defense.Active = true
 			state.Defense.Type = 'Physical'
-			add_to_chat(122,'Physical defense is now on.')
+			add_to_chat(122,'Physical defense ('..state.Defense.PhysicalMode..') is now on.')
 		elseif activateState == 'magicaldefense' then
 			state.Defense.Active = true
 			state.Defense.Type = 'Magical'
-			add_to_chat(122,'Magical defense is now on.')
+			add_to_chat(122,'Magical defense ('..state.Defense.MagicalMode..') is now on.')
 		elseif activateState == 'kite' or activateState == 'kiting' then
 			state.Kiting = true
 			add_to_chat(122,'Kiting is now on.')
