@@ -1157,6 +1157,8 @@ function _MoteInclude.get_spell_mappings()
 		['Stona']='StatusRemoval',['Viruna']='StatusRemoval',['Erase']='StatusRemoval',
 		['Utsusemi: Ichi']='Utsusemi',['Utsusemi: Ni']='Utsusemi',
 		['Burn']='ElementalEnfeeble',['Frost']='ElementalEnfeeble',['Choke']='ElementalEnfeeble',['Rasp']='ElementalEnfeeble',['Shock']='ElementalEnfeeble',['Drown']='ElementalEnfeeble',
+		['Teleport-Holla']='Teleport',['Teleport-Dem']='Teleport',['Teleport-Mea']='Teleport',['Teleport-Altep']='Teleport',['Teleport-Yhoat']='Teleport',
+		['Teleport-Vahzl']='Teleport',['Recall-Pashh']='Teleport',['Recall-Meriph']='Teleport',['Recall-Jugner']='Teleport',
 	}
 
 	return mappings
