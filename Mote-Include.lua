@@ -17,7 +17,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 12/26/2013 2:33:51 AM
+-- Last Modified: 12/27/2013 4:55:31 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
@@ -181,6 +181,7 @@ function _MoteInclude.precast(spell,action)
 			
 			-- Call this to break 'precast.FC' into a proper set.
 			local baseSet = get_expanded_set(sets, spellTiming)
+			local equipSet = {}
 
 			-- Use midcast sets if cast time is too short (TODO: override this with custom fast cast calculations)
 			-- Set determination ordering:
@@ -190,19 +191,25 @@ function _MoteInclude.precast(spell,action)
 			-- Skill
 			-- Spell type
 			if baseSet[spell.english] then
-				equip(baseSet[spell.english])
+				equipSet = baseSet[spell.english]
 			elseif classes.CustomClass and baseSet[classes.CustomClass] then
-				equip(baseSet[classes.CustomClass])
+				equipSet = baseSet[classes.CustomClass]
 			elseif spellMap and baseSet[spellMap] then
-				equip(baseSet[spellMap])
+				equipSet = baseSet[spellMap]
 			elseif baseSet[spell.skill] then
-				equip(baseSet[spell.skill])
+				equipSet = baseSet[spell.skill]
 			elseif baseSet[spell.type] then
-				equip(baseSet[spell.type])
+				equipSet = baseSet[spell.type]
 			else
-				equip(baseSet)
+				equipSet = baseSet
+			end
+			
+			-- Check for specialized casting modes for any given set selection.
+			if equipSet[state.CastingMode] then
+				equipSet = equipSet[state.CastingMode]
 			end
 
+			equip(equipSet)
 
 			-- Magian staves with fast cast on them
 			if baseSet[tostring(spell.element)] then
@@ -284,6 +291,8 @@ function _MoteInclude.midcast(spell,action)
 	if not preHandled then
 		if action.type == 'Magic' then
 			local spellMap = classes.spellMappings[spell.english]
+
+			local equipSet = {}
 			
 			-- Set determination ordering:
 			-- Specific spell name
@@ -292,19 +301,25 @@ function _MoteInclude.midcast(spell,action)
 			-- Skill
 			-- Spell type
 			if sets.midcast[spell.english] then
-				equip(sets.midcast[spell.english])
+				equipSet = sets.midcast[spell.english]
 			elseif classes.CustomClass and sets.midcast[classes.CustomClass] then
-				equip(sets.midcast[classes.CustomClass])
+				equipSet = sets.midcast[classes.CustomClass]
 			elseif spellMap and sets.midcast[spellMap] then
-				equip(sets.midcast[spellMap])
+				equipSet = sets.midcast[spellMap]
 			elseif sets.midcast[spell.skill] then
-				equip(sets.midcast[spell.skill])
+				equipSet = sets.midcast[spell.skill]
 			elseif sets.midcast[spell.type] then
-				equip(sets.midcast[spell.type])
+				equipSet = sets.midcast[spell.type]
 			else
-				equip(sets.midcast)
+				equipSet = sets.midcast
 			end
 
+			-- Check for specialized casting modes for any given set selection.
+			if equipSet[state.CastingMode] then
+				equipSet = equipSet[state.CastingMode]
+			end
+
+			equip(equipSet)
 		end
 	end
 	
