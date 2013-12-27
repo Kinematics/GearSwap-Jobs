@@ -147,8 +147,6 @@ function get_sets()
 	sets.midcast.StatusRemoval = {
 		head="Orison Cap +2",legs="Orison Pantaloons +2"}
 
-	sets.midcast['Divine Caress'] = {hands="Orison Mitts +2"}
-
 	sets.midcast.Protectra = {ring1="Sheltered Ring"}
 
 	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Cleric's Pantaloons +2"}
@@ -254,6 +252,13 @@ function get_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 
+	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
+	
+	sets.Buff['Divine Caress'] = {hands="Orison Mitts +2"}
+
+
+
+
 	windower.send_command('input /macro book 14;wait .1;input /macro set 4')
 	gearswap_binds_on_load()
 
@@ -286,7 +291,7 @@ end
 function job_post_precast(spell, action, spellMap, useMidcastGear)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
 	if useMidcastGear and spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
-		equip(sets.midcast['Divine Caress'])
+		equip(sets.Buff['Divine Caress'])
 	end
 end
 
@@ -302,7 +307,7 @@ end
 function job_post_midcast(spell, action, spellMap)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
 	if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
-		equip(sets.midcast['Divine Caress'])
+		equip(sets.Buff['Divine Caress'])
 	end
 end
 
