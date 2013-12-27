@@ -264,8 +264,9 @@ function get_sets()
 
 
 
-	sets.engaged['Saber Dance'] = {legs="Etoile Tights +2"}
-	sets.engaged['Climactic Flourish'] = {legs="Charis Tiara +2"}
+	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
+	sets.Buff['Saber Dance'] = {legs="Etoile Tights +2"}
+	sets.Buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
 
 	skillchainPending = false
 	
@@ -356,9 +357,10 @@ end
 
 function customize_melee_set(meleeSet)
 	if buffactive['saber dance'] and not state.Defense.Active then
-		meleeSet = set_combine(meleeSet, sets.engaged['Saber Dance'])
-	elseif buffactive['climactic flourish'] and not state.Defense.Active then
-		meleeSet = set_combine(meleeSet, sets.engaged['Climactic Flourish'])
+		meleeSet = set_combine(meleeSet, sets.Buff['Saber Dance'])
+	end
+	if buffactive['climactic flourish'] and not state.Defense.Active then
+		meleeSet = set_combine(meleeSet, sets.Buff['Climactic Flourish'])
 	end
 end
 
