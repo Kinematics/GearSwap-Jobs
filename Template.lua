@@ -190,59 +190,6 @@ function get_sets()
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
-	-- Custom melee group: High Haste
-	sets.engaged.HighHaste = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.HighHaste.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.HighHaste.Evasion = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Ik Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.HighHaste.Acc.Evasion = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.HighHaste.PDT = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-	sets.engaged.HighHaste.Acc.PDT = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-
-	-- Custom melee group: Max Haste
-	sets.engaged.MaxHaste = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Windbuffet Belt",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.MaxHaste.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.MaxHaste.Evasion = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Ik Cape",waist="Windbuffet Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.MaxHaste.Acc.Evasion = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.MaxHaste.PDT = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-	sets.engaged.MaxHaste.Acc.PDT = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-
-
 
 	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
 	gearswap_binds_on_load()
@@ -315,11 +262,7 @@ end
 -- buff == buff gained or lost
 -- gain_or_loss == 'gain' or 'loss', depending on the buff state change
 function buff_change(buff,gain_or_loss)
-	-- If we gain or lose any haste buffs, adjust which gear set we target.
-	if S{'haste','march','embrava','haste samba'}[buff:lower()] then
-		determine_haste_group()
-		handle_equipping_gear(player.status)
-	end
+	--handle_equipping_gear(player.status)
 end
 
 
@@ -329,11 +272,13 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-	if cmdParams[1] == 'update' then
-		determine_haste_group()
-	end
+
 end
 
+-- Called by the 'update' self-command.
+function job_update(cmdParams)
+
+end
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
@@ -344,35 +289,4 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
-
-
-function determine_haste_group()
-	-- We have three groups of DW in gear: Charis body, Charis neck + DW earrings, and Patentia Sash.
-
-	-- For high haste, we want to be able to drop one of the 10% groups (body, preferably).
-	-- High haste buffs:
-	-- 2x Marches + Haste
-	-- 2x Marches + Haste Samba
-	-- 1x March + Haste + Haste Samba
-	-- Embrava + any other haste buff
-	
-	-- For max haste, we probably need to consider dropping all DW gear.
-	-- Max haste buffs:
-	-- Embrava + Haste/March + Haste Samba
-	-- 2x March + Haste + Haste Samba
-	
-	if buffactive.embrava and (buffactive.haste or buffactive.march) and buffactive['haste samba'] then
-		CustomMeleeGroup = 'MaxHaste'
-	elseif buffactive.march == 2 and buffactive.haste and buffactive['haste samba'] then
-		CustomMeleeGroup = 'MaxHaste'
-	elseif buffactive.embrava and (buffactive.haste or buffactive.march or buffactive['haste samba']) then
-		CustomMeleeGroup = 'HighHaste'
-	elseif buffactive.march == 1 and buffactive.haste and buffactive['haste samba'] then
-		CustomMeleeGroup = 'HighHaste'
-	elseif buffactive.march == 2 and (buffactive.haste or buffactive['haste samba']) then
-		CustomMeleeGroup = 'HighHaste'
-	else
-		CustomMeleeGroup = 'Normal'
-	end
-end
 
