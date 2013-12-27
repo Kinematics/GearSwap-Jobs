@@ -272,6 +272,13 @@ function job_precast(spell, action, spellMap)
 		return true
 	end
 	
+	-- Lock weapon if we have TP (may customize this out more later)
+	if player.tp >= 100 then
+		disable('main','sub')
+	else
+		enable('main','sub')
+	end
+	
 	if spell.skill == 'ElementalMagic' then
 		classes.CustomClass = get_nuke_class(spell, action, spellMap)
 	end
@@ -325,11 +332,16 @@ end
 
 -- Called when the player's status changes.
 function status_change(newStatus,oldStatus)
-	-- Disable weapon swaps when engaged
-	if newStatus == 'Engaged' then
+	-- Lock weapon if we have TP (may customize this out more later)
+	if player.tp >= 100 then
 		disable('main','sub')
-	elseif oldStatus == 'Engaged' then
-		enable('main','sub')
+	else
+		-- Disable weapon swaps when engaged
+		if newStatus == 'Engaged' then
+			disable('main','sub')
+		elseif oldStatus == 'Engaged' then
+			enable('main','sub')
+		end
 	end
 end
 
@@ -355,7 +367,11 @@ end
 
 -- Called for direct player commands.
 function job_self_command(cmdParams)
-
+	if player.tp >= 100 then
+		disable('main','sub')
+	else
+		enable('main','sub')
+	end
 end
 
 -- Called by the 'update' self-command.
