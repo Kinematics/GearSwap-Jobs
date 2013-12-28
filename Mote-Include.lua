@@ -17,7 +17,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 12/27/2013 10:21:31 PM
+-- Last Modified: 12/28/2013 2:43:40 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local _MoteInclude = {}
@@ -72,21 +72,25 @@ function _MoteInclude.init_include()
 	options.TargetModes = {'default', 'stpc', 'stpt', 'stal'}
 	
 
-	-- Spell mappings defined in a function at the bottom of this file
+	-- Spell mappings to describe a 'type' of spell.
 	classes = {}
+	-- Basic spell mappings are based on common spell series.
+	-- EG: 'Cure' for Cure, Cure II, Cure III, Cure IV, Cure V, or Cure VI.
 	classes.spellMappings = get_spell_mappings()
-	-- List of spells (or spell maps) that don't benefit from greater skill.
-	--  Just midcast is fast recast gear.
+	-- List of spells and spell maps that don't benefit from greater skill.
+	--  Fine just equipping fast recast gear for these.
 	classes.NoSkillSpells = S{'Haste', 'Refresh', 'Refresh II', 'Regen',
 		 'Protect', 'Protectra', 'Shell', 'Shellra', 'Raise', 'Reraise'}
-
-	-- Custom class, like the generic spell mappings.  Gets reset after every use.
+	-- Custom, job-defined class, like the generic spell mappings.
+	-- Takes precedence over default spell maps.
+	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
 	classes.CustomClass = nil
 	
 	
-	-- Stuff for handling self commands
-	selfCommands = {['toggle']=handle_toggle, ['activate']=handle_activate, ['cycle']=handle_cycle, ['set']=handle_set,
-		['reset']=handle_reset, ['update']=handle_update, ['test']=handle_test}
+	-- Stuff for handling self commands.
+	-- The below map certain predefined commands to internal functions.
+	selfCommands = {['toggle']=handle_toggle, ['activate']=handle_activate, ['cycle']=handle_cycle,
+		 ['set']=handle_set, ['reset']=handle_reset, ['update']=handle_update, ['test']=handle_test}
 		
 	-- Display text mapping.
 	on_off_names = {[true] = 'on', [false] = 'off'}
@@ -116,6 +120,7 @@ function _MoteInclude.init_include()
 	spellWasChanged = false
 	-- Flag whether we changed the target of the spell.
 	targetWasChanged = false
+
 
 	-- Vars for use in melee set construction.
 	TPWeapon = 'Normal'
