@@ -294,7 +294,8 @@ function job_post_precast(spell, action, spellMap, useMidcastGear)
 	end
 	
 	-- Ionis gives us an extra 3% fast cast, so we can drop Incantor Stone for Impatiens.
-	if (classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee') and buffactive.ionis then
+	if (classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee') and
+		buffactive.ionis and areas.Adoulin[world.area:lower()] then
 		equip({ammo="Impatiens"})
 	end
 end
