@@ -120,7 +120,12 @@ function get_sets()
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Goliard Saio",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
-		
+	
+	-- Keep precast cure sets on	
+	sets.midcast.Cure = {}
+	
+	sets.midcast.Curaga = {}
+	
 	-- Specific spells
 	sets.midcast.Cursna = {
 		head="Orison Cap +2",neck="Malison Medallion",
@@ -291,8 +296,10 @@ end
 -- Return true if we handled the midcast work.  Otherwise it will fall back
 -- to the general midcast() code in Mote-Include.
 function job_midcast(spell, action, spellMap)
-	-- Always use FastRecast as the base layer
-	equip(sets.midcast.FastRecast)
+	-- Always use FastRecast as the base layer, except for cures which keep a constant set.
+	if spellMap ~= 'Cure' and spellMap ~= 'Curaga' then
+		equip(sets.midcast.FastRecast)
+	end
 
 	if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
 		if spellMap ~= 'Protectra' and spellMap ~= 'Shellra' then
