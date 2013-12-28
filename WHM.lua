@@ -274,16 +274,15 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Return true if we handled the precast work.  Otherwise it will fall back
--- to the general precast() code in Mote-Include.
-function job_precast(spell, action, spellMap)
-
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
 	if spell.english == "Paralyna" and buffactive.Paralyzed then
 		-- no gear swaps if we're paralyzed, to avoid blinking while trying to remove it.
-		return true
+		eventArgs.handled = true
+	else
+		classes.CustomClass = get_spell_class(spell, action, spellMap)
 	end
-
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end
 
 

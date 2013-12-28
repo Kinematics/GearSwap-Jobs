@@ -299,15 +299,15 @@ end
 -- Returns two values on completion:
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
-function job_change_spell(spell, action, spellMap)
+function job_change_spell(spell, action, spellMap, eventArgs)
 	if spell.type == 'Waltz' then
-		return refine_waltz(spell, action, spellMap)
+		return refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Return true if we handled the precast work.  Otherwise it will fall back
--- to the general precast() code in Mote-Include.
-function job_precast(spell, action, spellMap)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
 
 end
 
@@ -417,7 +417,7 @@ end
 -- Returns two values on completion:
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
-function refine_waltz(spell, action, spellMap)
+function refine_waltz(spell, action, spellMap, eventArgs)
 	local newWaltz = ''
 	local tpCost = 0
 	local wasCancelled = false
@@ -425,7 +425,8 @@ function refine_waltz(spell, action, spellMap)
 
 	-- Don't modify anything for Healing Waltz or Divine Waltzes
 	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
-		return wasCancelled, wasChanged
+		-- return without changing event args
+		return
 	end
 	
 	

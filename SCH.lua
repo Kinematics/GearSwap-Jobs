@@ -285,17 +285,14 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Return true if we handled the precast work.  Otherwise it will fall back
--- to the general precast() code in Mote-Include.
-function job_precast(spell, action, spellMap)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
 	if spellMap == 'Cure' or spellMap == 'Curaga' then
 		if world.weather_element == 'Light' or buffactive.aurorastorm then
 			classes.CustomClass = 'CureWithLightWeather'
 		end
-	--elseif addendumNukes[spell.english] and not buffactive['addendum: black'] then
-	
 	end
-
 end
 
 -- Run after the general precast() is done.

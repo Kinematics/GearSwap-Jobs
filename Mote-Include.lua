@@ -295,7 +295,7 @@ function _MoteInclude.precast(spell,action)
 					equip(sets.precast.WS)
 				end
 			end
-
+		-- All other types, such as Waltz, Jig, Scholar, etc.
 		elseif sets.precast[spell.type] then
 			if sets.precast[spell.type][spell.english] then
 				equip(sets.precast[spell.type][spell.english])

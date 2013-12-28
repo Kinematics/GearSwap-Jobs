@@ -237,9 +237,9 @@ end
 -- Job- versions of event handlers, allowing overriding default handling.
 -------------------------------------------------------------------------------------------------------------------
 
--- Return true if we handled the precast work.  Otherwise it will continue
--- to the general precast() code in Mote-Include.
-function job_precast(spell, action)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		--if string.find(world.area:lower(),'cirdas caverns') then
 		--	cast_delay(0.5)
@@ -258,11 +258,9 @@ function job_precast(spell, action)
 		-- If Nightingale is on, return the optional second return value to indicate
 		-- that it should equip midcast gear on precast rather than precast gear.
 		if buffactive.nightingale then
-			return false, 'midcast'
+			eventArgs.useMidcastGear = true
 		end
 	end
-	
-	return false
 end
 
 

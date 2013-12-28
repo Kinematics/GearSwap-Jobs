@@ -260,12 +260,14 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Return true if we handled the precast work.  Otherwise it will fall back
--- to the general precast() code in Mote-Include.
-function job_precast(spell, action, spellMap)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
 	-- Don't allow gear changes for teleports.
 	if spell.english == 'Warp' or spellMap == 'Teleport' or (spell.english == 'Warp II' and spell.target.type == 'SELF') then
-		return true
+		eventArgs.handled = true
+	elseif spell.skill == 'ElementalMagic' then
+		classes.CustomClass = get_nuke_class(spell, action, spellMap)
 	end
 	
 	-- Lock weapon if we have TP (may customize this out more later)
@@ -274,11 +276,8 @@ function job_precast(spell, action, spellMap)
 	else
 		enable('main','sub')
 	end
-	
-	if spell.skill == 'ElementalMagic' then
-		classes.CustomClass = get_nuke_class(spell, action, spellMap)
-	end
 end
+
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap)
@@ -404,6 +403,7 @@ function get_nuke_class(spell, action, spellMap)
 	if lowTierNukes[spell.english] then
 		-- low tier nukes use the default set
 		return nil
+	-- Areas where more magic accuracy is generally needed, so use Atinian instead of Lehbrailg on high-tier nukes.
 	elseif areas.Adoulin[world.area:lower()] then
 		return 'AdoulinHighTierNuke'
 	else
