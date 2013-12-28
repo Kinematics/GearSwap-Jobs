@@ -55,7 +55,7 @@ function get_sets()
 		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
-		head="Theophany Cap",neck="Aceso's Choker",ear1="Orison Earring",ear2="Loquacious Earring",
+		head="Theophany Cap +1",neck="Aceso's Choker",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Cure Clogs"}
 
