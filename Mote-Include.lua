@@ -190,17 +190,17 @@ function _MoteInclude.precast(spell,action)
 
 			-- Use midcast sets if cast time is too short (TODO: override this with custom fast cast calculations)
 			-- Set determination ordering:
-			-- Specific spell name
 			-- Custom class
 			-- Class mapping
+			-- Specific spell name
 			-- Skill
 			-- Spell type
-			if baseSet[spell.english] then
-				equipSet = baseSet[spell.english]
-			elseif classes.CustomClass and baseSet[classes.CustomClass] then
+			if classes.CustomClass and baseSet[classes.CustomClass] then
 				equipSet = baseSet[classes.CustomClass]
 			elseif spellMap and baseSet[spellMap] then
 				equipSet = baseSet[spellMap]
+			elseif baseSet[spell.english] then
+				equipSet = baseSet[spell.english]
 			elseif baseSet[spell.skill] then
 				equipSet = baseSet[spell.skill]
 			elseif baseSet[spell.type] then
@@ -294,17 +294,17 @@ function _MoteInclude.midcast(spell,action)
 			local equipSet = {}
 			
 			-- Set determination ordering:
-			-- Specific spell name
 			-- Custom class
 			-- Class mapping
+			-- Specific spell name
 			-- Skill
 			-- Spell type
-			if sets.midcast[spell.english] then
-				equipSet = sets.midcast[spell.english]
-			elseif classes.CustomClass and sets.midcast[classes.CustomClass] then
+			if classes.CustomClass and sets.midcast[classes.CustomClass] then
 				equipSet = sets.midcast[classes.CustomClass]
 			elseif spellMap and sets.midcast[spellMap] then
 				equipSet = sets.midcast[spellMap]
+			elseif sets.midcast[spell.english] then
+				equipSet = sets.midcast[spell.english]
 			elseif sets.midcast[spell.skill] then
 				equipSet = sets.midcast[spell.skill]
 			elseif sets.midcast[spell.type] then
