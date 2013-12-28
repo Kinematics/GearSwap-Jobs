@@ -14,7 +14,7 @@ function get_sets()
 	init_include()
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
+	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
 	options.CastingModes = {'Normal', 'Resistant', 'Dire'}
@@ -245,19 +245,11 @@ function get_sets()
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
-	-- Sets with weapons defined.
-	sets.engaged.Acc = {
-		head="Nahtirah Hat",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Gendewitha Bliaut",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
-
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
 	sets.Buff = {}
 	
 	sets.Buff['Divine Caress'] = {hands="Orison Mitts +2"}
-
-
 
 
 	windower.send_command('input /macro book 14;wait .1;input /macro set 4')
