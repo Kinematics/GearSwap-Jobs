@@ -101,6 +101,14 @@ function _MoteInclude.init_include()
 		'port bastok','bastok markets','bastok mines','metalworks',
 		'aht urhgan whitegate','tavanazian safehold','nashmau',
 		'selbina','mhaura','norg','eastern adoulin','western adoulin'}
+	-- Adoulin areas, where Ionis will grant special stat bonuses.
+	areas.Adoulin = S{'yahse hunting grounds', 'ceizak battlegrounds',
+		'foret de hennetiel','morimar basalt fields',
+		'yorcia weald','yorcia weald [u]',
+		'cirdas caverns','cirdas caverns [u]',
+		'marjami ravine','kamihr drifts',
+		'sih gates','moh gates','dho gates','woh gates','rala waterways'}
+
 
 	-- Flag to indicate whether midcast gear was used on precast.
 	precastUsedMidcastGear = false

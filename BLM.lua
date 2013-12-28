@@ -243,10 +243,6 @@ function get_sets()
 		'Stonega', 'Waterga', 'Aeroga', 'Firaga', 'Blizzaga', 'Thundaga',
 		'Stonega II', 'Waterga II', 'Aeroga II', 'Firaga II', 'Blizzaga II', 'Thundaga II'}
 
-	-- Areas where more magic accuracy is generally needed, so use Atinian instead of Lehbrailg on high-tier nukes.
-	areas.Adoulin = S{'foret de hennetiel','yorcia weald','yorcia weald [u]','cirdas caverns','cirdas caverns [u]',
-		'morimar basalt fields','marjami ravine','kamihr drifts','sih gates','moh gates','dho gates','woh gates'}
-
 
 	windower.send_command('input /macro book 15;wait .1;input /macro set 1')
 	gearswap_binds_on_load()
