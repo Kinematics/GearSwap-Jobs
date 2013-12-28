@@ -128,8 +128,6 @@ function _MoteInclude.init_include()
 	staffs.HMP = 'Chatoyant Staff'
 	staffs.PDT = 'Earth Staff'
 	staffs.Cure = 'Arka IV'
-	staffs.GeneralMagicAcc = 'Soothsayer Staff'
-	staffs.BlmMagicAcc = 'Atinian Staff'
 	
 end
 
