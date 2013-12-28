@@ -295,7 +295,9 @@ function job_midcast(spell, action, spellMap)
 	equip(sets.midcast.FastRecast)
 
 	if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
-		return true
+		if spellMap ~= 'Protectra' and spellMap ~= 'Shellra' then
+			return true
+		end
 	end
 	
 	classes.CustomClass = get_spell_class(spell, action, spellMap)
