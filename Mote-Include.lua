@@ -403,29 +403,55 @@ function _MoteInclude.aftercast(spell,action)
 end
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- Hooks for non-action events.
+-------------------------------------------------------------------------------------------------------------------
+
 -- Called when the player's status changes.
 function _MoteInclude.status_change(newStatus, oldStatus)
-	local preHandled = false
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
 
 	-- Allow jobs to override this code
 	if job_status_change then
-		preHandled = job_status_change(newStatus, oldStatus)
+		job_status_change(newStatus, oldStatus, eventArgs)
 	end
 
-	if not preHandled then
+	if not eventArgs.handled then
 		handle_equipping_gear(newStatus)
 	end
 end
+
+-- buff_change must always be handled in the job scripts.
+-- function buff_change(buff, gain_or_loss)
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Generalized functions for selecting and equipping gear sets.
 -------------------------------------------------------------------------------------------------------------------
 
--- Function to wrap logic for equipping gear on aftercast, status change, or user update.
--- @param status : The current or new player status that determines what sort of gear to equip. (string)
+-- Central point to call to equip gear based on status.
 function _MoteInclude.handle_equipping_gear(status)
-	-- Assume idle status if the status value is blank (eg: after first logging in)
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to override this code
+	if job_handle_equipping_gear then
+		job_handle_equipping_gear(status, eventArgs)
+	end
+
+	if not eventArgs.handled then
+		equip_gear_by_status(newStatus)
+	end
+end
+
+
+-- Function to wrap logic for equipping gear on aftercast, status change, or user update.
+-- @param status : The current or new player status that determines what sort of gear to equip.
+function _MoteInclude.equip_gear_by_status(status)
 	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..status..']') end
+	
+	-- Assume idle status if the status value is blank (eg: after first logging in)
 	if status == 'Idle' or status == '' then
 		equip(get_current_idle_set())
 	elseif status == 'Engaged' then
@@ -434,6 +460,8 @@ function _MoteInclude.handle_equipping_gear(status)
 		equip(get_current_resting_set())
 	end
 end
+
+
 
 -- Returns the appropriate idle set based on current state.
 function _MoteInclude.get_current_idle_set()
