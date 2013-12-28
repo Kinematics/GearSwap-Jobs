@@ -208,7 +208,7 @@ function get_sets()
 	sets.idle.Field.PDT = {main="Tamaxchi", sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
-		back="Umbra Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Umbra Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Herald's Gaiters"}
 		
 	sets.idle.Weak = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
@@ -293,6 +293,10 @@ end
 function job_midcast(spell, action, spellMap)
 	-- Always use FastRecast as the base layer
 	equip(sets.midcast.FastRecast)
+
+	if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
+		return true
+	end
 	
 	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end

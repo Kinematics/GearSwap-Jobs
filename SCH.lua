@@ -315,7 +315,7 @@ function job_midcast(spell, action, spellMap)
 	if action.type == 'Magic' then
 		equip(sets.midcast.FastRecast)
 		
-		if spell.english == 'Haste' or spell.english == 'Refresh' or spellMap == 'Regen' then
+		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
 			return true
 		end
 	end

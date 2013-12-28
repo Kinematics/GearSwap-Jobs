@@ -269,6 +269,14 @@ end
 -- Return true if we handled the midcast work.  Otherwise it will fall back
 -- to the general midcast() code in Mote-Include.
 function job_midcast(spell, action)
+	if action.type == 'Magic' then
+		equip(sets.midcast.FastRecast)
+
+		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
+			return true
+		end
+	end
+
 	if spell.type == 'BardSong' then
 		classes.CustomClass = get_song_class(spell)
 	end

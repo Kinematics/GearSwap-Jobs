@@ -75,6 +75,11 @@ function _MoteInclude.init_include()
 	-- Spell mappings defined in a function at the bottom of this file
 	classes = {}
 	classes.spellMappings = get_spell_mappings()
+	-- List of spells (or spell maps) that don't benefit from greater skill.
+	--  Just midcast is fast recast gear.
+	classes.NoSkillSpells = S{'Haste', 'Refresh', 'Refresh II', 'Regen',
+		 'Protect', 'Protectra', 'Shell', 'Shellra', 'Raise', 'Reraise'}
+
 	-- Custom class, like the generic spell mappings.  Gets reset after every use.
 	classes.CustomClass = nil
 	
@@ -1153,6 +1158,8 @@ function _MoteInclude.get_spell_mappings()
 		['Firestorm']='Storm',['Hailstorm']='Storm',['Windstorm']='Storm',['Sandstorm']='Storm',['Thunderstorm']='Storm',['Rainstorm']='Storm',['Aurorastorm']='Storm',['Voidstorm']='Storm',
 		['Teleport-Holla']='Teleport',['Teleport-Dem']='Teleport',['Teleport-Mea']='Teleport',['Teleport-Altep']='Teleport',['Teleport-Yhoat']='Teleport',
 		['Teleport-Vahzl']='Teleport',['Recall-Pashh']='Teleport',['Recall-Meriph']='Teleport',['Recall-Jugner']='Teleport',
+		['Raise']='Raise',['Raise II']='Raise',['Raise III']='Raise',['Arise']='Raise',
+		['Reraise']='Reraise',['Reraise II']='Reraise',['Reraise III']='Reraise',
 	}
 
 	return mappings
