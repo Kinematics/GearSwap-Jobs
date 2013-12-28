@@ -54,26 +54,6 @@ function get_sets()
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
 		
-	sets.precast.FC.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
-		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
-		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Cure Clogs"}
-
-	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
-
-	sets.precast.FC.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
-
-	sets.precast.FC.CureMelee = {ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
-
 	sets.precast.FC.EnhancingMagic = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
@@ -122,10 +102,27 @@ function get_sets()
 		body="Goliard Saio",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 	
-	-- Keep precast cure sets on	
-	sets.midcast.Cure = {}
-	
-	sets.midcast.Curaga = {}
+	-- Cure sets
+	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
+		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
+		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
+		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Cure Clogs"}
+
+	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
+		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
+		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+
+	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
+		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
+		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+
+	sets.midcast.CureMelee = {ammo="Incantor Stone",
+		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
+		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+
 	
 	-- Specific spells
 	sets.midcast.Cursna = {
@@ -282,6 +279,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.handled = true
 	else
 		classes.CustomClass = get_spell_class(spell, action, spellMap)
+		
+		if classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee' or spellMap == 'Cure' or spellMap == 'Curaga' then
+			eventArgs.useMidcastGear = true
+		end
 	end
 end
 
