@@ -264,22 +264,19 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 
--- Return true if we handled the midcast work.  Otherwise it will fall back
--- to the general midcast() code in Mote-Include.
-function job_midcast(spell, action)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_midcast(spell, action, spellMap, eventArgs)
 	if action.type == 'Magic' then
+		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 
+		-- If the spells don't get enhanced by skill or whatever, don't bother equipping gear.
 		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
-			return true
+			eventArgs.handled = true
+		elseif spell.type == 'BardSong' then
+			classes.CustomClass = get_song_class(spell)
 		end
 	end
-
-	if spell.type == 'BardSong' then
-		classes.CustomClass = get_song_class(spell)
-	end
-	
-	return false
 end
 
 -- Return true if we handled the aftercast work.  Otherwise it will fall back

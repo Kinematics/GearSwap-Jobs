@@ -214,25 +214,23 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 -- Run after the general precast() is done.
-function job_post_precast(spell, action, spellMap)
+function job_post_precast(spell, action, spellMap, eventArgs)
 
 end
 
 
--- Return true if we handled the midcast work.  Otherwise it will fall back
--- to the general midcast() code in Mote-Include.
-function job_midcast(spell, action, spellMap)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_midcast(spell, action, spellMap, eventArgs)
 
 end
 
 -- Run after the general midcast() is done.
-function job_post_midcast(spell, action, spellMap)
+function job_post_midcast(spell, action, spellMap, eventArgs)
 
 end
 
--- Return true if we handled the aftercast work.  Otherwise it will fall back
--- to the general aftercast() code in Mote-Include.
-function job_aftercast(spell, action)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_aftercast(spell, action, spellMap, eventArgs)
 
 end
 

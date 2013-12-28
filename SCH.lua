@@ -306,28 +306,28 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 end
 
 
--- Return true if we handled the midcast work.  Otherwise it will fall back
--- to the general midcast() code in Mote-Include.
-function job_midcast(spell, action, spellMap)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_midcast(spell, action, spellMap, eventArgs)
 	if action.type == 'Magic' then
+		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
-		
+
+		-- If the spells don't get enhanced by skill or whatever, don't bother equipping gear.
 		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
-			return true
+			eventArgs.handled = true
 		end
 	end
 end
 
 -- Run after the general midcast() is done.
-function job_post_midcast(spell, action, spellMap)
+function job_post_midcast(spell, action, spellMap, eventArgs)
 	if action.type == 'Magic' then
-		apply_grimoire_bonuses(spell, action, spellMap)
+		apply_grimoire_bonuses(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Return true if we handled the aftercast work.  Otherwise it will fall back
--- to the general aftercast() code in Mote-Include.
-function job_aftercast(spell, action)
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_aftercast(spell, action, spellMap, eventArgs)
 	if spell.english == 'Impact' then
 		enable('head','body')
 	end

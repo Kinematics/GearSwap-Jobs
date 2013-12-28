@@ -138,7 +138,7 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Generalized functions for handling precast/midcast/aftercast actions.
+-- Generalized functions for handling precast/midcast/aftercast for player-initiated actions.
 -- This depends on proper set naming.
 -- Each job can override any amount of these general functions using job_xxx() hooks.
 -------------------------------------------------------------------------------------------------------------------
@@ -314,25 +314,26 @@ end
 
 -- Called when a player starts casting a spell.
 function _MoteInclude.midcast(spell,action)
+	-- If we equipped midcast gear on precast, no need to do any work here.
 	if precastUsedMidcastGear then
 		if _global.debug_mode then add_to_chat(123,'Midcast gear was used in precast, so skipping midcast phase.') end
+		-- Reset var
 		precastUsedMidcastGear = false
 		return
 	end
 
-	local preHandled = false
-	
 	local spellMap = classes.spellMappings[spell.english]
+
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
 	
 	-- Allow jobs to override this code
 	if job_midcast then
-		preHandled = job_midcast(spell, action, spellMap)
+		job_midcast(spell, action, spellMap, eventArgs)
 	end
 
-	if not preHandled then
+	if not eventArgs.handled then
 		if action.type == 'Magic' then
-			local spellMap = classes.spellMappings[spell.english]
-
 			local equipSet = {}
 			
 			-- Set determination ordering:
@@ -366,21 +367,24 @@ function _MoteInclude.midcast(spell,action)
 	
 	-- Allow followup code to add to what was done here
 	if job_post_midcast then
-		job_post_midcast(spell, action, spellMap)
+		job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
 
 -- Called when an action has been completed (eg: spell finished casting, or failed to cast).
 function _MoteInclude.aftercast(spell,action)
-	local preHandled = false
+	local spellMap = classes.spellMappings[spell.english]
+
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
 
 	-- Allow jobs to override this code
 	if job_aftercast then
-		preHandled = job_aftercast(spell, action)
+		job_aftercast(spell, action, spellMap, eventArgs)
 	end
 
-	if not preHandled then
+	if not eventArgs.handled then
 		if spell.interrupted then
 			-- Wait a half-second to update so that aftercast equip will actually be worn.
 			windower.send_command('wait 0.6;gs c update')
@@ -391,7 +395,7 @@ function _MoteInclude.aftercast(spell,action)
 
 	-- Allow followup code to add to what was done here
 	if job_post_aftercast then
-		job_post_aftercast(spell, action)
+		job_post_aftercast(spell, action, spellMap, eventArgs)
 	end
 	
 	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
