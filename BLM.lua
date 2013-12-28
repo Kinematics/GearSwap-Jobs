@@ -279,11 +279,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 
--- Run after the general precast() is done.
-function job_post_precast(spell, action, spellMap)
-
-end
-
 
 -- Return true if we handled the midcast work.  Otherwise it will fall back
 -- to the general midcast() code in Mote-Include.

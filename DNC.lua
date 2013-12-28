@@ -311,7 +311,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 
 end
 
-function job_post_precast(spell, action, spellMap)
+function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type == "Weaponskill" then
 		if skillchainPending then
 			equip(sets.precast.Skillchain)

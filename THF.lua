@@ -274,7 +274,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 -- Run after the general precast() is done.
-function job_post_precast(spell, action, spellMap)
+function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'Step' or spell.type == 'Flourish1' then
 		if state.TreasureMode ~= 'None' then
 			equip(sets.TreasureHunter)

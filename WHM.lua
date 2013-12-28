@@ -286,9 +286,9 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 
-function job_post_precast(spell, action, spellMap, useMidcastGear)
+function job_post_precast(spell, action, spellMap, eventArgs)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
-	if useMidcastGear and spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
+	if eventArgs.useMidcastGear and spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 		equip(sets.Buff['Divine Caress'])
 	end
 	

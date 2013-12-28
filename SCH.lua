@@ -296,11 +296,11 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 -- Run after the general precast() is done.
-function job_post_precast(spell, action, spellMap)
+function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.english == 'Impact' then
 		cast_delay(2.5)
 		windower.send_command('@gs c impactrobe')
-	elseif useMidcastGear then
+	elseif eventArgs.useMidcastGear then
 		apply_grimoire_bonuses(spell, action, spellMap)
 	end
 end
