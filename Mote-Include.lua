@@ -143,39 +143,68 @@ end
 -- Each job can override any amount of these general functions using job_xxx() hooks.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called before sending the command to execute the desired action.
--- Define the set to be equipped at this point in time based on the type of action.
-function _MoteInclude.precast(spell,action)
+-- Only implemented in 0.800 of GearSwap
+-- Pretarget is called when GearSwap intercepts the original text input, but
+-- before the game has done any processing on it.  In particular, it hasn't
+-- initiated target selection for <st*> target types.
+-- This is the only function where it will be valid to use change_target().
+-- Ideally, all processing that involves cancel_spell(), including
+-- the work needed to do a change_spell (ie: cancel, send_command the new one)
+-- should be handled from here.
+function _MoteInclude.pretarget(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
-	
+
 	-- First allow for spell changes before we consider changing the target.
 	-- This is a job-specific matter.
-	if job_handle_spell_changes and not spellWasChanged and not targetWasChanged then
-		local spellCancelled, spellChanged = job_handle_spell_changes(spell,action,spellMap)
+	if job_change_spell and not spellWasChanged then
+		-- init a new eventArgs
+		local eventArgs = {handled = false, cancel = false}
+	
+		job_change_spell(spell, action, spellMap, eventArgs)
 		
-		if spellCancelled then
-			if spellChanged then
-				spellWasChanged = true
-			end
+		if eventArgs.handled then
+			spellWasChanged = true
+		end
+		
+		if eventArgs.cancel then
 			return
 		end
 	end
 	
 	spellWasChanged = false
-
 	
-	-- Handle optional target conversion (t to stpc/etc).  If we changed target, exit so this can be called
-	-- after proper target selection was done.
-	if not targetWasChanged then
-		if convert_target(spell,action,spellMap) then
-			targetWasChanged = true
-			return
-		end
+	
+	-- Handle optional target conversion.
+
+	-- init a new eventArgs
+	local eventArgs = {handled = false, cancel = false}
+
+	-- Allow the job to have a crack at it
+	if job_pretarget then
+		job_pretarget(spell, action, spellMap, eventArgs)
 	end
 	
-	targetWasChanged = false
+	-- If the job handled it themselves, or requested a cancellation, end here.
+	if eventArgs.handled or eventArgs.cancel then
+		return
+	end
+	
+	-- Otherwise, send it to our general target adjustment code.
+	try_change_target(spell, action, spellMap)
 
-	local preHandled = false
+end
+
+
+-- Called after the text command has been processed (and target selected), but
+-- before the packet gets pushed out.
+-- Equip any gear that should be on before the spell or ability is used.
+-- Define the set to be equipped at this point in time based on the type of action.
+function _MoteInclude.precast(spell,action)
+	-- Get the spell mapping, since we'll be passing it to various functions and checks.
+	local spellMap = classes.spellMappings[spell.english]
+	
+	-- init a new eventArgs
+	local eventArgs = {handled = false, useMidcastGear = false}
 
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
