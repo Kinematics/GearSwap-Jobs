@@ -55,26 +55,27 @@ function get_sets()
 		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
-		head="Theophany Cap +1",neck="Aceso's Choker",ear1="Orison Earring",ear2="Loquacious Earring",
+		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Cure Clogs"}
 
 	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
+		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.precast.FC.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
+		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.precast.FC.CureMelee = {ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Aceso's Choker",ear1="Orison Earring",ear2="Loquacious Earring",
+		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
-	sets.precast.FC.EnhancingMagic = {head="Nahtirah Hat",neck="Orison Locket",ear2="Loquac. Earring",
+	sets.precast.FC.EnhancingMagic = {
+		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
 
@@ -290,6 +291,11 @@ function job_post_precast(spell, action, spellMap, useMidcastGear)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
 	if useMidcastGear and spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 		equip(sets.Buff['Divine Caress'])
+	end
+	
+	-- Ionis gives us an extra 3% fast cast, so we can drop Incantor Stone for Impatiens.
+	if (classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee') and buffactive.ionis then
+		equip({ammo="Impatiens"})
 	end
 end
 
