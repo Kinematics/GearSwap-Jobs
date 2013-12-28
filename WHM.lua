@@ -424,12 +424,10 @@ function get_spell_class(spell, action, spellMap)
 				return "IntEnfeebles"
 			end
 		else
-			if spellMap == "Cure" or spellMap == "Curaga" then
-				if player.status == 'Engaged' then
-					return "CureMelee"
-				elseif afflatusSolace and spellMap == 'Cure' then
-					return "CureSolace"
-				end
+			if spellMap == 'Cure' and afflatusSolace then
+				return "CureSolace"
+			elseif spellMap == "Curaga" and player.status == 'Engaged' and player.equipment.main == 'Mondaha Cudgel' then
+				return "CureMelee"
 			end
 		end
 	end
