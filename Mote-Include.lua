@@ -208,18 +208,20 @@ function _MoteInclude.precast(spell,action)
 
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
-		preHandled, useMidcastGear = job_precast(spell, action, spellMap)
+		job_precast(spell, action, spellMap, eventArgs)
 	end
 
-	if not preHandled then
-
+	if not eventArgs.handled then
 		--cast_delay(options.CastDelay)
 		verify_equip()
 
 		if action.type == 'Magic' then
 			local spellTiming = 'precast.FC'
-			if spell.casttime <= 1 or useMidcastGear then
-				useMidcastGear = true
+			if spell.casttime <= 1.5 then
+				eventArgs.useMidcastGear = true
+			end
+			
+			if eventArgs.useMidcastGear then
 				precastUsedMidcastGear = {true, spell.english}
 				spellTiming = 'midcast'
 			end
@@ -305,7 +307,7 @@ function _MoteInclude.precast(spell,action)
 	
 	-- Allow followup code to add to what was done here
 	if job_post_precast then
-		job_post_precast(spell, action, spellMap, useMidcastGear)
+		job_post_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
@@ -1069,15 +1071,26 @@ function _MoteInclude.get_expanded_set(baseSet, str)
 end
 
 
-function _MoteInclude.convert_target(spell, action, spellMap)
+-- Support function for job functions that want to change the spell.
+-- This does the cancel/send_command, and sets the proper vars for the eventArgs parameter.
+function _MoteInclude.change_spell(command, eventArgs)
+	cancel_spell()
+	send_command(command)
+	eventArgs.handled = true
+	eventArgs.cancel = true
+end
+
+
+
+function _MoteInclude.try_change_target(spell, action, spellMap)
 	-- If the original command already used a target selection, or is explicitly <me>, return.
 	if spell.target.raw:find('<st') or spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
 	end
 	
 	-- Allow the job to do custom handling
-	if job_convert_target then
-		local preHandled, converted =  job_convert_target(spell, action, spellMap)
+	if job_try_change_target then
+		local preHandled, converted =  job_try_change_target(spell, action, spellMap)
 		if preHandled then
 			return converted
 		end
