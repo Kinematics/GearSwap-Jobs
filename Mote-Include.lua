@@ -264,10 +264,6 @@ function _MoteInclude.precast(spell,action)
 			end
 			
 			--if tonumber(spell.casttime) >= 4 then verify_equip() end
-		elseif spell.type == 'JobAbility' then
-			if sets.precast.JA[spell.english] then
-				equip(sets.precast.JA[spell.english])
-			end
 		elseif spell.type == 'Weaponskill' then
 			local modeToUse = state.WeaponskillMode
 			if state.WeaponskillMode == 'Normal' then
@@ -294,6 +290,10 @@ function _MoteInclude.precast(spell,action)
 				else
 					equip(sets.precast.WS)
 				end
+			end
+		elseif spell.type == 'JobAbility' then
+			if sets.precast.JA[spell.english] then
+				equip(sets.precast.JA[spell.english])
 			end
 		-- All other types, such as Waltz, Jig, Scholar, etc.
 		elseif sets.precast[spell.type] then
