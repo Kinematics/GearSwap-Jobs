@@ -317,14 +317,6 @@ end
 -- Hooks for other events that aren't handled by the include file.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain_or_loss == 'gain' or 'loss', depending on the buff state change
-function buff_change(buff,gain_or_loss)
-	--
-end
-
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.

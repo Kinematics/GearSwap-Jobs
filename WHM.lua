@@ -350,7 +350,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function status_change(newStatus,oldStatus)
+function job_status_change(newStatus,oldStatus)
 	-- Disable weapon swaps when engaged
 	if newStatus == 'Engaged' then
 		disable('main','sub')
@@ -362,7 +362,7 @@ end
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain_or_loss == 'gain' or 'loss', depending on the buff state change
-function buff_change(buff,gain_or_loss)
+function job_buff_change(buff,gain_or_loss)
 	if buff == 'Afflatus Solace' then
 		if gain_or_loss == 'gain' then
 			afflatusSolace = true

@@ -422,8 +422,23 @@ function _MoteInclude.status_change(newStatus, oldStatus)
 	end
 end
 
--- buff_change must always be handled in the job scripts.
--- function buff_change(buff, gain_or_loss)
+function buff_change(buff, gain_or_loss)
+	-- Global actions on buff effects
+	
+	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
+	if buff == 'Weakness' then
+		if gain_or_loss == 'gain' then
+			send_command('timers create "Weakness" 300 up abilities/00255.png')
+		else
+			send_command('timers delete "Weakness"')
+		end
+	end
+
+	-- Any job-specific handling.
+	if job_buff_change then
+		job_buff_change(buff, gain_or_loss)
+	end
+end
 
 
 -------------------------------------------------------------------------------------------------------------------

@@ -367,7 +367,7 @@ end
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain_or_loss == 'gain' or 'loss', depending on the buff state change
-function buff_change(buff,gain_or_loss)
+function job_buff_change(buff,gain_or_loss)
 	-- If SA/TA/Feint drop, revert to standard gear
 	if S{'sneak attack', 'trick attack', 'feint'}[buff:lower()] and gain_or_loss == 'loss' then
 		handle_equipping_gear(player.status)
