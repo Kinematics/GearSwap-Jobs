@@ -157,6 +157,7 @@ function _MoteInclude.pretarget(spell,action)
 
 	-- First allow for spell changes before we consider changing the target.
 	-- This is a job-specific matter.
+	-- spellWasChanged is a gate to prevent infinite loops.
 	if job_change_spell and not spellWasChanged then
 		-- init a new eventArgs
 		local eventArgs = {handled = false, cancel = false}
@@ -200,7 +201,7 @@ end
 -- before the packet gets pushed out.
 -- Equip any gear that should be on before the spell or ability is used.
 -- Define the set to be equipped at this point in time based on the type of action.
-function _MoteInclude.precast(spell,action)
+function _MoteInclude.precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 	
@@ -213,97 +214,8 @@ function _MoteInclude.precast(spell,action)
 	end
 
 	if not eventArgs.handled then
-		--cast_delay(options.CastDelay)
 		verify_equip()
-
-		if action.type == 'Magic' then
-			local spellTiming = 'precast.FC'
-			if spell.casttime <= 1.5 then
-				eventArgs.useMidcastGear = true
-			end
-			
-			if eventArgs.useMidcastGear then
-				precastUsedMidcastGear = {true, spell.english}
-				spellTiming = 'midcast'
-			end
-			
-			-- Call this to break 'precast.FC' into a proper set.
-			local baseSet = get_expanded_set(sets, spellTiming)
-			local equipSet = {}
-
-			-- Use midcast sets if cast time is too short (TODO: override this with custom fast cast calculations)
-			-- Set determination ordering:
-			-- Custom class
-			-- Class mapping
-			-- Specific spell name
-			-- Skill
-			-- Spell type
-			if classes.CustomClass and baseSet[classes.CustomClass] then
-				equipSet = baseSet[classes.CustomClass]
-			elseif spellMap and baseSet[spellMap] then
-				equipSet = baseSet[spellMap]
-			elseif baseSet[spell.english] then
-				equipSet = baseSet[spell.english]
-			elseif baseSet[spell.skill] then
-				equipSet = baseSet[spell.skill]
-			elseif baseSet[spell.type] then
-				equipSet = baseSet[spell.type]
-			else
-				equipSet = baseSet
-			end
-			
-			-- Check for specialized casting modes for any given set selection.
-			if equipSet[state.CastingMode] then
-				equipSet = equipSet[state.CastingMode]
-			end
-
-			equip(equipSet)
-
-			-- Magian staves with fast cast on them
-			if baseSet[tostring(spell.element)] then
-				equip(baseSet[tostring(spell.element)])
-			end
-			
-			--if tonumber(spell.casttime) >= 4 then verify_equip() end
-		elseif spell.type == 'Weaponskill' then
-			local modeToUse = state.WeaponskillMode
-			if state.WeaponskillMode == 'Normal' then
-				if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
-					modeToUse = state.OffenseMode
-				end
-			end
-			
-			if sets.precast.WS[spell.english] then
-				if sets.precast.WS[spell.english][modeToUse] then
-					equip(sets.precast.WS[spell.english][modeToUse])
-				else
-					equip(sets.precast.WS[spell.english])
-				end
-			elseif classes.CustomClass and sets.precast.WS[classes.CustomClass] then
-				if sets.precast.WS[classes.CustomClass][modeToUse] then
-					equip(sets.precast.WS[classes.CustomClass][modeToUse])
-				else
-					equip(sets.precast.WS[classes.CustomClass])
-				end
-			else
-				if sets.precast.WS[modeToUse] then
-					equip(sets.precast.WS[modeToUse])
-				else
-					equip(sets.precast.WS)
-				end
-			end
-		elseif spell.type == 'JobAbility' then
-			if sets.precast.JA[spell.english] then
-				equip(sets.precast.JA[spell.english])
-			end
-		-- All other types, such as Waltz, Jig, Scholar, etc.
-		elseif sets.precast[spell.type] then
-			if sets.precast[spell.type][spell.english] then
-				equip(sets.precast[spell.type][spell.english])
-			else
-				equip(sets.precast[spell.type])
-			end
-		end
+		equip(get_default_precast_set(spell, action, spellMap, eventArgs))
 	end
 	
 	-- Allow followup code to add to what was done here
@@ -334,36 +246,7 @@ function _MoteInclude.midcast(spell,action)
 	end
 
 	if not eventArgs.handled then
-		if action.type == 'Magic' then
-			local equipSet = {}
-			
-			-- Set determination ordering:
-			-- Custom class
-			-- Class mapping
-			-- Specific spell name
-			-- Skill
-			-- Spell type
-			if classes.CustomClass and sets.midcast[classes.CustomClass] then
-				equipSet = sets.midcast[classes.CustomClass]
-			elseif spellMap and sets.midcast[spellMap] then
-				equipSet = sets.midcast[spellMap]
-			elseif sets.midcast[spell.english] then
-				equipSet = sets.midcast[spell.english]
-			elseif sets.midcast[spell.skill] then
-				equipSet = sets.midcast[spell.skill]
-			elseif sets.midcast[spell.type] then
-				equipSet = sets.midcast[spell.type]
-			else
-				equipSet = sets.midcast
-			end
-
-			-- Check for specialized casting modes for any given set selection.
-			if equipSet[state.CastingMode] then
-				equipSet = equipSet[state.CastingMode]
-			end
-
-			equip(equipSet)
-		end
+		equip(get_default_midcast_set(spell, action, spellMap, eventArgs))
 	end
 	
 	-- Allow followup code to add to what was done here
@@ -482,6 +365,136 @@ function _MoteInclude.equip_gear_by_status(status)
 end
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- Functions for constructing default sets.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Get the default precast gear set.
+function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
+	local equipSet = {}
+
+	if action.type == 'Magic' then
+		local spellTiming = 'precast.FC'
+		if spell.casttime <= 1.5 then
+			eventArgs.useMidcastGear = true
+		end
+		
+		if eventArgs.useMidcastGear then
+			precastUsedMidcastGear = {true, spell.english}
+			spellTiming = 'midcast'
+		end
+		
+		-- Call this to break 'precast.FC' into a proper set.
+		local baseSet = get_expanded_set(sets, spellTiming)
+
+		-- Use midcast sets if cast time is too short (TODO: override this with custom fast cast calculations)
+		-- Set determination ordering:
+		-- Custom class
+		-- Class mapping
+		-- Specific spell name
+		-- Skill
+		-- Spell type
+		if classes.CustomClass and baseSet[classes.CustomClass] then
+			equipSet = baseSet[classes.CustomClass]
+		elseif spellMap and baseSet[spellMap] then
+			equipSet = baseSet[spellMap]
+		elseif baseSet[spell.english] then
+			equipSet = baseSet[spell.english]
+		elseif baseSet[spell.skill] then
+			equipSet = baseSet[spell.skill]
+		elseif baseSet[spell.type] then
+			equipSet = baseSet[spell.type]
+		else
+			equipSet = baseSet
+		end
+		
+		-- Check for specialized casting modes for any given set selection.
+		if equipSet[state.CastingMode] then
+			equipSet = equipSet[state.CastingMode]
+		end
+
+		-- Magian staves with fast cast on them
+		if baseSet[tostring(spell.element)] then
+			equipSet = set_combine(equipSet, baseSet[tostring(spell.element)])
+		end
+	elseif spell.type == 'Weaponskill' then
+		local modeToUse = state.WeaponskillMode
+		if state.WeaponskillMode == 'Normal' then
+			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
+				modeToUse = state.OffenseMode
+			end
+		end
+		
+		if sets.precast.WS[spell.english] then
+			if sets.precast.WS[spell.english][modeToUse] then
+				equipSet = sets.precast.WS[spell.english][modeToUse]
+			else
+				equipSet = sets.precast.WS[spell.english]
+			end
+		elseif classes.CustomClass and sets.precast.WS[classes.CustomClass] then
+			if sets.precast.WS[classes.CustomClass][modeToUse] then
+				equipSet = sets.precast.WS[classes.CustomClass][modeToUse]
+			else
+				equipSet = sets.precast.WS[classes.CustomClass]
+			end
+		else
+			if sets.precast.WS[modeToUse] then
+				equipSet = sets.precast.WS[modeToUse]
+			else
+				equipSet = sets.precast.WS
+			end
+		end
+	elseif spell.type == 'JobAbility' then
+		if sets.precast.JA[spell.english] then
+			equipSet = sets.precast.JA[spell.english]
+		end
+	-- All other types, such as Waltz, Jig, Scholar, etc.
+	elseif sets.precast[spell.type] then
+		if sets.precast[spell.type][spell.english] then
+			equipSet = sets.precast[spell.type][spell.english]
+		else
+			equipSet = sets.precast[spell.type]
+		end
+	end
+	
+	return equipSet
+end
+
+
+-- Get the default midcast gear set.
+function _MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
+	local equipSet = {}
+
+	if action.type == 'Magic' then
+		-- Set selection ordering:
+		-- Custom class
+		-- Class mapping
+		-- Specific spell name
+		-- Skill
+		-- Spell type
+		if classes.CustomClass and sets.midcast[classes.CustomClass] then
+			equipSet = sets.midcast[classes.CustomClass]
+		elseif spellMap and sets.midcast[spellMap] then
+			equipSet = sets.midcast[spellMap]
+		elseif sets.midcast[spell.english] then
+			equipSet = sets.midcast[spell.english]
+		elseif sets.midcast[spell.skill] then
+			equipSet = sets.midcast[spell.skill]
+		elseif sets.midcast[spell.type] then
+			equipSet = sets.midcast[spell.type]
+		else
+			equipSet = sets.midcast
+		end
+
+		-- Check for specialized casting modes for any given set selection.
+		if equipSet[state.CastingMode] then
+			equipSet = equipSet[state.CastingMode]
+		end
+	end
+	
+	return equipSet
+end
+
 
 -- Returns the appropriate idle set based on current state.
 function _MoteInclude.get_current_idle_set()
@@ -519,6 +532,7 @@ function _MoteInclude.get_current_idle_set()
 	
 	return idleSet
 end
+
 
 -- Returns the appropriate melee set based on current state.
 function _MoteInclude.get_current_melee_set()
@@ -582,6 +596,7 @@ function _MoteInclude.get_current_melee_set()
 	return meleeSet
 end
 
+
 -- Returns the appropriate resting set based on current state.
 function _MoteInclude.get_current_resting_set()
 	local restingSet = {}
@@ -596,6 +611,7 @@ function _MoteInclude.get_current_resting_set()
 	
 	return restingSet
 end
+
 
 -- Function to apply any active defense set on top of the supplied set
 -- @param baseSet : The set that any currently active defense set will be applied on top of. (gear set table)
@@ -627,6 +643,7 @@ function _MoteInclude.apply_defense(baseSet)
 	
 	return baseSet
 end
+
 
 -- Function to add kiting gear on top of the base set if kiting state is true.
 -- @param baseSet : The set that the kiting gear will be applied on top of. (gear set table)
