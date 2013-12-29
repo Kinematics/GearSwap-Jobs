@@ -422,7 +422,7 @@ function _MoteInclude.status_change(newStatus, oldStatus)
 	end
 end
 
-function buff_change(buff, gain_or_loss)
+function _MoteInclude.buff_change(buff, gain_or_loss)
 	-- Global actions on buff effects
 	
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
