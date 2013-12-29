@@ -230,6 +230,12 @@ end
 
 -- Called when a player starts casting a spell.
 function _MoteInclude.midcast(spell,action)
+	-- If we have showSet active for precast, don't try to equip midcast gear.
+	if showSet == 'precast' then
+		add_to_chat(122, 'Show Sets: Stopping at precast.')
+		return
+	end
+
 	-- If we equipped midcast gear on precast, no need to do any work here.
 	if precastUsedMidcastGear then
 		if _global.debug_mode then add_to_chat(123,'Midcast gear was used in precast, so skipping midcast phase.') end
@@ -238,11 +244,6 @@ function _MoteInclude.midcast(spell,action)
 		return
 	end
 	
-	-- If we have showSet active for precast, don't try to equip midcast gear.
-	if showSet == 'precast' then
-		return
-	end
-
 	local spellMap = classes.spellMappings[spell.english]
 
 	-- init a new eventArgs
@@ -269,7 +270,10 @@ end
 -- Called when an action has been completed (eg: spell finished casting, or failed to cast).
 function _MoteInclude.aftercast(spell,action)
 	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
-	if showSet == 'precast' or showSet == 'midcast' then
+	if showSet == 'midcast' then
+		add_to_chat(122, 'Show Sets: Stopping at midcast.')
+		return
+	elseif showSet == 'precast' then
 		return
 	end
 
@@ -1003,11 +1007,11 @@ function _MoteInclude.handle_show_set(cmdParams)
 	-- If given a param of 'precast', block equipping midcast/aftercast sets
 	elseif cmdParams[1]:lower() == 'precast' then
 		showSet = 'precast'
-		add_to_chat(122,'Will now only equip up to precast gear for spells/actions.')
+		add_to_chat(122,'GearSwap will now only equip up to precast gear for spells/actions.')
 	-- If given a param of 'midcast', block equipping aftercast sets
 	elseif cmdParams[1]:lower() == 'midcast' then
 		showSet = 'midcast'
-		add_to_chat(122,'Will now only equip up to midcast gear for spells.')
+		add_to_chat(122,'GearSwap will now only equip up to midcast gear for spells.')
 	-- With a parameter of 'off', turn off showset functionality.
 	elseif cmdParams[1]:lower() == 'off' then
 		showSet = nil
