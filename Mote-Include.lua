@@ -998,16 +998,20 @@ end
 function _MoteInclude.handle_show_set(cmdParams)
 	-- If no extra parameters, or 'tp' as a parameter, show the current TP set.
 	if #cmdParams == 0 or cmdParams[1]:lower() == 'tp' then
+		add_to_chat(122,'Showing current TP set.')
 		equip(get_current_melee_set())
 	-- If given a param of 'precast', block equipping midcast/aftercast sets
 	elseif cmdParams[1]:lower() == 'precast' then
 		showSet = 'precast'
+		add_to_chat(122,'Will now only equip up to precast gear for spells/actions.')
 	-- If given a param of 'midcast', block equipping aftercast sets
 	elseif cmdParams[1]:lower() == 'midcast' then
 		showSet = 'midcast'
+		add_to_chat(122,'Will now only equip up to midcast gear for spells.')
 	-- With a parameter of 'off', turn off showset functionality.
 	elseif cmdParams[1]:lower() == 'off' then
 		showSet = nil
+		add_to_chat(122,'Show Sets is turned off.')
 	end
 end
 
