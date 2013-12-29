@@ -182,20 +182,21 @@ function _MoteInclude.pretarget(spell,action)
 	-- Handle optional target conversion.
 
 	-- init a new eventArgs
-	local eventArgs = {handled = false, cancel = false}
+	-- handled == target change was handled
+	local eventArgs = {handled = false}
 
 	-- Allow the job to have a crack at it
 	if job_pretarget then
 		job_pretarget(spell, action, spellMap, eventArgs)
 	end
 	
-	-- If the job handled it themselves, or requested a cancellation, end here.
-	if eventArgs.handled or eventArgs.cancel then
+	-- If the job handled it themselves, end here.
+	if eventArgs.handled then
 		return
 	end
 	
 	-- Otherwise, send it to our general target adjustment code.
-	try_change_target(spell, action, spellMap)
+	auto_change_target(spell, action, spellMap)
 
 end
 
@@ -962,6 +963,7 @@ function _MoteInclude.handle_reset(cmdParams)
 			state.MaxWeaponskillDistance = 0
 			state.SelectNPCTargets = false
 			state.PCTargetMode = 'default'
+			showSet = nil
 			add_to_chat(122,'Everything has been reset to defaults.')
 		else
 			if _global.debug_mode then add_to_chat(123,'--handle_reset unknown state to reset: '..resetState) end
@@ -1194,59 +1196,64 @@ end
 
 
 
-function _MoteInclude.try_change_target(spell, action, spellMap)
-	-- If the original command already used a target selection, or is explicitly <me>, return.
-	if spell.target.raw:find('<st') or spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
+function _MoteInclude.auto_change_target(spell, action, spellMap)
+	-- Do not modify target for spells where we get <lastst> or <me>.
+	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
 	end
 	
+	-- init a new eventArgs
+	local eventArgs = {handled = false, pcTargetMode = 'default', selectNPCTargets = false}
+
 	-- Allow the job to do custom handling
-	if job_try_change_target then
-		local preHandled, converted =  job_try_change_target(spell, action, spellMap)
-		if preHandled then
-			return converted
-		end
+	-- They can completely handle it, or set one of the secondary eventArgs vars to selectively
+	-- override the default state vars.
+	if job_auto_change_target then
+		job_auto_change_target(spell, action, spellMap, eventArgs)
+	end
+	
+	-- If the job handled it, we're done.
+	if eventArgs.handled then
+		return
 	end
 			
 
-	local canUseOnPC = spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC
+	local canUseOnPlayer = spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC
 
 	local newTarget = ''
 	
-	-- Check if we want to adjust targetting for player characters
-	if canUseOnPC then
-		if state.PCTargetMode == 'stal' then
-			-- Limit choice based on what the valid targets of the spell are.
+	-- For spells that we can cast on players:
+	if canUseOnPlayer then
+		if eventArgs.pcTargetMode == 'stal' or state.PCTargetMode == 'stal' then
+			-- Use <stal> if possible, otherwise fall back to <stpt>.
 			if spell.validtarget.Ally then
 				newTarget = '<stal>'
 			elseif spell.validtarget.Party then
 				newTarget = '<stpt>'
-			elseif spell.validtarget.Self then
-				newTarget = '<me>'
 			end
-		elseif state.PCTargetMode == 'stpt' then
-			-- Limit choice based on what the valid targets of the spell are.
+		elseif eventArgs.pcTargetMode == 'stpt' or state.PCTargetMode == 'stpt' then
+			-- Even ally-possible spells are limited to the current party.
 			if spell.validtarget.Ally or spell.validtarget.Party then
 				newTarget = '<stpt>'
-			elseif spell.validtarget.Self then
-				newTarget = '<me>'
 			end
-		elseif state.PCTargetMode == 'stpc' then
-			-- Limit choice based on what the valid targets of the spell are.
+		elseif eventArgs.pcTargetMode == 'stpc' or state.PCTargetMode == 'stpc' then
+			-- If it's anything other than a self-only spell, can change to <stpc>.
 			if spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC then
 				newTarget = '<stpc>'
-			elseif spell.validtarget.Self then
-				newTarget = '<me>'
 			end
 		end
-	-- Check if we want to adjust targtting for enemies
-	elseif state.SelectNPCTargets and spell.validtarget.Enemy then
-		newTarget = '<stnpc>'
+	-- For spells that can be used on enemies:
+	elseif spell.validtarget.Enemy then
+		if eventArgs.selectNPCTargets or state.SelectNPCTargets then
+			-- Note: this means macros should be written for <t>, and it will change to <stnpc>
+			-- if the flag is set.  It won't change <stnpc> back to <t>.
+			newTarget = '<stnpc>'
+		end
 	end
 	
+	-- If a new target was selected and is different from the original, call the change function.
 	if newTarget ~= '' and newTarget ~= spell.target.raw then
 		change_target(newTarget)
-		return true
 	end
 end
 
