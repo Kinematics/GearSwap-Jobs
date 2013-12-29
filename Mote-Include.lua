@@ -449,10 +449,10 @@ end
 -- Function to wrap logic for equipping gear on aftercast, status change, or user update.
 -- @param status : The current or new player status that determines what sort of gear to equip.
 function _MoteInclude.equip_gear_by_status(status)
-	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..status..']') end
+	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..']') end
 	
 	-- Assume idle status if the status value is blank (eg: after first logging in)
-	if status == 'Idle' or status == '' then
+	if not status or status == 'Idle' or status == '' then
 		equip(get_current_idle_set())
 	elseif status == 'Engaged' then
 		equip(get_current_melee_set())
