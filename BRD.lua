@@ -294,21 +294,14 @@ function job_aftercast(spell, action)
 end
 
 
--- Called when the player's status changes.
-function job_status_change(newStatus,oldStatus)
-	return false
-end
+-- Called by the 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	pick_tp_weapon()
 
--- Called for direct player commands.
-function job_self_command(cmd)
-	if cmd[1]:lower() == 'update' then
-		pick_tp_weapon()
-
-		if player.equipment.main == 'Izhiikoh' then
-			disable('main','sub')
-		else
-			enable('main','sub')
-		end
+	if player.equipment.main == 'Izhiikoh' then
+		disable('main','sub')
+	else
+		enable('main','sub')
 	end
 end
 

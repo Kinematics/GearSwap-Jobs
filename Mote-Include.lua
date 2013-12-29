@@ -422,6 +422,7 @@ function _MoteInclude.status_change(newStatus, oldStatus)
 	end
 end
 
+
 function _MoteInclude.buff_change(buff, gain_or_loss)
 	-- Global actions on buff effects
 	
@@ -652,15 +653,17 @@ function _MoteInclude.self_command(cmd)
 		return
 	end
 	
-	-- Allow jobs to override this
-	local preHandled = false
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
 
+	-- Allow jobs to override this code
 	if job_self_command then
-		preHandled = job_self_command(splitCmd)
+		job_self_command(splitCmd, eventArgs)
 	end
 
-	if not preHandled then
-		-- Quick custom commands
+	if not eventArgs.handled then
+		-- Quick predefined commands
+		-- showtpset: equip the current TP set for examination.
 		if splitCmd[1]:lower() == 'showtpset' then
 			equip(get_current_melee_set())
 			return
@@ -947,12 +950,15 @@ end
 -- Where [option] can be 'user' to display current state.
 -- Otherwise, generally refreshes current gear used.
 function _MoteInclude.handle_update(cmdParams)
-	local preHandled = false
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to override this code
 	if job_update then
-		preHandled = job_update(cmdParams)
+		job_update(cmdParams, eventArgs)
 	end
-	
-	if not preHandled then
+
+	if not eventArgs.handled then
 		handle_equipping_gear(player.status)
 	end
 	

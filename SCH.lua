@@ -363,18 +363,19 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called for direct player commands.
-function job_self_command(cmdParams)
+function job_self_command(cmdParams, eventArgs)
 	if cmdParams[1]:lower() == 'scholar' then
 		handle_strategems(cmdParams)
-		return true
+		eventArgs.handled = true
 	elseif cmdParams[1]:lower() == 'impactrobe' then
 		equip({head=empty,body="Twilight Cloak"})
 		disable('head','body')
 	end
 end
 
+
 -- Called by the 'update' self-command.
-function job_update(cmdParams)
+function job_update(cmdParams, eventArgs)
 	if cmdParams[1] == 'user' and not (buffactive['light arts'] or buffactive['dark arts'] or buffactive['addendum: white'] or buffactive['addendum: black']) then
 		if state.IdleMode == 'Stun' then
 			windower.send_command('input /ja "Dark Arts" <me>')
@@ -383,6 +384,7 @@ function job_update(cmdParams)
 		end
 	end
 end
+
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.

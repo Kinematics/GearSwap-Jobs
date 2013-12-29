@@ -268,13 +268,13 @@ end
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for direct player commands.
-function job_self_command(cmdParams)
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
 
 end
 
 -- Called by the 'update' self-command.
-function job_update(cmdParams)
+function job_update(cmdParams, eventArgs)
 
 end
 

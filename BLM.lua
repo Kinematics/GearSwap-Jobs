@@ -347,7 +347,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called for direct player commands.
-function job_self_command(cmdParams)
+function job_self_command(cmdParams, eventArgs)
 	if player.tp >= 100 then
 		disable('main','sub')
 	else
@@ -355,10 +355,6 @@ function job_self_command(cmdParams)
 	end
 end
 
--- Called by the 'update' self-command.
-function job_update(cmdParams)
-
-end
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.

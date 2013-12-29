@@ -382,21 +382,19 @@ end
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for direct player commands.
-function job_self_command(cmdParams)
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
 	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
 		skillchainPending = false
-	elseif cmdParams[1] == 'update' then
-		determine_haste_group()
 	end
 end
 
 
--- Function to display the current relevant user state when doing an update.
--- Return true if display was handled, and you don't want the default info shown.
-function display_current_job_state()
-
+-- Called by the default 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	determine_haste_group()
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
