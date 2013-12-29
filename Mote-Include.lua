@@ -92,6 +92,9 @@ function _MoteInclude.init_include()
 	selfCommands = {['toggle']=handle_toggle, ['activate']=handle_activate, ['cycle']=handle_cycle,
 		 ['set']=handle_set, ['reset']=handle_reset, ['update']=handle_update,
 		 ['showset']=handle_show_set, ['test']=handle_test}
+	
+	-- Special var for displaying sets
+	showSet = nil
 		
 	-- Display text mapping.
 	on_off_names = {[true] = 'on', [false] = 'off'}
@@ -234,6 +237,11 @@ function _MoteInclude.midcast(spell,action)
 		precastUsedMidcastGear = false
 		return
 	end
+	
+	-- If we have showSet active for precast, don't try to equip midcast gear.
+	if showSet == 'precast' then
+		return
+	end
 
 	local spellMap = classes.spellMappings[spell.english]
 
@@ -256,8 +264,15 @@ function _MoteInclude.midcast(spell,action)
 end
 
 
+
+
 -- Called when an action has been completed (eg: spell finished casting, or failed to cast).
 function _MoteInclude.aftercast(spell,action)
+	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
+	if showSet == 'precast' or showSet == 'midcast' then
+		return
+	end
+
 	local spellMap = classes.spellMappings[spell.english]
 
 	-- init a new eventArgs
@@ -981,15 +996,18 @@ end
 
 -- showset: equip the current TP set for examination.
 function _MoteInclude.handle_show_set(cmdParams)
-	if #cmdParams > 0 and cmdParams[1]:lower() ~= 'tp' then
-		local setToShow = cmdParams[1]:lower()
-		
-		if setToShow == 'ws' then
-		
-	
-	else
-		-- default: show TP set
+	-- If no extra parameters, or 'tp' as a parameter, show the current TP set.
+	if #cmdParams == 0 or cmdParams[1]:lower() == 'tp' then
 		equip(get_current_melee_set())
+	-- If given a param of 'precast', block equipping midcast/aftercast sets
+	elseif cmdParams[1]:lower() == 'precast' then
+		showSet = 'precast'
+	-- If given a param of 'midcast', block equipping aftercast sets
+	elseif cmdParams[1]:lower() == 'midcast' then
+		showSet = 'midcast'
+	-- With a parameter of 'off', turn off showset functionality.
+	elseif cmdParams[1]:lower() == 'off' then
+		showSet = nil
 	end
 end
 
@@ -1101,6 +1119,10 @@ function _MoteInclude.display_current_state()
 
 		add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
 			'Kiting: '..on_off_names[state.Kiting]..', Select target: '..state.PCTargetMode..' (PC) / '..on_off_names[state.SelectNPCTargets]..' (NPC)')
+	end
+	
+	if showSet then
+		add_to_chat(122,'Show Sets it currently showing ['..showSet..'] sets.  Use "//gs c showset off" to turn it off.')
 	end
 end
 
