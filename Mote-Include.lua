@@ -90,7 +90,8 @@ function _MoteInclude.init_include()
 	-- Stuff for handling self commands.
 	-- The below map certain predefined commands to internal functions.
 	selfCommands = {['toggle']=handle_toggle, ['activate']=handle_activate, ['cycle']=handle_cycle,
-		 ['set']=handle_set, ['reset']=handle_reset, ['update']=handle_update, ['test']=handle_test}
+		 ['set']=handle_set, ['reset']=handle_reset, ['update']=handle_update,
+		 ['showset']=handle_show_set, ['test']=handle_test}
 		
 	-- Display text mapping.
 	on_off_names = {[true] = 'on', [false] = 'off'}
@@ -662,13 +663,6 @@ function _MoteInclude.self_command(cmd)
 	end
 
 	if not eventArgs.handled then
-		-- Quick predefined commands
-		-- showtpset: equip the current TP set for examination.
-		if splitCmd[1]:lower() == 'showtpset' then
-			equip(get_current_melee_set())
-			return
-		end
-		
 		-- Of the original command message passed in, remove the first word from
 		-- the list (it will be used to determine which function to call), and
 		-- send the remaining words are parameters for the function.
@@ -964,6 +958,21 @@ function _MoteInclude.handle_update(cmdParams)
 	
 	if cmdParams[1] == 'user' then
 		display_current_state()
+	end
+end
+
+
+-- showset: equip the current TP set for examination.
+function _MoteInclude.handle_show_set(cmdParams)
+	if #cmdParams > 0 and cmdParams[1]:lower() ~= 'tp' then
+		local setToShow = cmdParams[1]:lower()
+		
+		if setToShow == 'ws' then
+		
+	
+	else
+		-- default: show TP set
+		equip(get_current_melee_set())
 	end
 end
 
