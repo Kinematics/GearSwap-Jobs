@@ -361,7 +361,7 @@ function _MoteInclude.handle_equipping_gear(status)
 	end
 
 	if not eventArgs.handled then
-		equip_gear_by_status(newStatus)
+		equip_gear_by_status(status)
 	end
 end
 
