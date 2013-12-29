@@ -277,6 +277,12 @@ function _MoteInclude.aftercast(spell,action)
 	elseif showSet == 'precast' then
 		return
 	end
+	
+	-- Ignore the Unknown Interrupt
+	if spell.name == 'Unknown Interrupt' then
+		--add_to_chat(123, 'aftercast trace: Unknown Interrupt.  interrupted='..tostring(spell.interrupted))
+		return
+	end
 
 	local spellMap = classes.spellMappings[spell.english]
 
