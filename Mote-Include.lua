@@ -1142,53 +1142,10 @@ function _MoteInclude.display_current_state()
 	end
 end
 
+
 -------------------------------------------------------------------------------------------------------------------
--- Utility functions for vars or other data manipulation.
+-- Utility functions for changing spells and targets.
 -------------------------------------------------------------------------------------------------------------------
-
--- Function to split words based on whitespace.
--- Returns an array of the words found in the provided message.
-function _MoteInclude.splitwords(msg)
-	local splitarr = T{}
-
-	-- whitespace-separated components (without handling quotes)
-	--for word in str:gmatch("%S+") do
-	for word in string.gmatch(msg, "%f[%w]%S+%f[%W]") do
-		splitarr[#splitarr+1] = word
-	end
-
-	return splitarr
-end
-
-
--- Determine if a string ends with a specified ending string.
-function _MoteInclude.string_ends_with(String, End)
-	return End=='' or string.sub(String,-string.len(End))==End
-end
-
-
--- Invert a table such that the keys are values and the values are keys.
--- Use this to look up the index value of a given entry.
-function _MoteInclude.invert_table(t)
-	if t == nil then add_to_chat(123,'Attempting to invert table, received nil.') end
-	
-	local i={}
-	for k,v in pairs(t) do 
-		i[v] = k
-	end
-	return i
-end
-
--- Gets sub-tables based on baseSet from the string str that may be in dot form
--- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
-function _MoteInclude.get_expanded_set(baseSet, str)
-	local cur = baseSet
-	for i in str:gmatch("[^.]+") do
-		cur = cur[i]
-	end
-	
-	return cur
-end
 
 
 -- Support function for job functions that want to change the spell.
@@ -1261,6 +1218,54 @@ function _MoteInclude.auto_change_target(spell, action, spellMap)
 	if newTarget ~= '' and newTarget ~= spell.target.raw then
 		change_target(newTarget)
 	end
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Utility functions for vars or other data manipulation.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Function to split words based on whitespace.
+-- Returns an array of the words found in the provided message.
+function _MoteInclude.splitwords(msg)
+	local splitarr = T{}
+
+	-- whitespace-separated components (without handling quotes)
+	--for word in str:gmatch("%S+") do
+	for word in string.gmatch(msg, "%f[%w]%S+%f[%W]") do
+		splitarr[#splitarr+1] = word
+	end
+
+	return splitarr
+end
+
+
+-- Determine if a string ends with a specified ending string.
+function _MoteInclude.string_ends_with(String, End)
+	return End=='' or string.sub(String,-string.len(End))==End
+end
+
+
+-- Invert a table such that the keys are values and the values are keys.
+-- Use this to look up the index value of a given entry.
+function _MoteInclude.invert_table(t)
+	if t == nil then add_to_chat(123,'Attempting to invert table, received nil.') end
+	
+	local i={}
+	for k,v in pairs(t) do 
+		i[v] = k
+	end
+	return i
+end
+
+-- Gets sub-tables based on baseSet from the string str that may be in dot form
+-- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
+function _MoteInclude.get_expanded_set(baseSet, str)
+	local cur = baseSet
+	for i in str:gmatch("[^.]+") do
+		cur = cur[i]
+	end
+	
+	return cur
 end
 
 
