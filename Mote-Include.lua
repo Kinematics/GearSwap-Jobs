@@ -1028,12 +1028,6 @@ function _MoteInclude.handle_show_set(cmdParams)
 end
 
 
--- A test function for testing lua code.
-function _MoteInclude.handle_test(cmdParams)
-end
-
-
-
 ------  Utility functions to support self commands. ------
 
 -- Function to get the options.XXXModes table and the corresponding state value to make given state field.
@@ -1372,6 +1366,16 @@ function _MoteInclude.get_spell_mappings()
 
 	return mappings
 end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Test functions.
+-------------------------------------------------------------------------------------------------------------------
+
+-- A function for testing lua code.  Called via "gs c test".
+function _MoteInclude.handle_test(cmdParams)
+end
+
 
 
 -- Done with defining the module.  Return the table.
