@@ -379,7 +379,7 @@ function _MoteInclude.equip_gear_by_status(status)
 	
 	-- If status not defined, check for positive HP to make sure they're not dead.  If they
 	-- have 0 HP, don't try to equip stuff.  Otherwise treat as Idle.
-	if not status and player.hp > 0 then
+	if (not status or status == '') and player.hp > 0 then
 		equip(get_current_idle_set())
 	elseif status == 'Idle' then
 		equip(get_current_idle_set())
