@@ -691,28 +691,28 @@ end
 
 -- Routing function for general known self_commands.
 -- Handles splitting the provided command line up into discrete words, for the other functions to use.
-function _MoteInclude.self_command(cmd)
-	splitCmd = split(cmd, ' ')
-	if #splitCmd == 0 then
-		return
-	end
+function _MoteInclude.self_command(commandArgs)
+	--splitCmd = split(cmd, ' ')
+	--if #splitCmd == 0 then
+	--	return
+	--end
 	
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
 	-- Allow jobs to override this code
 	if job_self_command then
-		job_self_command(splitCmd, eventArgs)
+		job_self_command(commandArgs, eventArgs)
 	end
 
 	if not eventArgs.handled then
 		-- Of the original command message passed in, remove the first word from
 		-- the list (it will be used to determine which function to call), and
 		-- send the remaining words are parameters for the function.
-		local handleCmd = table.remove(splitCmd, 1)
+		local handleCmd = table.remove(commandArgs, 1)
 		
 		if selfCommands[handleCmd] then
-			selfCommands[handleCmd](splitCmd)
+			selfCommands[handleCmd](commandArgs)
 		end
 	end
 end
@@ -1375,7 +1375,6 @@ end
 -- A function for testing lua code.  Called via "gs c test".
 function _MoteInclude.handle_test(cmdParams)
 end
-
 
 
 -- Done with defining the module.  Return the table.
