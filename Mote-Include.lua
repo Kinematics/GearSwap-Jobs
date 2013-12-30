@@ -692,7 +692,7 @@ end
 -- Routing function for general known self_commands.
 -- Handles splitting the provided command line up into discrete words, for the other functions to use.
 function _MoteInclude.self_command(cmd)
-	splitCmd = splitwords(cmd)
+	splitCmd = split(cmd, ' ')
 	if #splitCmd == 0 then
 		return
 	end
@@ -1224,18 +1224,43 @@ end
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------
 
--- Function to split words based on whitespace.
--- Returns an array of the words found in the provided message.
-function _MoteInclude.splitwords(msg)
-	local splitarr = T{}
+---Name: split()
+---Args:
+----- msg (string): message to be subdivided
+----- delim (string/char): marker for subdivision
+------------------------------------------------------------------------------------
+---Returns:
+----- Table containing string(s)
+------------------------------------------------------------------------------------
+function split(msg, delim)
+	local result = T{}
 
-	-- whitespace-separated components (without handling quotes)
-	--for word in str:gmatch("%S+") do
-	for word in string.gmatch(msg, "%f[%w]%S+%f[%W]") do
-		splitarr[#splitarr+1] = word
+	-- If no delimiter specified, just extract alphabetic words
+	if not delim or delim == '' then
+		for word in msg:gmatch("%a+") do
+			result[#result+1] = word
+		end
+	else
+		-- If the delimiter isn't in the message, just return the whole message
+		if string.find(msg, delim) == nil then
+			result[1] = msg
+		else
+			-- Otherwise use a capture pattern based on the delimiter to
+			-- extract text chunks.
+			local pat = "(.-)" .. delim .. "()"
+			local lastPos
+			for part, pos in msg:gmatch(pat) do
+				result[#result+1] = part
+				lastPos = pos
+			end
+			-- Handle the last field
+			if #msg > lastPos then
+				result[#result+1] = msg:sub(lastPos)
+			end
+		end
 	end
-
-	return splitarr
+	
+	return result
 end
 
 
