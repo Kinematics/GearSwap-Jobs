@@ -375,7 +375,7 @@ end
 -- Function to wrap logic for equipping gear on aftercast, status change, or user update.
 -- @param status : The current or new player status that determines what sort of gear to equip.
 function _MoteInclude.equip_gear_by_status(status)
-	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..']') end
+	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..'], HP='..tostring(player.hp)) end
 	
 	-- If status not defined, check for positive HP to make sure they're not dead.  If they
 	-- have 0 HP, don't try to equip stuff.  Otherwise treat as Idle.
@@ -535,7 +535,7 @@ function _MoteInclude.get_current_idle_set()
 		idleScope = 'Field'
 	end
 	
-	if _global.debug_mode then add_to_chat(123,'Debug: Idle scope for ['..world.area..'] is ['..idleScope..']') end
+	if _global.debug_mode then add_to_chat(123,'Debug: Idle scope for '..world.area..' is '..idleScope) end
 
 	if sets.idle[idleScope] then
 		if sets.idle[idleScope][state.IdleMode] then
