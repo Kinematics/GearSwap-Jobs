@@ -366,10 +366,10 @@ end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
--- gain_or_loss == 'gain' or 'loss', depending on the buff state change
-function job_buff_change(buff,gain_or_loss)
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
 	-- If SA/TA/Feint drop, revert to standard gear
-	if S{'sneak attack', 'trick attack', 'feint'}[buff:lower()] and gain_or_loss == 'loss' then
+	if S{'sneak attack', 'trick attack', 'feint'}[buff:lower()] and gain then
 		handle_equipping_gear(player.status)
 	-- If any other buff changes while we still have SA/TA/Feint up, don't change gear
 	elseif not (buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint']) then

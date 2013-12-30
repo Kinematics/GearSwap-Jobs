@@ -366,7 +366,7 @@ end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
--- gain_or_loss == 'gain' or 'loss', depending on the buff state change
+-- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff,gain_or_loss)
 	-- If we gain or lose any haste buffs, adjust which gear set we target.
 	if S{'haste','march','embrava','haste samba'}[buff:lower()] then

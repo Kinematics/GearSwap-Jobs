@@ -361,10 +361,10 @@ end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
--- gain_or_loss == 'gain' or 'loss', depending on the buff state change
-function job_buff_change(buff,gain_or_loss)
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
 	if buff == 'Afflatus Solace' then
-		if gain_or_loss == 'gain' then
+		if gain then
 			afflatusSolace = true
 		else
 			afflatusSolace = false
