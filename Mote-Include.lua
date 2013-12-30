@@ -1226,7 +1226,7 @@ end
 ---Returns:
 ----- Table containing string(s)
 ------------------------------------------------------------------------------------
-function split(msg, delim)
+function _MoteInclude.split(msg, delim)
 	local result = T{}
 
 	-- If no delimiter specified, just extract alphabetic words
