@@ -807,7 +807,7 @@ function _MoteInclude.handle_cycle(cmdParams)
 				modeField = "weaponskill"
 			end
 			-- Capitalize the field (for use on output display)
-			modeField = modeField:gsub("%a", string.upper, 1)
+			modeField = modeField:gsub("%f[%a]%a", string.upper)
 
 			-- Get the options.XXXModes table, and the current state mode for the mode field.
 			local modeTable, currentValue = get_mode_table(modeField)
