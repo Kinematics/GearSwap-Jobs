@@ -445,11 +445,11 @@ function display_current_job_state()
 			defMode = state.Defense.MagicalMode
 		end
 
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..'  '
 	end
 	
-	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..
-		defenseString..'Kiting: '..on_off_names[state.Kiting]..', Treasure mode: '..state.TreasureMode)
+	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..'  WS: '..state.WeaponskillMode..'  '..
+		defenseString..'Kiting: '..on_off_names[state.Kiting]..'  TH: '..state.TreasureMode)
 
 	return true
 end
