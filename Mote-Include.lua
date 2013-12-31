@@ -402,7 +402,7 @@ end
 function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	if action.type == 'Magic' then
+	if action.type:lower() == 'magic' then
 		local spellTiming = 'precast.FC'
 		if spell.casttime <= 1.5 then
 			eventArgs.useMidcastGear = true
@@ -446,7 +446,7 @@ function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs
 		if baseSet[tostring(spell.element)] then
 			equipSet = set_combine(equipSet, baseSet[tostring(spell.element)])
 		end
-	elseif spell.type == 'Weaponskill' then
+	elseif spell.type:lower() == 'weaponskill' then
 		local modeToUse = state.WeaponskillMode
 		if state.WeaponskillMode == 'Normal' then
 			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
@@ -473,7 +473,7 @@ function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs
 				equipSet = sets.precast.WS
 			end
 		end
-	elseif spell.type == 'JobAbility' then
+	elseif spell.type:lower() == 'jobability' then
 		if sets.precast.JA[spell.english] then
 			equipSet = sets.precast.JA[spell.english]
 		end
