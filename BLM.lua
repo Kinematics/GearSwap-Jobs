@@ -15,7 +15,7 @@ function get_sets()
 	
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
-	options.OffenseModes = {'Normal'}
+	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
 	options.IdleModes = {'Normal', 'PDT'}
@@ -24,6 +24,7 @@ function get_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode = 'None'
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -269,15 +270,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	elseif spell.skill == 'ElementalMagic' then
 		classes.CustomClass = get_nuke_class(spell, action, spellMap)
 	end
-	
-	-- Lock weapon if we have TP (may customize this out more later)
-	if player.tp >= 100 then
-		disable('main','sub')
-	else
-		enable('main','sub')
-	end
 end
-
 
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -312,17 +305,7 @@ end
 
 -- Called when the player's status changes.
 function job_status_change(newStatus,oldStatus)
-	-- Lock weapon if we have TP (may customize this out more later)
-	if player.tp >= 100 then
-		disable('main','sub')
-	else
-		-- Disable weapon swaps when engaged
-		if newStatus == 'Engaged' then
-			disable('main','sub')
-		elseif oldStatus == 'Engaged' then
-			enable('main','sub')
-		end
-	end
+
 end
 
 -- Called when a player gains or loses a buff.
@@ -346,12 +329,14 @@ end
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for direct player commands.
-function job_self_command(cmdParams, eventArgs)
-	if player.tp >= 100 then
-		disable('main','sub')
-	else
-		enable('main','sub')
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue)
+	if stateField == 'Offense' then
+		if newValue == 'Normal' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
 	end
 end
 
@@ -359,6 +344,11 @@ end
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state()
+	local meleeString = ''
+	if state.OffenseMode == 'Normal' then
+		meleeString = 'Melee active, '
+	end
+	
 	local defenseString = ''
 	if state.Defense.Active then
 		local defMode = state.Defense.PhysicalMode
@@ -369,7 +359,7 @@ function display_current_job_state()
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
 
-	add_to_chat(122,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
+	add_to_chat(122,meleeString..'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
 	return true
