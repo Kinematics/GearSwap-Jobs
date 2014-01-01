@@ -547,7 +547,11 @@ function _MoteInclude.get_current_idle_set()
 			idleSet = sets.idle[idleScope]
 		end
 	else
-		idleSet = sets.idle
+		if sets.idle[state.IdleMode] then
+			idleSet = sets.idle[state.IdleMode]
+		else
+			idleSet = sets.idle
+		end
 	end
 	
 	idleSet = apply_defense(idleSet)
