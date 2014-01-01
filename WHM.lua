@@ -385,7 +385,7 @@ end
 -- Called by the 'update' self-command.
 function job_update(cmdParams)
 	if cmdParams[1] == 'user' then
-		if not buffactive['Afflatus Solace'] then
+		if not buffactive['Afflatus Solace'] and not buffactive['Afflatus Misery'] then
 			windower.send_command('input /ja "Afflatus Solace" <me>')
 		elseif player.sub_job:lower() == 'sch' and not (buffactive['Light Arts'] or buffactive['Addendum: White']) then
 			windower.send_command('input /ja "Light Arts" <me>')
