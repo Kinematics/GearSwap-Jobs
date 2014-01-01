@@ -36,6 +36,8 @@ function get_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA = {}
 	
+	sets.precast.JA['Mana Wall'] = {feet="Goetia Sabots +2"}
+
 	sets.precast.JA.Manafont = {body="Sorcerer's Coat +2"}
 	
 	-- equip to maximize HP (for Tarus) and minimize MP loss before using convert
@@ -287,6 +289,13 @@ function job_midcast(spell, action, spellMap, eventArgs)
 end
 
 
+function job_aftercast(spell, action, spellMap, eventArgs)
+	-- Lock feet after using Mana Wall.
+	if not spell.interrupted and spell.english == 'Mana Wall' then
+		disable('feet')
+	end
+end
+
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
@@ -312,15 +321,11 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if buff == "Mana Wall" then
-		if gain then
-			equip(sets.Buff['Mana Wall'])
-			disable('feet')
-		else
-			enable('feet')
-		end
+	-- Unlock feet when Mana Wall buff is lost.
+	if buff == "Mana Wall" and not gain then
+		enable('feet')
 	end
-		
+
 	handle_equipping_gear(player.status)
 end
 
