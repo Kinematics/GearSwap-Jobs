@@ -415,7 +415,6 @@ function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs
 		-- Call this to break 'precast.FC' into a proper set.
 		local baseSet = get_expanded_set(sets, spellTiming)
 
-		-- Use midcast sets if cast time is too short (TODO: override this with custom fast cast calculations)
 		-- Set determination ordering:
 		-- Custom class
 		-- Class mapping
@@ -447,6 +446,8 @@ function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs
 		end
 	elseif spell.type:lower() == 'weaponskill' then
 		local modeToUse = state.WeaponskillMode
+		-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
+		-- corresponding to the current offense mode.  If so, use that.
 		if state.WeaponskillMode == 'Normal' then
 			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
 				modeToUse = state.OffenseMode
