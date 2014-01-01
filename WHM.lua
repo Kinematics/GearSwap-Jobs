@@ -387,7 +387,7 @@ function job_update(cmdParams)
 	if cmdParams[1] == 'user' then
 		if not buffactive['Afflatus Solace'] then
 			windower.send_command('input /ja "Afflatus Solace" <me>')
-		elseif not (buffactive['Light Arts'] or buffactive['Addendum: White']) then
+		elseif player.sub_job:lower() == 'sch' and not (buffactive['Light Arts'] or buffactive['Addendum: White']) then
 			windower.send_command('input /ja "Light Arts" <me>')
 		end
 	end
