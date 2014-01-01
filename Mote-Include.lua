@@ -409,7 +409,7 @@ function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs
 	if action.type:lower() == 'magic' then
 		local spellTiming = 'precast.FC'
 		if eventArgs.useMidcastGear then
-			precastUsedMidcastGear = {true, spell.english}
+			precastUsedMidcastGear = true
 			spellTiming = 'midcast'
 		end
 		
