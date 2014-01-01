@@ -699,9 +699,12 @@ end
 -- Routing function for general known self_commands.
 -- Handles splitting the provided command line up into discrete words, for the other functions to use.
 function _MoteInclude.self_command(commandArgs)
-	local commandArgs = split(commandArgs, ' ')
-	if #commandArgs == 0 then
-		return
+	local commandArgs = commandArgs
+	if type(commandArgs) == 'string' then
+		commandArgs = split(commandArgs, ' ')
+		if #commandArgs == 0 then
+			return
+		end
 	end
 	
 	-- init a new eventArgs
