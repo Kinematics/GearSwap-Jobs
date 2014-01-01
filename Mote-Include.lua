@@ -212,7 +212,7 @@ function _MoteInclude.precast(spell, action)
 	-- init a new eventArgs
 	local eventArgs = {handled = false, useMidcastGear = false}
 
-	if spell.casttime <= 1.5 then
+	if spell.casttime and spell.casttime <= 1.5 then
 		eventArgs.useMidcastGear = true
 	end
 
