@@ -212,6 +212,10 @@ function _MoteInclude.precast(spell, action)
 	-- init a new eventArgs
 	local eventArgs = {handled = false, useMidcastGear = false}
 
+	if spell.casttime <= 1.5 then
+		eventArgs.useMidcastGear = true
+	end
+
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
 		job_precast(spell, action, spellMap, eventArgs)
@@ -404,10 +408,6 @@ function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs
 
 	if action.type:lower() == 'magic' then
 		local spellTiming = 'precast.FC'
-		if spell.casttime <= 1.5 then
-			eventArgs.useMidcastGear = true
-		end
-		
 		if eventArgs.useMidcastGear then
 			precastUsedMidcastGear = {true, spell.english}
 			spellTiming = 'midcast'
