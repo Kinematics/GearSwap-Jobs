@@ -18,7 +18,7 @@ function get_sets()
 	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
-	options.IdleModes = {'Normal', 'PDT'}
+	options.IdleModes = {'Normal', 'Nuke', 'PDT', 'Proc'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
@@ -51,15 +51,9 @@ function get_sets()
 		ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots"}
 
-	sets.precast.FC.EnhancingMagic = {
-		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots"}
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.ElementalMagic = {
-		head="Nahtirah Hat",neck="Stoicheion Medal",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots"}
+	sets.precast.FC.ElementalMagic = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
 	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
@@ -68,7 +62,6 @@ function get_sets()
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
-       
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
@@ -172,39 +165,55 @@ function get_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main=staffs.HMP,ammo="Clarus Stone",
+	sets.resting = {main="Chatoyant Staff",ammo="Clarus Stone",
 		head="Nefer Khat +1",neck="Grandiose Chain",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		waist="Austerity Belt",legs="Nares Trews",feet="Serpentes Sabots"}
 	
 
 	-- Idle sets
-	sets.idle = {}
-
-	sets.idle.Town = {main="Tamaxchi", sub="Genbu's Shield",ammo="Witchstone",
-		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 	
-	sets.idle.Field = {main="Tamaxchi", sub="Genbu's Shield",ammo="Witchstone",
+	-- Normal refresh idle set
+	sets.idle = {main="Atinian Staff", sub="Wizzan Grip",ammo="Witchstone",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.Field.PDT = {main="Tamaxchi", sub="Genbu's Shield",ammo="Witchstone",
-		head="Hagondes Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+	-- Idle set when focused on nuking; keep most/all nuking gear on.
+	sets.idle.Nuke = {main="Atinian Staff", sub="Wizzan Grip",ammo="Witchstone",
+		head="Nahtirah Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Icesoul Ring",
+		back="Toro Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Chelona Boots +1"}
+
+	-- Idle set when doing procs.  Fast cast gear, minimal nuke gear.  Won't change out of this for nukes.
+	sets.idle.Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
+		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Manasa Chasuble",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
+
+	-- Idle mode that keeps PDT gear on, but doesn't prevent normal gear swaps for precast/etc.
+	sets.idle.PDT = {main="Earth Staff", sub="Wizzan Grip",ammo="Witchstone",
+		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
-		
+
+	-- Idle mode scopes:
+	-- Idle mode when weak.
 	sets.idle.Weak = {main="Tamaxchi",sub="Genbu's Shield",ammo="Witchstone",
 		head="Hagondes Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Meridian Ring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
 	
+	-- Town gear.
+	sets.idle.Town = {main="Atinian Staff", sub="Wizzan Grip",ammo="Witchstone",
+		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
+		
 	-- Defense sets
 	sets.defense = {}
 
-	sets.defense.PDT = {main=staffs.PDT,sub="Wizzan Grip",
+	sets.defense.PDT = {main="Earth Staff",sub="Wizzan Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
@@ -220,8 +229,6 @@ function get_sets()
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
 	sets.Buff = {}
 	
-	sets.Buff.Use = {}
-
 	sets.Buff['Mana Wall'] = {feet="Goetia Sabots +2"}
 	
 
@@ -256,7 +263,7 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	spellcast_binds_on_unload()
+	--spellcast_binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -269,6 +276,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 	-- Don't allow gear changes for teleports.
 	if spell.english == 'Warp' or spellMap == 'Teleport' or (spell.english == 'Warp II' and spell.target.type == 'SELF') then
 		eventArgs.handled = true
+	-- If using IdleMode=Nuke or IdleMode=Proc, don't swap gear for precasting nukes
+	elseif (state.IdleMode == 'Nuke' or state.IdleMode == 'Proc') and spell.skill == 'ElementalMagic' then
+		eventArgs.handled = true
+	-- Otherwise, for nukes get a custom class to distinguish low-tier from high-tier.
 	elseif spell.skill == 'ElementalMagic' then
 		classes.CustomClass = get_nuke_class(spell, action, spellMap)
 	end
@@ -278,12 +289,17 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if action.type == 'Magic' then
-		-- Default base equipment layer of fast recast.
-		equip(sets.midcast.FastRecast)
-
-		-- If the spells don't get enhanced by skill or whatever, don't bother equipping gear.
-		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
+		if state.IdleMode == 'Proc' and spell.skill == 'ElementalMagic' then
+			add_to_chat(15,'Proc mode, no swapping gear for midcast.')
 			eventArgs.handled = true
+		else
+			-- Default base equipment layer is fast recast.
+			equip(sets.midcast.FastRecast)
+	
+			-- If the spells don't get enhanced by skill or whatever, don't bother equipping additional gear.
+			if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
+				eventArgs.handled = true
+			end
 		end
 	end
 end
