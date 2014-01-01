@@ -85,6 +85,8 @@ function _MoteInclude.init_include()
 	-- Takes precedence over default spell maps.
 	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
 	classes.CustomClass = nil
+	-- Custom group used for defining melee sets.  Persists long-term.
+	classes.CustomMeleeGroup = 'Normal'
 	
 	
 	-- Stuff for handling self commands.
@@ -110,12 +112,9 @@ function _MoteInclude.init_include()
 		'aht urhgan whitegate','tavanazian safehold','nashmau',
 		'selbina','mhaura','norg','eastern adoulin','western adoulin'}
 	-- Adoulin areas, where Ionis will grant special stat bonuses.
-	areas.Adoulin = S{'yahse hunting grounds', 'ceizak battlegrounds',
-		'foret de hennetiel','morimar basalt fields',
-		'yorcia weald','yorcia weald [u]',
-		'cirdas caverns','cirdas caverns [u]',
-		'marjami ravine','kamihr drifts',
-		'sih gates','moh gates','dho gates','woh gates','rala waterways'}
+	areas.Adoulin = S{'yahse hunting grounds', 'ceizak battlegrounds', 'foret de hennetiel','morimar basalt fields',
+		'yorcia weald','yorcia weald [u]', 'cirdas caverns','cirdas caverns [u]',
+		'marjami ravine','kamihr drifts', 'sih gates','moh gates','dho gates','woh gates','rala waterways'}
 
 
 	-- Flag to indicate whether midcast gear was used on precast.
@@ -128,7 +127,6 @@ function _MoteInclude.init_include()
 
 	-- Vars for use in melee set construction.
 	TPWeapon = 'Normal'
-	CustomMeleeGroup = 'Normal'
 
 
 	-- Other general vars.  Set whatever's convenient for your job luas.
@@ -570,9 +568,9 @@ end
 function _MoteInclude.get_current_melee_set()
 	local meleeSet = {}
 	
-	if sets.engaged[CustomMeleeGroup] then
-		if sets.engaged[CustomMeleeGroup][TPWeapon] then
-			meleeSet = sets.engaged[CustomMeleeGroup][TPWeapon]
+	if sets.engaged[classes.CustomMeleeGroup] then
+		if sets.engaged[classes.CustomMeleeGroup][TPWeapon] then
+			meleeSet = sets.engaged[classes.CustomMeleeGroup][TPWeapon]
 			
 			if meleeSet[state.OffenseMode] then
 				meleeSet = meleeSet[state.OffenseMode]
@@ -582,7 +580,7 @@ function _MoteInclude.get_current_melee_set()
 				meleeSet = meleeSet[state.DefenseMode]
 			end
 		else
-			meleeSet = sets.engaged[CustomMeleeGroup]
+			meleeSet = sets.engaged[classes.CustomMeleeGroup]
 	
 			if meleeSet[state.OffenseMode] then
 				meleeSet = meleeSet[state.OffenseMode]
