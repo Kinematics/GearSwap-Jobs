@@ -381,10 +381,12 @@ end
 function _MoteInclude.equip_gear_by_status(status)
 	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..'], HP='..tostring(player.hp)) end
 	
-	-- If status not defined, check for positive HP to make sure they're not dead.  If they
-	-- have 0 HP, don't try to equip stuff.  Otherwise treat as Idle.
-	if (not status or status == '') and player.hp > 0 then
-		equip(get_current_idle_set())
+	-- If status not defined, check for positive HP to make sure they're not dead.
+	-- If they have 0 HP, don't try to equip stuff.  Otherwise treat as Idle.
+	if status == nil or status == '' then
+		if player.hp > 0 then
+			equip(get_current_idle_set())
+		end
 	elseif status == 'Idle' then
 		equip(get_current_idle_set())
 	elseif status == 'Engaged' then
