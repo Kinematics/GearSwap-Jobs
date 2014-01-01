@@ -129,7 +129,7 @@ function get_sets()
 	sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range="Daurdabla"})
 
 	-- Other general spells and classes.
-	sets.midcast.Cure = {main=staffs.Cure,sub='Achaq Grip',
+	sets.midcast.Cure = {main="Arka IV",sub='Achaq Grip',
 		head="Gendewitha Caubeen",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		legs="Gendewitha Spats",feet="Gendewitha Galoshes"}

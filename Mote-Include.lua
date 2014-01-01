@@ -136,7 +136,6 @@ function _MoteInclude.init_include()
 	staffs = {}
 	staffs.HMP = 'Chatoyant Staff'
 	staffs.PDT = 'Earth Staff'
-	staffs.Cure = 'Arka IV'
 	
 end
 
