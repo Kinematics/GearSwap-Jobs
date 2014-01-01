@@ -831,7 +831,7 @@ function _MoteInclude.handle_cycle(cmdParams)
 		-- identifier for the field we're toggling
 		local paramField = cmdParams[1]:lower()
 
-		if string_ends_with(paramField, 'mode') then
+		if paramField:endswith('mode') then
 			-- Remove 'mode' from the end of the string
 			local modeField = paramField:sub(1,#paramField-4)
 			-- Convert WS to Weaponskill
@@ -931,7 +931,7 @@ function _MoteInclude.handle_set(cmdParams)
 			add_to_chat(122,fieldDesc..' is now '..on_off_names[fieldToSet[1]]..'.')
 
 		-- Or if we're dealing with a mode setting
-		elseif string_ends_with(lowerField, 'mode') then
+		elseif lowerField:endswith('mode') then
 			-- Remove 'mode' from the end of the string
 			modeField = lowerField:sub(1,#lowerField-4)
 			-- Convert WS to Weaponskill
@@ -1323,12 +1323,6 @@ function _MoteInclude.split(msg, delim)
 	end
 	
 	return result
-end
-
-
--- Determine if a string ends with a specified ending string.
-function _MoteInclude.string_ends_with(String, End)
-	return End=='' or string.sub(String,-string.len(End))==End
 end
 
 
