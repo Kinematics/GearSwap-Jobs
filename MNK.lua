@@ -14,7 +14,7 @@ function get_sets()
 	init_include()
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
+	options.OffenseModes = {'Normal', 'Acc', 'Mod'}
 	options.DefenseModes = {'Normal', 'PDT', 'HP', 'Counter'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
@@ -88,8 +88,8 @@ function get_sets()
 	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS["Victory Smite"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
-	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
+	sets.precast.WS["Victory Smite"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",hands="Anchorite's Gloves"})
+	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",hands="Anchorite's Gloves"})
 	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], {waist="Thunder Belt",feet="Otronif Boots"})
 
 	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck="Light Gorget"})
@@ -182,9 +182,13 @@ function get_sets()
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.engaged.PDT = {ammo="Charis Feather",
+	sets.engaged.Mod = {ammo="Thew Bomblet",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Manibozho Boots"}
+	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
@@ -192,7 +196,7 @@ function get_sets()
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.Counter = {ammo="Charis Feather",
+	sets.engaged.Counter = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Anchorite's Hose",feet="Otronif Boots"}
@@ -220,13 +224,29 @@ function get_sets()
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.engaged.HF.PDT = {ammo="Charis Feather",
+	sets.engaged.HF.PDT = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.HF.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.HF.Impetus = {ammo="Thew Bomblet",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
+	sets.engaged.HF.Impetus.Acc = {ammo="Honed Tathlum",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
+	sets.engaged.HF.Impetus.PDT = {ammo="Thew Bomblet",
+		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.HF.Impetus.Acc.PDT = {ammo="Honed Tathlum",
+		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
@@ -309,26 +329,27 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	local adjMeleeSet = ''
+
+	classes.CustomMeleeGroups:clear()
 	
 	if buff == "Hundred Fists" then
 		if gain then
-			adjMeleeSet = "HF"
+			classes.CustomMeleeGroups:append('HF')
 		end
 	elseif buffactive['hundred fists'] then
-		adjMeleeSet = "HF"
+		classes.CustomMeleeGroups:append('HF')
 	elseif buffactive.footwork then
-		adjMeleeSet = "Footwork"
+		classes.CustomMeleeGroups:append('Footwork')
 	end
 	
 	if buff == "Impetus" then
 		if gain then
-			adjMeleeSet = adjMeleeSet.."Impetus"
+			classes.CustomMeleeGroups:append('Impetus')
 		end
-	elseif buffactive['impetus'] then
-		adjMeleeSet = adjMeleeSet.."Impetus"
+	elseif buffactive.impetus then
+		classes.CustomMeleeGroups:append('Impetus')
 	end
-	
-	classes.CustomMeleeSet = adjMeleeSet
+
 	handle_equipping_gear(player.status)
 end
 
@@ -344,7 +365,17 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-
+	CustomMeleeGroups:clear()
+	
+	if buffactive['hundred fists'] then
+		classes.CustomMeleeGroups:append('HF')
+	elseif buffactive.footwork then
+		classes.CustomMeleeGroups:append('Footwork')
+	end
+	
+	if buffactive.impetus then
+		classes.CustomMeleeGroups:append('Impetus')
+	end
 end
 
 -- Function to display the current relevant user state when doing an update.
