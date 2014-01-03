@@ -365,7 +365,7 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-	CustomMeleeGroups:clear()
+	classes.CustomMeleeGroups:clear()
 	
 	if buffactive['hundred fists'] then
 		classes.CustomMeleeGroups:append('HF')
