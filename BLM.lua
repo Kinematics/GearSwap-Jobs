@@ -14,11 +14,11 @@ function get_sets()
 	init_include()
 	
 	-- Options: Override default values
-	options.CastingModes = {'Normal', 'Resistant'}
+	options.CastingModes = {'Normal', 'Resistant', 'Proc'}
 	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
-	options.IdleModes = {'Normal', 'Nuke', 'PDT', 'Proc'}
+	options.IdleModes = {'Normal', 'PDT'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
@@ -181,18 +181,6 @@ function get_sets()
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
-
-	-- Idle set when focused on nuking; keep most/all nuking gear on.
-	sets.idle.Nuke = {main="Atinian Staff", sub="Wizzan Grip",ammo="Witchstone",
-		head="Nahtirah Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Icesoul Ring",
-		back="Toro Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Chelona Boots +1"}
-
-	-- Idle set when doing procs.  Fast cast gear, minimal nuke gear.  Won't change out of this for nukes.
-	sets.idle.Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Manasa Chasuble",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	-- Idle mode that keeps PDT gear on, but doesn't prevent normal gear swaps for precast/etc.
 	sets.idle.PDT = {main="Earth Staff", sub="Wizzan Grip",ammo="Witchstone",
@@ -395,7 +383,9 @@ end
 
 -- Function to get the custom class to use for nukes.
 function get_nuke_class(spell, action, spellMap)
-	if lowTierNukes[spell.english] then
+	if state.CastingMode == 'Proc' then
+		return nil
+	elseif lowTierNukes[spell.english] then
 		-- low tier nukes use the default set
 		return nil
 	-- Areas where more magic accuracy is generally needed, so use Atinian instead of Lehbrailg on high-tier nukes.
