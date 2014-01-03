@@ -1036,7 +1036,16 @@ end
 function _MoteInclude.handle_show_set(cmdParams)
 	-- If no extra parameters, or 'tp' as a parameter, show the current TP set.
 	if #cmdParams == 0 or cmdParams[1]:lower() == 'tp' then
-		add_to_chat(122,'Showing current TP set.')
+		local meleeGroups = ''
+		if #classes.CustomMeleeGroups > 0 then
+			meleeGroups = ' ['
+			for i = 1,#classes.CustomMeleeGroups do
+				meleeGroups = meleeGroups..classes.CustomMeleeGroups[i]
+			end
+			meleeGroups = meleeGroups..']'
+		end
+		
+		add_to_chat(122,'Showing current TP set: ['..state.OffenseMode..'/'..state.DefenseMode..']'..meleeGroups)
 		equip(get_current_melee_set())
 	-- If given a param of 'precast', block equipping midcast/aftercast sets
 	elseif cmdParams[1]:lower() == 'precast' then
