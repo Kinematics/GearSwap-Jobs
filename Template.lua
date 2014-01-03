@@ -278,9 +278,8 @@ function job_update(cmdParams, eventArgs)
 
 end
 
--- Function to display the current relevant user state when doing an update.
--- Return true if display was handled, and you don't want the default info shown.
-function display_current_job_state()
+-- Set eventArgs.handled to true if we don't want the automatic display to be run.
+function display_current_job_state(eventArgs)
 
 end
 
