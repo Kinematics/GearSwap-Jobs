@@ -219,7 +219,6 @@ function _MoteInclude.precast(spell, action)
 	end
 
 	if not eventArgs.handled then
-		verify_equip()
 		equip(get_default_precast_set(spell, action, spellMap, eventArgs))
 	end
 	
