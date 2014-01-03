@@ -1181,12 +1181,12 @@ end
 -- Function to display the current relevant user state when doing an update.
 -- Uses display_current_job_state instead if that is defined in the job lua.
 function _MoteInclude.display_current_state()
-	local preHandled = false
+	local eventArgs = {handled = false}
 	if display_current_job_state then
-		preHandled = display_current_job_state()
+		display_current_job_state(eventArgs)
 	end
 	
-	if not preHandled then
+	if not eventArgs.handled then
 		local defenseString = ''
 		if state.Defense.Active then
 			local defMode = state.Defense.PhysicalMode
