@@ -303,7 +303,7 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
-	if action.type == 'Magic' then
+	if spell.action_type == 'Magic' then
 		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 
@@ -420,7 +420,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function get_spell_class(spell, action, spellMap)
-	if action.type == 'Magic' then
+	if spell.action_type == 'Magic' then
 		if spell.skill == "EnfeeblingMagic" then
 			if spell.type == "WhiteMagic" then
 				return "MndEnfeebles"

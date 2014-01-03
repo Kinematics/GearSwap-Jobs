@@ -405,7 +405,7 @@ end
 function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	if action.type:lower() == 'magic' then
+	if spell.action_type:lower() == 'magic' then
 		local spellTiming = 'precast.FC'
 		if eventArgs.useMidcastGear then
 			precastUsedMidcastGear = true
@@ -494,7 +494,7 @@ end
 function _MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	if action.type == 'Magic' then
+	if spell.action_type == 'Magic' then
 		-- Set selection ordering:
 		-- Custom class
 		-- Class mapping
