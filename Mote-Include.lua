@@ -64,11 +64,6 @@ function _MoteInclude.init_include()
 	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
 	options.MagicalDefenseModes = {'MDT', 'Resist'}
 
-	-- General cast delay value to be sure gear that's equipped on precast
-	-- actually takes effect.  Adjust to suit.
-	-- Only use if verify_equip isn't appropriate.
-	options.CastDelay = 0.35
-	
 	options.TargetModes = {'default', 'stpc', 'stpt', 'stal'}
 	
 
@@ -91,9 +86,15 @@ function _MoteInclude.init_include()
 	
 	-- Stuff for handling self commands.
 	-- The below map certain predefined commands to internal functions.
-	selfCommands = {['toggle']=handle_toggle, ['activate']=handle_activate, ['cycle']=handle_cycle,
-		 ['set']=handle_set, ['reset']=handle_reset, ['update']=handle_update,
-		 ['showset']=handle_show_set, ['test']=handle_test}
+	selfCommands = {
+		['toggle']=handle_toggle,
+		['activate']=handle_activate,
+		['cycle']=handle_cycle,
+		['set']=handle_set,
+		['reset']=handle_reset,
+		['update']=handle_update,
+		['showset']=handle_show_set,
+		['test']=handle_test}
 	
 	-- Special var for displaying sets
 	showSet = nil
@@ -144,14 +145,10 @@ end
 -- Each job can override any amount of these general functions using job_xxx() hooks.
 -------------------------------------------------------------------------------------------------------------------
 
--- Only implemented in 0.800 of GearSwap
 -- Pretarget is called when GearSwap intercepts the original text input, but
 -- before the game has done any processing on it.  In particular, it hasn't
 -- initiated target selection for <st*> target types.
 -- This is the only function where it will be valid to use change_target().
--- Ideally, all processing that involves cancel_spell(), including
--- the work needed to do a change_spell (ie: cancel, send_command the new one)
--- should be handled from here.
 function _MoteInclude.pretarget(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
 
@@ -209,9 +206,10 @@ function _MoteInclude.precast(spell, action)
 	-- init a new eventArgs
 	local eventArgs = {handled = false, useMidcastGear = false}
 
-	if spell.casttime and spell.casttime <= 1.5 then
-		eventArgs.useMidcastGear = true
-	end
+	--if spell.casttime and spell.casttime < 0.5 then
+	--	eventArgs.useMidcastGear = true
+	--end
+	
 
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
@@ -229,7 +227,10 @@ function _MoteInclude.precast(spell, action)
 end
 
 
--- Called when a player starts casting a spell.
+-- Called immediately after precast() so that we can build the midcast gear set which
+-- will be sent out at the same time (packet contains precastgear:action:midcastgear).
+-- Midcast gear selected should be for potency, recast, etc.  It should take effect
+-- regardless of the spell cast speed.
 function _MoteInclude.midcast(spell,action)
 	-- If we have showSet active for precast, don't try to equip midcast gear.
 	if showSet == 'precast' then
