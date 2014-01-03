@@ -191,11 +191,19 @@ function get_sets()
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.HP = {ammo="Thew Bomblet",
+		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Epona's Ring",
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
+	sets.engaged.Acc.HP = {ammo="Thew Bomblet",
+		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
 	sets.engaged.Counter = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -209,11 +217,11 @@ function get_sets()
 	sets.engaged.Footwork = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Anchorite's Gaiters"}
 	sets.engaged.Footwork.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
+		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Anchorite's Gaiters"}
 
 	-- Hundred Fists melee group
 	sets.engaged.HF = {ammo="Thew Bomblet",
