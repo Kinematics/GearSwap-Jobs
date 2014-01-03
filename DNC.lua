@@ -41,7 +41,7 @@ function get_sets()
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Etoile Tiara +2",ear1="Roundel Earring",
 		body="Maxixi Casaque",hands="Buremte Gloves",
-		back="Iximulew Cape",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
+		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
@@ -505,18 +505,18 @@ function determine_haste_group()
 	-- Embrava + Haste/March + Haste Samba
 	-- 2x March + Haste + Haste Samba
 	
+	classes.CustomMeleeGroups:clear()
+	
 	if buffactive.embrava and (buffactive.haste or buffactive.march) and buffactive['haste samba'] then
-		CustomMeleeGroup = 'MaxHaste'
+		classes.CustomMeleeGroups:append('MaxHaste')
 	elseif buffactive.march == 2 and buffactive.haste and buffactive['haste samba'] then
-		CustomMeleeGroup = 'MaxHaste'
+		classes.CustomMeleeGroups:append('MaxHaste')
 	elseif buffactive.embrava and (buffactive.haste or buffactive.march or buffactive['haste samba']) then
-		CustomMeleeGroup = 'HighHaste'
+		classes.CustomMeleeGroups:append('HighHaste')
 	elseif buffactive.march == 1 and buffactive.haste and buffactive['haste samba'] then
-		CustomMeleeGroup = 'HighHaste'
+		classes.CustomMeleeGroups:append('HighHaste')
 	elseif buffactive.march == 2 and (buffactive.haste or buffactive['haste samba']) then
-		CustomMeleeGroup = 'HighHaste'
-	else
-		CustomMeleeGroup = 'Normal'
+		classes.CustomMeleeGroups:append('HighHaste')
 	end
 end
 
