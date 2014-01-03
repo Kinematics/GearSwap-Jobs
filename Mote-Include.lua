@@ -80,8 +80,8 @@ function _MoteInclude.init_include()
 	-- Takes precedence over default spell maps.
 	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
 	classes.CustomClass = nil
-	-- Custom group used for defining melee sets.  Persists long-term.
-	classes.CustomMeleeGroup = 'Normal'
+	-- Custom groups used for defining melee sets.  Persists long-term.
+	classes.CustomMeleeGroups = L{}
 	
 	
 	-- Stuff for handling self commands.
@@ -528,7 +528,7 @@ end
 -- Returns the appropriate idle set based on current state.
 function _MoteInclude.get_current_idle_set()
 	local idleScope = ''
-	local idleSet = {}
+	local idleSet = sets.idle
 
 	if buffactive.weakness then
 		idleScope = 'Weak'
@@ -540,18 +540,12 @@ function _MoteInclude.get_current_idle_set()
 	
 	if _global.debug_mode then add_to_chat(123,'Debug: Idle scope for '..world.area..' is '..idleScope) end
 
-	if sets.idle[idleScope] then
-		if sets.idle[idleScope][state.IdleMode] then
-			idleSet = sets.idle[idleScope][state.IdleMode]
-		else
-			idleSet = sets.idle[idleScope]
-		end
-	else
-		if sets.idle[state.IdleMode] then
-			idleSet = sets.idle[state.IdleMode]
-		else
-			idleSet = sets.idle
-		end
+	if idleSet[idleScope] then
+		idleSet = idleSet[idleScope]
+	end
+
+	if idleSet[state.IdleMode] then
+		idleSet = idleSet[state.IdleMode]
 	end
 	
 	idleSet = apply_defense(idleSet)
@@ -568,53 +562,27 @@ end
 
 
 -- Returns the appropriate melee set based on current state.
+-- Set construction order (all sets after sets.engaged are optional):
+--   sets.engaged[classes.CustomMeleeGroups (any number)][TPWeapon][state.OffenseMode][state.DefenseMode]
 function _MoteInclude.get_current_melee_set()
-	local meleeSet = {}
+	local meleeSet = sets.engaged
 	
-	if sets.engaged[classes.CustomMeleeGroup] then
-		if sets.engaged[classes.CustomMeleeGroup][TPWeapon] then
-			meleeSet = sets.engaged[classes.CustomMeleeGroup][TPWeapon]
-			
-			if meleeSet[state.OffenseMode] then
-				meleeSet = meleeSet[state.OffenseMode]
-			end
-			
-			if meleeSet[state.DefenseMode] then
-				meleeSet = meleeSet[state.DefenseMode]
-			end
-		else
-			meleeSet = sets.engaged[classes.CustomMeleeGroup]
-	
-			if meleeSet[state.OffenseMode] then
-				meleeSet = meleeSet[state.OffenseMode]
-			end
-			
-			if meleeSet[state.DefenseMode] then
-				meleeSet = meleeSet[state.DefenseMode]
-			end
+	for i = 1,#classes.CustomMeleeGroups do
+		if meleeSet[classes.CustomMeleeGroups[i]] then
+			meleeSet = meleeSet[classes.CustomMeleeGroups[i]]
 		end
-	else
-		if sets.engaged[TPWeapon] then
-			meleeSet = sets.engaged[TPWeapon]
-			
-			if meleeSet[state.OffenseMode] then
-				meleeSet = meleeSet[state.OffenseMode]
-			end
-			
-			if meleeSet[state.DefenseMode] then
-				meleeSet = meleeSet[state.DefenseMode]
-			end
-		else
-			meleeSet = sets.engaged
+	end
 	
-			if meleeSet[state.OffenseMode] then
-				meleeSet = meleeSet[state.OffenseMode]
-			end
-			
-			if meleeSet[state.DefenseMode] then
-				meleeSet = meleeSet[state.DefenseMode]
-			end
-		end
+	if meleeSet[TPWeapon] then
+		meleeSet = meleeSet[TPWeapon]
+	end
+	
+	if meleeSet[state.OffenseMode] then
+		meleeSet = meleeSet[state.OffenseMode]
+	end
+	
+	if meleeSet[state.DefenseMode] then
+		meleeSet = meleeSet[state.DefenseMode]
 	end
 	
 	meleeSet = apply_defense(meleeSet)
