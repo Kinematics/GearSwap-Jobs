@@ -739,31 +739,30 @@ function _MoteInclude.handle_toggle(cmdParams)
 		-- identifier for the field we're toggling
 		local toggleField = cmdParams[1]:lower()
 		local toggleDesc = ''
-		local toggleVar = nil
+		local toggleVal
 		
 		if toggleField == 'defense' then
-			toggleVar = {state.Defense.Active}
+			state.Defense.Active = not state.Defense.Active
+			toggleVal = state.Defense.Active
 			toggleDesc = state.Defense.Type
 		elseif toggleField == 'kite' or toggleField == 'kiting' then
-			toggleVar = {state.Kiting}
+			state.Kiting = not state.Kiting
+			toggleVal = state.Kiting
 			toggleDesc = 'Kiting'
 		elseif toggleField == 'target' then
-			toggleVar = {state.SelectNPCTargets}
+			state.SelectNPCTargets = not state.SelectNPCTargets
+			toggleVal = state.SelectNPCTargets
 			toggleDesc = 'NPC targetting'
-		end
-
-		if toggleVar ~= nil then
-			toggleVar[1] = not toggleVar[1]
 		else
 			if _global.debug_mode then add_to_chat(123,'Unknown toggle field: '..toggleField) end
 			return false
 		end
 
 		if job_state_change then
-			job_state_change(toggleDesc, toggleVar[1])
+			job_state_change(toggleDesc, toggleVal)
 		end
 
-		add_to_chat(122,toggleDesc..' is now '..on_off_names[toggleVar[1]]..'.')
+		add_to_chat(122,toggleDesc..' is now '..on_off_names[toggleVal]..'.')
 	else
 		if _global.debug_mode then add_to_chat(123,'--handle_toggle parameter failure: field not specified') end
 		return false
@@ -780,27 +779,21 @@ function _MoteInclude.handle_activate(cmdParams)
 	if #cmdParams > 0 then
 		activateState = cmdParams[1]:lower()
 		local activateDesc = ''
-		local activateVar = nil
 		
 		if activateState == 'physicaldefense' then
-			activateVar = {state.Defense.Active}
+			state.Defense.Active = true
 			state.Defense.Type = 'Physical'
 			activateDesc = 'Physical defense ('..state.Defense.PhysicalMode..')'
 		elseif activateState == 'magicaldefense' then
-			activateVar = {state.Defense.Active}
+			state.Defense.Active = true
 			state.Defense.Type = 'Magical'
 			activateDesc = 'Magical defense ('..state.Defense.MagicalMode..')'
 		elseif activateState == 'kite' or activateState == 'kiting' then
-			activateVar = {state.Kiting}
+			state.Kiting = true
 			activateDesc = 'Kiting'
 		elseif activateState == 'target' then
-			activateVar = {state.SelectNPCTargets}
+			state.SelectNPCTargets = true
 			activateDesc = 'NPC targetting'
-		end
-
-		-- Set the state value to true.
-		if activateVar ~= nil then
-			activateVar[1] = true
 		else
 			if _global.debug_mode then add_to_chat(123,'--handle_activate unknown state to activate: '..activateState) end
 			return false
@@ -808,7 +801,7 @@ function _MoteInclude.handle_activate(cmdParams)
 
 		-- Notify the job of the change.
 		if job_state_change then
-			job_state_change(activateDesc, activateVar[1])
+			job_state_change(activateDesc, true)
 		end
 
 		-- Display what got changed to the user.
@@ -896,7 +889,6 @@ function _MoteInclude.handle_set(cmdParams)
 		local field = cmdParams[1]
 		local lowerField = field:lower()
 		local setField = cmdParams[2]
-		local fieldToSet = nil
 		local fieldDesc = ''
 		
 		
@@ -905,32 +897,27 @@ function _MoteInclude.handle_set(cmdParams)
 			local setValue = T{'on', 'true'}:contains(setField)
 			
 			if lowerField == 'defense' then
-				fieldToSet = {state.Defense.Active}
+				state.Defense.Active = setValue
 				fieldDesc = state.Defense.Type
 			elseif lowerField == 'kite' or lowerField == 'kiting' then
-				fieldToSet = {state.Kiting}
+				state.Kiting = setValue
 				fieldDesc = 'Kiting'
 			elseif lowerField == 'target' then
-				fieldToSet = {state.SelectNPCTargets}
+				state.SelectNPCTargets = setValue
 				fieldDesc = 'NPC targetting'
-			end
-
-
-			-- Set the state value.
-			if fieldToSet ~= nil then
-				fieldToSet[1] = setValue
 			else
 				if _global.debug_mode then add_to_chat(123,'Unknown field to set: '..field) end
 				return false
 			end
-	
+
+
 			-- Notify the job of the change.
 			if job_state_change then
-				job_state_change(fieldDesc, fieldToSet[1])
+				job_state_change(fieldDesc, setValue)
 			end
 	
 			-- Display what got changed to the user.
-			add_to_chat(122,fieldDesc..' is now '..on_off_names[fieldToSet[1]]..'.')
+			add_to_chat(122,fieldDesc..' is now '..on_off_names[setValue]..'.')
 
 		-- Or if we're dealing with a mode setting
 		elseif lowerField:endswith('mode') then
