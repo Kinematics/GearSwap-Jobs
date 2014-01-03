@@ -384,7 +384,7 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams)
-	if cmdParams[1] == 'user' then
+	if cmdParams[1] == 'user' and not areas.Cities[world.area] then
 		if not buffactive['Afflatus Solace'] and not buffactive['Afflatus Misery'] then
 			windower.send_command('input /ja "Afflatus Solace" <me>')
 		elseif player.sub_job:lower() == 'sch' and
