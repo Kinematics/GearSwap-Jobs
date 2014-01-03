@@ -398,7 +398,7 @@ end
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
-function display_current_job_state()
+function display_current_job_state(eventArgs)
 	local defenseString = ''
 	if state.Defense.Active then
 		local defMode = state.Defense.PhysicalMode
@@ -412,7 +412,7 @@ function display_current_job_state()
 	add_to_chat(122,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
-	return true
+	eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
