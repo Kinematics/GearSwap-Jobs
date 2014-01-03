@@ -1184,9 +1184,20 @@ function _MoteInclude.display_current_state()
 	
 			defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 		end
+		
+		local pcTarget = ''
+		if state.PCTargetMode ~= 'default' then
+			pcTarget = ', Target PC: '..state.PCTargetMode
+		end
+
+		local npcTarget = ''
+		if state.SelectNPCTargets then
+			pcTarget = ', Target NPCs'
+		end
+		
 
 		add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
-			'Kiting: '..on_off_names[state.Kiting]..', Select target: '..state.PCTargetMode..' (PC) / '..on_off_names[state.SelectNPCTargets]..' (NPC)')
+			'Kiting: '..on_off_names[state.Kiting]..pcTarget..npcTarget)
 	end
 	
 	if showSet then
