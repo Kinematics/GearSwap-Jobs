@@ -49,16 +49,13 @@ function get_sets()
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots"}
+		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	sets.precast.FC.ElementalMagic = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
-	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",
-		head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants",feet="Chelona Boots"}
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris", back="Pahtli Cape"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
@@ -110,11 +107,6 @@ function get_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast.BardSong = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
-		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
-
 	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Mediator's Ring",
@@ -127,6 +119,11 @@ function get_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants",feet="Bokwus Boots"}
 
+	sets.midcast.BardSong = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
+		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
+
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
 	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
@@ -138,6 +135,12 @@ function get_sets()
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+
+	-- Idle set when doing procs.  Fast cast gear, minimal nuke gear.  Won't change out of this for nukes.
+	sets.midcast.ElementalMagic.Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
+		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Manasa Chasuble",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	-- Custom classes for high-tier nukes.
 	sets.midcast.HighTierNuke = {main="Lehbrailg",sub="Wizzan Grip",ammo="Witchstone",
