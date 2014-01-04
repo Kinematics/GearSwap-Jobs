@@ -302,7 +302,7 @@ end
 -- 2) bool of whether the spell was changed to something new
 function job_change_spell(spell, action, spellMap, eventArgs)
 	if spell.type == 'Waltz' then
-		return refine_waltz(spell, action, spellMap, eventArgs)
+		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
@@ -488,7 +488,8 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 		wasCancelled = true
 	end
 	
-	return wasCancelled, wasChanged
+	eventArgs.handled = wasChanged
+	eventArgs.cancel = wasCancelled
 end
 
 function determine_haste_group()
