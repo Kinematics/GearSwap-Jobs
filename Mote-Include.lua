@@ -14,7 +14,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/1/2014 9:50:52 AM
+-- Last Modified: 1/4/2014 2:22:44 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local MoteInclude = {}
@@ -1273,6 +1273,18 @@ function MoteInclude.auto_change_target(spell, action, spellMap)
 		change_target(newTarget)
 	end
 end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Utility functions for common gear equips.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Add the obi for the given element if it matches either the current weather or day.
+function MoteInclude.add_obi(spell_element)
+	if gear.Obi[spell_element] and (world.weather_element == spell_element or world.day_element == spell_element) then
+		equip(gear.Obi[spell_element])
+	end
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
