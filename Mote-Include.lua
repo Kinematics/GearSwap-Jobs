@@ -80,7 +80,22 @@ function MoteInclude.init_include()
 	-- Custom groups used for defining melee sets.  Persists long-term.
 	classes.CustomMeleeGroups = L{}
 	
+	-- Vars for use in melee set construction.
+	TPWeapon = 'Normal'
 	
+	-- Flag to indicate whether midcast gear was used on precast.
+	precastUsedMidcastGear = false
+	-- Flag whether the job lua changed the spell to be used.
+	spellWasChanged = false
+	-- Flag whether we changed the target of the spell.
+	targetWasChanged = false
+
+	-- Special var for displaying sets at certain cast times.
+	showSet = nil
+		
+	-- Display text mapping.
+	on_off_names = {[true] = 'on', [false] = 'off'}
+
 	-- Stuff for handling self commands.
 	-- The below map certain predefined commands to internal functions.
 	selfCommands = {
@@ -93,12 +108,6 @@ function MoteInclude.init_include()
 		['showset']=handle_show_set,
 		['test']=handle_test}
 	
-	-- Special var for displaying sets
-	showSet = nil
-		
-	-- Display text mapping.
-	on_off_names = {[true] = 'on', [false] = 'off'}
-
 
 	-- Set to allow us to determine if we're in a city zone.
 	-- Eventually may add other types of zone groups.
@@ -115,16 +124,24 @@ function MoteInclude.init_include()
 		'marjami ravine','kamihr drifts', 'sih gates','moh gates','dho gates','woh gates','rala waterways'}
 
 
-	-- Flag to indicate whether midcast gear was used on precast.
-	precastUsedMidcastGear = false
-	-- Flag whether the job lua changed the spell to be used.
-	spellWasChanged = false
-	-- Flag whether we changed the target of the spell.
-	targetWasChanged = false
+	-- Special gear info that may be useful across jobs.
+	
+	gear = {}
+	
+	gear.Obi = {}
+	gear.Obi.Light = "Korin Obi"
+	--gear.Obi.Dark = "Anrin Obi"
+	gear.Obi.Fire = "Karin Obi"
+	gear.Obi.Ice = "Hyorin Obi"
+	--gear.Obi.Wind = "Furin Obi"
+	--gear.Obi.Earth = "Dorin Obi"
+	gear.Obi.Lightning = "Rairin Obi"
+	--gear.Obi.Water = "Suirin Obi"
 
+	gear.Staff = {}
+	gear.Staff.HMP = 'Chatoyant Staff'
+	gear.Staff.PDT = 'Earth Staff'
 
-	-- Vars for use in melee set construction.
-	TPWeapon = 'Normal'
 
 
 	-- Other general vars.  Set whatever's convenient for your job luas.
