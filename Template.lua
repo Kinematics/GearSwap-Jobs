@@ -296,6 +296,11 @@ function job_update(cmdParams, eventArgs)
 
 end
 
+-- Handle notifications of user state values being changed.
+function job_state_change(stateField, newValue)
+
+end
+
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
 
