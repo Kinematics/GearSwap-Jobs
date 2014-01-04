@@ -300,7 +300,7 @@ end
 -- Returns two values on completion:
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
-function job_change_spell(spell, action, spellMap, eventArgs)
+function job_pretarget(spell, action, spellMap, eventArgs)
 	if spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end

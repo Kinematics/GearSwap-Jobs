@@ -203,11 +203,8 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Handle spell changes before attempting any precast stuff.  Called from pretarget().
--- Set eventArgs.handled to true if we changed the spell, and a new one was sent out. If it was,
---   this function won't be called again in the same cycle.
--- Set eventArgs.cancel to true if the current spell was cancelled, and no further processing should be done.
-function job_change_spell(spell, action, spellMap, eventArgs)
+-- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
+function job_pretarget(spell, action, spellMap, eventArgs)
 
 end
 

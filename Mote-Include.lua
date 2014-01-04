@@ -165,46 +165,19 @@ end
 function MoteInclude.pretarget(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- First allow for spell changes before we consider changing the target.
-	-- This is a job-specific matter.
-	-- spellWasChanged is a gate to prevent infinite loops.
-	if job_change_spell and not spellWasChanged then
-		-- init a new eventArgs
-		local eventArgs = {handled = false, cancel = false}
-	
-		job_change_spell(spell, action, spellMap, eventArgs)
-		
-		if eventArgs.handled then
-			spellWasChanged = true
-		end
-		
-		if eventArgs.cancel then
-			return
-		end
-	end
-	
-	spellWasChanged = false
-	
-	
-	-- Handle optional target conversion.
-
 	-- init a new eventArgs
-	-- handled == target change was handled
 	local eventArgs = {handled = false}
 
-	-- Allow the job to have a crack at it
+	-- Allow the job to handle it.
 	if job_pretarget then
 		job_pretarget(spell, action, spellMap, eventArgs)
 	end
 	
-	-- If the job handled it themselves, end here.
-	if eventArgs.handled then
-		return
+	-- If the job didn't handle things themselves, continue..
+	if not eventArgs.handled then
+		-- Handle optional target conversion.
+		auto_change_target(spell, action, spellMap)
 	end
-	
-	-- Otherwise, send it to our general target adjustment code.
-	auto_change_target(spell, action, spellMap)
-
 end
 
 
