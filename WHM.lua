@@ -39,7 +39,7 @@ function get_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA = {}
 	
-	sets.precast.JA.Benediction = {feet="Cleric's Briault +2"}
+	sets.precast.JA.Benediction = {body="Cleric's Briault +2"}
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {
@@ -50,20 +50,19 @@ function get_sets()
 	-- Fast cast sets for spells
 	
 	-- default fast cast
-	sets.precast.FC = {head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
+	sets.precast.FC = {ammo="Incantor Stone",
+		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
 		
-	sets.precast.FC.EnhancingMagic = {
-		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquac. Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.HealingMagic = {main="Beneficus",sub="Genbu's Shield",
-		neck="Colossus's Torque",
-		body="Orison Bliaud +2",hands="Healer's Mitts",ring1="Sirona's Ring",ring2="Ephedra Ring",
-		back="Tempered Cape",legs="Cleric's Pantaloons +2"}
-		
+	sets.precast.FC.HealingMagic = set_combine(sets.precast.FC, {legs="Orison's Pantaloons +2"})
+
+	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {body="Heka's Kalasiris",
+		back="Pahtli Cape", feet="Cure Clogs"})
+
+	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
        
 	-- Magian staves with cast time reduction, by element
@@ -163,7 +162,7 @@ function get_sets()
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Theophany Pantaloons +2",feet="Orison Duckbills +2"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
@@ -186,7 +185,7 @@ function get_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main=staffs.HMP, 
+	sets.resting = {main=gear.Staff.HMP, 
 		head="Nefer Khat +1",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",
 		waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
@@ -194,25 +193,20 @@ function get_sets()
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {main="Tamaxchi", sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',ring2='Dark Ring',
+		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Witful Belt",legs="Nares Trews",feet="Herald's Gaiters"}
+
+	sets.idle.PDT = {main="Tamaxchi", sub="Genbu's Shield",ammo="Incantor Stone",
+		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
+		back="Umbra Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Herald's Gaiters"}
 
 	sets.idle.Town = {main="Tamaxchi", sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Witful Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 	
-	sets.idle.Field = {main="Tamaxchi", sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Witful Belt",legs="Nares Trews",feet="Herald's Gaiters"}
-
-	sets.idle.Field.PDT = {main="Tamaxchi", sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
-		back="Umbra Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Herald's Gaiters"}
-		
 	sets.idle.Weak = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Meridian Ring",

@@ -147,7 +147,7 @@ function get_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main=staffs.HMP, 
+	sets.resting = {main=gear.Staff.HMP, 
 		body="Gendewitha Bliaut",
 		legs="Nares Trews",feet="Chelona Boots +1"}
 	
