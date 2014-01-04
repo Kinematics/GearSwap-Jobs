@@ -24,6 +24,11 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'Evasion'
 	
+	state.Buff = {}
+	state.Buff['Sneak Attack'] = buffactive['sneak attack']
+	state.Buff['Trick Attack'] = buffactive['trick attack']
+	state.Buff['Feint'] = buffactive['feint']
+	
 	-- TH mode handling
 	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
 	state.TreasureMode = 'Tag'
@@ -303,28 +308,36 @@ end
 
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
-function job_aftercast(spell, action)
+function job_aftercast(spell, action, spellMap, eventArgs)
+	-- Update the state of certain buff JAs if the action wasn't interrupted.
+	if not spell.interrupted then
+		if state.Buff[spell.name] ~= nil then
+			state.Buff[spell.name] = true
+		end
+	end
+		
 	-- Don't let aftercast revert gear set for SA/TA/Feint
 	if S{'Sneak Attack', 'Trick Attack', 'Feint'}[spell.english] and not spell.interrupted then
-		return true
+		eventArgs.handled = true
 	-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
-	elseif buffactive['sneak attack'] then
+	elseif state.Buff['Sneak Attack'] then
 		equip(sets.precast.JA['Sneak Attack'])
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
 			equip(sets.TreasureHunter)
 		end
-		return true
-	elseif buffactive['trick attack'] then
+		eventArgs.handled = true
+	elseif state.Buff['Trick Attack'] then
 		equip(sets.precast.JA['Trick Attack'])
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
 			equip(sets.TreasureHunter)
 		end
-		return true
-	elseif buffactive['feint'] then
+		eventArgs.handled = true
+	elseif state.Buff['Feint'] then
+		--equip(sets.precast.JA['Feint'])
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
 			equip(sets.TreasureHunter)
 		end
-		return true
+		eventArgs.handled = true
 	elseif spell.target then
 		if spell.target.type == 'Enemy' and not spell.interrupted then
 			tag_with_th = false
@@ -374,7 +387,7 @@ function job_status_change(newStatus,oldStatus)
 	end
 
 	-- If SA/TA/Feint are active, don't change gear sets
-	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
+	if satafeint_active() then
 		eventArgs.handled = true
 	end
 end
@@ -383,16 +396,20 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	-- If SA/TA/Feint drop, revert to standard gear
-	if S{'sneak attack', 'trick attack', 'feint'}[buff:lower()] and gain then
-		handle_equipping_gear(player.status)
-	-- If any other buff changes while we still have SA/TA/Feint up, don't change gear
-	elseif not (buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint']) then
-		-- If we gain or lose any haste buffs, adjust which gear set we target.
+	if state.Buff[buff] ~= nil then
+		state.Buff[spell.name] = gain
+	end
+	
+	if not satafeint_active() then
 		handle_equipping_gear(player.status)
 	end
 end
 
+-- Function to indicate if any buffs have been activated that we don't want to equip gear over.
+function satafeint_active()
+	return state.Buff['Sneak Attack'] or state.Buff['Trick Attack'] or state.Buff['Feint']
+end
+	
 
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for TH mode handling.
