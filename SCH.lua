@@ -4,7 +4,7 @@
 
 -- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
 
--- Last Modified: 12/27/2013 2:18:57 PM
+-- Last Modified: 1/4/2014 2:42:24 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -297,6 +297,10 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
+function job_pretarget(spell, action, spellMap, eventArgs)
+end
+
+
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
@@ -321,7 +325,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 
-		-- If the spells don't get enhanced by skill or whatever, don't bother equipping gear.
+		-- If the spells don't get enhanced by skill or whatever, don't bother equipping further gear.
 		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
 			eventArgs.handled = true
 		end
@@ -391,7 +395,8 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-	if cmdParams[1] == 'user' and not (buffactive['light arts'] or buffactive['dark arts'] or buffactive['addendum: white'] or buffactive['addendum: black']) then
+	if cmdParams[1] == 'user' and not (buffactive['light arts']      or buffactive['dark arts'] or
+					   buffactive['addendum: white'] or buffactive['addendum: black']) then
 		if state.IdleMode == 'Stun' then
 			windower.send_command('input /ja "Dark Arts" <me>')
 		else
@@ -425,10 +430,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function apply_grimoire_bonuses(spell, action, spellMap)
-	--local checkForStormElement = {'Earth'='Sandstorm','Water'='Rainstorm','Wind'='Windstorm','Fire'='Firestorm',
-	--	'Ice'='Hailstorm','Lightning'='Thunderstorm','Light'='Aurorastorm','Dark'='Voidstorm'}
-	--buffactive[checkForStormElement[spell.element]]
-
 	if buffactive.ebullience then equip(sets.Buff['Ebullience']) end
 	if buffactive.rapture then equip(sets.Buff['Rapture']) end
 	if buffactive.perpetuance then equip(sets.Buff['Perpetuance']) end
