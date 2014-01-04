@@ -4,7 +4,7 @@
 
 -- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
 
--- Last Modified: 12/31/2013 9:45:55 AM
+-- Last Modified: 1/4/2014 2:28:29 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -279,8 +279,14 @@ end
 
 function job_post_precast(spell, action, spellMap, eventArgs)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
-	if eventArgs.useMidcastGear and spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
-		equip(sets.Buff['Divine Caress'])
+	if eventArgs.useMidcastGear then
+		if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
+			equip(sets.Buff['Divine Caress'])
+		elseif spellMap == 'Cure' or spellMap == 'Curaga' then
+			add_obi(spell.element)
+		elseif spell.skill == 'DivineMagic' and spell.english ~= 'Flash' then
+			add_obi(spell.element)
+		end
 	end
 	
 	-- Ionis gives us an extra 3% fast cast, so we can drop Incantor Stone for Impatiens.
@@ -312,6 +318,10 @@ function job_post_midcast(spell, action, spellMap)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
 	if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 		equip(sets.Buff['Divine Caress'])
+	elseif spellMap == 'Cure' or spellMap == 'Curaga' then
+		add_obi(spell.element)
+	elseif spell.skill == 'DivineMagic' and spell.english ~= 'Flash' then
+		add_obi(spell.element)
 	end
 end
 
