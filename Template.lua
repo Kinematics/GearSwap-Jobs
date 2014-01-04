@@ -2,14 +2,10 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 12/25/2013 6:17:03 AM
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
+-- Last Modified: 1/4/2014 4:52:19 PM
 
 function get_sets()
-	-- Load and initialize the include file.
+	-- Load and initialize the include file that this depends on.
 	include('Mote-Include.lua')
 	init_include()
 	
@@ -200,7 +196,7 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	spellcast_binds_on_unload()
+	--spellcast_binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -220,6 +216,7 @@ function get_job_wsmode(spell, action, spellMap)
 end
 
 -- Run after the general precast() is done.
+-- eventArgs is the same one used in job_precast, in case information needs to be persisted.
 function job_post_precast(spell, action, spellMap, eventArgs)
 
 end
@@ -231,6 +228,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 end
 
 -- Run after the general midcast() is done.
+-- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
 
 end
@@ -245,10 +243,12 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
 	return idleSet
 end
 
+-- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
 	return meleeSet
 end
@@ -258,15 +258,15 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function job_status_change(newStatus,oldStatus)
-
+function job_status_change(newStatus, oldStatus)
+	--handle_equipping_gear(newStatus)
 end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	--handle_equipping_gear(player.status)
+
 end
 
 
@@ -279,7 +279,8 @@ function job_self_command(cmdParams, eventArgs)
 
 end
 
--- Called by the 'update' self-command.
+-- Called by the 'update' self-command, for common needs.
+-- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
 
 end
