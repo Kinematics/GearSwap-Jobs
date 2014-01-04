@@ -192,11 +192,6 @@ function MoteInclude.precast(spell, action)
 	-- init a new eventArgs
 	local eventArgs = {handled = false, useMidcastGear = false}
 
-	--if spell.casttime and spell.casttime < 0.5 then
-	--	eventArgs.useMidcastGear = true
-	--end
-	
-
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
 		job_precast(spell, action, spellMap, eventArgs)
