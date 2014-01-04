@@ -273,10 +273,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.handled = true
 	else
 		classes.CustomClass = get_spell_class(spell, action, spellMap)
-		
-		if classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee' or spellMap == 'Cure' or spellMap == 'Curaga' then
-			eventArgs.useMidcastGear = true
-		end
 	end
 end
 
