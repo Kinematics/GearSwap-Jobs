@@ -460,9 +460,19 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		end
 	elseif spell.type:lower() == 'weaponskill' then
 		local modeToUse = state.WeaponskillMode
-		-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
-		-- corresponding to the current offense mode.  If so, use that.
-		if state.WeaponskillMode == 'Normal' then
+		local job_wsmode = nil
+		
+		-- Allow the job file to specify a weaponskill mode
+		if get_job_wsmode then
+			job_wsmode = get_job_wsmode(spell, action, spellMap)
+		end
+
+		-- If the job file returned a weaponskill mode, use that.
+		if job_wsmode then
+			modeToUse = job_wsmode
+		elseif state.WeaponskillMode == 'Normal' then
+			-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
+			-- corresponding to the current offense mode.  If so, use that.
 			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
 				modeToUse = state.OffenseMode
 			end
