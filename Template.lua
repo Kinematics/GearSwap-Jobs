@@ -213,6 +213,12 @@ function job_precast(spell, action, spellMap, eventArgs)
 
 end
 
+-- Return a customized weaponskill mode to use for weaponskill sets.
+-- Don't return anything if you're not overriding the default value.
+function get_job_wsmode(spell, action, spellMap)
+
+end
+
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
 
