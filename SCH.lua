@@ -289,7 +289,7 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	if spellMap == 'Cure' or spellMap == 'Curaga' then
-		if world.weather_element == 'Light' or buffactive.aurorastorm then
+		if world.weather_element == 'Light' then
 			classes.CustomClass = 'CureWithLightWeather'
 		end
 	end
