@@ -360,7 +360,7 @@ function job_status_change(newStatus,oldStatus)
 
 	-- If SA/TA/Feint are active, don't change gear sets
 	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
-		return 'handled'
+		eventArgs.handled = true
 	end
 end
 
