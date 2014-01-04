@@ -62,6 +62,10 @@ function get_sets()
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
+	sets.precast.FC.Impact = {ammo="Incantor Stone",
+		head=empty,ear2="Loquacious Earring",
+		body="Twilight Cloak",hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Swith Cape",legs="Orvail Pants",feet="Argute Loafers +2"}
 
        
 	-- Weaponskill sets
@@ -176,6 +180,11 @@ function get_sets()
 	sets.midcast.Helix.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+
+	sets.midcast.Impact = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
+		head=empty,neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Twilight Cloak",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
 
 
@@ -297,10 +306,7 @@ end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.english == 'Impact' then
-		cast_delay(2.5)
-		windower.send_command('@gs c impactrobe')
-	elseif eventArgs.useMidcastGear then
+	if eventArgs.useMidcastGear and spell.english ~= 'Impact' then
 		apply_grimoire_bonuses(spell, action, spellMap)
 	end
 end
@@ -321,16 +327,14 @@ end
 
 -- Run after the general midcast() is done.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if action.type == 'Magic' then
+	if spell.action_type == 'Magic' and spell.english ~= 'Impact' then
 		apply_grimoire_bonuses(spell, action, spellMap, eventArgs)
 	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if spell.english == 'Impact' then
-		enable('head','body')
-	end
+
 end
 
 
@@ -367,9 +371,6 @@ function job_self_command(cmdParams, eventArgs)
 	if cmdParams[1]:lower() == 'scholar' then
 		handle_strategems(cmdParams)
 		eventArgs.handled = true
-	elseif cmdParams[1]:lower() == 'impactrobe' then
-		equip({head=empty,body="Twilight Cloak"})
-		disable('head','body')
 	end
 end
 
