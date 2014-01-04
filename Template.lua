@@ -243,6 +243,12 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 
 end
 
+-- Run after the general aftercast() is done.
+-- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
+function job_post_aftercast(spell, action, spellMap, eventArgs)
+
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
