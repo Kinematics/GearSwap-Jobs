@@ -2,9 +2,6 @@
 -- Common variables and functions to be included in job scripts.
 -- Include this file in the get_sets() function with the command:
 -- include('Mote-Include.lua')
--- or
--- include(player.name..'/Mote-Include.lua')
--- depending on where you keep your files -- in the data/ directory or the data/<player.name> directory.
 --
 -- You then MUST run init_include()
 --
