@@ -14,7 +14,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/4/2014 2:22:44 AM
+-- Last Modified: 1/4/2014 4:40:03 PM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local MoteInclude = {}
@@ -109,23 +109,22 @@ function MoteInclude.init_include()
 		['test']=handle_test}
 	
 
-	-- Set to allow us to determine if we're in a city zone.
-	-- Eventually may add other types of zone groups.
+	-- Set specialized groupings of world zones.
 	areas = {}
-	areas.Cities = S{"ru'lude gardens", 'upper jeuno','lower jeuno','port jeuno',
-		'port windurst','windurst waters','windurst woods','windurst walls','heavens tower',
-		"port san s'oria","northern san s'oria","southern san s'oria",
-		'port bastok','bastok markets','bastok mines','metalworks',
-		'aht urhgan whitegate','tavanazian safehold','nashmau',
-		'selbina','mhaura','norg','eastern adoulin','western adoulin'}
+	-- City areas for town gear and behavior.
+	areas.Cities = S{"RU'LUDE GARDENS", 'UPPER JEUNO','LOWER JEUNO','PORT JEUNO',
+		'PORT WINDURST','WINDURST WATERS','WINDURST WOODS','WINDURST WALLS','HEAVENS TOWER',
+		"PORT SAN S'ORIA","NORTHERN SAN S'ORIA","SOUTHERN SAN S'ORIA",
+		'PORT BASTOK','BASTOK MARKETS','BASTOK MINES','METALWORKS',
+		'AHT URHGAN WHITEGATE','TAVANAZIAN SAFEHOLD','NASHMAU',
+		'SELBINA','MHAURA','NORG','EASTERN ADOULIN','WESTERN ADOULIN'}
 	-- Adoulin areas, where Ionis will grant special stat bonuses.
-	areas.Adoulin = S{'yahse hunting grounds', 'ceizak battlegrounds', 'foret de hennetiel','morimar basalt fields',
-		'yorcia weald','yorcia weald [u]', 'cirdas caverns','cirdas caverns [u]',
-		'marjami ravine','kamihr drifts', 'sih gates','moh gates','dho gates','woh gates','rala waterways'}
+	areas.Adoulin = S{'YAHSE HUNTING GROUNDS', 'CEIZAK BATTLEGROUNDS', 'FORET DE HENNETIEL','MORIMAR BASALT FIELDS',
+		'YORCIA WEALD','YORCIA WEALD [U]', 'CIRDAS CAVERNS','CIRDAS CAVERNS [U]',
+		'MARJAMI RAVINE','KAMIHR DRIFTS', 'SIH GATES','MOH GATES','DHO GATES','WOH GATES','RALA WATERWAYS'}
 
 
 	-- Special gear info that may be useful across jobs.
-	
 	gear = {}
 	
 	gear.Obi = {}
@@ -556,7 +555,7 @@ function MoteInclude.get_current_idle_set()
 
 	if buffactive.weakness then
 		idleScope = 'Weak'
-	elseif areas.Cities[world.area:lower()] then
+	elseif areas.Cities[world.area] then
 		idleScope = 'Town'
 	else
 		idleScope = 'Field'
