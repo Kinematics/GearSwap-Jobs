@@ -17,7 +17,7 @@
 -- Last Modified: 1/1/2014 9:50:52 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
-local _MoteInclude = {}
+local MoteInclude = {}
 
 
 -------------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ local _MoteInclude = {}
 -- These are accessible at the including job lua script's scope.
 -------------------------------------------------------------------------------------------------------------------
 
-function _MoteInclude.init_include()
+function MoteInclude.init_include()
 	-- Var for tracking state values
 	state = {}
 	
@@ -146,7 +146,7 @@ end
 -- before the game has done any processing on it.  In particular, it hasn't
 -- initiated target selection for <st*> target types.
 -- This is the only function where it will be valid to use change_target().
-function _MoteInclude.pretarget(spell,action)
+function MoteInclude.pretarget(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
 
 	-- First allow for spell changes before we consider changing the target.
@@ -196,7 +196,7 @@ end
 -- before the packet gets pushed out.
 -- Equip any gear that should be on before the spell or ability is used.
 -- Define the set to be equipped at this point in time based on the type of action.
-function _MoteInclude.precast(spell, action)
+function MoteInclude.precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 	
@@ -228,7 +228,7 @@ end
 -- will be sent out at the same time (packet contains precastgear:action:midcastgear).
 -- Midcast gear selected should be for potency, recast, etc.  It should take effect
 -- regardless of the spell cast speed.
-function _MoteInclude.midcast(spell,action)
+function MoteInclude.midcast(spell,action)
 	-- If we have showSet active for precast, don't try to equip midcast gear.
 	if showSet == 'precast' then
 		add_to_chat(122, 'Show Sets: Stopping at precast.')
@@ -267,7 +267,7 @@ end
 
 
 -- Called when an action has been completed (eg: spell finished casting, or failed to cast).
-function _MoteInclude.aftercast(spell,action)
+function MoteInclude.aftercast(spell,action)
 	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
 	if showSet == 'midcast' then
 		add_to_chat(122, 'Show Sets: Stopping at midcast.')
@@ -316,7 +316,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function _MoteInclude.status_change(newStatus, oldStatus)
+function MoteInclude.status_change(newStatus, oldStatus)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -334,7 +334,7 @@ end
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
-function _MoteInclude.buff_change(buff, gain)
+function MoteInclude.buff_change(buff, gain)
 	-- Global actions on buff effects
 	
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
@@ -358,7 +358,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Central point to call to equip gear based on status.
-function _MoteInclude.handle_equipping_gear(status)
+function MoteInclude.handle_equipping_gear(status)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -375,7 +375,7 @@ end
 
 -- Function to wrap logic for equipping gear on aftercast, status change, or user update.
 -- @param status : The current or new player status that determines what sort of gear to equip.
-function _MoteInclude.equip_gear_by_status(status)
+function MoteInclude.equip_gear_by_status(status)
 	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..'], HP='..tostring(player.hp)) end
 	
 	-- If status not defined, check for positive HP to make sure they're not dead.
@@ -399,7 +399,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Get the default precast gear set.
-function _MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
+function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	if spell.action_type:lower() == 'magic' then
@@ -488,7 +488,7 @@ end
 
 
 -- Get the default midcast gear set.
-function _MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
+function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	if spell.action_type == 'Magic' then
@@ -523,7 +523,7 @@ end
 
 
 -- Returns the appropriate idle set based on current state.
-function _MoteInclude.get_current_idle_set()
+function MoteInclude.get_current_idle_set()
 	local idleScope = ''
 	local idleSet = sets.idle
 
@@ -561,7 +561,7 @@ end
 -- Returns the appropriate melee set based on current state.
 -- Set construction order (all sets after sets.engaged are optional):
 --   sets.engaged[classes.CustomMeleeGroups (any number)][TPWeapon][state.OffenseMode][state.DefenseMode]
-function _MoteInclude.get_current_melee_set()
+function MoteInclude.get_current_melee_set()
 	local meleeSet = sets.engaged
 	
 	for i = 1,#classes.CustomMeleeGroups do
@@ -596,7 +596,7 @@ end
 
 
 -- Returns the appropriate resting set based on current state.
-function _MoteInclude.get_current_resting_set()
+function MoteInclude.get_current_resting_set()
 	local restingSet = {}
 	
 	if sets.resting[state.RestingMode] then
@@ -613,7 +613,7 @@ end
 
 -- Function to apply any active defense set on top of the supplied set
 -- @param baseSet : The set that any currently active defense set will be applied on top of. (gear set table)
-function _MoteInclude.apply_defense(baseSet)
+function MoteInclude.apply_defense(baseSet)
 	if state.Defense.Active then
 		local defenseSet = {}
 		local defMode = ''
@@ -645,7 +645,7 @@ end
 
 -- Function to add kiting gear on top of the base set if kiting state is true.
 -- @param baseSet : The set that the kiting gear will be applied on top of. (gear set table)
-function _MoteInclude.apply_kiting(baseSet)
+function MoteInclude.apply_kiting(baseSet)
 	if state.Kiting then
 		if sets.Kiting then
 			baseSet = set_combine(baseSet, sets.Kiting)
@@ -663,7 +663,7 @@ end
 
 -- Routing function for general known self_commands.
 -- Handles splitting the provided command line up into discrete words, for the other functions to use.
-function _MoteInclude.self_command(commandArgs)
+function MoteInclude.self_command(commandArgs)
 	local commandArgs = commandArgs
 	if type(commandArgs) == 'string' then
 		commandArgs = split(commandArgs, ' ')
@@ -700,7 +700,7 @@ end
 -- Valid toggles: Defense, Kiting
 -- Returns true if a known toggle was handled.  Returns false if not.
 -- User command format: gs c toggle [field]
-function _MoteInclude.handle_toggle(cmdParams)
+function MoteInclude.handle_toggle(cmdParams)
 	if #cmdParams > 0 then
 		-- identifier for the field we're toggling
 		local toggleField = cmdParams[1]:lower()
@@ -741,7 +741,7 @@ end
 
 -- Function to handle turning on particular states, while possibly also setting a mode value.
 -- User command format: gs c activate [field]
-function _MoteInclude.handle_activate(cmdParams)
+function MoteInclude.handle_activate(cmdParams)
 	if #cmdParams > 0 then
 		activateState = cmdParams[1]:lower()
 		local activateDesc = ''
@@ -787,7 +787,7 @@ end
 -- All fields must end in 'Mode'
 -- Returns true if a known toggle was handled.  Returns false if not.
 -- User command format: gs c cycle [field]
-function _MoteInclude.handle_cycle(cmdParams)
+function MoteInclude.handle_cycle(cmdParams)
 	if #cmdParams > 0 then
 		-- identifier for the field we're toggling
 		local paramField = cmdParams[1]:lower()
@@ -849,7 +849,7 @@ end
 
 -- Function to set various states to specific values directly.
 -- User command format: gs c set [field] [value]
-function _MoteInclude.handle_set(cmdParams)
+function MoteInclude.handle_set(cmdParams)
 	if #cmdParams > 1 then
 		-- identifier for the field we're setting
 		local field = cmdParams[1]
@@ -949,7 +949,7 @@ end
 
 -- Function to turn off togglable features, or reset values to their defaults.
 -- User command format: gs c reset [field]
-function _MoteInclude.handle_reset(cmdParams)
+function MoteInclude.handle_reset(cmdParams)
 	if #cmdParams > 0 then
 		resetState = cmdParams[1]:lower()
 		
@@ -1010,7 +1010,7 @@ end
 -- User command format: gs c update [option]
 -- Where [option] can be 'user' to display current state.
 -- Otherwise, generally refreshes current gear used.
-function _MoteInclude.handle_update(cmdParams)
+function MoteInclude.handle_update(cmdParams)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -1030,7 +1030,7 @@ end
 
 
 -- showset: equip the current TP set for examination.
-function _MoteInclude.handle_show_set(cmdParams)
+function MoteInclude.handle_show_set(cmdParams)
 	-- If no extra parameters, or 'tp' as a parameter, show the current TP set.
 	if #cmdParams == 0 or cmdParams[1]:lower() == 'tp' then
 		local meleeGroups = ''
@@ -1063,7 +1063,7 @@ end
 ------  Utility functions to support self commands. ------
 
 -- Function to get the options.XXXModes table and the corresponding state value to make given state field.
-function _MoteInclude.get_mode_table(field)
+function MoteInclude.get_mode_table(field)
 	local modeTable = {}
 	local currentValue = ''
 
@@ -1110,7 +1110,7 @@ function _MoteInclude.get_mode_table(field)
 end
 
 -- Function to set the appropriate state value for the specified field.
-function _MoteInclude.set_mode(field, val)
+function MoteInclude.set_mode(field, val)
 	if field == 'Offense' then
 		state.OffenseMode = val
 	elseif field == 'Defense' then
@@ -1142,7 +1142,7 @@ end
 
 -- Function to display the current relevant user state when doing an update.
 -- Uses display_current_job_state instead if that is defined in the job lua.
-function _MoteInclude.display_current_state()
+function MoteInclude.display_current_state()
 	local eventArgs = {handled = false}
 	if display_current_job_state then
 		display_current_job_state(eventArgs)
@@ -1187,7 +1187,7 @@ end
 
 -- Support function for job functions that want to change the spell.
 -- This does the cancel/send_command, and sets the proper vars for the eventArgs parameter.
-function _MoteInclude.change_spell(command, eventArgs)
+function MoteInclude.change_spell(command, eventArgs)
 	cancel_spell()
 	send_command(command)
 	eventArgs.handled = true
@@ -1196,7 +1196,7 @@ end
 
 
 
-function _MoteInclude.auto_change_target(spell, action, spellMap)
+function MoteInclude.auto_change_target(spell, action, spellMap)
 	-- Do not modify target for spells where we get <lastst> or <me>.
 	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
@@ -1269,7 +1269,7 @@ end
 ---Returns:
 ----- Table containing string(s)
 ------------------------------------------------------------------------------------
-function _MoteInclude.split(msg, delim)
+function MoteInclude.split(msg, delim)
 	local result = T{}
 
 	-- If no delimiter specified, just extract alphabetic words
@@ -1303,7 +1303,7 @@ end
 
 -- Invert a table such that the keys are values and the values are keys.
 -- Use this to look up the index value of a given entry.
-function _MoteInclude.invert_table(t)
+function MoteInclude.invert_table(t)
 	if t == nil then add_to_chat(123,'Attempting to invert table, received nil.') end
 	
 	local i={}
@@ -1315,7 +1315,7 @@ end
 
 -- Gets sub-tables based on baseSet from the string str that may be in dot form
 -- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
-function _MoteInclude.get_expanded_set(baseSet, str)
+function MoteInclude.get_expanded_set(baseSet, str)
 	local cur = baseSet
 	for i in str:gmatch("[^.]+") do
 		cur = cur[i]
@@ -1331,7 +1331,7 @@ end
 
 
 -- Function to bind GearSwap binds when loading a GS script.
-function _MoteInclude.gearswap_binds_on_load()
+function MoteInclude.gearswap_binds_on_load()
 	windower.send_command('bind f9 gs c cycle OffenseMode')
 	windower.send_command('bind ^f9 gs c cycle DefenseMode')
 	windower.send_command('bind !f9 gs c cycle WeaponskillMode')
@@ -1347,7 +1347,7 @@ function _MoteInclude.gearswap_binds_on_load()
 end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
-function _MoteInclude.spellcast_binds_on_unload()
+function MoteInclude.spellcast_binds_on_unload()
 	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
 	windower.send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
 	windower.send_command('bind !f9 input /ma CombatMode Cycle(WS)')
@@ -1367,7 +1367,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Returns a table of spell mappings to allow grouping classes of spells that are otherwise disparately named.
-function _MoteInclude.get_spell_mappings()
+function MoteInclude.get_spell_mappings()
 	local mappings = {
 		['Cure']='Cure',['Cure II']='Cure',['Cure III']='Cure',['Cure IV']='Cure',['Cure V']='Cure',['Cure VI']='Cure',
 		['Cura']='Curaga',['Cura II']='Curaga',['Cura III']='Curaga',
@@ -1410,9 +1410,9 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- A function for testing lua code.  Called via "gs c test".
-function _MoteInclude.handle_test(cmdParams)
+function MoteInclude.handle_test(cmdParams)
 end
 
 
 -- Done with defining the module.  Return the table.
-return _MoteInclude
+return MoteInclude
