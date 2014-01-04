@@ -25,6 +25,8 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
+	state.Sublimation = buffactive['Sublimation: Activated']
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -269,7 +271,8 @@ function get_sets()
 
 	sets.Buff['Klimaform'] = {feet="Savant's Loafers +2"}
 
-	sets.Buff['Sublimation'] = {ear1="Savant's Earring"}
+	sets.Buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Argute Gown +2"}
+	sets.Buff.PDTSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring"}
 
 	--sets.Buff['Sandstorm'] = {feet="Desert Boots"}
 
@@ -343,6 +346,14 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
+	if state.Sublimation then
+		if state.IdleMode == 'Normal' then
+			idleSet = set_combine(idleSet, sets.Buff.FullSublimation)
+		elseif state.IdleMode == 'PDT' then
+			idleSet = set_combine(idleSet, sets.Buff.PDTSublimation)
+		end
+	end
+	
 	return idleSet
 end
 
@@ -358,7 +369,10 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	--handle_equipping_gear(player.status)
+	if buff == "Sublimation: Activated" then
+		state.Sublimation = gain
+		update_gear_sets(player.status)
+	end
 end
 
 
