@@ -17,10 +17,10 @@ function get_sets()
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
+	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
 	options.MagicalDefenseModes = {'MDT'}
 
-	state.Defense.PhysicalMode = 'Evasion'
+	state.Defense.PhysicalMode = 'PDT'
 	
 	--------------------------------------
 	-- Start defining the sets
