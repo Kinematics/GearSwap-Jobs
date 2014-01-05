@@ -241,12 +241,6 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
-		--if string.find(world.area:lower(),'cirdas caverns') then
-		--	cast_delay(0.5)
-		--else
-		--	verify_equip()
-		--end
-
 		-- Auto-Pianissimo
 		if spell.target.type == 'PLAYER' and not buffactive.pianissimo then
 			cast_delay(1.5)
