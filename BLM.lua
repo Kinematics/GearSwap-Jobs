@@ -2,9 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 12/31/2013 9:46:26 AM
+-- Last Modified: 1/4/2014 6:20:20 PM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -267,12 +265,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 	-- Don't allow gear changes for teleports.
 	if spell.english == 'Warp' or spellMap == 'Teleport' or (spell.english == 'Warp II' and spell.target.type == 'SELF') then
 		eventArgs.handled = true
-	-- If using IdleMode=Nuke or IdleMode=Proc, don't swap gear for precasting nukes
-	elseif (state.IdleMode == 'Nuke' or state.IdleMode == 'Proc') and spell.skill == 'ElementalMagic' then
-		eventArgs.handled = true
-	-- Otherwise, for nukes get a custom class to distinguish low-tier from high-tier.
-	elseif spell.skill == 'ElementalMagic' then
-		classes.CustomClass = get_nuke_class(spell, action, spellMap)
 	end
 end
 
@@ -280,16 +272,20 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
-		if state.IdleMode == 'Proc' and spell.skill == 'ElementalMagic' then
-			add_to_chat(15,'Proc mode, no swapping gear for midcast.')
+		-- Default base equipment layer is fast recast.
+		equip(sets.midcast.FastRecast)
+
+		-- If the spells don't get enhanced by skill or whatever, don't bother equipping additional gear.
+		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
 			eventArgs.handled = true
-		else
-			-- Default base equipment layer is fast recast.
-			equip(sets.midcast.FastRecast)
-	
-			-- If the spells don't get enhanced by skill or whatever, don't bother equipping additional gear.
-			if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
+		end
+
+		if spell.skill == 'ElementalMagic' then
+			if state.CastingMode == 'Proc' then
+				add_to_chat(15,'Proc mode, no damage gear for midcast.')
 				eventArgs.handled = true
+			else
+				classes.CustomClass = get_nuke_class(spell, action, spellMap)
 			end
 		end
 	end
@@ -298,7 +294,7 @@ end
 
 function job_aftercast(spell, action, spellMap, eventArgs)
 	-- Lock feet after using Mana Wall.
-	if not spell.interrupted and spell.english == 'Mana Wall' then
+	if not spell.interrupted and spell.english == 'Mana Wall' and player.equipment.feet == "Goetia Sabots +2" then
 		disable('feet')
 	end
 end
@@ -311,18 +307,9 @@ function customize_idle_set(idleSet)
 	return idleSet
 end
 
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
-
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus,oldStatus)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
@@ -331,9 +318,8 @@ function job_buff_change(buff, gain)
 	-- Unlock feet when Mana Wall buff is lost.
 	if buff == "Mana Wall" and not gain then
 		enable('feet')
+		handle_equipping_gear(player.status)
 	end
-
-	handle_equipping_gear(player.status)
 end
 
 
@@ -387,13 +373,11 @@ end
 
 -- Function to get the custom class to use for nukes.
 function get_nuke_class(spell, action, spellMap)
-	if state.CastingMode == 'Proc' then
-		return nil
-	elseif lowTierNukes[spell.english] then
+	if lowTierNukes[spell.english] then
 		-- low tier nukes use the default set
 		return nil
 	-- Areas where more magic accuracy is generally needed, so use Atinian instead of Lehbrailg on high-tier nukes.
-	elseif areas.Adoulin[world.area:lower()] then
+	elseif areas.Adoulin[world.area] then
 		return 'AdoulinHighTierNuke'
 	else
 		return 'HighTierNuke'
