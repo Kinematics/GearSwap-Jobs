@@ -349,6 +349,10 @@ function job_state_change(stateField, newValue)
 		else
 			enable('main','sub')
 		end
+	elseif stateField == 'Reset' then
+		if state.OffenseMode == 'None' then
+			enable('main','sub')
+		end
 	end
 end
 
