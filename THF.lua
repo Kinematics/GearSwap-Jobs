@@ -2,9 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 12/31/2013 9:46:09 AM
+-- Last Modified: 1/5/2014 3:02:20 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -51,7 +49,7 @@ function get_sets()
 	sets.precast.JA['Collaborator'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Accomplice'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Flee'] = {feet="Pillager's Poulaines"}
-	sets.precast.JA['Hide'] = {body="Rogue's Vest +1"}
+	sets.precast.JA['Hide'] = {body="Pillager's Vest"}
 	sets.precast.JA['Conspirator'] = {} -- {body="Raider's Vest +2"}
 	sets.precast.JA['Steal'] = {head="Assassin's Bonnet +2",hands="Pillager's Armlets",feet="Pillager's Poulaines"}
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
@@ -338,14 +336,16 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 			equip(sets.TreasureHunter)
 		end
 		eventArgs.handled = true
-	elseif spell.target then
-		if spell.target.type == 'Enemy' and not spell.interrupted then
+	end
+	
+	if not spell.interrupted then
+		if spell.target and spell.target.type == 'Enemy' then
 			tag_with_th = false
 			tp_on_engage = 0
+		elseif (spell.type == 'Waltz' or spell.type == 'Samba') and tag_with_th then
+			-- Update current TP if we spend TP before we actually hit the mob
+			tp_on_engage = player.tp
 		end
-	elseif spell.type == 'Waltz' and tag_with_th then
-		-- Update current TP if we spend TP before we actually hit the mob
-		tp_on_engage = player.tp
 	end
 end
 
@@ -375,7 +375,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function job_status_change(newStatus,oldStatus)
+function job_status_change(newStatus, oldStatus, eventArgs)
 	if newStatus == 'Engaged' and state.TreasureMode ~= 'None' then
 		equip(sets.TreasureHunter)
 		tag_with_th = true
@@ -398,10 +398,10 @@ end
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
-	end
-	
-	if not satafeint_active() then
-		handle_equipping_gear(player.status)
+
+		if not satafeint_active() then
+			handle_equipping_gear(player.status)
+		end
 	end
 end
 
@@ -446,7 +446,7 @@ function job_self_command(cmdParams)
 end
 
 -- Called by the 'update' self-command.
-function job_update(cmdParams)
+function job_update(cmdParams, eventArgs)
 	if tag_with_th and player.tp ~= tp_on_engage then
 		tag_with_th = false
 		tp_on_engage = 0
@@ -462,14 +462,14 @@ function job_update(cmdParams)
 	
 	-- Don't trigger equipping gear if SA/TA/Feint is active.
 	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
-		return 'no gear change'
+		eventArgs.handled = true
 	end
 end
 
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
-function display_current_job_state()
+function display_current_job_state(eventArgs)
 	local defenseString = ''
 	if state.Defense.Active then
 		local defMode = state.Defense.PhysicalMode
@@ -483,7 +483,7 @@ function display_current_job_state()
 	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..'  WS: '..state.WeaponskillMode..'  '..
 		defenseString..'Kiting: '..on_off_names[state.Kiting]..'  TH: '..state.TreasureMode)
 
-	return true
+	eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
