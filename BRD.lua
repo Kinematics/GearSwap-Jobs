@@ -2,9 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 12/31/2013 9:46:30 AM
+-- Last Modified: 1/4/2014 6:39:49 PM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -12,6 +10,24 @@ function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
+	
+	-- Options: Override default values
+	options.CastingModes = {'Normal', 'Resistant'}
+	options.OffenseModes = {'None', 'Normal'}
+	options.DefenseModes = {'Normal'}
+	options.WeaponskillModes = {'Normal'}
+	options.IdleModes = {'Normal', 'PDT'}
+	options.RestingModes = {'Normal'}
+	options.PhysicalDefenseModes = {'PDT'}
+	options.MagicalDefenseModes = {'MDT'}
+
+	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode = 'None'
+	
+	
+	state.Buff = {}
+	state.Buff['Pianissimo'] = buffactive['pianissimo']
+	
 	
 	-- Some vars.  Define at the top so that the sets can make use of them.
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
@@ -25,6 +41,30 @@ function get_sets()
 	
 	-- Precast Sets
 	sets.precast = {}
+
+
+	-- Fast cast sets for spells
+	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
+		hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
+		
+	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
+		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
+		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Swith Cape",waist="Aoidos' Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
+
+	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range="Daurdabla"})
+		
+	sets.precast.FC.Cure = {
+		head="Nahtirah Hat",ear2="Loquac. Earring",
+		body="Heka's Kalasiris",hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Pahtli Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
+
+	sets.precast.FC.EnhancingMagic = {
+		head="Nahtirah Hat",ear2="Loquac. Earring",
+		hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
+
 	
 	-- Precast sets to enhance JAs
 	sets.precast.JA = {}
@@ -39,29 +79,7 @@ function get_sets()
 		body="Gendewitha Bliaut",hands="Buremte Gloves",
 		back="Refraction Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
-	-- Fast cast sets for spells
-	
-	-- default fast cast
-	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
-		
-	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
-		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
-		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Aoidos' Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
-
-	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range="Daurdabla"})
-		
-	sets.precast.FC.Cure = {head="Nahtirah Hat",ear2="Loquac. Earring",
-		body="Heka's Kalasiris",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Pahtli Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
-
        
-	-- Magian staves with cast time reduction, by element
-	--sets.precast.FC.Thunder = {main='Apamajas I'}
-	--sets.precast.FC.Fire = {main='Atar I'}
-	
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {range="Gjallarhorn",
@@ -116,7 +134,7 @@ function get_sets()
 		back="Harmony Cape",waist="Corvax Sash",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs
-	sets.midcast.Debuff = {main="Soothsayer Staff",sub="Quire Grip",range="Gjallarhorn",
+	sets.midcast.SongDebuff = {main="Soothsayer Staff",sub="Quire Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Aoidos' Rhing. +2",feet="Bokwus Boots"}
@@ -155,7 +173,7 @@ function get_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {main=gear.Staff.PDT, sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1=leftDarkRing,ring2=rightDarkRing,
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 
 	sets.idle.Town = {main=gear.Staff.PDT, sub="Quire Grip",range="Oneiros Harp",
@@ -163,11 +181,6 @@ function get_sets()
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 	
-	sets.idle.Field = {main=staffs.PDT, sub="Quire Grip",range="Oneiros Harp",
-		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
-		
 	sets.idle.Weak = {main=gear.Staff.PDT,sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Meridian Ring",
@@ -222,14 +235,14 @@ function get_sets()
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind ^= gs c cycle targetmode')
 
-	-- For tracking current recast timers.
+	-- For tracking current recast timers via the Timers plugin.
 	timer_reg = {}
 end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	windower.send_command('unbind ^`')
-	spellcast_binds_on_unload()	
+	--spellcast_binds_on_unload()	
 end
 
 
@@ -242,15 +255,17 @@ end
 function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
-		if spell.target.type == 'PLAYER' and not buffactive.pianissimo then
-			cast_delay(1.5)
-			windower.send_command('@input /raw /ja "Pianissimo" <me>')
+		if spell.target.type == 'PLAYER' and not state.Buff['Pianissimo'] then
+			cancel_spell()
+			windower.send_command('@input /ja "Pianissimo" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
+			eventArgs.handled = true
+			return
 		end
 
 		classes.CustomClass = get_song_class(spell)
 		
-		-- If Nightingale is on, return the optional second return value to indicate
-		-- that it should equip midcast gear on precast rather than precast gear.
+		-- If Nightingale is on, note it in eventArgs to indicate that midcast gear
+		-- should be equipped during precast rather than the normal precast gear.
 		if buffactive.nightingale then
 			eventArgs.useMidcastGear = true
 		end
@@ -273,37 +288,61 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Return true if we handled the aftercast work.  Otherwise it will fall back
--- to the general aftercast() code in Mote-Include.
-function job_aftercast(spell, action)
-	if spell.type == 'BardSong' then
-		if spell.target then
-			if spell.target.type and spell.target.type:upper() == 'SELF' then
-				adjust_Timers(spell, action)
+-- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
+function job_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted then
+		if state.Buff[spell.name] ~= nil then
+			state.Buff[spell.name] = true
+		end
+
+		if spell.type == 'BardSong' then
+			if spell.target then
+				if spell.target.type and spell.target.type:upper() == 'SELF' then
+					adjust_Timers(spell, action, spellMap)
+				end
 			end
 		end
 	end
-	
-	return false
 end
-
-
--- Called by the 'update' self-command.
-function job_update(cmdParams, eventArgs)
-	pick_tp_weapon()
-
-	if player.equipment.main == 'Izhiikoh' then
-		disable('main','sub')
-	else
-		enable('main','sub')
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for other events that aren't handled by the include file.
 -------------------------------------------------------------------------------------------------------------------
 
+function job_buff_change(buff, gain)
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements self-commands.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called by the 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	pick_tp_weapon()
+
+	if player.equipment.main == 'Izhiikoh' and state.OffenseMode == 'None' then
+		send_command('gs c set OffenseMode Normal')
+	end
+end
+
+
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue)
+	if stateField == 'Offense' then
+		if newValue == 'Normal' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
+	elseif stateField == 'Reset' then
+		if state.OffenseMode == 'None' then
+			enable('main','sub')
+		end
+	end
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
@@ -314,7 +353,7 @@ function get_song_class(spell)
 	if DaurdSongs[spell.english] then
 		return 'Daurdabla'
 	elseif spell.target.type == 'MONSTER' then
-		return 'Debuff'
+		return 'SongDebuff'
 	else
 		return 'SongEffect'
 	end
@@ -324,7 +363,7 @@ end
 -- Function to create custom buff-remaining timers with the Timers plugin,
 -- keeping only the actual valid songs rather than spamming the default
 -- buff remaining timers.
-function adjust_Timers(spell, action)
+function adjust_Timers(spell, action, spellMap)
 	local t = os.time()
 	
 	-- Eliminate songs that have already expired from our local list.
@@ -336,7 +375,7 @@ function adjust_Timers(spell, action)
 		timer_reg[i] = nil
 	end
 	
-	local dur = calculate_duration(spell.name)
+	local dur = calculate_duration(spell.name, spellMap)
 	if timer_reg[spell.name] then
 		-- Can delete timers that have less than 120 seconds remaining, since
 		-- the new version of the song will overwrite the old one.
@@ -387,7 +426,7 @@ end
 
 -- Function to calculate the duration of a song based on the equipment used to cast it.
 -- Called from adjust_Timers(), which is only called on aftercast().
-function calculate_duration(spellName)
+function calculate_duration(spellName, spellMap)
 	local mult = 1
 	if player.equipment.range == 'Daurdabla' then mult = mult + 0.25 end -- change to 0.3 with 95/99 Daur
 	if player.equipment.range == "Gjallarhorn" then mult = mult + 0.3 end -- change to 0.4 with 99 Gjall
@@ -399,7 +438,6 @@ function calculate_duration(spellName)
 	if player.equipment.legs == "Mdk. Shalwar +1" then mult = mult + 0.1 end
 	if player.equipment.feet == "Brioso Slippers" then mult = mult + 0.1 end
 	
-	spellMap = classes.spellMappings[spellName]
 	if spellMap == 'Paeon' and player.equipment.head == "Brioso Roundlet" then mult = mult + 0.1 end
 	if spellMap == 'Paeon' and player.equipment.head == "Brioso Roundlet +1" then mult = mult + 0.1 end
 	if spellMap == 'Madrigal' and player.equipment.head == "Aoidos' Calot +2" then mult = mult + 0.1 end
