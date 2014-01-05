@@ -2,9 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 12/31/2013 9:46:34 AM
+-- Last Modified: 1/5/2014 1:48:24 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -54,7 +52,8 @@ function get_sets()
 	sets.precast.Step['Feather Step'] = {feet="Charis Shoes +2"}
 
 	sets.precast.Flourish1 = {}
-	sets.precast.Flourish1['Violent Flourish'] = {body="Etoile Casaque +2"}
+	sets.precast.Flourish1['Violent Flourish'] = {ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Etoile Casaque +2",ring1="Mediator's Ring",ring2="Sangoma Ring",feet="Iuitl Gaiters"} -- magic accuracy
 	sets.precast.Flourish1['Desperate Flourish'] = {} -- acc gear
 
 	sets.precast.Flourish2 = {}
@@ -301,24 +300,21 @@ end
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
 function job_pretarget(spell, action, spellMap, eventArgs)
-	if spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
-	end
+
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-
+	if spell.type == 'Waltz' then
+		refine_waltz(spell, action, spellMap, eventArgs)
+	end
 end
 
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.type == "Weaponskill" then
+	if spell.type:lower() == "weaponskill" then
 		if skillchainPending then
 			equip(sets.precast.Skillchain)
-		else
-			skillchainPending = true
-			send_command('wait 7;gs c clear skillchainPending')
 		end
 	end
 end
@@ -326,19 +322,16 @@ end
 
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
-function job_aftercast(spell, action)
+function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
 		if spell.english == "Wild Flourish" then
 			skillchainPending = true
 			send_command('wait 7;gs c clear skillchainPending')
+		elseif spell.type:lower() == "weaponskill" then
+			skillchainPending = not skillchainPending
+			send_command('wait 7;gs c clear skillchainPending')
 		end
 	end
-	
-	if spell.type == "Weaponskill" then
-		skillchainPending = false
-	end
-	
-	return false
 end
 
 
@@ -347,15 +340,21 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
+	if player.hpp < 80 then
+		idleSet.head = "Ocelomeh Headpiece +1"
+	end
+	
 	return idleSet
 end
 
 function customize_melee_set(meleeSet)
-	if buffactive['saber dance'] and not state.Defense.Active then
-		meleeSet = set_combine(meleeSet, sets.Buff['Saber Dance'])
-	end
-	if buffactive['climactic flourish'] and not state.Defense.Active then
-		meleeSet = set_combine(meleeSet, sets.Buff['Climactic Flourish'])
+	if not state.Defense.Active then
+		if buffactive['saber dance'] then
+			meleeSet = set_combine(meleeSet, sets.Buff['Saber Dance'])
+		end
+		if buffactive['climactic flourish'] then
+			meleeSet = set_combine(meleeSet, sets.Buff['Climactic Flourish'])
+		end
 	end
 	
 	return meleeSet
@@ -406,51 +405,43 @@ end
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
 function refine_waltz(spell, action, spellMap, eventArgs)
-	local newWaltz = ''
-	local tpCost = 0
-	local wasCancelled = false
-	local wasChanged = false
-
 	-- Don't modify anything for Healing Waltz or Divine Waltzes
 	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
-		-- return without changing event args
+		return
+	end
+
+	-- Can only calculate healing amounts for ourself.
+	if spell.target.type ~= "SELF" then
 		return
 	end
 	
+	local missingHP = player.max_hp - player.hp
+	local newWaltz
 	
-	-- Can only calculate healing amounts for ourself.
-	if spell.target.type == "SELF" then
-		local missingHP = player.max_hp - player.hp
-		
-		if missingHP < 40 then
-			add_to_chat(122,'Full HP!')
-		elseif missingHP < 200 then
-			newWaltz = 'Curing Waltz'
-		elseif missingHP < 500 then
-			newWaltz = 'Curing Waltz II'
-		elseif missingHP < 900 then
-			newWaltz = 'Curing Waltz III'
-		elseif missingHP < 1200 then
-			newWaltz = 'Curing Waltz IV'
-		else
-			newWaltz = 'Curing Waltz V'
-		end
-		
-		if newWaltz ~= '' then
-			add_to_chat(122,'Using '..newWaltz..' for ['..tostring(missingHP)..' HP]')
-			
-			if newWaltz ~= spell.english then
-				wasChanged = true
-			end
-		end
+	if missingHP < 40 then
+		-- not worth curing
+	elseif missingHP < 200 then
+		newWaltz = 'Curing Waltz'
+	elseif missingHP < 500 then
+		newWaltz = 'Curing Waltz II'
+	elseif missingHP < 900 then
+		newWaltz = 'Curing Waltz III'
+	elseif missingHP < 1200 then
+		newWaltz = 'Curing Waltz IV'
+	else
+		newWaltz = 'Curing Waltz V'
 	end
 	
-	if newWaltz ~= '' then
-		tpCost = waltzTPCost[newWaltz]
+	if not newWaltz then
+		add_to_chat(122,'Full HP!')
+		eventArgs.cancel = true
+		return
 	end
+	
+	local tpCost = waltzTPCost[newWaltz]
 	
 	-- Downgrade the spell to what we can afford
-	if player.tp < tpCost and not buffactive.trance and newWaltz ~= '' then
+	if player.tp < tpCost and not buffactive.trance then
 		--[[ Costs:
 			Curing Waltz:     20 TP
 			Curing Waltz II:  35 TP
@@ -459,10 +450,12 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 			Curing Waltz V:   80 TP
 			Divine Waltz:     40 TP
 			Divine Waltz II:  80 TP
-		]]
+		--]]
 		
 		if player.tp < 20 then
 			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Cancelling.')
+			eventArgs.cancel = true
+			return
 		elseif player.tp < 35 then
 			newWaltz = 'Curing Waltz'
 		elseif player.tp < 50 then
@@ -473,23 +466,17 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 			newWaltz = 'Curing Waltz IV'
 		end
 		
-		if newWaltz ~= '' then
-			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz)
-			
-			if newWaltz ~= spell.english then
-				wasChanged = true
-				send_command('wait 0.05;input /ja "'..newWaltz..'" '..spell.target.raw)
-			end
-		end
+		add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz..'.')
 	end
+
 	
 	if newWaltz ~= spell.english then
-		cancel_spell()
-		wasCancelled = true
+		send_command('wait 0.03;input /ja "'..newWaltz..'" <me>')
+		eventArgs.cancel = true
+		return
 	end
-	
-	eventArgs.handled = wasChanged
-	eventArgs.cancel = wasCancelled
+
+	add_to_chat(122,'Using '..newWaltz..' to cure '..tostring(missingHP)..' HP.')
 end
 
 function determine_haste_group()
