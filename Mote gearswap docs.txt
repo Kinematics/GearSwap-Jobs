@@ -1,156 +1,114 @@
 Documentation for use of Mote-Include GearSwaps.
 
 
+ ------   SETS   ------
 
-Order of events, and the functions that handle them:
+Sets are constructed hierarchically.  The 'sets' set is the root node.  Other broad categories of sets descend from the root node, and are named in lowercast.  Each of those groups has other descendants. Major breaking-off points, where you start specifying sets by spell name or option, are capitalized, as are final-tier options.  Explicitly known set groups:
 
-1) Precast, before a spell or ability is case. This is handled by precast() in Mote-Include.lua.  Actions:
-    1a) First, precast() calls job_precast() in the job.lua.  If job_precast() returns true, no further handling is done.
-    1aa) job_precast() is called with the spell and action parameters that GearSwap provides precast(), as well as a spellMap parameter that indicates the default spell mapping for the current action (so that the job class doesn't have to look that up itself).
-    1ab) job_precast() can optionally return a second value in order to indicate that midcast gear should be used instead of precast gear, such as when Nightingale or Spontaneity are active.  The second value just has to be anything other than nil, 0 or false.
-    1b) precast() then searches defined sets for an appropriate set to equip.  See section on set naming.
-    1ba) If the spell cast time is below a certain threshhold, it will instead attempt to find the proper midcast set and equip that instead.
-    1c) After precast() determines a set to use and equip()s it, it calls job_post_precast(), which can further modify the set.
-    1ca) job_post_precast is called with 4 parameters: spell, action, spellMap, and useMidcastGear; useMidcastGear is flagged if it was determined that midcast gear should be worn on precast.
-2) Midcast.  This is called when GearSwap detects the packet indicating that the spell started casting. JAs don't have midcast.  Actions:
-    2a) First, if midcast gear was used in the precast section, the entire midcast() function is skipped.
-    2b) First, midcast() calls job_midcast() in the job.lua.  If job_midcast() returns true, no further handling is done.
-    2ba) job_midcast() is called with the spell and action parameters that GearSwap provides precast(), as well as a spellMap parameter that indicates the default spell mapping for the current action (so that the job class doesn't have to look that up itself).
-    2c) midcast() then searches defined sets for an appropriate set to equip.  See section on set naming.
-    2d) After midcast() determines a set to use and equip()s it, it calls job_post_midcast(), which can further modify the set.
-    2da) job_post_midcast is called with 3 parameters: spell, action, and spellMap.
-3) Aftercast.  This is called when GearSwap detects the packet indicating that the spell started casting. JAs don't have aftercast.  Actions:
-    3a) First, aftercast() calls job_aftercast() in the job.lua.  If job_aftercast() returns true, no further handling is done.
-    3b) aftercast() then searches defined sets for an appropriate set to equip.  See section on set naming.
-    3c) After aftercast() determines a set to use and equip()s it, it calls job_post_aftercast(), which can further modify the set.
+sets
+    .precast
+        .FC
+        .JA
+        .WS
+        .~type (ie: spell.type, such as .Waltz, .Jig, .CorsairShot, etc)
+    .midcast
+    .idle
+        .Field
+        .Town
+        .Weak
+    .engaged
+    .resting
+    .defense
+    .Kiting
 
 
-From this you can see that only the job_xxxxcast() functions need to be written in the job lua.  The default handling tries for a reasonably intelligent selection of what set to equip, so well-defined sets cover most of the job of making use of this.
-
-Note 1: For all the job_xxx() functions that are referenced -- they are -not- mandatory.  The include file will check to see if they exist, and if they don't then it will continue on as normal.
+The Include then searches those general set categories for more specific versions of each group.  For example, sets.precast.FC.Cure would be the set for casting cure spells; sets.idle.Field.PDT would be the field idle set to wear when idle mode is set to PDT; sets.engaged.Dagger would be sets used for melee while wielding a dagger (nb: melee sets have more complex options).
 
 
+You can add more detail to the set to be used based on a variety of factors, depending on the set category.
 
-Self commands are commands that are issued directly to GearSwap, and passed through to the lua scripts.  The format is "gs c <command>", and the string "<command>" is sent to the script self_command() handler.  This function is defined in Mote-Include.
 
-1) self_command() first breaks up the command into space-separated words.  For example, "gs c update manual" will be passed the paramter (from GearSwap) of "update manual", which is will then split into {"update", "manual"}.
-2) self_command() calls job_self_command() to give it first shot at handling the self command.  It will provide the list of words, not the original command.  If job_self_command() returns true, no further processing is done.
-3) After that, self_command will process the command if it falls within a set list of known commands.
+When specifying a subset of a major set type for precast and midcast, the Include will check for subsets in the following order:
 
-Known self-commands are used for defining the state of the character, and what gear sets will be selected:
+1) Custom class.  If you define a custom class in classes.CustomClass, the Include will attempt to find that first.
 
-1) Toggle.  This will toggle a boolean state value.  Valid commands are:
-    1a) "toggle Kiting" will toggle the kiting state.
-    1b) "toggle Defense" will toggle the defense (all-out defense) value.  It will not change its current type (physical or magical).
-    
-2) Activate.  This will turn on a boolean state value, as well as define certain defense values.  Valid commands are:
-    2a) "activate kiting" will turn kiting on.
-    2b) "activate PhysicalDefense" will turn Defense on, and set its type as Physical.
-    2c) "activate MagicalDefense"  will turn Defense on, and set its type as Magical.
-    
-3) Cycle. This will cycle through predefined lists for various state types.  There are default lists defined in Mote-Include, but you can override those in the job lua with your own list.  Note that there is no predetermined set of valid values.  -Anything- can be in the list (including nothing at all, in which case it will always default to 'Normal'; 'Normal' should be part of most listings, though, aside from PhysicalDefense and MagicalDefense.) and it will be handled properly, so feel free to name them to match your needs.  Valid commands are:
-    3a) "cycle OffenseMode" - Cycle through known offense modes for hybrid TP sets (eg: accuracy, attack, etc).
-    3a) "cycle DefenseMode" - Cycle through known defense modes for hybrid TP sets (eg: evasion, PDT, etc).
-    3a) "cycle WeaponskillMode" - Cycle through known weaponskill modes to override the default gear set (eg: crit, PDT, etc).
-    3a) "cycle CastingMode" - Cycle through known casting modes (eg: resistant, proc, dire, etc).
-    3a) "cycle IdleMode" - Cycle through known idle modes (eg: normal, PDT, pet, etc)
-    3a) "cycle RestingMode" - Cycle through known resting modes (eg: normal, pet, etc)
-    3a) "cycle PhysicalDefenseMode" - Cycle through known all-out physical defense modes (eg: PDT, evasion, etc)
-    3a) "cycle MagicalDefenseMode" - Cycle through known all-out magical defense modes (eg: MDT, resist, etc)
-    
-4) Set.  This will set a specific value for one of the various states (anything listed above, as well as 'Distance' for maximum weaponskill distance; note that distance limitations on weaponskills are not currently implemented).  Format is "set <stateVariable> <value>".  (Using Distance without a value will set your current distance from your target; not currently implemented.  Setting Distance to 0 will turn off distance checks.)
+2) Spell map.  At the bottom of the Include is a list of spell mappings, to allow various spells to all be considered a single 'type' (eg: Cure for all single-target cure spells, Minuet for all the different Minuets, etc).
 
-5) Reset.  This restores various states or groups of states to default values.
-    5a) "reset defense" turns off all-out defense mode.
-    5b) "reset kiting" turns off kiting.
-    5c) "reset melee" returns OffenseMode and DefenseMode to Normal.
-    5d) "reset casting" returns CastingMode to Normal.
-    5e) "reset distance" sets max weaponskill distance to 0 (ie: doesn't prevent any weaponskills).
-    5f) "reset all" resets all states to default values.
-    
-6) Update.  This initiates re-equipping gear appropriate to your current state.  If sent as "update user", it also displays the current state config.  The default display can be overridden in the job lua function, display_current_job_state().
+3) Spell name.  It will then attempt to find a set designed for specific spells (eg: Stoneskin, Berserk).
 
-Note 2: None of the user commands are case sensitive, so any capitalization is ok.
+4) Spell skill.  It will then check for the skill used in casting the spell (eg: EnhancingMagic, ElementalMagic).
+
+5) Spell type.  It will then check for the general type of spell (eg: WhiteMagic, BardSong).
+
+Note that for spell types that are abilities (eg: Waltz, CorsairShot, etc), it will further search for the spell name as a subset under the type. EG: sets.precast.Waltz['Healing Waltz'].
+
+Also, weaponskills (whether named or part of a custom class) will search for a set refinement of the weaponskill mode (which can also be custom-specified, if desired).  EG: sets.precast.WS.Upheaval['Mighty Strikes'], sets.precast.WS.MagicalWeaponskills.Brew.
 
 
 
-Now, equipping gear.  A separate set of functions (starting at handle_equipping_gear()) is defined for generally equipping gear appropriate to the current state.  This will most commonly be called via aftercast(), but also from an "update" user command, as well as after any state change is made.
+When specifying a subset of melee sets, the include will attempt to construct a set based on a chain of values, all of which are optional (if it doesn't find one value, it will continue to the next in the chain).
 
-Aside from set naming (see below), these functions apply idle/engaged/resting gear first, and then any all-out defense gear, and then any kiting gear.  All of these possibilities are combined into a single set, and then a call is made to either customize_idle_gear() or customize_melee_gear() (passing the set that the include functions have constructed thus far) that allows the job script to further modify the set to be equipped.  There's no customization call for resting gear.
+1) You may add custom 'group' values to the classes.CustomMeleeClasses list (use classes.CustomMeleeClasses.append(~new group) to add to the list).  These will be stacked on in the order they exist within the list.  For example, if the list contains 'HundredFists', 'Impetus', the include will continue searching from sets.engaged.HundredFists.Impetus.
 
+2) You may specify a specific weapon via the TPWeapon variable.  For example, you might have different gear sets defined under sets.engaged.GK and sets.engaged.Polearm.
 
+3) You may specify sets based on the OffenseMode value.  For example, you might default to sets.engaged.Dagger, but also have sets.engaged.Dagger.Acc when OffenseMode is set to Acc.
 
-Set Naming.
+4) You may specify sets based on the DefenseMode value.  For example, you might default to sets.engaged.Dagger, but also have sets.engaged.Dagger.Evasion when DefenseMode is set to Evasion.
 
-This is where the magic happens.  For all of the above to handle most of the work 'automatically', they need to have well-defined sets that they can search for.  This is done via sub-tables.
-
-A handy feature of lua is that we don't need to know that the sets exist beforehand, but can instead test to see if the set exists, and apply it if it does.  This allows you to simply add a new, properly named set and it will automatically be included when the code tries to equip gear appropriate to the action being taken.
-
-The code searches for sets in a particular order, so keep that in mind as you make them.
-
-First, all sets are children of the 'sets' table.  Under that table we define certain broad categories of sets:
-
-sets.idle
-sets.engaged
-sets.resting
-sets.precast
-sets.midcast
-sets.defense
+A fully-defined set might be something like sets.engaged.HundredFists.Impetus.H2H.Acc.PDT.  However many specification values can be considered optional, so that it will fall back to the next previous set.  For example, rather than sets.engaged.H2H.Normal.Normal (no groups, H2H weapon, normal offense and defense), if H2H is your default weapon you could just as easily use just sets.engaged.
 
 
-All sets that are active at the indicated points in time (eg: sets.idle for idle sets, sets.precast for precast gear, etc) fall under the obvious categories.  sets.defense is set aside for all-out defense gear (PhysicalDefense or MagicalDefense).
 
-Some of these sets have various children that also describe broad categories within each grouping:
-
-sets.idle
-    sets.idle.Town - gear worn while inside an area defined as a town
-    sets.idle.Field
-    sets.idle.Weak - gear worn while the weakness buff is active
-sets.engaged
-    sets.engaged.<TPWeapon> - if TPWeapon is defined, it lets you create groups of engaged sets
-sets.precast
-    sets.precast.JA - job abilities
-    sets.precast.WS - weaponskills
-    sets.precast.FC - fast cast sets for spells
-    sets.precast.<type> - For other action types, such as CorsairShot, Waltz, Jig, etc.
+Construct your sets with that in mind, and the Include will be able to handle 95% of set selection and equipping without you needing to write any particular rules.
 
 
-The idle sets are then refined by IdleMode.  For example, if you had a PDT idle mode, you could have
 
-sets.idle.Field.PDT
-
-Engaged sets have OffenseMode and DefenseMode.  That means you can have:
-
-sets.engaged.Dagger.Accuracy.Evasion
-
-Note that the above are optional.  If a given sub-table isn't defined, it will fall back on an earlier table.  For example, if you had OffenseMode=Accuracy and DefenseMode=Evasion, but didn't define a table with both accuracy and evasion, it would check for sets.engaged.Dagger.Accuracy, and sets.engaged.Dagger.Evasion.  If neither of those sets are defined, it will fall back to sets.engaged.Dagger.  And if you never defined a TP weapon it would simply use sets.engaged.  Also note that if a given job only ever uses one weapon you can skip the TPWeapon sub-table entirely, and have sets.engaged.Accuracy.Evasion.
+ ------   RULES   ------
 
 
-For the precast and midcast tables, further searches are done in the following order:
+ ---- Basics ----
+ 
+ --- Actions ---
 
-For job abilities and weaponskills, it searches based on the action name.  So:
+The basic function calls occur for precast, midcast and aftercast.  The Include file handles the action precast()/etc functions, and calls special versions within the job file.  These calls are made both before and after the Include file does its predefined work.  EG:
 
-sets.precast.JA.Berserk
-sets.precast.WS.Upheaval
+Include: precast()
+        Job: job_precast()
+        Include: default code
+        Job: job_post_precast()
 
-For weaponskills, it also checks for weaponskill mode:
+Each time these functions are called, the Include passes certain parameters:
 
-sets.precast.WS.Upheaval.MightyStrikes
-
-If no named weaponskill is defined, it will fall back on the general sets.precast.WS set (which itself can be refined with weaponskill modes).
-
-Midcast is only relevant to magic spells, so there's no further immediate breakdown.  The breakdown under spells.midcast is the same as for spells.precast.FC.  The order of searching within the spells sets is:
-
-1) Check for the spell name.  EG: sets.midcast.Stoneskin
-2) Check for any custom class.  EG: sets.midcast.MndEnfeebles (see below)
-3) Check for any standard class mapping.  EG: sets.midcast.Cure
-4) Check for the skill used by the spell.  EG: sets.midcast.EnhancingMagic
-5) Check for the type of spell.  EG: sets.midcast.WhiteMagic
-6) If all else fails, use the base set.  EG: sets.midcast, or sets.precast.FC
+spell: All spell information provided by GearSwap.
+action: This no longer carries any information, but is passed through since it still exists within the GearSwap code.
+spellMap: This is the general mapping, if any, for the spell.  EG: If the spell.name is 'Choke', the spellMap value will be 'ElementalEnfeeble'.
+eventArgs: This is a means of flagging the Include that you don't wish for it to do its default processing.
 
 
-For weaponskills and spells (precast and midcast) you may also define a custom class (in job_precast(); this has to be defined every time through, since the custom class is cleared out after every pass) to describe a broad range of actions that don't fit within the normal categories -- for example, all magical weaponskills, or all mnd-based enfeebles -- and use that in place of the actual spell name.  So:
+eventArgs will always have a sub-field of 'handled'.  If you set eventArgs.handled = true, the Include will not perform any default processing on that time slot (such as precast).  It may also have a sub-field of 'cancel', if it's in the pretarget or precast phase.  If you set eventArgs.cancel = true, the Include will cancel the spell and quit any further processing.
 
-sets.midcast.FC.MndEnfeebles
-sets.precast.WS.MagicalWeaponskills.Brew
+The reason for the pre, default, and post ordering for each section is to allow a logical layering of equipment at each level.  If you want to special-case a certain bit of equipment, put that in the Pre section and tell the Include that you handled choosing what gear to equip.  If you want the default gear to be equipped, but possibly make a small modification (eg: Orison Mitts +2 when casting a -na spell with Divine Caress active), put that in the Post section.
+
+
+ --- Melee ---
+
+While there is a pre/default/post section for aftercast, that's not actually where most gear handling is done for non-action equips (though you can still use it to prevent aftercast from equipping gear, by setting the usual eventArgs.handled to true).
+
+Modifications to the aftercast gear to be equipped is done via two additional functions:
+
+customize_idle_set(idleSet)
+
+customize_melee_set(meleeSet)
+
+These functions allow you to modify the default constructed sets before they're actually equipped.  Return the modified set at the end of the function.
+
+
+ ---- Advanced ----
+ 
+ --- States & Modes ---
+
+ --- Setting Custom Classes ---
+
+
 
