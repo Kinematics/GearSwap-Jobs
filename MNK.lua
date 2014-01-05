@@ -2,9 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 12/25/2013 6:17:03 AM
+-- Last Modified: 1/5/2014 2:40:57 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -294,82 +292,37 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_midcast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the general midcast() is done.
-function job_post_midcast(spell, action, spellMap, eventArgs)
-
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
-function customize_idle_set(idleSet)
-	return idleSet
-end
-
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
-
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus,oldStatus)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	local adjMeleeSet = ''
-
-	classes.CustomMeleeGroups:clear()
+	if buff == "Hundred Fists" or buff == "Impetus" or buff == "Footwork" then
+		local adjMeleeSet = ''
 	
-	if buff == "Hundred Fists" then
-		if gain then
+		classes.CustomMeleeGroups:clear()
+		
+		if (buff == "Hundred Fists" and gain) or buffactive['hundred fists'] then
 			classes.CustomMeleeGroups:append('HF')
+		elseif buffactive.footwork then
+			classes.CustomMeleeGroups:append('Footwork')
 		end
-	elseif buffactive['hundred fists'] then
-		classes.CustomMeleeGroups:append('HF')
-	elseif buffactive.footwork then
-		classes.CustomMeleeGroups:append('Footwork')
-	end
-	
-	if buff == "Impetus" then
-		if gain then
+		
+		if (buff == "Impetus" and gain) or buffactive.impetus then
 			classes.CustomMeleeGroups:append('Impetus')
 		end
-	elseif buffactive.impetus then
-		classes.CustomMeleeGroups:append('Impetus')
+	
+		handle_equipping_gear(player.status)
 	end
-
-	handle_equipping_gear(player.status)
 end
 
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called for custom player commands.
-function job_self_command(cmdParams, eventArgs)
-
-end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
@@ -386,11 +339,6 @@ function job_update(cmdParams, eventArgs)
 	end
 end
 
--- Function to display the current relevant user state when doing an update.
--- Return true if display was handled, and you don't want the default info shown.
-function display_current_job_state(eventArgs)
-
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
