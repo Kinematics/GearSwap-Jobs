@@ -197,6 +197,7 @@ function MoteInclude.precast(spell, action)
 		job_precast(spell, action, spellMap, eventArgs)
 	end
 
+	-- Perform default equips if the job didn't handle it.
 	if not eventArgs.handled then
 		equip(get_default_precast_set(spell, action, spellMap, eventArgs))
 	end
@@ -237,6 +238,7 @@ function MoteInclude.midcast(spell,action)
 		job_midcast(spell, action, spellMap, eventArgs)
 	end
 
+	-- Perform default equips if the job didn't handle it.
 	if not eventArgs.handled then
 		equip(get_default_midcast_set(spell, action, spellMap, eventArgs))
 	end
@@ -309,6 +311,7 @@ function MoteInclude.status_change(newStatus, oldStatus)
 		job_status_change(newStatus, oldStatus, eventArgs)
 	end
 
+	-- Equip default gear if not handled by the job.
 	if not eventArgs.handled then
 		handle_equipping_gear(newStatus)
 	end
@@ -342,6 +345,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Central point to call to equip gear based on status.
+-- Status - Player status that we're using to define what gear to equip.
 function MoteInclude.handle_equipping_gear(status)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
@@ -351,6 +355,7 @@ function MoteInclude.handle_equipping_gear(status)
 		job_handle_equipping_gear(status, eventArgs)
 	end
 
+	-- Equip default gear if job didn't handle it.
 	if not eventArgs.handled then
 		equip_gear_by_status(status)
 	end
@@ -362,8 +367,8 @@ end
 function MoteInclude.equip_gear_by_status(status)
 	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..'], HP='..tostring(player.hp)) end
 	
-	-- If status not defined, check for positive HP to make sure they're not dead.
-	-- If they have 0 HP, don't try to equip stuff.  Otherwise treat as Idle.
+	-- If status not defined, treat as idle.
+	-- Be sure to check for positive HP to make sure they're not dead.
 	if status == nil or status == '' then
 		if player.hp > 0 then
 			equip(get_current_idle_set())
@@ -386,7 +391,7 @@ end
 function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	if spell.action_type:lower() == 'magic' then
+	if spell.action_type == 'Magic' then
 		local spellTiming = 'precast.FC'
 		if eventArgs.useMidcastGear then
 			precastUsedMidcastGear = true
@@ -651,6 +656,13 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------------
 -- General functions for manipulating state values.
 -- Only specifically handles state and such that we've defined within this include.
 -------------------------------------------------------------------------------------------------------------------
@@ -687,7 +699,7 @@ function MoteInclude.self_command(commandArgs)
 end
 
 
--- Individual handling of self commands --
+-- Individual handling of self-commands
 
 
 -- Handle toggling specific vars that we know of.
@@ -705,6 +717,11 @@ function MoteInclude.handle_toggle(cmdParams)
 			state.Defense.Active = not state.Defense.Active
 			toggleVal = state.Defense.Active
 			toggleDesc = state.Defense.Type
+			if state.Defense.Type == 'Physical' then
+				toggleDesc = 'Physical defense ('..state.Defense.PhysicalMode..')'
+			else
+				toggleDesc = 'Magical defense ('..state.Defense.MagicalMode..')'
+			end
 		elseif toggleField == 'kite' or toggleField == 'kiting' then
 			state.Kiting = not state.Kiting
 			toggleVal = state.Kiting
@@ -799,6 +816,11 @@ function MoteInclude.handle_cycle(cmdParams)
 			-- Get the options.XXXModes table, and the current state mode for the mode field.
 			local modeTable, currentValue = get_mode_table(modeField)
 
+			if not modeTable then
+				if _global.debug_mode then add_to_chat(123,'Unknown mode : '..modeField..'.') end
+				return false
+			end
+
 			-- Get the index of the current mode.  'Normal' or undefined is treated as index 0.
 			local invertedTable = invert_table(modeTable)
 			local index = 0
@@ -858,7 +880,11 @@ function MoteInclude.handle_set(cmdParams)
 			
 			if lowerField == 'defense' then
 				state.Defense.Active = setValue
-				fieldDesc = state.Defense.Type
+				if state.Defense.Type == 'Physical' then
+					fieldDesc = 'Physical defense ('..state.Defense.PhysicalMode..')'
+				else
+					fieldDesc = 'Magical defense ('..state.Defense.MagicalMode..')'
+				end
 			elseif lowerField == 'kite' or lowerField == 'kiting' then
 				state.Kiting = setValue
 				fieldDesc = 'Kiting'
@@ -893,22 +919,21 @@ function MoteInclude.handle_set(cmdParams)
 			-- Get the options.XXXModes table, and the current state mode for the mode field.
 			local modeTable, currentValue = get_mode_table(modeField)
 			
-			-- Check if the new setting exists in the mode table
-			if modeTable[setField] then
-				-- And save that to the appropriate state field.
-				set_mode(modeField, setField)
-
-				-- Notify the job script of the change.
-				if job_state_change then
-					job_state_change(modeField, setField)
-				end
-				
-				-- Display what got changed to the user.
-				add_to_chat(122,modeField..' mode is now '..setField..'.')
-			else
+			if not modeTable or not modeTable[setField] then
 				if _global.debug_mode then add_to_chat(123,'Unknown mode value: '..setField..' for '..modeField..' mode.') end
 				return false
 			end
+			
+			-- And save that to the appropriate state field.
+			set_mode(modeField, setField)
+
+			-- Notify the job script of the change.
+			if job_state_change then
+				job_state_change(modeField, setField)
+			end
+			
+			-- Display what got changed to the user.
+			add_to_chat(122,modeField..' mode is now '..setField..'.')
 
 		-- Or issueing a command where the user may not provide the value
 		elseif lowerField == 'distance' then
@@ -1177,18 +1202,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for changing spells and targets.
 -------------------------------------------------------------------------------------------------------------------
-
-
--- Support function for job functions that want to change the spell.
--- This does the cancel/send_command, and sets the proper vars for the eventArgs parameter.
-function MoteInclude.change_spell(command, eventArgs)
-	cancel_spell()
-	send_command(command)
-	eventArgs.handled = true
-	eventArgs.cancel = true
-end
-
-
 
 function MoteInclude.auto_change_target(spell, action, spellMap)
 	-- Do not modify target for spells where we get <lastst> or <me>.
