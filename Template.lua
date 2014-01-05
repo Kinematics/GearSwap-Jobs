@@ -4,6 +4,8 @@
 
 -- Last Modified: 1/4/2014 6:07:55 PM
 
+-- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
+
 function get_sets()
 	-- Load and initialize the include file that this depends on.
 	include('Mote-Include.lua')
