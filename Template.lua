@@ -2,7 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/4/2014 4:52:19 PM
+-- Last Modified: 1/4/2014 6:07:55 PM
 
 function get_sets()
 	-- Load and initialize the include file that this depends on.
