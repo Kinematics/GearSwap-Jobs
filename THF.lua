@@ -397,7 +397,7 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
-		state.Buff[spell.name] = gain
+		state.Buff[buff] = gain
 	end
 	
 	if not satafeint_active() then
