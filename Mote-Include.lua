@@ -162,11 +162,16 @@ function MoteInclude.pretarget(spell,action)
 	local spellMap = classes.spellMappings[spell.english]
 
 	-- init a new eventArgs
-	local eventArgs = {handled = false}
+	local eventArgs = {handled = false, cancel = false}
 
 	-- Allow the job to handle it.
 	if job_pretarget then
 		job_pretarget(spell, action, spellMap, eventArgs)
+	end
+
+	if eventArgs.cancel then
+		cancel_spell()
+		return
 	end
 	
 	-- If the job didn't handle things themselves, continue..
@@ -186,11 +191,16 @@ function MoteInclude.precast(spell, action)
 	local spellMap = classes.spellMappings[spell.english]
 	
 	-- init a new eventArgs
-	local eventArgs = {handled = false, useMidcastGear = false}
+	local eventArgs = {handled = false, cancel = false, useMidcastGear = false}
 
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
 		job_precast(spell, action, spellMap, eventArgs)
+	end
+	
+	if eventArgs.cancel then
+		cancel_spell()
+		return
 	end
 
 	-- Perform default equips if the job didn't handle it.
