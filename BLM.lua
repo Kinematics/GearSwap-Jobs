@@ -291,6 +291,12 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
+function job_post_midcast(spell, action, spellMap, eventArgs)
+	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and state.CastingMode ~= 'Proc' then
+		add_obi(spell.element)
+	end
+end
+
 
 function job_aftercast(spell, action, spellMap, eventArgs)
 	-- Lock feet after using Mana Wall.
