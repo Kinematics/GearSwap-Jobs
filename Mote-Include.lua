@@ -14,7 +14,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/4/2014 6:07:49 PM
+-- Last Modified: 1/5/2014 1:29:22 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local MoteInclude = {}
@@ -144,10 +144,6 @@ function MoteInclude.init_include()
 
 
 	-- Other general vars.  Set whatever's convenient for your job luas.
-	
-	staffs = {}
-	staffs.HMP = 'Chatoyant Staff'
-	staffs.PDT = 'Earth Staff'
 	
 end
 

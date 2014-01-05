@@ -217,12 +217,12 @@ function get_sets()
 	-- Defense sets
 	sets.defense = {}
 
-	sets.defense.PDT = {main=staffs.PDT,sub="Achaq Grip",
+	sets.defense.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1=leftDarkRing,ring2=rightDarkRing,
 		back="Umbra Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
-	sets.defense.MDT = {main=staffs.PDT,sub="Achaq Grip",
+	sets.defense.MDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Theophany Cap +1",neck="Twilight Torque",
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1=leftDarkRing,ring2="Shadow Ring",
 		back="Engulfer Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}

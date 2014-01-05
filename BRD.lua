@@ -153,12 +153,12 @@ function get_sets()
 	
 	
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {main=staffs.PDT, sub="Quire Grip",range="Oneiros Harp",
+	sets.idle = {main=gear.Staff.PDT, sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1=leftDarkRing,ring2=rightDarkRing,
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 
-	sets.idle.Town = {main=staffs.PDT, sub="Quire Grip",range="Oneiros Harp",
+	sets.idle.Town = {main=gear.Staff.PDT, sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
@@ -168,7 +168,7 @@ function get_sets()
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 		
-	sets.idle.Weak = {main=staffs.PDT,sub="Quire Grip",range="Oneiros Harp",
+	sets.idle.Weak = {main=gear.Staff.PDT,sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Meridian Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
@@ -177,12 +177,12 @@ function get_sets()
 	-- Defense sets
 	sets.defense = {}
 
-	sets.defense.PDT = {main=staffs.PDT,sub="Quire Grip",
+	sets.defense.PDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',ring2='Dark Ring',
 		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
-	sets.defense.MDT = {main=staffs.PDT,sub="Quire Grip",
+	sets.defense.MDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',--[[ring2="Shadow Ring",
 		back="Engulfer Cape",]]waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
