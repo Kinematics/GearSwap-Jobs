@@ -2,9 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- NOTE: This is a work in progress, experimenting.  Expect it to change frequently, and maybe include debug stuff.
-
--- Last Modified: 1/4/2014 2:28:29 AM
+-- Last Modified: 1/5/2014 3:03:25 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
@@ -14,7 +12,7 @@ function get_sets()
 	init_include()
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
+	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
 	options.CastingModes = {'Normal', 'Resistant', 'Dire'}
@@ -23,29 +21,19 @@ function get_sets()
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 	
+	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode = 'None'
 	
-	--leftDarkRing = {name="Dark Ring",augments={"Physical Damage Taken -6%", "Magical Damage Taken -3%", "Spell Interruption Rate Down 5%"}}
-	--rightDarkRing = {name="Dark Ring",augments={"Physical Damage Taken -5%", "Magical Damage Taken -3%"}}
-	
-	afflatusSolace = buffactive['Afflatus Solace']
+	state.Buff = {}
+	state.Buff['Afflatus Solace'] = buffactive['afflatus solace']
 
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
-	
+
 	-- Precast Sets
 	sets.precast = {}
 	
-	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-	
-	sets.precast.JA.Benediction = {body="Cleric's Briault +2"}
-
-	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {
-		head="Nahtirah Hat",ear1="Roundel Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",
-		back="Refraction Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	-- Fast cast sets for spells
 	
@@ -59,15 +47,28 @@ function get_sets()
 
 	sets.precast.FC.HealingMagic = set_combine(sets.precast.FC, {legs="Orison's Pantaloons +2"})
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {body="Heka's Kalasiris",
-		back="Pahtli Cape", feet="Cure Clogs"})
+	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
+
+	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {
+		ammo="Impatiens",
+		head="Theophany Cap +1",
+		body="Heka's Kalasiris",
+		back="Pahtli Cape",waist="Witful Belt",feet="Cure Clogs"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
-       
-	-- Magian staves with cast time reduction, by element
-	--sets.precast.FC.Thunder = {main='Apamajas I'}
-	--sets.precast.FC.Fire = {main='Atar I'}
+	
+	-- Precast sets to enhance JAs
+	sets.precast.JA = {}
+	
+	sets.precast.JA.Benediction = {body="Cleric's Briault +2"}
+
+	-- Waltz set (chr and vit)
+	sets.precast.Waltz = {
+		head="Nahtirah Hat",ear1="Roundel Earring",
+		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",
+		back="Refraction Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+	
 	
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
@@ -105,14 +106,14 @@ function get_sets()
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Cure Clogs"}
+		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
-	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
+	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
-	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens",
+	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor's Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
@@ -123,7 +124,6 @@ function get_sets()
 		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	
-	-- Specific spells
 	sets.midcast.Cursna = {
 		head="Orison Cap +2",neck="Malison Medallion",
 		hands="Hieros Mittens",ring1="Ephedra Ring",
@@ -136,7 +136,6 @@ function get_sets()
 
 	sets.midcast.Auspice = {feet="Orison Duckbills +2"}
 
-	-- Spell classes
 	sets.midcast.Barspell = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Colossus's Torque",
 		body="Orison Bliaud +2",hands="Orison Mitts +2",
@@ -290,10 +289,10 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 	end
 	
 	-- Ionis gives us an extra 3% fast cast, so we can drop Incantor Stone for Impatiens.
-	if (classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee') and
-		buffactive.ionis and areas.Adoulin[world.area:lower()] then
-		equip({ammo="Impatiens"})
-	end
+	--if (classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee') and
+	--	buffactive.ionis and areas.Adoulin[world.area:lower()] then
+	--	equip({ammo="Impatiens"})
+	--end
 end
 
 
@@ -314,7 +313,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end
 
-function job_post_midcast(spell, action, spellMap)
+function job_post_midcast(spell, action, spellMap, eventArgs)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
 	if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 		equip(sets.Buff['Divine Caress'])
@@ -327,8 +326,14 @@ end
 
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
-function job_aftercast(spell, action)
-	return false
+function job_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted then
+		if state.Buff[spell.name] ~= nil then
+			state.Buff[spell.name] = true
+		elseif spell.name == "Afflatus Misery" then
+			state.Buff['Afflatus Solace'] = false
+		end
+	end
 end
 
 
@@ -349,26 +354,12 @@ end
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called when the player's status changes.
-function job_status_change(newStatus,oldStatus)
-	-- Disable weapon swaps when engaged
-	if newStatus == 'Engaged' then
-		disable('main','sub')
-	elseif oldStatus == 'Engaged' then
-		enable('main','sub')
-	end
-end
-
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if buff == 'Afflatus Solace' then
-		if gain then
-			afflatusSolace = true
-		else
-			afflatusSolace = false
-		end
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
 	end
 end
 
@@ -377,20 +368,34 @@ end
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for direct player commands.
-function job_self_command(cmdParams)
-
+-- Called by the 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	if cmdParams[1] == 'user' and not areas.Cities[world.area] then
+		local needsArts = player.sub_job:lower() == 'sch' and
+			not buffactive['Light Arts'] and not buffactive['Addendum: White'] and
+			not buffactive['Dark Arts'] and not buffactive['Addendum: Black']
+			
+		if not buffactive['Afflatus Solace'] and not buffactive['Afflatus Misery'] then
+			if needsArts then
+				windower.send_command('input /ja "Afflatus Solace" <me>;wait 1.2;input /ja "Light Arts" <me>')
+			else
+				windower.send_command('input /ja "Afflatus Solace" <me>')
+			end
+		end
+	end
 end
 
--- Called by the 'update' self-command.
-function job_update(cmdParams)
-	if cmdParams[1] == 'user' and not areas.Cities[world.area] then
-		if not buffactive['Afflatus Solace'] and not buffactive['Afflatus Misery'] then
-			windower.send_command('input /ja "Afflatus Solace" <me>')
-		elseif player.sub_job:lower() == 'sch' and
-			not buffactive['Light Arts'] and not buffactive['Addendum: White'] and
-			not buffactive['Dark Arts'] and not buffactive['Addendum: Black'] then
-			windower.send_command('input /ja "Light Arts" <me>')
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue)
+	if stateField == 'Offense' then
+		if newValue == 'Normal' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
+	elseif stateField == 'Reset' then
+		if state.OffenseMode == 'None' then
+			enable('main','sub')
 		end
 	end
 end
@@ -428,9 +433,9 @@ function get_spell_class(spell, action, spellMap)
 				return "IntEnfeebles"
 			end
 		else
-			if spellMap == 'Cure' and afflatusSolace then
+			if spellMap == 'Cure' and state.Buff['Afflatus Solace'] then
 				return "CureSolace"
-			elseif spellMap == "Curaga" and player.status == 'Engaged' and player.equipment.main == 'Mondaha Cudgel' then
+			elseif (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' and player.equipment.main == 'Mondaha Cudgel' then
 				return "CureMelee"
 			end
 		end
