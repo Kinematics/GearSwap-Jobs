@@ -271,7 +271,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus)
+function job_status_change(newStatus, oldStatus, eventArgs)
 	--handle_equipping_gear(newStatus)
 end
 
