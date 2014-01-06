@@ -415,10 +415,10 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- Spell type
 		if classes.CustomClass and baseSet[classes.CustomClass] then
 			equipSet = baseSet[classes.CustomClass]
-		elseif spellMap and baseSet[spellMap] then
-			equipSet = baseSet[spellMap]
 		elseif baseSet[spell.english] then
 			equipSet = baseSet[spell.english]
+		elseif spellMap and baseSet[spellMap] then
+			equipSet = baseSet[spellMap]
 		elseif baseSet[spell.skill] then
 			equipSet = baseSet[spell.skill]
 		elseif baseSet[spell.type] then
@@ -499,16 +499,16 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
 		-- Set selection ordering:
 		-- Custom class
-		-- Class mapping
 		-- Specific spell name
+		-- Class mapping
 		-- Skill
 		-- Spell type
 		if classes.CustomClass and sets.midcast[classes.CustomClass] then
 			equipSet = sets.midcast[classes.CustomClass]
-		elseif spellMap and sets.midcast[spellMap] then
-			equipSet = sets.midcast[spellMap]
 		elseif sets.midcast[spell.english] then
 			equipSet = sets.midcast[spell.english]
+		elseif spellMap and sets.midcast[spellMap] then
+			equipSet = sets.midcast[spellMap]
 		elseif sets.midcast[spell.skill] then
 			equipSet = sets.midcast[spell.skill]
 		elseif sets.midcast[spell.type] then
