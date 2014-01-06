@@ -83,11 +83,6 @@ function MoteInclude.init_include()
 	-- Vars for use in melee set construction.
 	TPWeapon = 'Normal'
 	
-	-- Flag whether the job lua changed the spell to be used.
-	spellWasChanged = false
-	-- Flag whether we changed the target of the spell.
-	targetWasChanged = false
-
 	-- Special var for displaying sets at certain cast times.
 	showSet = nil
 		
