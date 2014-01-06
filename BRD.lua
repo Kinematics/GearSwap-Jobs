@@ -327,7 +327,7 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue)
-	if stateField == 'Offense' then
+	if stateField == 'OffenseMode' then
 		if newValue == 'Normal' then
 			disable('main','sub')
 		else
