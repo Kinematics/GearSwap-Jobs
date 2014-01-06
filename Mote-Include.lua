@@ -467,8 +467,6 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[spell.skill]
 		elseif equipSet[spell.type] then
 			equipSet = equipSet[spell.type]
-		else
-			equipSet = baseSet
 		end
 		
 		-- Check for specialized casting modes for any given set selection.
