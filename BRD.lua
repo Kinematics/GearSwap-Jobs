@@ -261,14 +261,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 			eventArgs.cancel = true
 			return
 		end
-
-		classes.CustomClass = get_song_class(spell)
-		
-		-- If Nightingale is on, note it in eventArgs to indicate that midcast gear
-		-- should be equipped during precast rather than the normal precast gear.
-		if buffactive.nightingale then
-			eventArgs.useMidcastGear = true
-		end
 	end
 end
 
