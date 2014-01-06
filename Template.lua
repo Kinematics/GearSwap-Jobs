@@ -240,6 +240,18 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 
 end
 
+-- Runs when a pet initiates an action.
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_pet_midcast(spell, action, spellMap, eventArgs)
+
+end
+
+-- Run after the general pet midcast() is done.
+-- eventArgs is the same one used in job_pet_midcast, in case information needs to be persisted.
+function job_pet_post_midcast(spell, action, spellMap, eventArgs)
+
+end
+
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
 
@@ -248,6 +260,17 @@ end
 -- Run after the general aftercast() is done.
 -- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
 function job_post_aftercast(spell, action, spellMap, eventArgs)
+
+end
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_pet_aftercast(spell, action, spellMap, eventArgs)
+
+end
+
+-- Run after the general pet aftercast() is done.
+-- eventArgs is the same one used in job_pet_aftercast, in case information needs to be persisted.
+function job_pet_post_aftercast(spell, action, spellMap, eventArgs)
 
 end
 
