@@ -33,6 +33,8 @@ function get_sets()
 	sets.precast.JA = {}
 
 	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
+
+	sets.precast.JA['Trance'] = {head="Etoile Tiara +2"}
 	
 
 	-- Waltz set (chr and vit)
