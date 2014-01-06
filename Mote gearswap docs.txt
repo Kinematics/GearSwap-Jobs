@@ -156,7 +156,7 @@ Target - for determination of whether to force use of <stnpc> when performing ac
 
 
 
-The valid cyclable modes are:
+The valid cycle-able modes are:
 
 OffenseMode - the offense portion of the hybrid melee set (eg: acc, crit, etc)
 DefenseMode - the defense portion of the hybrid melee set (eg: evasion, pdt, etc)
