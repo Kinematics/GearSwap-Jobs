@@ -632,8 +632,8 @@ function MoteInclude.get_current_idle_set()
 	end
 
 	for i = 1,#classes.CustomIdleGroups do
-		if meleeSet[classes.CustomIdleGroups[i]] then
-			meleeSet = meleeSet[classes.CustomIdleGroups[i]]
+		if idleSet[classes.CustomIdleGroups[i]] then
+			idleSet = idleSet[classes.CustomIdleGroups[i]]
 		end
 	end
 	
