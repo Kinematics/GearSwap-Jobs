@@ -2,7 +2,7 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/5/2014 3:03:25 AM
+-- Last Modified: 1/6/2014 7:32:14 AM
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
