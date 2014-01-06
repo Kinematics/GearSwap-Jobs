@@ -604,18 +604,20 @@ function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventA
 	-- Class mapping
 	-- Skill
 	-- Spell type
-	if classes.CustomClass and sets.midcast.Pet[classes.CustomClass] then
-		equipSet = sets.midcast.Pet.[classes.CustomClass]
-	elseif sets.midcast.Pet[spell.english] then
-		equipSet = sets.midcast.Pet[spell.english]
-	elseif spellMap and sets.midcast.Pet[spellMap] then
-		equipSet = sets.midcast.Pet[spellMap]
-	elseif sets.midcast.Pet[spell.skill] then
-		equipSet = sets.midcast.Pet[spell.skill]
-	elseif sets.midcast.Pet[spell.type] then
-		equipSet = sets.midcast.Pet[spell.type]
-	else
-		equipSet = sets.midcast.Pet
+	if sets.midcast.Pet then
+		if classes.CustomClass and sets.midcast.Pet[classes.CustomClass] then
+			equipSet = sets.midcast.Pet[classes.CustomClass]
+		elseif sets.midcast.Pet[spell.english] then
+			equipSet = sets.midcast.Pet[spell.english]
+		elseif spellMap and sets.midcast.Pet[spellMap] then
+			equipSet = sets.midcast.Pet[spellMap]
+		elseif sets.midcast.Pet[spell.skill] then
+			equipSet = sets.midcast.Pet[spell.skill]
+		elseif sets.midcast.Pet[spell.type] then
+			equipSet = sets.midcast.Pet[spell.type]
+		else
+			equipSet = sets.midcast.Pet
+		end
 	end
 
 	-- Check for specialized casting modes for any given set selection.
