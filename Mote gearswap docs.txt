@@ -117,7 +117,7 @@ These functions allow you to modify the default constructed sets before they're 
 
  ---- Custom controls ----
  
-State values are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments (you can find those near the bottom of the Include file).
+State values (ie: information about what type of state you're in, such as accuracy-focused melee, or PDT idle, or kiting, etc) are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments (you can find those near the bottom of the Include file).
 
 Since commands are sent directly to GearSwap, there are three ways to format the sending depending on where it originates from:
 
