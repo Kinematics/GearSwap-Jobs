@@ -1424,6 +1424,8 @@ function MoteInclude.get_spell_mappings()
 		['Teleport-Vahzl']='Teleport',['Recall-Pashh']='Teleport',['Recall-Meriph']='Teleport',['Recall-Jugner']='Teleport',
 		['Raise']='Raise',['Raise II']='Raise',['Raise III']='Raise',['Arise']='Raise',
 		['Reraise']='Reraise',['Reraise II']='Reraise',['Reraise III']='Reraise',
+		['Fire Maneuver']='Maneuver',['Ice Maneuver']='Maneuver',['Wind Maneuver']='Maneuver',['Earth Maneuver']='Maneuver',['Thunder Maneuver']='Maneuver',
+		['Water Maneuver']='Maneuver',['Light Maneuver']='Maneuver',['Dark Maneuver']='Maneuver',
 	}
 
 	return mappings
