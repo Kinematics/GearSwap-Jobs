@@ -256,6 +256,13 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Called before the Include starts constructing melee/idle/resting sets.
+-- Can customize state or custom melee class values at this point.
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_handle_equipping_gear(status, eventArgs)
+	return idleSet
+end
+
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
 	return idleSet
