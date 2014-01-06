@@ -26,7 +26,7 @@ function get_sets()
 	
 	
 	state.Buff = {}
-	state.Buff['Pianissimo'] = buffactive['pianissimo']
+	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
 	
 	
 	-- Some vars.  Define at the top so that the sets can make use of them.

@@ -23,9 +23,9 @@ function get_sets()
 	state.Defense.PhysicalMode = 'Evasion'
 	
 	state.Buff = {}
-	state.Buff['Sneak Attack'] = buffactive['sneak attack']
-	state.Buff['Trick Attack'] = buffactive['trick attack']
-	state.Buff['Feint'] = buffactive['feint']
+	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
+	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
+	state.Buff['Feint'] = buffactive['feint'] or false
 	
 	-- TH mode handling
 	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
