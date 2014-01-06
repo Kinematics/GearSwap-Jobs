@@ -340,8 +340,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
-	add_to_chat(122,'Special idle: '..tostring(classes.CustomIdleGroups))
-	add_to_chat(122,'Special melee: '..tostring(classes.CustomMeleeGroups))
+	--add_to_chat(122,'Special idle: '..tostring(classes.CustomIdleGroups))
+	--add_to_chat(122,'Special melee: '..tostring(classes.CustomMeleeGroups))
 	
 	local defenseString = ''
 	if state.Defense.Active then
