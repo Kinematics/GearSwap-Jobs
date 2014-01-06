@@ -95,13 +95,15 @@ The reason for the pre, default, and post ordering for each section is to allow 
 
 While there is a pre/default/post section for aftercast, that's not actually where most gear handling is done for non-action equips (though you can still use it to prevent aftercast from equipping gear, by setting the usual eventArgs.handled to true).
 
-Modifications to the aftercast gear to be equipped is done via two additional functions:
+Modifications to the aftercast gear to be equipped is done via three additional functions:
+
+job_handle_equipping_gear(status, eventArgs)
 
 customize_idle_set(idleSet)
 
 customize_melee_set(meleeSet)
 
-These functions allow you to modify the default constructed sets before they're actually equipped.  Return the modified set at the end of the function.
+These functions allow you to modify the default constructed sets before they're actually equipped.  job_handle_equipping_gear can be used to set up information that may be needed in constructing the default sets (eg: setting up the CustomMeleeSet list).  The two customize functions are called after the default sets are defined.  Return the modified set at the end of the function for them.
 
 
  ---- Advanced ----
