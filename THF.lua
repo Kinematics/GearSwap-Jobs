@@ -447,7 +447,10 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-	if tag_with_th and player.tp ~= tp_on_engage then
+	if state.TreasureMode == 'None' then
+		tag_with_th = false
+		tp_on_engage = 0
+	elseif tag_with_th and player.tp ~= tp_on_engage then
 		tag_with_th = false
 		tp_on_engage = 0
 	elseif cmdParams[1] == 'th' and player.status == 'Engaged' then
