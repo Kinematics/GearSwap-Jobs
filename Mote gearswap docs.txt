@@ -115,7 +115,7 @@ These functions allow you to modify the default constructed sets before they're 
 
  ---- Custom controls ----
  
-State values are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments.
+State values are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments (you can find those near the bottom of the Include file).
 
 Since commands are sent directly to GearSwap, there are three ways to format the sending depending on where it originates from:
 
@@ -132,9 +132,11 @@ set <state> <value>
 reset <resettype>
 
 
+There are two types of <state>:
+
 <field> is for boolean fields -- they can only be true or false (or on or off, if you prefer).  You can toggle them on and off, or activate them to force them on, or set them to a specific state.  A field that is reset will be turned off.
 
-<mode> is for lists of values.  You can use cycle to increment over that list, returning to the first value after passing the end of the list.  You can use set to assign a specific value.  And reset will return it to the first value of the list.
+<mode> is for lists of values.  You can use cycle to increment over that list, returning to the first value after passing the end of the list.  You can use set to assign a specific value, and a reset will return it to the first value of the list.
 
 
 The valid togglable fields are:
@@ -171,7 +173,3 @@ Casting - returns CastingMode to its default (first) value
 Target - resets both NPC targetting and PC targetting, to turn off any overriding being done
 All - resets all fields and modes to their defaults
 
-
- 
- 
- 
