@@ -71,7 +71,7 @@ Construct your sets with that in mind, and the Include will be able to handle 95
  
  --- Actions ---
 
-The basic function calls occur for precast, midcast and aftercast.  The Include file handles the action precast()/etc functions, and calls special versions within the job file.  These calls are made both before and after the Include file does its predefined work.  EG:
+The basic function calls occur for precast, midcast and aftercast, as well as pet_midcast and pet_aftercast.  The Include file handles the precast()/etc functions, and calls special versions within the job file.  These calls are made both before and after the Include file does its predefined work.  EG:
 
 Include: precast()
         Job: job_precast()
