@@ -275,7 +275,11 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
 			eventArgs.handled = true
 		elseif spell.type == 'BardSong' then
-			classes.CustomClass = get_song_class(spell)
+			-- layer general gear on first, then let default handler add song-specific gear.
+			local generalClass = get_song_class(spell)
+			if generalClass and sets.midcast[generalClass] then
+				equip(sets.midcast[generalClass])
+			end
 		end
 	end
 end
