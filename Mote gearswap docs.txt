@@ -32,9 +32,9 @@ When specifying a subset of a major set type for precast and midcast, the Includ
 
 1) Custom class.  If you define a custom class in classes.CustomClass, the Include will attempt to find that first.
 
-2) Spell map.  At the bottom of the Include is a list of spell mappings, to allow various spells to all be considered a single 'type' (eg: Cure for all single-target cure spells, Minuet for all the different Minuets, etc).
+2) Spell name.  It will then attempt to find a set designed for specific spells (eg: Stoneskin, Berserk).
 
-3) Spell name.  It will then attempt to find a set designed for specific spells (eg: Stoneskin, Berserk).
+3) Spell map.  At the bottom of the Include is a list of spell mappings, to allow various spells to all be considered a single 'type' (eg: Cure for all single-target cure spells, Minuet for all the different Minuets, etc).
 
 4) Spell skill.  It will then check for the skill used in casting the spell (eg: EnhancingMagic, ElementalMagic).
 
