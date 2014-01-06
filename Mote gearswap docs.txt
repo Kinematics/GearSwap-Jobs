@@ -86,7 +86,7 @@ spellMap: This is the general mapping, if any, for the spell.  EG: If the spell.
 eventArgs: This is a means of flagging the Include that you don't wish for it to do its default processing.
 
 
-eventArgs will always have a sub-field of 'handled'.  If you set eventArgs.handled = true, the Include will not perform any default processing on that time slot (such as precast).  It may also have a sub-field of 'cancel', if it's in the pretarget or precast phase.  If you set eventArgs.cancel = true, the Include will cancel the spell and quit any further processing.
+eventArgs will always have a sub-field of 'handled'.  If you set eventArgs.handled = true, the Include will not perform any default processing on that time slot (such as precast).  It may also have a sub-field of 'cancel', if it's in the pretarget or precast phase.  If you set eventArgs.cancel = true, the Include will cancel the spell and quit any further processing (note: don't call cancel_spell() yourself; the include handles that).
 
 The reason for the pre, default, and post ordering for each section is to allow a logical layering of equipment at each level.  If you want to special-case a certain bit of equipment, put that in the Pre section and tell the Include that you handled choosing what gear to equip.  If you want the default gear to be equipped, but possibly make a small modification (eg: Orison Mitts +2 when casting a -na spell with Divine Caress active), put that in the Post section.
 
