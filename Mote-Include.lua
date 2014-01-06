@@ -83,8 +83,6 @@ function MoteInclude.init_include()
 	-- Vars for use in melee set construction.
 	TPWeapon = 'Normal'
 	
-	-- Flag to indicate whether midcast gear was used on precast.
-	precastUsedMidcastGear = false
 	-- Flag whether the job lua changed the spell to be used.
 	spellWasChanged = false
 	-- Flag whether we changed the target of the spell.
@@ -191,7 +189,7 @@ function MoteInclude.precast(spell, action)
 	local spellMap = classes.spellMappings[spell.english]
 	
 	-- init a new eventArgs
-	local eventArgs = {handled = false, cancel = false, useMidcastGear = false}
+	local eventArgs = {handled = false, cancel = false}
 
 	-- Allow jobs to have first shot at setting up the precast gear.
 	if job_precast then
@@ -226,14 +224,6 @@ function MoteInclude.midcast(spell,action)
 		return
 	end
 
-	-- If we equipped midcast gear on precast, no need to do any work here.
-	if precastUsedMidcastGear then
-		if _global.debug_mode then add_to_chat(123,'Midcast gear was used in precast, so skipping midcast phase.') end
-		-- Reset var
-		precastUsedMidcastGear = false
-		return
-	end
-	
 	local spellMap = classes.spellMappings[spell.english]
 
 	-- init a new eventArgs
@@ -463,14 +453,8 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	if spell.action_type == 'Magic' then
-		local spellTiming = 'precast.FC'
-		if eventArgs.useMidcastGear then
-			precastUsedMidcastGear = true
-			spellTiming = 'midcast'
-		end
-		
 		-- Call this to break 'precast.FC' into a proper set.
-		local baseSet = get_expanded_set(sets, spellTiming)
+		equipSet = sets.precast.FC
 
 		-- Set determination ordering:
 		-- Custom class
@@ -478,16 +462,16 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- Specific spell name
 		-- Skill
 		-- Spell type
-		if classes.CustomClass and baseSet[classes.CustomClass] then
-			equipSet = baseSet[classes.CustomClass]
-		elseif baseSet[spell.english] then
-			equipSet = baseSet[spell.english]
-		elseif spellMap and baseSet[spellMap] then
-			equipSet = baseSet[spellMap]
-		elseif baseSet[spell.skill] then
-			equipSet = baseSet[spell.skill]
-		elseif baseSet[spell.type] then
-			equipSet = baseSet[spell.type]
+		if classes.CustomClass and equipSet[classes.CustomClass] then
+			equipSet = equipSet[classes.CustomClass]
+		elseif equipSet[spell.english] then
+			equipSet = equipSet[spell.english]
+		elseif spellMap and equipSet[spellMap] then
+			equipSet = equipSet[spellMap]
+		elseif equipSet[spell.skill] then
+			equipSet = equipSet[spell.skill]
+		elseif equipSet[spell.type] then
+			equipSet = equipSet[spell.type]
 		else
 			equipSet = baseSet
 		end
@@ -498,7 +482,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		end
 
 		-- Magian staves with fast cast on them
-		if baseSet[tostring(spell.element)] then
+		if sets.precast.FC[tostring(spell.element)] then
 			equipSet = set_combine(equipSet, baseSet[tostring(spell.element)])
 		end
 	elseif spell.type:lower() == 'weaponskill' then
