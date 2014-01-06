@@ -13,8 +13,8 @@ function get_sets()
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
+	options.DefenseModes = {'Normal', 'DT'}
+	options.WeaponskillModes = {'Normal', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
@@ -22,27 +22,19 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
+	options.PetModes = {'Heal','Ranged','Tank','Nuke','Melee'}
+	state.PetMode = 'Heal'
+	
+	petHaste = 0
+	petStatus = pet.status
+	statusUpdatesStarted = false
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
 	
 	-- Precast Sets
 	sets.precast = {}
-	
-	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-
-	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
-	
-
-	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {ammo="Sonia's Plectrum",
-		head="Etoile Tiara +2",ear1="Roundel Earring",
-		body="Maxixi Casaque",hands="Buremte Gloves",
-		back="Iximulew Cape",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
-		
-	-- Don't need any special gear for Healing Waltz.
-	sets.precast.Waltz['Healing Waltz'] = {}
 
 	-- Fast cast sets for spells
 	
@@ -51,109 +43,139 @@ function get_sets()
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
+	
+	-- Precast sets to enhance JAs
+	sets.precast.JA = {}
+
+	sets.precast.JA['Tactical Switch'] = {feet="Cirque Scarpe +2"}
+	
+	sets.precast.JA['Repair'] = {feet="Puppetry Babouches +1"}
+
+	sets.precast.JA['Maneuver'] = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Puppetry Dastanas +1"}
+
+
+
+	-- Waltz set (chr and vit)
+	sets.precast.Waltz = {
+		head="Whirlpool Mask",ear1="Roundel Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Spiral Ring",
+		back="Iximulew Cape",legs="Nahtirah Trousers",feet="Thurandaut Boots +1"}
+		
+	-- Don't need any special gear for Healing Waltz.
+	sets.precast.Waltz['Healing Waltz'] = {}
+
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
-	sets.precast.WS = {ammo="Thew Bomblet",
+	sets.precast.WS = {
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
+		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Exenterator'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Houyi's Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist="Thunder Belt"})
+	sets.precast.WS['Stringing Pummel'] = set_combine(sets.precast.WS, {neck="Rancor Collar",ring1="Spiral Ring",waist="Soil Belt"})
+	sets.precast.WS['Stringing Pummel'].Mod = set_combine(sets.precast.WS['Stringing Pummel'], {legs="Nahtirah Trousers"})
 
-	sets.precast.WS['Dancing Edge'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
-	sets.precast.WS['Dancing Edge'].Acc = set_combine(sets.precast.WS['Dancing Edge'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Dancing Edge'].Mod = set_combine(sets.precast.WS['Dancing Edge'], {waist="Soil Belt"})
+	sets.precast.WS['Victory Smite'] = set_combine(sets.precast.WS, {neck="Rancor Collar",waist="Thunder Belt"})
+	sets.precast.WS['Victory Smite'].Mod = set_combine(sets.precast.WS['Victory Smite'], {waist="Soil Belt"})
 
-	sets.precast.WS['Evisceration'] = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Rancor Collar",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
-	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist="Soil Belt"})
+	sets.precast.WS['Shijin Spiral'] = set_combine(sets.precast.WS, {neck="Light Gorget",waist="Light Belt"})
+	sets.precast.WS['Shijin Spiral'].Mod = set_combine(sets.precast.WS['Shijin Spiral'], {waist="Soil Belt"})
 
-	sets.precast.WS['Mandalic Stab'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
-	sets.precast.WS['Pyrrhic Kleos'].Acc = set_combine(sets.precast.WS['Pyrrhic Kleos'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Pyrrhic Kleos'].Mod = set_combine(sets.precast.WS['Pyrrhic Kleos'], {waist="Soil Belt"})
-
-	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
-		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-	
 	
 	-- Midcast Sets
 	sets.midcast = {}
-	
+
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		body="Otronif Harness",hands="Thaumas Gloves",
+		waist="Twilight Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {
-		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="Whirlpool Mask",ear2="Loquacious Earring",
+		body="Otronif Harness",hands="Thaumas Gloves",
+		waist="Black Belt",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
+
+
+	-- Midcast sets for pet actions
+	sets.midcast.Pet = {}
+
+	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
+
+	sets.midcast.Pet.Weaponskill = {head="Cirque Capello +2"}
 
 	
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
+	sets.resting = {head="Foire Taj",neck="Wiglen Gorget",
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {}
 
-	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Town = {main="Oatixur",range="Eminent Animator",
+		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 	
-	sets.idle.Field = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Field = {
+		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Weak = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Weak = {
+		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 	
+	-- Idle sets to wear while pet is engaged
+	sets.idle.Field.PetTank = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Pantin Dastanas +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+
+	sets.idle.Field.PetMelee = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Pantin Dastanas +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+
+	sets.idle.Field.PetRanged = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Cirque Guanti +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Hermes' Sandals"}
+
+	sets.idle.Field.PetNuke = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Pantin Dastanas +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"}
+
+	sets.idle.Field.PetHeal = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Pantin Dastanas +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+
 	-- Defense sets
 	sets.defense = {}
 
 	sets.defense.Evasion = {
-		head="Whirlpool Mask",neck="Torero Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-
-	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Dark Ring",
+		back="Ik Cape",waist="Hurch'lan Sash",legs="Nahtirah Trousers",feet="Otronif Boots"}
 
-	sets.defense.MDT = {ammo="Demonry Stone",
+	sets.defense.PDT = {
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Dark Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Nahtirah Trousers",feet="Otronif Boots"}
 
-	sets.Kiting = {feet="Skadi's Jambeaux +1"}
+	sets.defense.MDT = {
+		head="Whirlpool Mask",neck="Twilight Torque",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Tuilha Cape",waist="Hurch'lan Sash",legs="Nahtirah Trousers",feet="Otronif Boots"}
+
+	sets.Kiting = {feet="Hermes' Sandals"}
 
 	-- Engaged sets
 
@@ -163,37 +185,51 @@ function get_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.Evasion = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Ik Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.Acc.Evasion = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.PDT = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+	sets.engaged = {
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.Acc = {
+		head="Whirlpool Mask",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.DT = {
+		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
+		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.Acc.DT = {
+		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Beeline Ring",
+		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.PetHaste5 = {
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.PetHaste15 = {
+		head="Foire Taj",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.PetHaste20 = {
+		head="Foire Taj",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.PetHaste25 = {
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
-	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
+	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
+		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
+		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
+
+	windower.send_command('input /macro book 9;wait .1;input /macro set 10')
 	gearswap_binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
+	windower.send_command('bind !- gs c cycle targetmode')
+
+	windower.send_command('bind ^= gs c cycle petmode')
 end
 
 -- Called when this job file is unloaded (eg: job change)
@@ -205,66 +241,50 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
-function job_pretarget(spell, action, spellMap, eventArgs)
-
+function job_pet_midcast(spell, action, spellMap, eventArgs)
+	--add_to_chat(122,'Pet action: '..spell.name)
+	if petWeaponskills[spell.english] then
+		--add_to_chat(122,'Pet weaponskill')
+		classes.CustomClass = "Weaponskill"
+	end
 end
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-
-end
-
--- Return a customized weaponskill mode to use for weaponskill sets.
--- Don't return anything if you're not overriding the default value.
-function get_job_wsmode(spell, action, spellMap)
-
-end
-
--- Run after the general precast() is done.
--- eventArgs is the same one used in job_precast, in case information needs to be persisted.
-function job_post_precast(spell, action, spellMap, eventArgs)
-
-end
-
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_midcast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the general midcast() is done.
--- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
-function job_post_midcast(spell, action, spellMap, eventArgs)
-
-end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted and S{'Deploy','Retrieve','Activate','Deactivate'}[spell.english] then
+		do_pet_status_change()
+		eventArgs.handled = true
 
+		if not statusUpdatesStarted then
+			send_command('wait 5; gs c update petstatus')
+			statusUpdatesStarted = true
+		end
+	end
 end
-
--- Run after the general aftercast() is done.
--- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
-function job_post_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
--- Modify the default idle set after it was constructed.
-function customize_idle_set(idleSet)
-	return idleSet
+-- Called before the Include starts constructing melee/idle/resting sets.
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_handle_equipping_gear(status, eventArgs)
+	classes.CustomMeleeGroups:clear()
+	classes.CustomIdleGroups:clear()
+	
+	if pet.isvalid and pet.status == 'Engaged' and state.OffenseMode == 'Normal' and state.DefenseMode == 'Normal' then
+		if player.status == 'Idle' then
+			classes.CustomIdleGroups:append('Pet'..state.PetMode)
+		elseif player.status == 'Engaged' and S{'Melee','Ranged','Tank','Heal'}[state.PetMode] then
+			determine_pet_haste()
+			if petHaste > 0 then
+				classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
+			end
+		end
+	end
 end
 
--- Modify the default melee set after it was constructed.
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
@@ -272,43 +292,131 @@ end
 
 -- Called when the player's status changes.
 function job_status_change(newStatus, oldStatus, eventArgs)
-	--handle_equipping_gear(newStatus)
+
 end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if buff == 'Wind Maneuver' then
+		handle_equipping_gear(player.status)
+	end
 end
 
+
+-- Note: this is a hack, a temporary solution
+function pet_status_change(newStatus, oldStatus)
+	handle_equipping_gear(player.status)
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for custom player commands.
-function job_self_command(cmdParams, eventArgs)
-
-end
-
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-
+	-- Hack for keeping track of pet status, until raising events for it is implemented
+	if cmdParams[1] == 'petstatus' then
+		do_pet_status_change()
+		send_command('wait 5; gs c update petstatus')
+		statusUpdatesStarted = true
+		eventArgs.handled = true
+	elseif cmdParams[1] == 'user' and not statusUpdatesStarted then
+		do_pet_status_change()
+		send_command('wait 5; gs c update petstatus')
+		statusUpdatesStarted = true
+	end
+	
 end
 
--- Handle notifications of user state values being changed.
+-- Handle notifications of general user state change.
 function job_state_change(stateField, newValue)
-
+	if stateField == 'PetMode' then
+		handle_equipping_gear(player.status)
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
+	add_to_chat(122,'Special idle: '..tostring(classes.CustomIdleGroups))
+	add_to_chat(122,'Special melee: '..tostring(classes.CustomMeleeGroups))
+	
+	local defenseString = ''
+	if state.Defense.Active then
+		local defMode = state.Defense.PhysicalMode
+		if state.Defense.Type == 'Magical' then
+			defMode = state.Defense.MagicalMode
+		end
 
+		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+	end
+
+	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
+		'Kiting: '..on_off_names[state.Kiting])
+
+	if pet.isvalid then
+		local petInfoString = pet.name..' ['..state.PetMode..']  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
+		
+		if state.PetMode == 'Nuke' or state.PetMode == 'Heal' then
+			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
+		end
+		
+		add_to_chat(122,petInfoString)
+	end
+
+	eventArgs.handled = true
 end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Hooks for pet mode handling.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Request job-specific mode tables.
+-- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+function job_get_mode_table(field)
+	if field == 'Pet' then
+		return options.PetModes, state.PetMode
+	end
+	
+	-- Return an error if we don't recognize the field requested.
+	return nil, nil, true
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_mode(field, val)
+	if field == 'Pet' then
+		state.PetMode = val
+		return true
+	end
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+function determine_pet_haste()
+	petHaste = 0
+	if pet.isvalid and S{'Melee','Ranged','Tank','Heal'}[state.PetMode] then
+		-- assume Turbo Charger is equipped for any non-Nuke auto
+		-- possibly change this for healer auto?
+		petHaste = 5
+		if buffactive['wind maneuver'] then
+			petHaste = 10 + 5 * buffactive['wind maneuver']
+		end
+	end
+end
+
+-- Hack to support watching for pet status changes
+function do_pet_status_change()
+	local oldPetStatus = petStatus
+	petStatus = pet.status
+	if petStatus ~= oldPetStatus then
+		pet_status_change(petStatus, oldPetStatus)
+	end
+end
+
 
