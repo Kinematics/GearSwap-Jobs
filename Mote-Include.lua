@@ -77,8 +77,9 @@ function MoteInclude.init_include()
 	-- Takes precedence over default spell maps.
 	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
 	classes.CustomClass = nil
-	-- Custom groups used for defining melee sets.  Persists long-term.
+	-- Custom groups used for defining melee and idle sets.  Persists long-term.
 	classes.CustomMeleeGroups = L{}
+	classes.CustomIdleGroups = L{}
 	
 	-- Vars for use in melee set construction.
 	TPWeapon = 'Normal'
@@ -628,6 +629,12 @@ function MoteInclude.get_current_idle_set()
 
 	if idleSet[state.IdleMode] then
 		idleSet = idleSet[state.IdleMode]
+	end
+
+	for i = 1,#classes.CustomIdleGroups do
+		if meleeSet[classes.CustomIdleGroups[i]] then
+			meleeSet = meleeSet[classes.CustomIdleGroups[i]]
+		end
 	end
 	
 	idleSet = apply_defense(idleSet)
