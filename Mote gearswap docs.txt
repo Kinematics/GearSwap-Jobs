@@ -171,7 +171,7 @@ TargetMode - the type of target selection method to use with player-targettable 
 In addition, you can create additional job-specific modes that are handled via the cycle command.  See thf as an example with TreasureMode.
 
 
-Note that all modes /should/ have a value of 'Normal' available, usually in the first position of the list so that it can be considered the default value (and thus doesn't need to be specifically named when constructing sets).
+Note that all modes /should/ have a value of 'Normal' available, usually in the first position of the list so that it can be considered the default value (and thus doesn't need to be specifically named when constructing sets).  There are some cases where you may want to deviate from that.  For example, I set the default (first) position of OffenseMode to 'None' for my mage jobs, and put 'Normal' in the second position, which allows me to use that to determine whether or not to lock the weapon slots.
 
 
 Reset works on certain general types:
