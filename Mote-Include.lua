@@ -932,7 +932,7 @@ function MoteInclude.handle_cycle(cmdParams)
 			set_mode(modeField, newModeValue)
 			
 			if job_state_change then
-				job_state_change(modeField, newModeValue)
+				job_state_change(modeField..'Mode', newModeValue)
 			end
 			
 			-- Display what got changed to the user.
