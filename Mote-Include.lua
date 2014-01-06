@@ -303,6 +303,71 @@ function MoteInclude.aftercast(spell,action)
 end
 
 
+function MoteInclude.pet_midcast(spell,action)
+	-- If we have showSet active for precast, don't try to equip midcast gear.
+	if showSet == 'precast' then
+		add_to_chat(122, 'Show Sets: Stopping at precast.')
+		return
+	end
+
+	local spellMap = classes.spellMappings[spell.english]
+
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
+	
+	-- Allow jobs to override this code
+	if job_pet_midcast then
+		job_pet_midcast(spell, action, spellMap, eventArgs)
+	end
+
+	-- Perform default equips if the job didn't handle it.
+	if not eventArgs.handled then
+		equip(get_default_pet_midcast_set(spell, action, spellMap, eventArgs))
+	end
+	
+	-- Allow followup code to add to what was done here
+	if job_post_pet_midcast then
+		job_post_pet_midcast(spell, action, spellMap, eventArgs)
+	end
+end
+
+function MoteInclude.pet_aftercast(spell,action)
+	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
+	if showSet == 'midcast' then
+		add_to_chat(122, 'Show Sets: Stopping at midcast.')
+		return
+	elseif showSet == 'precast' then
+		return
+	end
+
+	local spellMap = classes.spellMappings[spell.english]
+
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
+	
+	-- Allow jobs to override this code
+	if job_pet_aftercast then
+		job_pet_aftercast(spell, action, spellMap, eventArgs)
+	end
+
+	if not eventArgs.handled then
+		if spell.interrupted then
+			-- Wait a half-second to update so that aftercast equip will actually be worn.
+			windower.send_command('wait 0.6;gs c update')
+		else
+			handle_equipping_gear(player.status)
+		end
+	end
+	
+	-- Allow followup code to add to what was done here
+	if job_post_pet_aftercast then
+		job_post_pet_aftercast(spell, action, spellMap, eventArgs)
+	end
+	
+	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
+	classes.CustomClass = nil
+end
+
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for non-action events.
 -------------------------------------------------------------------------------------------------------------------
@@ -525,6 +590,42 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	
 	return equipSet
 end
+
+
+-- Get the default pet midcast gear set.
+function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
+	local equipSet = {}
+
+	-- TODO: examine possible values in pet actions
+	
+	-- Set selection ordering:
+	-- Custom class
+	-- Specific spell name
+	-- Class mapping
+	-- Skill
+	-- Spell type
+	if classes.CustomClass and sets.midcast.Pet[classes.CustomClass] then
+		equipSet = sets.midcast.Pet.[classes.CustomClass]
+	elseif sets.midcast.Pet[spell.english] then
+		equipSet = sets.midcast.Pet[spell.english]
+	elseif spellMap and sets.midcast.Pet[spellMap] then
+		equipSet = sets.midcast.Pet[spellMap]
+	elseif sets.midcast.Pet[spell.skill] then
+		equipSet = sets.midcast.Pet[spell.skill]
+	elseif sets.midcast.Pet[spell.type] then
+		equipSet = sets.midcast.Pet[spell.type]
+	else
+		equipSet = sets.midcast.Pet
+	end
+
+	-- Check for specialized casting modes for any given set selection.
+	if equipSet[state.CastingMode] then
+		equipSet = equipSet[state.CastingMode]
+	end
+	
+	return equipSet
+end
+
 
 
 -- Returns the appropriate idle set based on current state.
