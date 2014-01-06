@@ -143,9 +143,17 @@ There are two types of <state>:
 
 The valid togglable fields are:
 
-Defense - for all-out defense, either physical or magical (the exact type is set elsewhere)
+Defense - for all-out defense, either physical or magical (the exact type is set with Activate)
 Kiting - for wearing +movement speed above any other gear
 Target - for determination of whether to force use of <stnpc> when performing actions against mobs
+
+
+Fields that can be activated:
+PhysicalDefense - Turn on Defense, and set it to physical
+MagicalDefense - Turn on Defense, and set it to magical
+Kiting - for wearing +movement speed above any other gear
+Target - for determination of whether to force use of <stnpc> when performing actions against mobs
+
 
 
 The valid cyclable modes are:
