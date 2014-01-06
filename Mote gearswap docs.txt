@@ -112,3 +112,66 @@ These functions allow you to modify the default constructed sets before they're 
 
 
 
+
+ ---- Custom controls ----
+ 
+State values are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments.
+
+Since commands are sent directly to GearSwap, there are three ways to format the sending depending on where it originates from:
+
+From the command line:  //gs c <command>
+From a macro: /console gs c <command>
+From a bind: gs c <command>
+
+General command format:
+
+toggle <field>
+activate <field>
+cycle <mode>
+set <state> <value>
+reset <resettype>
+
+
+<field> is for boolean fields -- they can only be true or false (or on or off, if you prefer).  You can toggle them on and off, or activate them to force them on, or set them to a specific state.  A field that is reset will be turned off.
+
+<mode> is for lists of values.  You can use cycle to increment over that list, returning to the first value after passing the end of the list.  You can use set to assign a specific value.  And reset will return it to the first value of the list.
+
+
+The valid togglable fields are:
+
+Defense - for all-out defense, either physical or magical (the exact type is set elsewhere)
+Kiting - for wearing +movement speed above any other gear
+Target - for determination of whether to force use of <stnpc> when performing actions against mobs
+
+
+The valid cyclable modes are:
+
+OffenseMode - the offense portion of the hybrid melee set (eg: acc, crit, etc)
+DefenseMode - the defense portion of the hybrid melee set (eg: evasion, pdt, etc)
+CastingMode - the mode describing what type of gear to use for casting (eg: resistant, enmitydown, etc)
+WeaponskillMode - a specification of a specific mode to weaponskill with (eg: acc, mod, etc)
+IdleMode - the type of idling gear to use (eg: pdt, pet)
+RestingMode - the type of gear to wear while resting (eg: petfighting)
+PhysicalDefenseMode - the type of physical defense gear when the all-out defense mode is activated (eg: pdt, evasion)
+MagicalDefenseMode - the type of magical defense gear when the all-out defense mode is activated (eg: mdt, resist)
+TargetMode - the type of target selection method to use with player-targettable spells (eg: stal, stpc, stpt).  Note: predefined, you shouldn't change this.
+
+In addition, you can create additional job-specific modes that are handled via the cycle command.  See thf as an example with TreasureMode.
+
+
+Note that all modes /should/ have a value of 'Normal' available, usually in the first position of the list so that it can be considered the default value (and thus doesn't need to be specifically named when constructing sets).
+
+
+Reset works on certain general types:
+
+Defense - turns defense off
+Kiting - turns kiting off
+Melee - returns OffenseMode and DefenseMode to their default (first) values
+Casting - returns CastingMode to its default (first) value
+Target - resets both NPC targetting and PC targetting, to turn off any overriding being done
+All - resets all fields and modes to their defaults
+
+
+ 
+ 
+ 
