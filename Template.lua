@@ -284,7 +284,7 @@ end
 -- Can customize state or custom melee class values at this point.
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_handle_equipping_gear(status, eventArgs)
-	return idleSet
+
 end
 
 -- Modify the default idle set after it was constructed.
