@@ -15,6 +15,7 @@ function get_sets()
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
+	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
