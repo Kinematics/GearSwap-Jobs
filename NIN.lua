@@ -23,6 +23,9 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
+	state.Buff = {}
+	state.Buff.Migawari = buffactive.migawari or false
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -331,7 +334,9 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if not spell.interrupted and spell.english == "Migawari: Ichi" then
+		state.Buff.Migawari = true
+	end
 end
 
 -- Run after the general aftercast() is done.
@@ -355,11 +360,17 @@ end
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
 	idleSet = set_combine(idleSet, select_movement())
+	if state.Buff.Migawari then
+		idleSet = set_combine(idleSet, sets.Buff.Migawari)
+	end
 	return idleSet
 end
 
 -- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
+	if state.Buff.Migawari then
+		meleeSet = set_combine(meleeSet, sets.Buff.Migawari)
+	end
 	return meleeSet
 end
 
@@ -376,7 +387,10 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+		handle_equipping_gear(player.status)
+	end
 end
 
 
