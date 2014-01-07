@@ -79,7 +79,7 @@ function get_sets()
 	sets.midcast.Curaga = sets.midcast.Cure
 
 	sets.midcast.EnhancingMagic = {
-		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Atrophy Chapeau",neck="Colossus's Torque",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
 		body="Duelist's Tabard +2",hands="Atrophy Gloves",ring1="Prolix Ring",
 		back="Estoqueur's Cape",waist="Witful Belt",legs="Portent Pants",feet="Estoqueur's Houseaux +2"}
 
@@ -116,6 +116,10 @@ function get_sets()
 		body="Atrophy Tabard",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
+	--sets.midcast.Drain = set_combine(sets.midcast.EnfeeblingMagic, {ring2="Excelsis Ring"})
+
+	--sets.midcast.Aspir = sets.midcast.Drain
+
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
@@ -129,8 +133,8 @@ function get_sets()
 	sets.idle = {}
 
 	sets.idle.Town = {ammo="Impatiens",
-		head="Atrophy's Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard",hands="Atrophy Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		head="Atrophy Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Atrophy Tabard",hands="Atrophy Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Gendewitha Galoshes"}
 	
 	sets.idle.Field = {ammo="Impatiens",
