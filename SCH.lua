@@ -43,29 +43,29 @@ function get_sets()
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants",feet="Argute Loafers +2"}
+		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
 
 	sets.precast.FC.EnhancingMagic = {ammo="Incantor Stone",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots"}
+		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
 
 	sets.precast.FC.ElementalMagic = {ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Stoicheion Medal",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots"}
+		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
 
 	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants",feet="Chelona Boots"}
+		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots"}
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
 	sets.precast.FC.Impact = {ammo="Incantor Stone",
 		head=empty,ear2="Loquacious Earring",
 		body="Twilight Cloak",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants",feet="Argute Loafers +2"}
+		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
 
        
 	-- Midcast Sets
@@ -78,12 +78,12 @@ function get_sets()
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants",feet="Argute Loafers +2"}
+		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Argute Loafers +2"}
 
 	sets.midcast.CureWithLightWeather = {main="Chatoyant Staff",sub="Achaq Grip",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Twilight Cape",waist="Korin Obi",legs="Orvail Pants",feet="Argute Loafers +2"}
+		back="Twilight Cape",waist="Korin Obi",legs="Orvail Pants +1",feet="Argute Loafers +2"}
 
 	sets.midcast.Curaga = sets.midcast.Cure
 
@@ -140,7 +140,7 @@ function get_sets()
 	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Bokwus Boots"}
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.

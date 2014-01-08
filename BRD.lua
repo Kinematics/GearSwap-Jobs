@@ -41,7 +41,7 @@ function get_sets()
 	-- Fast cast sets for spells
 	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
 		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
@@ -53,12 +53,12 @@ function get_sets()
 	sets.precast.FC.Cure = {
 		head="Nahtirah Hat",ear2="Loquac. Earring",
 		body="Heka's Kalasiris",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Pahtli Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Pahtli Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.EnhancingMagic = {
 		head="Nahtirah Hat",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	
 	-- Precast sets to enhance JAs

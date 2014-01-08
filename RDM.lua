@@ -46,7 +46,7 @@ function get_sets()
 	sets.precast.FC = {ammo="Impatiens",
 		head="Atrophy Chapeau",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
        
 	-- Weaponskill sets

@@ -37,12 +37,12 @@ function get_sets()
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Cure = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		ring1="Prolix Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
        
 	-- Weaponskill sets

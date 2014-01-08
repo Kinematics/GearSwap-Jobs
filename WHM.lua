@@ -37,7 +37,7 @@ function get_sets()
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -170,7 +170,7 @@ function get_sets()
 	sets.midcast.IntEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Orvail Pants",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Orvail Pants +1",feet="Bokwus Boots"}
 
 	
 	-- Sets to return to when not performing an action.

@@ -44,7 +44,7 @@ function get_sets()
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants",feet="Chelona Boots +1"}
+		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -111,7 +111,7 @@ function get_sets()
 	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Bokwus Boots"}
 
 	sets.midcast.BardSong = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
