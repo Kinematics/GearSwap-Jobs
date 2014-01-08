@@ -154,9 +154,8 @@ function get_sets()
 
 	-- Spell skill categories
 	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
-		neck="Colossus's Torque",
-		body="Manasa Chasuble",hands="Ayao's Gages",
-		waist="Cascade Belt",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		body="Manasa Chasuble",hands="Dynasty Mitts",
+		legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
 
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
@@ -166,7 +165,7 @@ function get_sets()
 	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Mediator's Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Portent Pants",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 
 	-- Custom spell classes
