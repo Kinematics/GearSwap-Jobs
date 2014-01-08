@@ -103,6 +103,22 @@ function MoteInclude.init_include()
 		['test']=handle_test}
 	
 
+	-- Subtables within the sets table that we expect to exist, and are annoying to have to
+	-- define within each individual job file.  We can define them here to make sure we don't
+	-- have to check for existence.  The job file should be including this before defining
+	-- any sets, so any changes it makes will override these anyway.
+	sets.precast = {}
+	sets.precast.FC = {}
+	sets.precast.JA = {}
+	sets.precast.WS = {}
+	sets.midcast = {}
+	sets.idle = {}
+	sets.resting = {}
+	sets.engaged = {}
+	sets.defense = {}
+	sets.buff = {}
+	
+
 	-- Set specialized groupings of world zones.
 	areas = {}
 	-- City areas for town gear and behavior.
@@ -134,7 +150,6 @@ function MoteInclude.init_include()
 	gear.Staff = {}
 	gear.Staff.HMP = 'Chatoyant Staff'
 	gear.Staff.PDT = 'Earth Staff'
-
 
 
 	-- Other general vars.  Set whatever's convenient for your job luas.
