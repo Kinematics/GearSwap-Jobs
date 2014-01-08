@@ -208,7 +208,7 @@ function get_job_wsmode(spell, action, spellMap)
 
 end
 
--- Run after the general precast() is done.
+-- Run after the default precast() is done.
 -- eventArgs is the same one used in job_precast, in case information needs to be persisted.
 function job_post_precast(spell, action, spellMap, eventArgs)
 
@@ -220,7 +220,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 
 end
 
--- Run after the general midcast() is done.
+-- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
 
@@ -232,7 +232,7 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 
 end
 
--- Run after the general pet midcast() is done.
+-- Run after the default pet midcast() is done.
 -- eventArgs is the same one used in job_pet_midcast, in case information needs to be persisted.
 function job_pet_post_midcast(spell, action, spellMap, eventArgs)
 
@@ -243,7 +243,7 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 
 end
 
--- Run after the general aftercast() is done.
+-- Run after the default aftercast() is done.
 -- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
 function job_post_aftercast(spell, action, spellMap, eventArgs)
 
@@ -254,7 +254,7 @@ function job_pet_aftercast(spell, action, spellMap, eventArgs)
 
 end
 
--- Run after the general pet aftercast() is done.
+-- Run after the default pet aftercast() is done.
 -- eventArgs is the same one used in job_pet_aftercast, in case information needs to be persisted.
 function job_pet_post_aftercast(spell, action, spellMap, eventArgs)
 
