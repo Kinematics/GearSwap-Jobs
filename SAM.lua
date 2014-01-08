@@ -13,15 +13,20 @@ function get_sets()
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
+	options.DefenseModes = {'Normal', 'PDT', 'Reraise'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
+	options.PhysicalDefenseModes = {'PDT', 'Reraise'}
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+	
+	state.Buff = {}
+	state.Buff.Sekkanoki = buffactive.sekkanoki or false
+	state.Buff.Sengikori = buffactive.sengikori or false
+	state.Buff['Meikyou Shisui'] = buffactive['Meikyou Shisui'] or false
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -29,13 +34,15 @@ function get_sets()
 	
 	-- Precast Sets
 	-- Precast sets to enhance JAs
-	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
+	sets.precast.JA.Meditate = {head="Myochin Kabuto",hands="Saotome Kote +2"}
+	sets.precast.JA['Warding Circle'] = {head="Myochin Kabuto"}
+	sets.precast.JA['Blade Bash'] = {hands="Saotome Kote +2"}
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
-		head="Etoile Tiara +2",ear1="Roundel Earring",
-		body="Maxixi Casaque",hands="Buremte Gloves",
-		back="Iximulew Cape",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
+		head="Yaoyotl Helm",
+		body="Otronif Harness",hands="Buremte Gloves",ring1="Spiral Ring",
+		back="Iximulew Cape",waist="Caudata Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
@@ -44,101 +51,83 @@ function get_sets()
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Brutal Earring",ear2="Moonshade Earring",
+		body="Phorcys Korazin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Atheling Mantle",waist="Caudata Belt",legs="Karieyh Brayettes +1",feet="Karieyh Sollerets +1"}
+	sets.precast.WS.Acc = set_combine(sets.precast.WS, {back="Letalis Mantle"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Exenterator'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Houyi's Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist="Thunder Belt"})
+	sets.precast.WS['Tachi: Fudo'] = set_combine(sets.precast.WS, {neck="Snow Gorget"})
+	sets.precast.WS['Tachi: Fudo'].Acc = set_combine(sets.precast.WS.Acc, {neck="Snow Gorget"})
+	sets.precast.WS['Tachi: Fudo'].Mod = set_combine(sets.precast.WS['Tachi: Fudo'], {waist="Snow Belt"})
 
-	sets.precast.WS['Dancing Edge'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
-	sets.precast.WS['Dancing Edge'].Acc = set_combine(sets.precast.WS['Dancing Edge'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Dancing Edge'].Mod = set_combine(sets.precast.WS['Dancing Edge'], {waist="Soil Belt"})
+	sets.precast.WS['Tachi: Shoha'] = set_combine(sets.precast.WS, {neck="Thunder Gorget"})
+	sets.precast.WS['Tachi: Shoha'].Acc = set_combine(sets.precast.WS.Acc, {neck="Thunder Gorget"})
+	sets.precast.WS['Tachi: Shoha'].Mod = set_combine(sets.precast.WS['Tachi: Shoha'], {waist="Thunder Belt"})
 
-	sets.precast.WS['Evisceration'] = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Rancor Collar",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
-	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist="Soil Belt"})
+	sets.precast.WS['Tachi: Rana'] = set_combine(sets.precast.WS, {neck="Snow Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",})
+	sets.precast.WS['Tachi: Rana'].Acc = set_combine(sets.precast.WS.Acc, {neck="Snow Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",})
+	sets.precast.WS['Tachi: Rana'].Mod = set_combine(sets.precast.WS['Tachi: Rana'], {waist="Snow Belt"})
 
-	sets.precast.WS['Pyrrhic Kleos'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
-	sets.precast.WS['Pyrrhic Kleos'].Acc = set_combine(sets.precast.WS['Pyrrhic Kleos'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Pyrrhic Kleos'].Mod = set_combine(sets.precast.WS['Pyrrhic Kleos'], {waist="Soil Belt"})
+	sets.precast.WS['Tachi: Kasha'] = set_combine(sets.precast.WS, {neck="Light Gorget",waist="Light Belt"})
 
-	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
-		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-	
-	
+	sets.precast.WS['Tachi: Gekko'] = set_combine(sets.precast.WS, {neck="Snow Gorget",waist="Snow Belt"})
+
+	sets.precast.WS['Tachi: Yukikaze'] = set_combine(sets.precast.WS, {neck="Snow Gorget",waist="Snow Belt"})
+
+	sets.precast.WS['Tachi: Ageha'] = set_combine(sets.precast.WS, {neck="Soil Gorget",waist="Soil Belt"})
+
+	sets.precast.WS['Tachi: Jinpu'] = set_combine(sets.precast.WS, {neck="Soil Gorget",waist="Soil Belt"})
+
+
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-		
-	-- Specific spells
-	sets.midcast.Utsusemi = {
-		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="Yaoyotl Helm",
+		body="Otronif Harness",hands="Otronif Gloves",
+		legs="Phorcys Dirs",feet="Otronif Boots"}
 
 	
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
-		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
+	sets.resting = {neck="Wiglen Gorget",ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
-
-	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Town = {main="Tsurumaru", sub="Pole Grip",ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Atheling Mantle",waist="Flume Belt",legs="Phorcys Dirs",feet="Danzo Sune-ate"}
 	
-	sets.idle.Field = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Field = {
+		head="Yaoyotl Helm",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Danzo Sune-ate"}
 
-	sets.idle.Weak = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Weak = {
+		head="Twilight Helm",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Twilight Mail",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Danzo Sune-ate"}
 	
 	-- Defense sets
-	sets.defense.Evasion = {
-		head="Whirlpool Mask",neck="Torero Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-
 	sets.defense.PDT = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots"}
+
+	sets.defense.Reraise = {
+		head="Twilight Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Twilight Mail",hands="Buremte Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
-		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots"}
 
-	sets.Kiting = {feet="Skadi's Jambeaux +1"}
+	sets.Kiting = {feet="Danzo Sune-ate"}
+
+	sets.Reraise = {head="Twilight Helm",body="Twilight Mail"}
 
 	-- Engaged sets
 
@@ -148,33 +137,66 @@ function get_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.Evasion = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Ik Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.Acc.Evasion = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.PDT = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+	-- Delay 450 GK, 25 Save TP => 65 Store TP for a 5-hit (25 Store TP in gear)
+	sets.engaged = {ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Karieyh Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Atheling Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Acc = {ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Karieyh Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.PDT = {ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		back="Iximulew Cape",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Reraise = {ammo="Thew Bomblet",
+		head="Twilight Helm",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Twilight Mail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="K'ayres Ring",
+		back="Ik Cape",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Acc.Reraise = {ammo="Thew Bomblet",
+		head="Twilight Helm",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Twilight Mail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="K'ayres Ring",
+		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+		
+	-- Melee sets for in Adoulin, which has an extra 10 Save TP for weaponskills.
+	-- Delay 450 GK, 35 Save TP => 89 Store TP for a 4-hit (49 Store TP in gear), 2 Store TP for a 5-hit
+	sets.engaged.Adoulin = {ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Karieyh Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Takaha Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Adoulin.Acc = {ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Unkai Domaru +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Adoulin.PDT = {ammo="Thew Bomblet",
+		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		back="Iximulew Cape",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Adoulin.Acc.PDT = {ammo="Honed Tathlum",
+		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Adoulin.Reraise = {ammo="Thew Bomblet",
+		head="Twilight Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Twilight Mail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="K'ayres Ring",
+		back="Ik Cape",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
+	sets.engaged.Adoulin.Acc.Reraise = {ammo="Thew Bomblet",
+		head="Twilight Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Twilight Mail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="K'ayres Ring",
+		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots"}
 
 
-	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
+	sets.buff.Sekkanoki = {hands="Unkai Kote +2"}
+	sets.buff.Sengikori = {feet="Unkai Sune-ate +2"}
+	sets.buff['Meikyou Shisui'] = {feet="Saotome Sune-ate +2"}
+
+
+	windower.send_command('input /macro book 7;wait .1;input /macro set 2')
 	gearswap_binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
@@ -192,7 +214,15 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
 function job_pretarget(spell, action, spellMap, eventArgs)
-
+	if spell.type:lower() == 'weaponskill' then
+		-- Change any GK weaponskills to polearm weaponskill if we're using a polearm.
+		if player.equipment.main=='Quint Spear' or player.equipment.main=='Quint Spear' then
+			if spell.english:startswith("Tachi:") then
+				send_command('input /ws "Penta Thrust" '..spell.target.raw)
+				eventArgs.cancel = true
+			end
+		end
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -207,55 +237,52 @@ function get_job_wsmode(spell, action, spellMap)
 
 end
 
--- Run after the general precast() is done.
+-- Run after the default precast() is done.
 -- eventArgs is the same one used in job_precast, in case information needs to be persisted.
 function job_post_precast(spell, action, spellMap, eventArgs)
-
+	if spell.type:lower() == 'weaponskill' then
+		if state.Buff.Sekkanoki then
+			equip(sets.buff.Sekkanoki)
+		end
+		if state.Buff.Sengikori then
+			equip(sets.buff.Sengikori)
+		end
+		if state.Buff['Meikyou Shisui'] then
+			equip(sets.buff['Meikyou Shisui'])
+		end
+	end
 end
 
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
-
+	if spell.action_type == 'Magic' then
+		equip(sets.midcast.FastRecast)
+	end
 end
 
--- Run after the general midcast() is done.
+-- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-
-end
-
--- Runs when a pet initiates an action.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_pet_midcast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the general pet midcast() is done.
--- eventArgs is the same one used in job_pet_midcast, in case information needs to be persisted.
-function job_pet_post_midcast(spell, action, spellMap, eventArgs)
-
+	-- Effectively lock these items in place.
+	if state.DefenseMode == 'Reraise' or
+		(state.Defense.Active and state.Defense.Type == 'Physical' and state.Defense.PhysicalMode == 'Reraise') then
+		equip(sets.Reraise)
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
+	end
 end
 
--- Run after the general aftercast() is done.
+-- Run after the default aftercast() is done.
 -- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
 function job_post_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_pet_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the general pet aftercast() is done.
--- eventArgs is the same one used in job_pet_aftercast, in case information needs to be persisted.
-function job_pet_post_aftercast(spell, action, spellMap, eventArgs)
 
 end
 
@@ -294,7 +321,9 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
 end
 
 
@@ -310,7 +339,10 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-
+	classes.CustomMeleeGroups:clear()
+	if areas.Adoulin:contains(world.area) and buffactive.ionis then
+		classes.CustomMeleeGroups:append('Adoulin')
+	end
 end
 
 -- Handle notifications of user state values being changed.
