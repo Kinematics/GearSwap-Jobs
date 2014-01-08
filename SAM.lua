@@ -28,13 +28,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
-	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-
 	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
-	
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
@@ -44,13 +39,6 @@ function get_sets()
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
-
-	-- Fast cast sets for spells
-	
-	sets.precast.FC = {ear2="Loquacious Earring",
-		hands="Thaumas Gloves"}
-
-	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
        
 	-- Weaponskill sets
@@ -97,8 +85,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
-	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",
@@ -137,8 +123,6 @@ function get_sets()
 		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
 	
 	-- Defense sets
-	sets.defense = {}
-
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Torero Torque",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",

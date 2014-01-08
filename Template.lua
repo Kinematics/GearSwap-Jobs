@@ -28,11 +28,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-
 	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
 	
 
@@ -69,10 +66,7 @@ function get_sets()
 	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist="Thunder Belt"})
 
-	sets.precast.WS['Dancing Edge'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
+	sets.precast.WS['Dancing Edge'] = set_combine(sets.precast.WS, {neck="Soil Gorget",feet="Iuitl Gaiters"})
 	sets.precast.WS['Dancing Edge'].Acc = set_combine(sets.precast.WS['Dancing Edge'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Dancing Edge'].Mod = set_combine(sets.precast.WS['Dancing Edge'], {waist="Soil Belt"})
 
@@ -83,10 +77,7 @@ function get_sets()
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist="Soil Belt"})
 
-	sets.precast.WS['Pyrrhic Kleos'] = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
+	sets.precast.WS['Pyrrhic Kleos'] = set_combine(sets.precast.WS, {neck="Soil Gorget",feet="Iuitl Gaiters"})
 	sets.precast.WS['Pyrrhic Kleos'].Acc = set_combine(sets.precast.WS['Pyrrhic Kleos'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Pyrrhic Kleos'].Mod = set_combine(sets.precast.WS['Pyrrhic Kleos'], {waist="Soil Belt"})
 
@@ -97,8 +88,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
-	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",
@@ -119,8 +108,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
-
 	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
@@ -137,8 +124,6 @@ function get_sets()
 		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
 	
 	-- Defense sets
-	sets.defense = {}
-
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Torero Torque",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",

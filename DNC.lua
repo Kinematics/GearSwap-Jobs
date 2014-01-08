@@ -27,10 +27,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
 
 	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
 
@@ -119,7 +117,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
@@ -141,7 +138,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
 
 	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
@@ -159,7 +155,6 @@ function get_sets()
 		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
 	
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Torero Torque",
@@ -266,9 +261,8 @@ function get_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.Buff = {}
-	sets.Buff['Saber Dance'] = {legs="Etoile Tights +2"}
-	sets.Buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
+	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
+	sets.buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
 
 	skillchainPending = false
 	

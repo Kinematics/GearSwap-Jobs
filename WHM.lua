@@ -32,12 +32,8 @@ function get_sets()
 	--------------------------------------
 
 	-- Precast Sets
-	sets.precast = {}
-	
-	
+
 	-- Fast cast sets for spells
-	
-	-- default fast cast
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
@@ -59,8 +55,6 @@ function get_sets()
 
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-	
 	sets.precast.JA.Benediction = {body="Cleric's Briault +2"}
 
 	-- Waltz set (chr and vit)
@@ -95,7 +89,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
@@ -213,7 +206,6 @@ function get_sets()
 	sets.Owleyes = {main="Owleyes", sub="Genbu's Shield"}
 	
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
@@ -242,9 +234,7 @@ function get_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.Buff = {}
-	
-	sets.Buff['Divine Caress'] = {hands="Orison Mitts +2"}
+	sets.buff['Divine Caress'] = {hands="Orison Mitts +2"}
 
 
 	windower.send_command('input /macro book 14;wait .1;input /macro set 4')

@@ -19,6 +19,7 @@ function get_sets()
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
+	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
 	
@@ -27,12 +28,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
 	
-	options.MagicalDefenseModes = {'MDT'}
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-
 	sets.precast.JA['Chainspell'] = {body="Duelist's Tabard +2"}
 	
 
@@ -64,7 +61,6 @@ function get_sets()
 
 	
 	-- Midcast Sets
-	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
 		head="Atrophy Chapeau",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
@@ -130,8 +126,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
-
 	sets.idle.Town = {ammo="Impatiens",
 		head="Atrophy Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard",hands="Atrophy Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
@@ -148,8 +142,6 @@ function get_sets()
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Gendewitha Galoshes"}
 	
 	-- Defense sets
-	sets.defense = {}
-
 	sets.defense.PDT = {
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",

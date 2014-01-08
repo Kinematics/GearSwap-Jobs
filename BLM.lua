@@ -28,12 +28,9 @@ function get_sets()
 	-- Start defining the sets
 	--------------------------------------
 	
-	-- Precast Sets
-	sets.precast = {}
+	---- Precast Sets ----
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-	
 	sets.precast.JA['Mana Wall'] = {feet="Goetia Sabots +2"}
 
 	sets.precast.JA.Manafont = {body="Sorcerer's Coat +2"}
@@ -71,9 +68,8 @@ function get_sets()
 		back="Toro Cape",waist="Thunder Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 	
 	
-	-- Midcast Sets
-	sets.midcast = {}
-	
+	---- Midcast Sets ----
+
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Prolix Ring",
@@ -200,7 +196,6 @@ function get_sets()
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
 		
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.PDT = {main="Earth Staff",sub="Wizzan Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
@@ -216,9 +211,8 @@ function get_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.Buff = {}
 	
-	sets.Buff['Mana Wall'] = {feet="Goetia Sabots +2"}
+	sets.buff['Mana Wall'] = {feet="Goetia Sabots +2"}
 	
 
 	-- Engaged sets

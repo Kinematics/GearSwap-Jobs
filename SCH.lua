@@ -32,11 +32,9 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
-	
+
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-	
+
 	sets.precast.JA['Tabula Rasa'] = {legs="Argute Pants +2"}
 
 
@@ -70,13 +68,7 @@ function get_sets()
 		back="Swith Cape",legs="Orvail Pants",feet="Argute Loafers +2"}
 
        
-	-- Weaponskill sets
-	-- Default set for any weaponskill that isn't any more specifically defined
-	sets.precast.WS = {}
-
-
 	-- Midcast Sets
-	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
@@ -200,7 +192,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
 
 	sets.idle.Town = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Savant's Bonnet +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
@@ -228,7 +219,6 @@ function get_sets()
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 	
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",

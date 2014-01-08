@@ -32,16 +32,11 @@ function get_sets()
 	-- Some vars.  Define at the top so that the sets can make use of them.
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
 
-	--leftDarkRing = {name="Dark Ring",augments={"Physical Damage Taken -6%", "Magical Damage Taken -3%", "Spell Interruption Rate Down 5%"}}
-	--rightDarkRing = {name="Dark Ring",augments={"Physical Damage Taken -5%", "Magical Damage Taken -3%"}}
-
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
-
 
 	-- Fast cast sets for spells
 	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
@@ -67,7 +62,6 @@ function get_sets()
 
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
 	
 	sets.precast.JA.Nightingale = {feet="Bard's Slippers +2"}
 	sets.precast.JA.Troubadour = {body="Bard's Justaucorps +2"}
@@ -105,7 +99,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
 
 	-- General set for recast times.
 	sets.midcast.FastRecast = {range="Angel Lyre",
@@ -188,7 +181,6 @@ function get_sets()
 	
 	
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",

@@ -41,11 +41,8 @@ function get_sets()
 	sets.TreasureHunter = {hands="Assassin's Armlets +2", feet="Raider's Poulaines +2"}
 	
 	-- Precast Sets
-	sets.precast = {}
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-
 	sets.precast.JA['Collaborator'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Accomplice'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Flee'] = {feet="Pillager's Poulaines"}
@@ -150,7 +147,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
@@ -172,7 +168,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
 
 	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
@@ -190,7 +185,6 @@ function get_sets()
 		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 	
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Torero Torque",

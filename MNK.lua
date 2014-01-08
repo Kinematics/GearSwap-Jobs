@@ -27,11 +27,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
 	
 	-- Precast sets to enhance JAs on use
-	sets.precast.JA = {}
-
 	sets.precast.JA['Hundred Fists'] = {legs="Melee Hose +2"}
 
 	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves"}
@@ -109,8 +106,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
-	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Otronif Harness",hands="Thaumas Gloves",
@@ -147,8 +142,6 @@ function get_sets()
 		back="Iximulew Cape",waist="Black Belt",legs="Nahtirah Trousers",feet="Herald's Gaiters"}
 	
 	-- Defense sets
-	sets.defense = {}
-
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Twilight Torque",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",

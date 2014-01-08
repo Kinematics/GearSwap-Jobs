@@ -29,10 +29,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
 	
 	-- Fast cast sets for spells
 	
@@ -49,7 +47,6 @@ function get_sets()
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
-	sets.precast.WS = {}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Flash Nova'] = {
@@ -63,7 +60,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
 	
 	sets.midcast.FastRecast = {
 		head="Zelus Tiara",ear2="Loquacious Earring",
@@ -90,7 +86,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
 
 	sets.idle.Town = {range="Matre Bell",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
@@ -108,7 +103,6 @@ function get_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 	
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.PDT = {range="Matre Bell",
 		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",

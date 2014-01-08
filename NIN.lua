@@ -32,12 +32,9 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
-	
-	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
 
-	
+	-- Precast sets to enhance JAs
+
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Whirlpool Mask",
@@ -90,8 +87,6 @@ function get_sets()
 	
 	
 	-- Midcast Sets
-	sets.midcast = {}
-	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Hachiya Chainmail",hands="Otronif Gloves",
@@ -134,8 +129,6 @@ function get_sets()
 		back="Iximulew Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
 	
 	-- Defense sets
-	sets.defense = {}
-
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Torero Torque",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Dark Ring",
@@ -271,12 +264,10 @@ function get_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
-	sets.Buff = {}
-	
-	sets.Buff.Migawari = {body="Iga Ningi"}
-	sets.Buff.Doom = {ring2="Saida Ring"}
-	sets.Buff.Yonin = {}
-	sets.Buff.Innin = {}
+	sets.buff.Migawari = {body="Iga Ningi"}
+	sets.buff.Doom = {ring2="Saida Ring"}
+	sets.buff.Yonin = {}
+	sets.buff.Innin = {}
 
 
 	windower.send_command('input /macro book 3;wait .1;input /macro set 10')

@@ -34,10 +34,8 @@ function get_sets()
 	--------------------------------------
 	
 	-- Precast Sets
-	sets.precast = {}
 
 	-- Fast cast sets for spells
-	
 	sets.precast.FC = {ear2="Loquacious Earring",
 		hands="Thaumas Gloves"}
 
@@ -45,8 +43,6 @@ function get_sets()
 
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA = {}
-
 	sets.precast.JA['Tactical Switch'] = {feet="Cirque Scarpe +2"}
 	
 	sets.precast.JA['Repair'] = {feet="Puppetry Babouches +1"}
@@ -85,7 +81,6 @@ function get_sets()
 
 	
 	-- Midcast Sets
-	sets.midcast = {}
 
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
@@ -115,7 +110,6 @@ function get_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle = {}
 
 	sets.idle.Town = {main="Oatixur",range="Eminent Animator",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -159,7 +153,6 @@ function get_sets()
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
 	-- Defense sets
-	sets.defense = {}
 
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Twilight Torque",
