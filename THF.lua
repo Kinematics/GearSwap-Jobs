@@ -309,7 +309,7 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 	end
 		
 	-- Don't let aftercast revert gear set for SA/TA/Feint
-	if S{'Sneak Attack', 'Trick Attack', 'Feint'}[spell.english] and not spell.interrupted then
+	if S{'Sneak Attack', 'Trick Attack', 'Feint'}:contains(spell.english) and not spell.interrupted then
 		eventArgs.handled = true
 	-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
 	elseif state.Buff['Sneak Attack'] then

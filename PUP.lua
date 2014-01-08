@@ -246,7 +246,7 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted and S{'Deploy','Retrieve','Activate','Deactivate'}[spell.english] then
+	if not spell.interrupted and S{'Deploy','Retrieve','Activate','Deactivate'}:contains(spell.english) then
 		do_pet_status_change()
 		eventArgs.handled = true
 
@@ -270,7 +270,7 @@ function job_handle_equipping_gear(status, eventArgs)
 	if pet.isvalid and pet.status == 'Engaged' and state.OffenseMode == 'Normal' and state.DefenseMode == 'Normal' then
 		if player.status == 'Idle' then
 			classes.CustomIdleGroups:append('Pet'..state.PetMode)
-		elseif player.status == 'Engaged' and S{'Melee','Ranged','Tank','Heal'}[state.PetMode] then
+		elseif player.status == 'Engaged' and S{'Melee','Ranged','Tank','Heal'}:contains(state.PetMode) then
 			determine_pet_haste()
 			if petHaste > 0 then
 				classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
@@ -394,7 +394,7 @@ end
 
 function determine_pet_haste()
 	petHaste = 0
-	if pet.isvalid and S{'Melee','Ranged','Tank','Heal'}[state.PetMode] then
+	if pet.isvalid and S{'Melee','Ranged','Tank','Heal'}:contains(state.PetMode) then
 		-- assume Turbo Charger is equipped for any non-Nuke auto
 		-- possibly change this for healer auto?
 		petHaste = 5
