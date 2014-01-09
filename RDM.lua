@@ -37,7 +37,10 @@ function get_sets()
 	
 
 	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {}
+	sets.precast.Waltz = {
+		head="Atrophy Chapeau +1"
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",
+		back="Refraction Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
