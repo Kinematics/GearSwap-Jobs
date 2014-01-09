@@ -395,13 +395,6 @@ end
 
 -- Called when the player's status changes.
 function MoteInclude.pet_status_change(newStatus, oldStatus)
-	-- Handle corrections for parameter bugs:
-	if newStatus == oldStatus then
-		return
-	end
-	
-	--------------------------------
-	
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
