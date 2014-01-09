@@ -45,9 +45,9 @@ function get_sets()
 	-- Fast cast sets for spells
 	
 	-- 80% Fast Cast (including trait) for all spells, plus 5% quick cast
-	-- note: actually 82%; drop an earring or prolix ring
+	-- No other FC sets necessary.
 	sets.precast.FC = {ammo="Impatiens",
-		head="Atrophy Chapeau",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Atrophy Chapeau +1",ear2="Loquacious Earring",
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
