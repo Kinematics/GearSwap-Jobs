@@ -242,9 +242,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function job_precast(spell, action, spellMap, eventArgs)
-	if pet.isvalid then
-		add_to_chat(123,pet.name..': '..pet.head..', '..pet.frame..', status='..pet.status)
-	end
+
 end
 
 function job_pet_midcast(spell, action, spellMap, eventArgs)
@@ -264,7 +262,7 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 		end
 		
 		if spell.english == 'Deploy' then
-			display_pet_status()
+			display_pet_status('Engaged')
 		end
 	end
 end
@@ -389,9 +387,17 @@ function adjust_gear_sets_for_pet()
 	end
 end
 
-function display_pet_status()
+function display_pet_status(withStatus)
 	if pet.isvalid then
-		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
+		local petInfoString = pet.name..' ['..pet.head..']: '
+		
+		if withStatus then
+			petInfoString = petInfoString..withStatus
+		else
+			petInfoString = petInfoString..tostring(pet.status)
+		end
+		
+		petInfoString = petInfoString..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
 		
 		if magicPetModes:contains(state.PetMode) then
 			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
