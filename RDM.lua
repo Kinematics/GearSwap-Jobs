@@ -38,7 +38,7 @@ function get_sets()
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {
-		head="Atrophy Chapeau +1"
+		head="Atrophy Chapeau +1",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",
 		back="Refraction Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 		
