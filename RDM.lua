@@ -64,7 +64,8 @@ function get_sets()
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, 
-		{neck="Soil Gorget",ear1="Brutal Earring",ear2="Moonshade Earring",waist="Soil Belt"})
+		{neck="Soil Gorget",ear1="Brutal Earring",ear2="Moonshade Earring",
+		ring1="Aquasoul Ring",ring2="Aquasoul Ring",waist="Soil Belt"})
 
 	sets.precast.WS['Sanguine Blade'] = {ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoichean Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
@@ -91,7 +92,9 @@ function get_sets()
 		body="Duelist's Tabard +2",hands="Atrophy Gloves",ring1="Prolix Ring",
 		back="Estoqueur's Cape",waist="Cascade Belt",legs="Portent Pants",feet="Estoqueur's Houseaux +2"}
 
-	sets.midcast.Refresh = set_combine(sets.midcast.EnhancingMagic, {legs="Estoqueur's Fuseau +2"})
+	sets.midcast.Refresh = {legs="Estoqueur's Fuseau +2"}
+
+	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 	
 	sets.midcast.EnfeeblingMagic = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
