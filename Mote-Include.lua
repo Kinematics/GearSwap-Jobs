@@ -69,10 +69,13 @@ function MoteInclude.init_include()
 	-- Basic spell mappings are based on common spell series.
 	-- EG: 'Cure' for Cure, Cure II, Cure III, Cure IV, Cure V, or Cure VI.
 	classes.spellMappings = get_spell_mappings()
-	-- List of spells and spell maps that don't benefit from greater skill.
-	--  Fine just equipping fast recast gear for these.
-	classes.NoSkillSpells = S{'Haste', 'Refresh', 'Refresh II', 'Regen',
-		 'Protect', 'Protectra', 'Shell', 'Shellra', 'Raise', 'Reraise'}
+	-- List of spells and spell maps that don't benefit from greater skill (though
+	-- they may benefit from spell-specific augments, such as improved regen or refresh).
+	-- Spells that fall under this category will be skipped when searching for
+	-- spell.skill sets.
+	classes.NoSkillSpells = S{'Haste', 'Refresh', 'Regen',
+		 'Protect', 'Protectra', 'Shell', 'Shellra',
+		 'Raise', 'Reraise'}
 	-- Custom, job-defined class, like the generic spell mappings.
 	-- Takes precedence over default spell maps.
 	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
@@ -393,6 +396,7 @@ end
 -- Called when the player's status changes.
 function MoteInclude.pet_status_change(newStatus, oldStatus)
 	-- Handle corrections for parameter bugs:
+	add_to_chat(123,'pet_status_change: '..tostring(oldStatus)..' -> '..tostring(newStatus))
 	if type(newStatus):lower() == 'table' and newStatus.name then
 		newStatus = newStatus.name
 	end
@@ -595,7 +599,8 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 			equipSet = sets.midcast[spell.english]
 		elseif spellMap and sets.midcast[spellMap] then
 			equipSet = sets.midcast[spellMap]
-		elseif sets.midcast[spell.skill] then
+		elseif sets.midcast[spell.skill] and
+			not (classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap]) then
 			equipSet = sets.midcast[spell.skill]
 		elseif sets.midcast[spell.type] then
 			equipSet = sets.midcast[spell.type]
