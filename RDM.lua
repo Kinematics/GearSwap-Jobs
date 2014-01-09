@@ -55,9 +55,9 @@ function get_sets()
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
-		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		back="Atheling Mantle",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Death Blossom'] = set_combine(sets.precast.WS)
@@ -73,21 +73,21 @@ function get_sets()
 	-- Midcast Sets
 	
 	sets.midcast.FastRecast = {
-		head="Atrophy Chapeau",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Atrophy Chapeau +1",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {
 		head="Gendewitha Caubeen",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Gendewitha Galoshes"}
+		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 
 	sets.midcast.EnhancingMagic = {
-		head="Atrophy Chapeau",neck="Colossus's Torque",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Atrophy Chapeau +1",neck="Colossus's Torque",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
 		body="Duelist's Tabard +2",hands="Atrophy Gloves",ring1="Prolix Ring",
-		back="Estoqueur's Cape",waist="Witful Belt",legs="Portent Pants",feet="Estoqueur's Houseaux +2"}
+		back="Estoqueur's Cape",waist="Cascade Belt",legs="Portent Pants",feet="Estoqueur's Houseaux +2"}
 
 	sets.midcast.Refresh = set_combine(sets.midcast.EnhancingMagic, {legs="Estoqueur's Fuseau +2"})
 	
@@ -97,14 +97,10 @@ function get_sets()
 		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
 		legs="Estoqueur's Fuseau +2",feet="Estoqueur's Houseaux +2"}
 
-	sets.midcast.EnfeeblingMagic = {
-		head="Atrophy Chapeau",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Atrophy Tabard",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Mediator's Ring",
+	sets.midcast.EnfeeblingMagic = {ammo="Impatiens",
+		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Cascade Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
-
-	sets.midcast.EnfeebleInt = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
-
-	sets.midcast.EnfeebleMnd = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
 
 	sets.midcast['Dia III'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
 
@@ -116,8 +112,8 @@ function get_sets()
 		back="Toro Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.DarkMagic = {
-		head="Atrophy Chapeau",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Atrophy Tabard",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
+		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	--sets.midcast.Drain = set_combine(sets.midcast.EnfeeblingMagic, {ring2="Excelsis Ring"})
@@ -132,36 +128,36 @@ function get_sets()
 	-- Resting sets
 	sets.resting = {main="Chatoyant Staff",
 		head="Duelist's Chapeau +2",neck="Wiglen Gorget",
-		body="Atrophy Tabard",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Atrophy Tabard +1",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle.Town = {ammo="Impatiens",
-		head="Atrophy Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard",hands="Atrophy Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Gendewitha Galoshes"}
+		head="Atrophy Chapeau +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 	
 	sets.idle.Field = {ammo="Impatiens",
 		head="Duelist's Chapeau +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Gendewitha Galoshes"}
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 
 	sets.idle.Weak = {ammo="Impatiens",
 		head="Duelist's Chapeau +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Gendewitha Galoshes"}
+		body="Atrophy Tabard +1",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 	
 	-- Defense sets
 	sets.defense.PDT = {
-		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
-		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 
@@ -176,9 +172,9 @@ function get_sets()
 	
 	-- Normal melee group
 	sets.engaged = {
-		head="Atrophy Chapeau",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hagondes Coat",hands="Atrophy Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Goading Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Atrophy Tabard +1",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Atheling Mantle",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
 	windower.send_command('input /macro book 4;wait .1;input /macro set 3')
