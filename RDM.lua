@@ -172,6 +172,8 @@ function get_sets()
 	-- If you create a set with both offense and defense modes, the offense mode should be first.
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
+	MeleeWeapons = S{"Buramenk'ah"}
+	
 	-- Normal melee group
 	sets.engaged = {
 		head="Atrophy Chapeau",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -241,6 +243,16 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Called by the 'update' self-command, for common needs.
+-- Set eventArgs.handled to true if we don't want automatic equipping of gear.
+function job_update(cmdParams, eventArgs)
+	if MeleeWeapons:contains(player.equipment.main) then
+		disable('main', 'sub')
+	else
+		enable('main', 'sub')
+	end
+end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
