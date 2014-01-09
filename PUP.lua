@@ -246,9 +246,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 function job_pet_midcast(spell, action, spellMap, eventArgs)
-	--add_to_chat(122,'Pet action: '..spell.name)
 	if petWeaponskills:contains(spell.english) then
-		--add_to_chat(122,'Pet weaponskill')
 		classes.CustomClass = "Weaponskill"
 	end
 end
