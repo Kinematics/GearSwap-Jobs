@@ -112,7 +112,7 @@ function get_sets()
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	--sets.midcast.Drain = set_combine(sets.midcast.EnfeeblingMagic, {ring2="Excelsis Ring"})
+	--sets.midcast.Drain = set_combine(sets.midcast.DarkMagic, {ring2="Excelsis Ring"})
 
 	--sets.midcast.Aspir = sets.midcast.Drain
 
