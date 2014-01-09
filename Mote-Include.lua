@@ -396,11 +396,6 @@ end
 -- Called when the player's status changes.
 function MoteInclude.pet_status_change(newStatus, oldStatus)
 	-- Handle corrections for parameter bugs:
-	add_to_chat(123,'pet_status_change: '..tostring(oldStatus)..' -> '..tostring(newStatus))
-	if type(newStatus):lower() == 'table' and newStatus.name then
-		newStatus = newStatus.name
-	end
-
 	if newStatus == oldStatus then
 		return
 	end
