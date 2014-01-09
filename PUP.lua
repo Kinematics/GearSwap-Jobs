@@ -310,7 +310,8 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-
+	state.PetMode = get_pet_mode()
+	adjust_gear_sets_for_pet()
 end
 
 -- Handle notifications of general user state change.
