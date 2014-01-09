@@ -390,6 +390,34 @@ function MoteInclude.status_change(newStatus, oldStatus)
 end
 
 
+-- Called when the player's status changes.
+function MoteInclude.pet_status_change(newStatus, oldStatus)
+	-- Handle corrections for parameter bugs:
+	if type(newStatus):lower() == 'table' and newStatus.name then
+		newStatus = newStatus.name
+	end
+
+	if newStatus == oldStatus then
+		return
+	end
+	
+	--------------------------------
+	
+	-- init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to override this code
+	if job_status_change then
+		job_pet_status_change(newStatus, oldStatus, eventArgs)
+	end
+
+	-- Equip default gear if not handled by the job.
+	if not eventArgs.handled then
+		handle_equipping_gear(player.status, newStatus)
+	end
+end
+
+
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
@@ -418,18 +446,18 @@ end
 
 -- Central point to call to equip gear based on status.
 -- Status - Player status that we're using to define what gear to equip.
-function MoteInclude.handle_equipping_gear(status)
+function MoteInclude.handle_equipping_gear(playerStatus, petStatus)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
 	-- Allow jobs to override this code
 	if job_handle_equipping_gear then
-		job_handle_equipping_gear(status, eventArgs)
+		job_handle_equipping_gear(playerStatus, eventArgs)
 	end
 
 	-- Equip default gear if job didn't handle it.
 	if not eventArgs.handled then
-		equip_gear_by_status(status)
+		equip_gear_by_status(playerStatus)
 	end
 end
 

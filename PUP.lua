@@ -22,12 +22,19 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
-	options.PetModes = {'Heal','Ranged','Tank','Nuke','Melee'}
-	state.PetMode = 'Heal'
+
+	petModes = {
+		['Harlequin Head'] = 'Melee',
+		['Sharpshot Head'] = 'Ranged',
+		['Valoredge Head'] = 'Tank',
+		['Stormwaker Head'] = 'Magic',
+		['Soulsoother Head'] = 'Heal',
+		['Spiritreaver Head'] = 'Nuke'
+		}
+
+	magicPetModes = S{'Nuke','Heal','Magic'}
 	
-	petHaste = 0
-	petStatus = pet.status
-	statusUpdatesStarted = false
+	state.PetMode = get_pet_mode()
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -217,13 +224,12 @@ function get_sets()
 		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
 		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
 
-	windower.send_command('input /macro book 9;wait .1;input /macro set 10')
+	windower.send_command('input /macro book 9;wait .1;input /macro set 3')
 	gearswap_binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind !- gs c cycle targetmode')
 
-	windower.send_command('bind ^= gs c cycle petmode')
 end
 
 -- Called when this job file is unloaded (eg: job change)
@@ -235,9 +241,15 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
+function job_precast(spell, action, spellMap, eventArgs)
+	if pet.isvalid then
+		add_to_chat(123,pet.name..': '..pet.head..', '..pet.frame..', status='..pet.status)
+	end
+end
+
 function job_pet_midcast(spell, action, spellMap, eventArgs)
 	--add_to_chat(122,'Pet action: '..spell.name)
-	if petWeaponskills[spell.english] then
+	if petWeaponskills:contains(spell.english) then
 		--add_to_chat(122,'Pet weaponskill')
 		classes.CustomClass = "Weaponskill"
 	end
@@ -246,13 +258,13 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted and S{'Deploy','Retrieve','Activate','Deactivate'}:contains(spell.english) then
-		do_pet_status_change()
-		eventArgs.handled = true
-
-		if not statusUpdatesStarted then
-			send_command('wait 5; gs c update petstatus')
-			statusUpdatesStarted = true
+	if not spell.interrupted then
+		if S{'Activate','Deactivate'}:contains(spell.english) then
+			state.PetMode = get_pet_mode()
+		end
+		
+		if spell.english == 'Deploy' then
+			display_pet_status()
 		end
 	end
 end
@@ -264,19 +276,7 @@ end
 -- Called before the Include starts constructing melee/idle/resting sets.
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_handle_equipping_gear(status, eventArgs)
-	classes.CustomMeleeGroups:clear()
-	classes.CustomIdleGroups:clear()
-	
-	if pet.isvalid and pet.status == 'Engaged' and state.OffenseMode == 'Normal' and state.DefenseMode == 'Normal' then
-		if player.status == 'Idle' then
-			classes.CustomIdleGroups:append('Pet'..state.PetMode)
-		elseif player.status == 'Engaged' and S{'Melee','Ranged','Tank','Heal'}:contains(state.PetMode) then
-			determine_pet_haste()
-			if petHaste > 0 then
-				classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
-			end
-		end
-	end
+
 end
 
 
@@ -294,15 +294,18 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if buff == 'Wind Maneuver' then
+		adjust_gear_sets_for_pet()
 		handle_equipping_gear(player.status)
 	end
 end
 
 
--- Note: this is a hack, a temporary solution
-function pet_status_change(newStatus, oldStatus)
-	handle_equipping_gear(player.status)
+-- Called when the pet's status changes.
+function job_pet_status_change(newStatus, oldStatus)
+	state.PetMode = get_pet_mode()
+	adjust_gear_sets_for_pet()
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
@@ -311,32 +314,16 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	-- Hack for keeping track of pet status, until raising events for it is implemented
-	if cmdParams[1] == 'petstatus' then
-		do_pet_status_change()
-		send_command('wait 5; gs c update petstatus')
-		statusUpdatesStarted = true
-		eventArgs.handled = true
-	elseif cmdParams[1] == 'user' and not statusUpdatesStarted then
-		do_pet_status_change()
-		send_command('wait 5; gs c update petstatus')
-		statusUpdatesStarted = true
-	end
-	
+
 end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue)
-	if stateField == 'PetMode' then
-		handle_equipping_gear(player.status)
-	end
+
 end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
-	--add_to_chat(122,'Special idle: '..tostring(classes.CustomIdleGroups))
-	--add_to_chat(122,'Special melee: '..tostring(classes.CustomMeleeGroups))
-	
 	local defenseString = ''
 	if state.Defense.Active then
 		local defMode = state.Defense.PhysicalMode
@@ -350,15 +337,7 @@ function display_current_job_state(eventArgs)
 	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
-	if pet.isvalid then
-		local petInfoString = pet.name..' ['..state.PetMode..']  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
-		
-		if state.PetMode == 'Nuke' or state.PetMode == 'Heal' then
-			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
-		end
-		
-		add_to_chat(122,petInfoString)
-	end
+	display_pet_status()
 
 	eventArgs.handled = true
 end
@@ -367,49 +346,58 @@ end
 -- Hooks for pet mode handling.
 -------------------------------------------------------------------------------------------------------------------
 
--- Request job-specific mode tables.
--- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_mode_table(field)
-	if field == 'Pet' then
-		return options.PetModes, state.PetMode
-	end
-	
-	-- Return an error if we don't recognize the field requested.
-	return nil, nil, true
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_mode(field, val)
-	if field == 'Pet' then
-		state.PetMode = val
-		return true
-	end
-end
-
-
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function determine_pet_haste()
-	petHaste = 0
-	if pet.isvalid and S{'Melee','Ranged','Tank','Heal'}:contains(state.PetMode) then
-		-- assume Turbo Charger is equipped for any non-Nuke auto
-		-- possibly change this for healer auto?
-		petHaste = 5
-		if buffactive['wind maneuver'] then
-			petHaste = 10 + 5 * buffactive['wind maneuver']
+function get_pet_mode()
+	if pet.isvalid then
+		return petModes[pet.head]
+	end
+end
+
+function get_pet_haste()
+	local haste = 0
+	
+	if pet.isvalid then
+		if pet.attachments['Turbo Charger'] then
+			haste = 5
+			if buffactive['wind maneuver'] then
+				haste = 10 + 5 * buffactive['wind maneuver']
+			end
+		end
+	end
+	
+	return haste
+end
+
+
+function adjust_gear_sets_for_pet()
+	classes.CustomIdleGroups:clear()
+	classes.CustomMeleeGroups:clear()
+
+	-- If the pet is engaged, adjust potential idle and melee groups.
+	if pet.isvalid and pet.status == 'Engaged' then
+		-- idle
+		classes.CustomIdleGroups:append('Pet'..state.PetMode)
+		
+		-- melee
+		local petHaste = get_pet_haste()
+		if petHaste > 0 then
+			classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
 		end
 	end
 end
 
--- Hack to support watching for pet status changes
-function do_pet_status_change()
-	local oldPetStatus = petStatus
-	petStatus = pet.status
-	if petStatus ~= oldPetStatus then
-		pet_status_change(petStatus, oldPetStatus)
+function display_pet_status()
+	if pet.isvalid then
+		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
+		
+		if magicPetModes:contains(state.PetMode) then
+			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
+		end
+		
+		add_to_chat(122,petInfoString)
 	end
 end
 
