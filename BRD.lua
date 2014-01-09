@@ -263,10 +263,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 
-		-- If the spells don't get enhanced by skill or whatever, don't bother equipping gear.
-		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
-			eventArgs.handled = true
-		elseif spell.type == 'BardSong' then
+		if spell.type == 'BardSong' then
 			-- layer general gear on first, then let default handler add song-specific gear.
 			local generalClass = get_song_class(spell)
 			if generalClass and sets.midcast[generalClass] then

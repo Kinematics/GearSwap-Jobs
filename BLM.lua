@@ -269,11 +269,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer is fast recast.
 		equip(sets.midcast.FastRecast)
 
-		-- If the spells don't get enhanced by skill or whatever, don't bother equipping additional gear.
-		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
-			eventArgs.handled = true
-		end
-
 		if spell.skill == 'ElementalMagic' then
 			if state.CastingMode == 'Proc' then
 				add_to_chat(15,'Proc mode, no damage gear for midcast.')

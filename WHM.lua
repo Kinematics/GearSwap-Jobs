@@ -290,13 +290,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
 		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
-
-		-- If the spells don't get enhanced by skill or whatever, don't bother equipping gear.
-		if classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap] then
-			if spellMap ~= 'Protectra' and spellMap ~= 'Shellra' then
-				eventArgs.handled = true
-			end
-		end
 	end
 	
 	classes.CustomClass = get_spell_class(spell, action, spellMap)
