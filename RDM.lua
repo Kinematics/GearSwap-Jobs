@@ -91,10 +91,6 @@ function get_sets()
 
 	sets.midcast.Refresh = set_combine(sets.midcast.EnhancingMagic, {legs="Estoqueur's Fuseau +2"})
 	
-	sets.midcast.ComposureOther = {head="Estoqueur's Chappel +2",
-		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
-		legs="Estoqueur's Fuseau +2",feet="Estoqueur's Houseaux +2"}
-
 	sets.midcast.EnfeeblingMagic = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Mediator's Ring",
@@ -117,6 +113,13 @@ function get_sets()
 	--sets.midcast.Drain = set_combine(sets.midcast.EnfeeblingMagic, {ring2="Excelsis Ring"})
 
 	--sets.midcast.Aspir = sets.midcast.Drain
+
+
+	-- Sets for special buff conditions on spells.
+	
+	sets.buff.ComposureOther = {head="Estoqueur's Chappel +2",
+		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
+		legs="Estoqueur's Fuseau +2",feet="Estoqueur's Houseaux +2"}
 
 	sets.buff.Saboteur = {hands="Estoqueur's Gantherots"}
 	
@@ -193,16 +196,16 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
-	if spell.skill == 'EnfeeblingMagic' and state.Buff.Saboteur then
-		equip(sets.buff.Saboteur)
-	end
+
 end
 
 -- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if buffactive.composure and spell.skill == 'EnhancingMagic' and spell.target.type == 'PLAYER' then
-		equip(sets.midcast.ComposureOther)
+	if spell.skill == 'EnfeeblingMagic' and state.Buff.Saboteur then
+		equip(sets.buff.Saboteur)
+	elseif buffactive.composure and spell.skill == 'EnhancingMagic' and spell.target.type == 'PLAYER' then
+		equip(sets.buff.ComposureOther)
 	end
 end
 
