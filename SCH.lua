@@ -25,7 +25,7 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
-	state.Sublimation = buffactive['Sublimation: Activated']
+	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -335,7 +335,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
-	if state.Sublimation then
+	if state.Buff.Sublimation then
 		if state.IdleMode == 'Normal' then
 			idleSet = set_combine(idleSet, sets.Buff.FullSublimation)
 		elseif state.IdleMode == 'PDT' then
@@ -359,7 +359,7 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if buff == "Sublimation: Activated" then
-		state.Sublimation = gain
+		state.Buff.Sublimation = gain
 		update_gear_sets(player.status)
 	end
 end
