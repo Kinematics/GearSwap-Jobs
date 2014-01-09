@@ -119,13 +119,13 @@ function get_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 
 	sets.idle.Town = {main="Oatixur",range="Eminent Animator",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 	
 	sets.idle.Field = {
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
 	sets.idle.Weak = {
@@ -149,15 +149,21 @@ function get_sets()
 		body="Foire Tobe",hands="Cirque Guanti +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Hermes' Sandals"}
 
+	sets.idle.Field.PetHeal = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+
 	sets.idle.Field.PetNuke = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"}
 
-	sets.idle.Field.PetHeal = {
+	sets.idle.Field.PetMagic = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Cirque Scarpe +2"}
+
 
 	-- Defense sets
 
@@ -188,7 +194,7 @@ function get_sets()
 	-- Normal melee group
 	sets.engaged = {
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Regimen Mittens",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.Acc = {
 		head="Whirlpool Mask",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -196,28 +202,12 @@ function get_sets()
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.DT = {
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
+		body="Otronif Harness",hands="Regimen Mittens",ring1="Dark Ring",ring2="Epona's Ring",
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.Acc.DT = {
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Beeline Ring",
+		body="Otronif Harness",hands="Regimen Mittens",ring1="Dark Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.PetHaste5 = {
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Regimen Mittens",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.PetHaste15 = {
-		head="Foire Taj",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Regimen Mittens",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.PetHaste20 = {
-		head="Foire Taj",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.PetHaste25 = {
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Pantin Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
 	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
@@ -374,14 +364,16 @@ function adjust_gear_sets_for_pet()
 	classes.CustomMeleeGroups:clear()
 
 	-- If the pet is engaged, adjust potential idle and melee groups.
-	if pet.isvalid and pet.status == 'Engaged' then
-		-- idle
-		classes.CustomIdleGroups:append('Pet'..state.PetMode)
-		
-		-- melee
-		local petHaste = get_pet_haste()
-		if petHaste > 0 then
-			classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
+	if pet.isvalid then
+		if pet.status == 'Engaged' then
+			-- idle
+			classes.CustomIdleGroups:append('Pet'..state.PetMode)
+			
+			-- melee
+			local petHaste = get_pet_haste()
+			if petHaste > 0 then
+				--classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
+			end
 		end
 	end
 end
