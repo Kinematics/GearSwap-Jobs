@@ -23,6 +23,9 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
+	state.Buff = {}
+	state.Buff.Saboteur = buffactive.saboteur or false
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -100,8 +103,6 @@ function get_sets()
 
 	sets.midcast['Slow II'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
 	
-	sets.midcast.Saboteur = {hands="Estoqueur's Gantherots"}
-	
 	sets.midcast.ElementalMagic = {
 		head="Hagondes Hat",neck="Stoichean Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
@@ -115,6 +116,9 @@ function get_sets()
 	--sets.midcast.Drain = set_combine(sets.midcast.EnfeeblingMagic, {ring2="Excelsis Ring"})
 
 	--sets.midcast.Aspir = sets.midcast.Drain
+
+	sets.buff.Saboteur = {hands="Estoqueur's Gantherots"}
+	
 
 	-- Sets to return to when not performing an action.
 	
@@ -184,11 +188,27 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Run after the general midcast() is done.
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_midcast(spell, action, spellMap, eventArgs)
+	if spell.skill == 'EnfeeblingMagic' and state.Buff.Saboteur then
+		equip(sets.buff.Saboteur)
+	end
+end
+
+-- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	if buffactive.composure and spell.skill == 'EnhancingMagic' and spell.target.type == 'PLAYER' then
 		equip(sets.midcast.ComposureOther)
+	end
+end
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
 	end
 end
 
@@ -205,7 +225,9 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
 end
 
 
