@@ -73,9 +73,9 @@ function MoteInclude.init_include()
 	-- they may benefit from spell-specific augments, such as improved regen or refresh).
 	-- Spells that fall under this category will be skipped when searching for
 	-- spell.skill sets.
-	classes.NoSkillSpells = S{'Haste', 'Refresh', 'Regen',
-		 'Protect', 'Protectra', 'Shell', 'Shellra',
-		 'Raise', 'Reraise'}
+	classes.NoSkillSpells = S{
+		'Haste', 'Refresh', 'Regen', 'Protect', 'Protectra', 'Shell', 'Shellra',
+		'Raise', 'Reraise','Cursna'}
 	-- Custom, job-defined class, like the generic spell mappings.
 	-- Takes precedence over default spell maps.
 	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
