@@ -91,8 +91,6 @@ function get_sets()
 
 	sets.midcast.Refresh = set_combine(sets.midcast.EnhancingMagic, {legs="Estoqueur's Fuseau +2"})
 	
-	sets.midcast['Refresh II'] = sets.midcast.Refresh
-	
 	sets.midcast.ComposureOther = {head="Estoqueur's Chappel +2",
 		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
 		legs="Estoqueur's Fuseau +2",feet="Estoqueur's Houseaux +2"}
