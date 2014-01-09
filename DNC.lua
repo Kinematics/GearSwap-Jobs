@@ -135,6 +135,7 @@ function get_sets()
 	-- Resting sets
 	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
+	sets.ExtraRegen = {head="Ocelomeh Headpiece +1"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
@@ -337,7 +338,7 @@ end
 
 function customize_idle_set(idleSet)
 	if player.hpp < 80 then
-		idleSet.head = "Ocelomeh Headpiece +1"
+		idleSet = set_combine(idleSet, sets.ExtraRegen)
 	end
 	
 	return idleSet
