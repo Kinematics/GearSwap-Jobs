@@ -63,14 +63,13 @@ function get_sets()
 		back="Atheling Mantle",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Death Blossom'] = set_combine(sets.precast.WS)
-
-	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ear1="Brutal Earring",ear2="Moonshade Earring"})
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, 
+		{neck="Soil Gorget",ear1="Brutal Earring",ear2="Moonshade Earring",waist="Soil Belt"})
 
 	sets.precast.WS['Sanguine Blade'] = {ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoichean Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	
 	-- Midcast Sets
