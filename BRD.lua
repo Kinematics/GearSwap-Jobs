@@ -422,6 +422,7 @@ function calculate_duration(spellName, spellMap)
 	if player.equipment.body == "Aoidos' Hngrln. +2" then mult = mult + 0.1 end
 	if player.equipment.legs == "Mdk. Shalwar +1" then mult = mult + 0.1 end
 	if player.equipment.feet == "Brioso Slippers" then mult = mult + 0.1 end
+	if player.equipment.feet == "Brioso Slippers +1" then mult = mult + 0.11 end
 	
 	if spellMap == 'Paeon' and player.equipment.head == "Brioso Roundlet" then mult = mult + 0.1 end
 	if spellMap == 'Paeon' and player.equipment.head == "Brioso Roundlet +1" then mult = mult + 0.1 end
