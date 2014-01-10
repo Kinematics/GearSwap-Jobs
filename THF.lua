@@ -402,11 +402,6 @@ function job_buff_change(buff, gain)
 	end
 end
 
--- Function to indicate if any buffs have been activated that we don't want to equip gear over.
-function satafeint_active()
-	return state.Buff['Sneak Attack'] or state.Buff['Trick Attack'] or state.Buff['Feint']
-end
-	
 
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for TH mode handling.
@@ -494,5 +489,10 @@ function check_range_lock()
 	else
 		enable('range', 'ammo')
 	end
+end
+
+-- Function to indicate if any buffs have been activated that we don't want to equip gear over.
+function satafeint_active()
+	return state.Buff['Sneak Attack'] or state.Buff['Trick Attack'] or state.Buff['Feint']
 end
 
