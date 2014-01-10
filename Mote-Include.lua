@@ -14,7 +14,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/8/2014 4:56:57 PM
+-- Last Modified: 1/10/2014 12:01:00 AM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local MoteInclude = {}
@@ -103,6 +103,7 @@ function MoteInclude.init_include()
 		['reset']=handle_reset,
 		['update']=handle_update,
 		['showset']=handle_show_set,
+		['naked']=handle_naked,
 		['test']=handle_test}
 	
 
@@ -1205,6 +1206,14 @@ function MoteInclude.handle_show_set(cmdParams)
 		showSet = nil
 		add_to_chat(122,'Show Sets is turned off.')
 	end
+end
+
+-- Minor variation on the GearSwap "gs equip naked" command, that ensures that
+-- all slots are enabled before removing gear.
+-- Command: "gs c naked"
+function MoteInclude.handle_naked(cmdParams)
+	enable('main','sub','range','ammo','head','neck','lear','rear','body','hands','lring','rring','back','waist','legs','feet')
+	equip(sets.naked)
 end
 
 
