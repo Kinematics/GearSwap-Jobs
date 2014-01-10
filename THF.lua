@@ -371,6 +371,8 @@ end
 function job_status_change(newStatus, oldStatus, eventArgs)
 	check_range_lock()
 	
+	-- If engaging, put on TH gear.
+	-- If disengaging, turn off TH tagging.
 	if newStatus == 'Engaged' and state.TreasureMode ~= 'None' then
 		equip(sets.TreasureHunter)
 		tag_with_th = true
