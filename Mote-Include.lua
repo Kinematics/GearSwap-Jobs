@@ -1400,7 +1400,7 @@ end
 -- Add the obi for the given element if it matches either the current weather or day.
 function MoteInclude.add_obi(spell_element)
 	if gear.Obi[spell_element] and (world.weather_element == spell_element or world.day_element == spell_element) then
-		equip(gear.Obi[spell_element])
+		equip({waist=gear.Obi[spell_element]})
 	end
 end
 
