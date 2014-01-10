@@ -269,21 +269,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_job_wsmode(spell, action, spellMap)
-	local wsmode = ''
-	if state.Buff['Sneak Attack'] then
-		wsmode = 'SA'
-	end
-	if state.Buff['Trick Attack'] then
-		wsmode = wsmode .. 'TA'
-	end
-	
-	if wsmode ~= '' then
-		return wsmode
-	end
-end
-
-
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'Step' or spell.type == 'Flourish1' then
@@ -346,6 +331,20 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
+
+function get_job_wsmode(spell, action, spellMap)
+	local wsmode = ''
+	if state.Buff['Sneak Attack'] then
+		wsmode = 'SA'
+	end
+	if state.Buff['Trick Attack'] then
+		wsmode = wsmode .. 'TA'
+	end
+	
+	if wsmode ~= '' then
+		return wsmode
+	end
+end
 
 function customize_idle_set(idleSet)
 	if player.hpp < 80 then
