@@ -330,7 +330,7 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- Customization hooks for idle and melee sets construction.
 -------------------------------------------------------------------------------------------------------------------
 
 function get_job_wsmode(spell, action, spellMap)
