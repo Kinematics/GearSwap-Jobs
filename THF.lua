@@ -187,6 +187,8 @@ function get_sets()
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 	
+	sets.ExtraRegen = {head="Ocelomeh Headpiece +1"}
+
 	-- Defense sets
 
 	sets.defense.Evasion = {
@@ -353,7 +355,7 @@ end
 
 function customize_idle_set(idleSet)
 	if player.hpp < 80 then
-		idleSet.head = "Ocelomeh Headpiece +1"
+		idleSet = set_combine(idleSet, sets.ExtraRegen)
 	end
 	
 	return idleSet
