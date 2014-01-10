@@ -451,8 +451,14 @@ function job_update(cmdParams, eventArgs)
 		windower.send_command('wait 3;gs c update th')
 	end
 	
-	-- Don't trigger equipping gear if SA/TA/Feint is active.
-	if buffactive['sneak attack'] or buffactive['trick attack'] or buffactive['feint'] then
+	-- Update the current state of state.Buff, in case buff_change failed
+	-- to update the value.
+	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
+	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
+	state.Buff['Feint'] = buffactive['feint'] or false
+
+	-- Don't allow normal gear equips if SA/TA/Feint is active.
+	if satafeint_active() then
 		eventArgs.handled = true
 	end
 end
