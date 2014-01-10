@@ -269,12 +269,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-
-end
-
 function get_job_wsmode(spell, action, spellMap)
 	local wsmode = ''
 	if state.Buff['Sneak Attack'] then
@@ -438,11 +432,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called for direct player commands.
-function job_self_command(cmdParams)
-
-end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
