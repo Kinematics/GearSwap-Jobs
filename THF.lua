@@ -296,25 +296,30 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 	-- Don't let aftercast revert gear set for SA/TA/Feint
 	if S{'Sneak Attack', 'Trick Attack', 'Feint'}:contains(spell.english) and not spell.interrupted then
 		eventArgs.handled = true
-	-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
-	elseif state.Buff['Sneak Attack'] then
-		equip(sets.precast.JA['Sneak Attack'])
-		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
-			equip(sets.TreasureHunter)
+	end
+	
+	-- If this wasn't an action that would have used up SATA/Feint, make sure to put gear back on.
+	if spell.type:lower() ~= 'weaponskill' and spell.type:lower() ~= 'step' then
+		-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
+		if state.Buff['Sneak Attack'] then
+			equip(sets.precast.JA['Sneak Attack'])
+			if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+				equip(sets.TreasureHunter)
+			end
+			eventArgs.handled = true
+		elseif state.Buff['Trick Attack'] then
+			equip(sets.precast.JA['Trick Attack'])
+			if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+				equip(sets.TreasureHunter)
+			end
+			eventArgs.handled = true
+		elseif state.Buff['Feint'] then
+			equip(sets.precast.JA['Feint'])
+			if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+				equip(sets.TreasureHunter)
+			end
+			eventArgs.handled = true
 		end
-		eventArgs.handled = true
-	elseif state.Buff['Trick Attack'] then
-		equip(sets.precast.JA['Trick Attack'])
-		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
-			equip(sets.TreasureHunter)
-		end
-		eventArgs.handled = true
-	elseif state.Buff['Feint'] then
-		--equip(sets.precast.JA['Feint'])
-		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
-			equip(sets.TreasureHunter)
-		end
-		eventArgs.handled = true
 	end
 	
 	if not spell.interrupted then
