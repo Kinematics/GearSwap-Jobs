@@ -369,6 +369,8 @@ end
 
 -- Called when the player's status changes.
 function job_status_change(newStatus, oldStatus, eventArgs)
+	check_range_lock()
+	
 	if newStatus == 'Engaged' and state.TreasureMode ~= 'None' then
 		equip(sets.TreasureHunter)
 		tag_with_th = true
@@ -435,6 +437,8 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
+	check_range_lock()
+
 	if state.TreasureMode == 'None' then
 		tag_with_th = false
 		tp_on_engage = 0
@@ -443,12 +447,6 @@ function job_update(cmdParams, eventArgs)
 		tp_on_engage = 0
 	elseif cmdParams[1] == 'th' and player.status == 'Engaged' then
 		windower.send_command('wait 3;gs c update th')
-	end
-	
-	if player.equipment.range ~= 'empty' then
-		disable('range', 'ammo')
-	else
-		enable('range', 'ammo')
 	end
 	
 	-- Don't trigger equipping gear if SA/TA/Feint is active.
@@ -481,4 +479,12 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Function to lock the ranged slot if we have a ranged weapon equipped.
+function check_range_lock()
+	if player.equipment.range ~= 'empty' then
+		disable('range', 'ammo')
+	else
+		enable('range', 'ammo')
+	end
+end
 
