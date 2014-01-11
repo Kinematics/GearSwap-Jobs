@@ -92,54 +92,48 @@ function get_sets()
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",
 		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-		
-	-- Specific spells
-	sets.midcast.Utsusemi = {
-		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
 	sets.resting = {main=gear.Staff.HMP,
-		head="Convoker's Horn",neck="Wiglen Gorget",
+		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		waist="Austerity Belt",legs="Nares Trews",}
+		back="Pahtli Cape",waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Town = {ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 	
-	sets.idle.Field = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Field = {ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.Weak = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Field.Pet = {ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
+
+	sets.idle.Weak = {ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 	
 	-- Defense sets
-	sets.defense.Evasion = {
-		head="Whirlpool Mask",neck="Torero Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-
-	sets.defense.PDT = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+	sets.defense.PDT = {main=gear.Staff.PDT,
+		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
-		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="Hagondes Hat",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 
@@ -178,7 +172,7 @@ function get_sets()
 
 
 	windower.send_command('input /macro book 16;wait .1;input /macro set 1')
-	gearswap_binds_on_load()
+	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind ^= gs c cycle targetmode')
@@ -186,7 +180,7 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	--spellcast_binds_on_unload()
+	--binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------

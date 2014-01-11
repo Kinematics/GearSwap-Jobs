@@ -197,7 +197,7 @@ function get_sets()
 
 
 	windower.send_command('input /macro book 11;wait .1;input /macro set 2')
-	gearswap_binds_on_load()
+	binds_on_load()
 
 	windower.send_command('bind ^` input /ja "Hasso" <me>')
 	windower.send_command('bind !` input /ja "Seigan" <me>')
@@ -208,7 +208,7 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	--spellcast_binds_on_unload()
+	--binds_on_unload()
 	windower.send_command('unbind ^`')
 	windower.send_command('unbind !`')
 end

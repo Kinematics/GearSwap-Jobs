@@ -272,7 +272,7 @@ function get_sets()
 
 	-- Misc setup commands
 	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
-	gearswap_binds_on_load()
+	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind ^= gs c cycle targetmode')
@@ -280,7 +280,7 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	spellcast_binds_on_unload()
+	binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------

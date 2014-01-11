@@ -221,7 +221,7 @@ function get_sets()
 
 	windower.send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
 	windower.send_command('input /macro book 18;wait .1;input /macro set 2')
-	gearswap_binds_on_load()
+	binds_on_load()
 
 
 	windower.send_command('bind ^- gs c toggle target')
@@ -234,7 +234,7 @@ end
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	windower.send_command('unbind ^`')
-	--spellcast_binds_on_unload()	
+	--binds_on_unload()	
 end
 
 
