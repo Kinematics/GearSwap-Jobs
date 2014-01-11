@@ -5,6 +5,12 @@
 --
 -- You then MUST run init_include()
 --
+-- IMPORTANT: This include requires supporting include files:
+-- Mote-Utility
+-- Mote-Mappings
+-- Mote-SelfCommands
+-- UserGlobals
+--
 -- It should be the first command in the get_sets() function, but must at least be executed before
 -- any included vars are referenced.
 --
