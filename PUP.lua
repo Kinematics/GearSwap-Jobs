@@ -102,8 +102,6 @@ function get_sets()
 
 
 	-- Midcast sets for pet actions
-	sets.midcast.Pet = {}
-
 	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
 
 	sets.midcast.Pet.Weaponskill = {head="Cirque Capello +2"}
