@@ -406,7 +406,7 @@ function MoteInclude.pet_status_change(newStatus, oldStatus)
 	local eventArgs = {handled = false}
 
 	-- Allow jobs to override this code
-	if job_status_change then
+	if job_pet_status_change then
 		job_pet_status_change(newStatus, oldStatus, eventArgs)
 	end
 
