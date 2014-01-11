@@ -26,6 +26,14 @@ local MoteInclude = {}
 -------------------------------------------------------------------------------------------------------------------
 
 function MoteInclude.init_include()
+
+	-- Load externally-defined information (info that we don't want to change every time this file is updated).
+	-- Used to define functions to set the user's desired global binds.
+	include('GlobalBinds')
+	-- Used to define various types of data mappings.
+	include('GlobalMappings')
+
+
 	-- Var for tracking state values
 	state = {}
 	
@@ -127,15 +135,8 @@ function MoteInclude.init_include()
 	sets.defense = {}
 	sets.buff = {}
 	
-	-- Include areas to categorize specialized groupings of world zones. Referenced via the areas table.
-	include('AreaVariables')
-
-	-- Include general global vars for gear.  Referenced via the gear table.
-	include('UserGearGlobals')
-	
-	-- Used to define functions to set the user's desired global binds.
-	include('GlobalBinds')
-	
+	-- Include general user globals. Primarily for the 'gear' table.
+	include('UserGlobals')
 end
 
 
