@@ -76,19 +76,19 @@ function get_sets()
 	-- Midcast Sets
 	
 	sets.midcast.FastRecast = {
-		head="Atrophy Chapeau +1",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Atrophy Chapeau +1",ear2="Loquacious Earring",
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {
-		head="Gendewitha Caubeen",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Gendewitha Caubeen",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 
 	sets.midcast.EnhancingMagic = {
-		head="Atrophy Chapeau +1",neck="Colossus's Torque",ear1="Estoqueur's Earring",ear2="Loquacious Earring",
+		head="Atrophy Chapeau +1",neck="Colossus's Torque",
 		body="Duelist's Tabard +2",hands="Atrophy Gloves",ring1="Prolix Ring",
 		back="Estoqueur's Cape",waist="Cascade Belt",legs="Portent Pants",feet="Estoqueur's Houseaux +2"}
 
