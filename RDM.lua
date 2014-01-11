@@ -121,7 +121,9 @@ function get_sets()
 
 
 	-- Sets for special buff conditions on spells.
-	
+
+	sets.midcast.EnhancingDuration = {hands="Atrophy Gloves",back="Estoqueur's Cape",feet="Estoqueur's Houseaux +2"}
+		
 	sets.buff.ComposureOther = {head="Estoqueur's Chappel +2",
 		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
 		legs="Estoqueur's Fuseau +2",feet="Estoqueur's Houseaux +2"}
@@ -212,8 +214,12 @@ end
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	if spell.skill == 'EnfeeblingMagic' and state.Buff.Saboteur then
 		equip(sets.buff.Saboteur)
-	elseif buffactive.composure and spell.skill == 'EnhancingMagic' and spell.target.type == 'PLAYER' then
-		equip(sets.buff.ComposureOther)
+	elseif spell.skill == 'EnhancingMagic' then
+		if buffactive.composure and spell.target.type == 'PLAYER' then
+			equip(sets.buff.ComposureOther)
+		elseif spell.target.type == 'SELF' then
+			equip(sets.midcast.EnhancingDuration)
+		end
 	end
 end
 
