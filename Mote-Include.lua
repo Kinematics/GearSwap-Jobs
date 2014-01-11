@@ -29,10 +29,9 @@ function MoteInclude.init_include()
 
 	-- Load externally-defined information (info that we don't want to change every time this file is updated).
 	-- Used to define functions to set the user's desired global binds.
-	include('GlobalBinds')
+	include('Mote-Utility')
 	-- Used to define various types of data mappings.
-	include('GlobalMappings')
-
+	include('Mote-Mappings')
 
 	-- Var for tracking state values
 	state = {}
