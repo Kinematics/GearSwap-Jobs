@@ -6,20 +6,6 @@
 
 local selfCommands = {}
 
-
--- The below table maps text commands to our handler functions.
-selfCommands.selfCommandMaps = {
-	['toggle']=handle_toggle,
-	['activate']=handle_activate,
-	['cycle']=handle_cycle,
-	['set']=handle_set,
-	['reset']=handle_reset,
-	['update']=handle_update,
-	['showset']=handle_show_set,
-	['naked']=handle_naked,
-	['test']=handle_test}
-
-
 -- Routing function for general known self_commands.
 -- Handles splitting the provided command line up into discrete words, for the other functions to use.
 function selfCommands.self_command(commandArgs)
@@ -45,8 +31,8 @@ function selfCommands.self_command(commandArgs)
 		-- send the remaining words are parameters for the function.
 		local handleCmd = table.remove(commandArgs, 1)
 		
-		if selfCommands[handleCmd] then
-			selfCommands[handleCmd](commandArgs)
+		if selfCommandMaps[handleCmd] then
+			selfCommandMaps[handleCmd](commandArgs)
 		end
 	end
 end
@@ -558,6 +544,32 @@ function selfCommands.display_current_state()
 		add_to_chat(122,'Show Sets it currently showing ['..showSet..'] sets.  Use "//gs c showset off" to turn it off.')
 	end
 end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Test functions.
+-------------------------------------------------------------------------------------------------------------------
+
+-- A function for testing lua code.  Called via "gs c test".
+function selfCommands.handle_test(cmdParams)
+	add_to_chat(123,'did test')
+end
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- The below table maps text commands to the above handler functions.
+-------------------------------------------------------------------------------------------------------------------
+
+selfCommands.selfCommandMaps = {
+	['toggle']   = selfCommands.handle_toggle,
+	['activate'] = selfCommands.handle_activate,
+	['cycle']    = selfCommands.handle_cycle,
+	['set']      = selfCommands.handle_set,
+	['reset']    = selfCommands.handle_reset,
+	['update']   = selfCommands.handle_update,
+	['showset']  = selfCommands.handle_show_set,
+	['naked']    = selfCommands.handle_naked,
+	['test']     = selfCommands.handle_test}
 
 
 return selfCommands
