@@ -107,7 +107,7 @@ function get_sets()
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
-	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
+	-- Idle sets
 	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
