@@ -50,7 +50,9 @@ function MoteInclude.init_include()
 	state.SelectNPCTargets     = false
 	state.PCTargetMode         = 'default'
 	
-	-- Vars for tracking valid modes
+	
+	-- Vars for specifying valid mode values.
+	-- Defaults here are just for example. Set them properly in each job file.
 	options = {}
 	options.OffenseModes = {'Normal', 'Acc','Crit'}
 	options.DefenseModes = {'Normal', 'PDT', 'Evasion','Counter'}
@@ -64,7 +66,7 @@ function MoteInclude.init_include()
 	options.TargetModes = {'default', 'stpc', 'stpt', 'stal'}
 	
 
-	-- Spell mappings to describe a 'type' of spell.
+	-- Spell mappings to describe a 'type' of spell.  Used when searching for valid sets.
 	classes = {}
 	-- Basic spell mappings are based on common spell series.
 	-- EG: 'Cure' for Cure, Cure II, Cure III, Cure IV, Cure V, or Cure VI.
@@ -84,7 +86,7 @@ function MoteInclude.init_include()
 	classes.CustomMeleeGroups = L{}
 	classes.CustomIdleGroups = L{}
 	
-	-- Vars for use in melee set construction.
+	-- Var for use in melee set construction.
 	TPWeapon = 'Normal'
 	
 	-- Special var for displaying sets at certain cast times.
