@@ -6,43 +6,6 @@
 local utility = {}
 
 -------------------------------------------------------------------------------------------------------------------
--- Functions to set user-specified binds, generally on load and unload.
--- Kept separate from the main include so as to not get clobbered when the main is updated.
--------------------------------------------------------------------------------------------------------------------
-
--- Function to bind GearSwap binds when loading a GS script.
-function utility.binds_on_load()
-	windower.send_command('bind f9 gs c cycle OffenseMode')
-	windower.send_command('bind ^f9 gs c cycle DefenseMode')
-	windower.send_command('bind !f9 gs c cycle WeaponskillMode')
-	windower.send_command('bind f10 gs c activate PhysicalDefense')
-	windower.send_command('bind ^f10 gs c cycle PhysicalDefenseMode')
-	windower.send_command('bind !f10 gs c toggle kiting')
-	windower.send_command('bind f11 gs c activate MagicalDefense')
-	windower.send_command('bind ^f11 gs c cycle CastingMode')
-	windower.send_command('bind !f11 gs c set CastingMode Dire')
-	windower.send_command('bind f12 gs c update user')
-	windower.send_command('bind ^f12 gs c cycle IdleMode')
-	windower.send_command('bind !f12 gs c reset defense')
-end
-
--- Function to re-bind Spellcast binds when unloading GearSwap.
-function utility.binds_on_unload()
-	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
-	windower.send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
-	windower.send_command('bind !f9 input /ma CombatMode Cycle(WS)')
-	windower.send_command('bind f10 input /ma PhysicalDefense .On')
-	windower.send_command('bind ^f10 input /ma PhysicalDefense .Cycle')
-	windower.send_command('bind !f10 input /ma CombatMode Toggle(Kite)')
-	windower.send_command('bind f11 input /ma MagicalDefense .On')
-	windower.send_command('bind ^f11 input /ma CycleCastingMode')
-	windower.send_command('bind !f11 input /ma CastingMode Dire')
-	windower.send_command('bind f12 input /ma Update .Manual')
-	windower.send_command('bind ^f12 input /ma CycleIdleMode')
-	windower.send_command('bind !f12 input /ma Reset .Defense')
-end
-
--------------------------------------------------------------------------------------------------------------------
 -- Function to easily change to a given macro set or book.  Book value is optional.
 -------------------------------------------------------------------------------------------------------------------
 
@@ -56,68 +19,6 @@ function utility.set_macro_page(set,book)
 		windower.send_command('input /macro set '..tostring(set))
 	end
 end
-
-
--------------------------------------------------------------------------------------------------------------------
--- Utility functions for vars or other data manipulation.
--------------------------------------------------------------------------------------------------------------------
-
--- Utility for splitting strings.  Obsoleted by revised library function.
-function utility.split(msg, delim)
-	local result = T{}
-
-	-- If no delimiter specified, just extract alphabetic words
-	if not delim or delim == '' then
-		for word in msg:gmatch("%a+") do
-			result[#result+1] = word
-		end
-	else
-		-- If the delimiter isn't in the message, just return the whole message
-		if string.find(msg, delim) == nil then
-			result[1] = msg
-		else
-			-- Otherwise use a capture pattern based on the delimiter to
-			-- extract text chunks.
-			local pat = "(.-)" .. delim .. "()"
-			local lastPos
-			for part, pos in msg:gmatch(pat) do
-				result[#result+1] = part
-				lastPos = pos
-			end
-			-- Handle the last field
-			if #msg > lastPos then
-				result[#result+1] = msg:sub(lastPos)
-			end
-		end
-	end
-	
-	return result
-end
-
-
--- Invert a table such that the keys are values and the values are keys.
--- Use this to look up the index value of a given entry.
-function utility.invert_table(t)
-	if t == nil then error('Attempting to invert table, received nil.', 2) end
-	
-	local i={}
-	for k,v in pairs(t) do 
-		i[v] = k
-	end
-	return i
-end
-
--- Gets sub-tables based on baseSet from the string str that may be in dot form
--- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
-function utility.get_expanded_set(baseSet, str)
-	local cur = baseSet
-	for i in str:gmatch("[^.]+") do
-		cur = cur[i]
-	end
-	
-	return cur
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility function for changing target types in an automatic manner.
@@ -188,6 +89,68 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
 -------------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Utility functions for vars or other data manipulation.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Utility for splitting strings.  Obsoleted by revised library function.
+function utility.split(msg, delim)
+	local result = T{}
+
+	-- If no delimiter specified, just extract alphabetic words
+	if not delim or delim == '' then
+		for word in msg:gmatch("%a+") do
+			result[#result+1] = word
+		end
+	else
+		-- If the delimiter isn't in the message, just return the whole message
+		if string.find(msg, delim) == nil then
+			result[1] = msg
+		else
+			-- Otherwise use a capture pattern based on the delimiter to
+			-- extract text chunks.
+			local pat = "(.-)" .. delim .. "()"
+			local lastPos
+			for part, pos in msg:gmatch(pat) do
+				result[#result+1] = part
+				lastPos = pos
+			end
+			-- Handle the last field
+			if #msg > lastPos then
+				result[#result+1] = msg:sub(lastPos)
+			end
+		end
+	end
+	
+	return result
+end
+
+
+-- Invert a table such that the keys are values and the values are keys.
+-- Use this to look up the index value of a given entry.
+function utility.invert_table(t)
+	if t == nil then error('Attempting to invert table, received nil.', 2) end
+	
+	local i={}
+	for k,v in pairs(t) do 
+		i[v] = k
+	end
+	return i
+end
+
+-- Gets sub-tables based on baseSet from the string str that may be in dot form
+-- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
+function utility.get_expanded_set(baseSet, str)
+	local cur = baseSet
+	for i in str:gmatch("[^.]+") do
+		cur = cur[i]
+	end
+	
+	return cur
+end
+
 
 
 return utility
