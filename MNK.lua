@@ -249,7 +249,7 @@ function get_sets()
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
-	windower.send_command('input /macro book 1;wait .1;input /macro set 2')
+	set_macro_page(1, 2)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

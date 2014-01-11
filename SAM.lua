@@ -195,7 +195,7 @@ function get_sets()
 	sets.buff['Meikyou Shisui'] = {feet="Saotome Sune-ate +2"}
 
 
-	windower.send_command('input /macro book 11;wait .1;input /macro set 2')
+	set_macro_page(2, 11)
 	binds_on_load()
 
 	windower.send_command('bind ^` input /ja "Hasso" <me>')

@@ -1453,10 +1453,10 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Handle generic binds on load/unload of GearSwap.
+-- Spell mappings allow defining a general category or description that each of sets of related
+-- spells all fall under.
 -------------------------------------------------------------------------------------------------------------------
 
--- Returns a table of spell mappings to allow grouping classes of spells that are otherwise disparately named.
 function MoteInclude.get_spell_mappings()
 	local mappings = {
 		['Cure']='Cure',['Cure II']='Cure',['Cure III']='Cure',['Cure IV']='Cure',['Cure V']='Cure',['Cure VI']='Cure',
@@ -1495,6 +1495,22 @@ function MoteInclude.get_spell_mappings()
 	}
 
 	return mappings
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Other utility functions
+-------------------------------------------------------------------------------------------------------------------
+
+function MoteInclude.set_macro_page(set,book)
+	if not tonumber(set) then error('Macro page: Set not a valid number ('..tostring(set)..')', 2) end
+
+	if book then
+		if not tonumber(book) then error('Macro page: Book not a valid number ('..tostring(book)..')', 2) end
+		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
+	else
+		windower.send_command('input /macro set '..tostring(set))
+	end
 end
 
 

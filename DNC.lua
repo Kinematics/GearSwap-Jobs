@@ -270,7 +270,7 @@ function get_sets()
 	waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
 	
 	
-	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
+	set_macro_page(2, 20)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

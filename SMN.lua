@@ -171,7 +171,7 @@ function get_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 
-	windower.send_command('input /macro book 16;wait .1;input /macro set 1')
+	set_macro_page(1, 16)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

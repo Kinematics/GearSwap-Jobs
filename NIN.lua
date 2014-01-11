@@ -269,7 +269,7 @@ function get_sets()
 	sets.buff.Innin = {}
 
 
-	windower.send_command('input /macro book 3;wait .1;input /macro set 10')
+	set_macro_page(1, 3)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

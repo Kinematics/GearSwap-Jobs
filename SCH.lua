@@ -271,7 +271,7 @@ function get_sets()
 
 
 	-- Misc setup commands
-	windower.send_command('input /macro book 20;wait .1;input /macro set 10')
+	set_macro_page(1, 17)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

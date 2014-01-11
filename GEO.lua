@@ -130,7 +130,7 @@ function get_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
-	windower.send_command('input /macro book 6;wait .1;input /macro set 1')
+	set_macro_page(1, 6)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

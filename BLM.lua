@@ -237,7 +237,7 @@ function get_sets()
 		'Stonega II', 'Waterga II', 'Aeroga II', 'Firaga II', 'Blizzaga II', 'Thundaga II'}
 
 
-	windower.send_command('input /macro book 15;wait .1;input /macro set 1')
+	set_macro_page(1, 15)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

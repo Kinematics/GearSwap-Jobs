@@ -236,7 +236,7 @@ function get_sets()
 	sets.buff['Divine Caress'] = {hands="Orison Mitts +2"}
 
 
-	windower.send_command('input /macro book 14;wait .1;input /macro set 4')
+	set_macro_page(4, 14)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

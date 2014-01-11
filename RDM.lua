@@ -184,7 +184,7 @@ function get_sets()
 		back="Atheling Mantle",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
-	windower.send_command('input /macro book 4;wait .1;input /macro set 3')
+	set_macro_page(3, 4)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

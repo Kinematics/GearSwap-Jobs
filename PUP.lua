@@ -214,7 +214,7 @@ function get_sets()
 		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
 		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
 
-	windower.send_command('input /macro book 9;wait .1;input /macro set 3')
+	set_macro_page(3, 9)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')

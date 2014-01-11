@@ -219,7 +219,7 @@ function get_sets()
 
 
 	windower.send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
-	windower.send_command('input /macro book 18;wait .1;input /macro set 2')
+	set_macro_page(2, 18)
 	binds_on_load()
 
 
