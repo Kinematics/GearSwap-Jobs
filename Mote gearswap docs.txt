@@ -1,5 +1,25 @@
 Documentation for use of Mote-Include GearSwaps.
 
+ ------   FILES   ------
+
+To use my include, certain supplemental files are required.
+
+Mote-Include.lua -- The primary include. This file is entirely rules code for handling selecting sets, and handling a predefined set of self-commands.  All user data should have been removed from it, so there should be no reason to modify it at all.  
+
+Mote-Mappings.lua -- File used for storing spell maps and other general mappings that jobs may want access to.  This should be all data, no functions.
+
+Mote-Utility.lua -- File for various utility functions that fall outside the general handling of gear selection and equipping.
+
+Mote-SelfCommands.lua -- File for handling our predefined self-commands for adjusting state values (offense mode, casting mode, update, etc).
+
+UserGlobals.lua -- Any additional values or functions that the user wants access to globally, without needing to modify the main include file.
+
+
+The separation into individual files is both for code sanity (all the self-command code is difficult to wade through while you're trying to examine the main gear changing code), and so that updates won't overwrite user customizations.  It should always be safe to simply drop in new versions of the various Mote-* files.
+
+
+All of these files should be in the same directory as your regular job lua files.
+
 
  ------   SETS   ------
 
