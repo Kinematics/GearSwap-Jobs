@@ -124,41 +124,14 @@ function MoteInclude.init_include()
 	sets.defense = {}
 	sets.buff = {}
 	
+	-- Include areas to categorize specialized groupings of world zones. Referenced via the areas table.
+	include('AreaVariables')
 
-	-- Set specialized groupings of world zones.
-	areas = {}
-	-- City areas for town gear and behavior.
-	areas.Cities = S{"RU'LUDE GARDENS", 'UPPER JEUNO','LOWER JEUNO','PORT JEUNO',
-		'PORT WINDURST','WINDURST WATERS','WINDURST WOODS','WINDURST WALLS','HEAVENS TOWER',
-		"PORT SAN D'ORIA","NORTHERN SAN D'ORIA","SOUTHERN SAN D'ORIA",
-		'PORT BASTOK','BASTOK MARKETS','BASTOK MINES','METALWORKS',
-		'AHT URHGAN WHITEGATE','TAVANAZIAN SAFEHOLD','NASHMAU',
-		'SELBINA','MHAURA','NORG','EASTERN ADOULIN','WESTERN ADOULIN'}
-	-- Adoulin areas, where Ionis will grant special stat bonuses.
-	areas.Adoulin = S{'YAHSE HUNTING GROUNDS', 'CEIZAK BATTLEGROUNDS', 'FORET DE HENNETIEL','MORIMAR BASALT FIELDS',
-		'YORCIA WEALD','YORCIA WEALD [U]', 'CIRDAS CAVERNS','CIRDAS CAVERNS [U]',
-		'MARJAMI RAVINE','KAMIHR DRIFTS', 'SIH GATES','MOH GATES','DHO GATES','WOH GATES','RALA WATERWAYS'}
-
-
-	-- Special gear info that may be useful across jobs.
-	gear = {}
+	-- Include general global vars for gear.  Referenced via the gear table.
+	include('UserGearGlobals')
 	
-	gear.Obi = {}
-	gear.Obi.Light = "Korin Obi"
-	--gear.Obi.Dark = "Anrin Obi"
-	gear.Obi.Fire = "Karin Obi"
-	gear.Obi.Ice = "Hyorin Obi"
-	--gear.Obi.Wind = "Furin Obi"
-	--gear.Obi.Earth = "Dorin Obi"
-	gear.Obi.Lightning = "Rairin Obi"
-	--gear.Obi.Water = "Suirin Obi"
-
-	gear.Staff = {}
-	gear.Staff.HMP = 'Chatoyant Staff'
-	gear.Staff.PDT = 'Earth Staff'
-
-
-	-- Other general vars.  Set whatever's convenient for your job luas.
+	-- Used to define functions to set the user's desired global binds.
+	include('GlobalBinds')
 	
 end
 
@@ -1408,17 +1381,6 @@ function MoteInclude.auto_change_target(spell, action, spellMap)
 	end
 end
 
--------------------------------------------------------------------------------------------------------------------
--- Utility functions for common gear equips.
--------------------------------------------------------------------------------------------------------------------
-
--- Add the obi for the given element if it matches either the current weather or day.
-function MoteInclude.add_obi(spell_element)
-	if gear.Obi[spell_element] and (world.weather_element == spell_element or world.day_element == spell_element) then
-		equip({waist=gear.Obi[spell_element]})
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
@@ -1487,43 +1449,6 @@ function MoteInclude.get_expanded_set(baseSet, str)
 	return cur
 end
 
-
--------------------------------------------------------------------------------------------------------------------
--- Handle generic binds on load/unload of GearSwap.
--------------------------------------------------------------------------------------------------------------------
-
-
--- Function to bind GearSwap binds when loading a GS script.
-function MoteInclude.gearswap_binds_on_load()
-	windower.send_command('bind f9 gs c cycle OffenseMode')
-	windower.send_command('bind ^f9 gs c cycle DefenseMode')
-	windower.send_command('bind !f9 gs c cycle WeaponskillMode')
-	windower.send_command('bind f10 gs c activate PhysicalDefense')
-	windower.send_command('bind ^f10 gs c cycle PhysicalDefenseMode')
-	windower.send_command('bind !f10 gs c toggle kiting')
-	windower.send_command('bind f11 gs c activate MagicalDefense')
-	windower.send_command('bind ^f11 gs c cycle CastingMode')
-	windower.send_command('bind !f11 gs c set CastingMode Dire')
-	windower.send_command('bind f12 gs c update user')
-	windower.send_command('bind ^f12 gs c cycle IdleMode')
-	windower.send_command('bind !f12 gs c reset defense')
-end
-
--- Function to re-bind Spellcast binds when unloading GearSwap.
-function MoteInclude.spellcast_binds_on_unload()
-	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
-	windower.send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
-	windower.send_command('bind !f9 input /ma CombatMode Cycle(WS)')
-	windower.send_command('bind f10 input /ma PhysicalDefense .On')
-	windower.send_command('bind ^f10 input /ma PhysicalDefense .Cycle')
-	windower.send_command('bind !f10 input /ma CombatMode Toggle(Kite)')
-	windower.send_command('bind f11 input /ma MagicalDefense .On')
-	windower.send_command('bind ^f11 input /ma CycleCastingMode')
-	windower.send_command('bind !f11 input /ma CastingMode Dire')
-	windower.send_command('bind f12 input /ma Update .Manual')
-	windower.send_command('bind ^f12 input /ma CycleIdleMode')
-	windower.send_command('bind !f12 input /ma Reset .Defense')
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Handle generic binds on load/unload of GearSwap.
