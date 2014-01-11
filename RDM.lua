@@ -23,7 +23,6 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
-	state.Buff = {}
 	state.Buff.Saboteur = buffactive.saboteur or false
 	
 	--------------------------------------

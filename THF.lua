@@ -22,7 +22,6 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'Evasion'
 	
-	state.Buff = {}
 	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
 	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
 	state.Buff['Feint'] = buffactive['feint'] or false

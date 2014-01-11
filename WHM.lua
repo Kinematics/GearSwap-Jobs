@@ -24,7 +24,6 @@ function get_sets()
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
 	
-	state.Buff = {}
 	state.Buff['Afflatus Solace'] = buffactive['afflatus solace'] or false
 
 	--------------------------------------

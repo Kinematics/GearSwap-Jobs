@@ -25,7 +25,6 @@ function get_sets()
 	state.OffenseMode = 'None'
 	
 	
-	state.Buff = {}
 	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
 	
 	

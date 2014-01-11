@@ -23,7 +23,6 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
-	state.Buff = {}
 	state.Buff.Sekkanoki = buffactive.sekkanoki or false
 	state.Buff.Sengikori = buffactive.sengikori or false
 	state.Buff['Meikyou Shisui'] = buffactive['Meikyou Shisui'] or false

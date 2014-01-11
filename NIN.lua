@@ -23,7 +23,6 @@ function get_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
-	state.Buff = {}
 	state.Buff.Migawari = buffactive.migawari or false
 	state.Buff.Doom = buffactive.doom or false
 	
