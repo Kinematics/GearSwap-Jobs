@@ -50,6 +50,8 @@ function MoteInclude.init_include()
 	state.SelectNPCTargets     = false
 	state.PCTargetMode         = 'default'
 	
+	state.Buff = {}
+	
 	
 	-- Vars for specifying valid mode values.
 	-- Defaults here are just for example. Set them properly in each job file.
