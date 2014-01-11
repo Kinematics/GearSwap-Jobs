@@ -14,7 +14,7 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/10/2014 12:01:00 AM
+-- Last Modified: 1/11/2014 3:44:45 PM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local MoteInclude = {}
@@ -28,6 +28,7 @@ local MoteInclude = {}
 function MoteInclude.init_include()
 
 	-- Load externally-defined information (info that we don't want to change every time this file is updated).
+
 	-- Used to define functions to set the user's desired global binds.
 	include('Mote-Utility')
 	-- Used to define various types of data mappings.
@@ -35,9 +36,10 @@ function MoteInclude.init_include()
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
 
+
 	-- Var for tracking state values
 	state = {}
-	
+
 	-- General melee offense/defense modes, allowing for hybrid set builds, as well as idle/resting/weaponskill.
 	state.OffenseMode     = 'Normal'
 	state.DefenseMode     = 'Normal'
@@ -45,7 +47,7 @@ function MoteInclude.init_include()
 	state.CastingMode     = 'Normal'
 	state.IdleMode        = 'Normal'
 	state.RestingMode     = 'Normal'
-	
+
 	-- All-out defense state, either physical or magical
 	state.Defense = {}
 	state.Defense.Active       = false
@@ -55,13 +57,13 @@ function MoteInclude.init_include()
 
 	state.Kiting               = false
 	state.MaxWeaponskillDistance = 0
-	
+
 	state.SelectNPCTargets     = false
 	state.PCTargetMode         = 'default'
-	
+
 	state.Buff = {}
-	
-	
+
+
 	-- Vars for specifying valid mode values.
 	-- Defaults here are just for example. Set them properly in each job file.
 	options = {}
@@ -75,7 +77,7 @@ function MoteInclude.init_include()
 	options.MagicalDefenseModes = {'MDT', 'Resist'}
 
 	options.TargetModes = {'default', 'stpc', 'stpt', 'stal'}
-	
+
 
 	-- Spell mappings to describe a 'type' of spell.  Used when searching for valid sets.
 	classes = {}
@@ -96,13 +98,13 @@ function MoteInclude.init_include()
 	-- Custom groups used for defining melee and idle sets.  Persists long-term.
 	classes.CustomMeleeGroups = L{}
 	classes.CustomIdleGroups = L{}
-	
+
 	-- Var for use in melee set construction.
 	TPWeapon = 'Normal'
-	
+
 	-- Special var for displaying sets at certain cast times.
 	showSet = nil
-		
+
 	-- Display text mapping.
 	on_off_names = {[true] = 'on', [false] = 'off'}
 
@@ -122,8 +124,8 @@ function MoteInclude.init_include()
 	sets.engaged = {}
 	sets.defense = {}
 	sets.buff = {}
-	
-	-- Include general user globals. Primarily for the 'gear' table.
+
+	-- Include general user globals (eg: the 'gear' table).
 	include('UserGlobals')
 end
 
@@ -153,7 +155,7 @@ function MoteInclude.pretarget(spell,action)
 		cancel_spell()
 		return
 	end
-	
+
 	-- If the job didn't handle things themselves, continue..
 	if not eventArgs.handled then
 		-- Handle optional target conversion.
@@ -169,7 +171,7 @@ end
 function MoteInclude.precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
-	
+
 	-- init a new eventArgs
 	local eventArgs = {handled = false, cancel = false}
 
@@ -177,7 +179,7 @@ function MoteInclude.precast(spell, action)
 	if job_precast then
 		job_precast(spell, action, spellMap, eventArgs)
 	end
-	
+
 	if eventArgs.cancel then
 		cancel_spell()
 		return
@@ -187,7 +189,7 @@ function MoteInclude.precast(spell, action)
 	if not eventArgs.handled then
 		equip(get_default_precast_set(spell, action, spellMap, eventArgs))
 	end
-	
+
 	-- Allow followup code to add to what was done here
 	if job_post_precast then
 		job_post_precast(spell, action, spellMap, eventArgs)
@@ -210,7 +212,7 @@ function MoteInclude.midcast(spell,action)
 
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
-	
+
 	-- Allow jobs to override this code
 	if job_midcast then
 		job_midcast(spell, action, spellMap, eventArgs)
@@ -220,14 +222,12 @@ function MoteInclude.midcast(spell,action)
 	if not eventArgs.handled then
 		equip(get_default_midcast_set(spell, action, spellMap, eventArgs))
 	end
-	
+
 	-- Allow followup code to add to what was done here
 	if job_post_midcast then
 		job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 end
-
-
 
 
 -- Called when an action has been completed (eg: spell finished casting, or failed to cast).
@@ -239,7 +239,7 @@ function MoteInclude.aftercast(spell,action)
 	elseif showSet == 'precast' then
 		return
 	end
-	
+
 	-- Ignore the Unknown Interrupt
 	if spell.name == 'Unknown Interrupt' then
 		--add_to_chat(123, 'aftercast trace: Unknown Interrupt.  interrupted='..tostring(spell.interrupted))
@@ -269,12 +269,13 @@ function MoteInclude.aftercast(spell,action)
 	if job_post_aftercast then
 		job_post_aftercast(spell, action, spellMap, eventArgs)
 	end
-	
+
 	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
 	classes.CustomClass = nil
 end
 
 
+-- Called when the pet readies an action.
 function MoteInclude.pet_midcast(spell,action)
 	-- If we have showSet active for precast, don't try to equip midcast gear.
 	if showSet == 'precast' then
@@ -286,7 +287,7 @@ function MoteInclude.pet_midcast(spell,action)
 
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
-	
+
 	-- Allow jobs to override this code
 	if job_pet_midcast then
 		job_pet_midcast(spell, action, spellMap, eventArgs)
@@ -296,13 +297,15 @@ function MoteInclude.pet_midcast(spell,action)
 	if not eventArgs.handled then
 		equip(get_default_pet_midcast_set(spell, action, spellMap, eventArgs))
 	end
-	
+
 	-- Allow followup code to add to what was done here
 	if job_post_pet_midcast then
 		job_post_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
+
+-- Called when the pet's action is complete.
 function MoteInclude.pet_aftercast(spell,action)
 	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
 	if showSet == 'midcast' then
@@ -316,7 +319,7 @@ function MoteInclude.pet_aftercast(spell,action)
 
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
-	
+
 	-- Allow jobs to override this code
 	if job_pet_aftercast then
 		job_pet_aftercast(spell, action, spellMap, eventArgs)
@@ -330,15 +333,16 @@ function MoteInclude.pet_aftercast(spell,action)
 			handle_equipping_gear(player.status)
 		end
 	end
-	
+
 	-- Allow followup code to add to what was done here
 	if job_post_pet_aftercast then
 		job_post_pet_aftercast(spell, action, spellMap, eventArgs)
 	end
-	
+
 	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
 	classes.CustomClass = nil
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for non-action events.
@@ -354,7 +358,7 @@ function MoteInclude.status_change(newStatus, oldStatus)
 		job_status_change(newStatus, oldStatus, eventArgs)
 	end
 
-	
+
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
 	if oldStatus == 'Dead' then
 		send_command('timers create "Weakness" 300 up abilities/00255.png')
@@ -389,7 +393,7 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function MoteInclude.buff_change(buff, gain)
 	-- Global actions on buff effects
-	
+
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
 	if buff == 'Weakness' then
 		if not gain then
@@ -430,7 +434,7 @@ end
 -- @param status : The current or new player status that determines what sort of gear to equip.
 function MoteInclude.equip_gear_by_status(status)
 	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..'], HP='..tostring(player.hp)) end
-	
+
 	-- If status not defined, treat as idle.
 	-- Be sure to check for positive HP to make sure they're not dead.
 	if status == nil or status == '' then
@@ -476,7 +480,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		elseif equipSet[spell.type] then
 			equipSet = equipSet[spell.type]
 		end
-		
+
 		-- Check for specialized casting modes for any given set selection.
 		if equipSet[state.CastingMode] then
 			equipSet = equipSet[state.CastingMode]
@@ -489,7 +493,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	elseif spell.type:lower() == 'weaponskill' then
 		local modeToUse = state.WeaponskillMode
 		local job_wsmode = nil
-		
+
 		-- Allow the job file to specify a weaponskill mode
 		if get_job_wsmode then
 			job_wsmode = get_job_wsmode(spell, action, spellMap)
@@ -505,7 +509,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 				modeToUse = state.OffenseMode
 			end
 		end
-		
+
 		if sets.precast.WS[spell.english] then
 			if sets.precast.WS[spell.english][modeToUse] then
 				equipSet = sets.precast.WS[spell.english][modeToUse]
@@ -537,7 +541,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 			equipSet = sets.precast[spell.type]
 		end
 	end
-	
+
 	return equipSet
 end
 
@@ -573,7 +577,7 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[state.CastingMode]
 		end
 	end
-	
+
 	return equipSet
 end
 
@@ -583,7 +587,7 @@ function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventA
 	local equipSet = {}
 
 	-- TODO: examine possible values in pet actions
-	
+
 	-- Set selection ordering:
 	-- Custom class
 	-- Specific spell name
@@ -610,10 +614,9 @@ function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventA
 	if equipSet[state.CastingMode] then
 		equipSet = equipSet[state.CastingMode]
 	end
-	
+
 	return equipSet
 end
-
 
 
 -- Returns the appropriate idle set based on current state.
@@ -628,7 +631,7 @@ function MoteInclude.get_current_idle_set()
 	else
 		idleScope = 'Field'
 	end
-	
+
 	if _global.debug_mode then add_to_chat(123,'Debug: Idle scope for '..world.area..' is '..idleScope) end
 
 	if idleSet[idleScope] then
@@ -644,16 +647,16 @@ function MoteInclude.get_current_idle_set()
 			idleSet = idleSet[classes.CustomIdleGroups[i]]
 		end
 	end
-	
+
 	idleSet = apply_defense(idleSet)
 	idleSet = apply_kiting(idleSet)
-	
+
 	if customize_idle_set then
 		idleSet = customize_idle_set(idleSet)
 	end
 
 	--if _global.debug_mode then print_set(idleSet, 'Final Idle Set') end
-	
+
 	return idleSet
 end
 
@@ -663,25 +666,25 @@ end
 --   sets.engaged[classes.CustomMeleeGroups (any number)][TPWeapon][state.OffenseMode][state.DefenseMode]
 function MoteInclude.get_current_melee_set()
 	local meleeSet = sets.engaged
-	
+
 	for i = 1,#classes.CustomMeleeGroups do
 		if meleeSet[classes.CustomMeleeGroups[i]] then
 			meleeSet = meleeSet[classes.CustomMeleeGroups[i]]
 		end
 	end
-	
+
 	if meleeSet[TPWeapon] then
 		meleeSet = meleeSet[TPWeapon]
 	end
-	
+
 	if meleeSet[state.OffenseMode] then
 		meleeSet = meleeSet[state.OffenseMode]
 	end
-	
+
 	if meleeSet[state.DefenseMode] then
 		meleeSet = meleeSet[state.DefenseMode]
 	end
-	
+
 	meleeSet = apply_defense(meleeSet)
 	meleeSet = apply_kiting(meleeSet)
 
@@ -690,7 +693,7 @@ function MoteInclude.get_current_melee_set()
 	end
 
 	--if _global.debug_mode then print_set(meleeSet, 'Melee set') end
-	
+
 	return meleeSet
 end
 
@@ -698,7 +701,7 @@ end
 -- Returns the appropriate resting set based on current state.
 function MoteInclude.get_current_resting_set()
 	local restingSet = {}
-	
+
 	if sets.resting[state.RestingMode] then
 		restingSet = sets.resting[state.RestingMode]
 	else
@@ -706,7 +709,7 @@ function MoteInclude.get_current_resting_set()
 	end
 
 	--if _global.debug_mode then print_set(restingSet, 'Resting Set') end
-	
+
 	return restingSet
 end
 
@@ -717,10 +720,10 @@ function MoteInclude.apply_defense(baseSet)
 	if state.Defense.Active then
 		local defenseSet = {}
 		local defMode = ''
-		
+
 		if state.Defense.Type == 'Physical' then
 			defMode = state.Defense.PhysicalMode
-			
+
 			if sets.defense[state.Defense.PhysicalMode] then
 				defenseSet = sets.defense[state.Defense.PhysicalMode]
 			else
@@ -735,10 +738,10 @@ function MoteInclude.apply_defense(baseSet)
 				defenseSet = sets.defense
 			end
 		end
-		
+
 		baseSet = set_combine(baseSet, defenseSet)
 	end
-	
+
 	return baseSet
 end
 
@@ -751,7 +754,7 @@ function MoteInclude.apply_kiting(baseSet)
 			baseSet = set_combine(baseSet, sets.Kiting)
 		end
 	end
-	
+
 	return baseSet
 end
 
