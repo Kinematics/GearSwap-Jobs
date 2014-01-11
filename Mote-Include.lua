@@ -120,6 +120,7 @@ function MoteInclude.init_include()
 	sets.precast.JA = {}
 	sets.precast.WS = {}
 	sets.midcast = {}
+	sets.midcast.Pet = {}
 	sets.idle = {}
 	sets.resting = {}
 	sets.engaged = {}
