@@ -387,6 +387,12 @@ function MoteInclude.status_change(newStatus, oldStatus)
 		job_status_change(newStatus, oldStatus, eventArgs)
 	end
 
+	
+	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
+	if oldStatus == 'Dead' then
+		send_command('timers create "Weakness" 300 up abilities/00255.png')
+	end
+
 	-- Equip default gear if not handled by the job.
 	if not eventArgs.handled then
 		handle_equipping_gear(newStatus)
@@ -419,9 +425,7 @@ function MoteInclude.buff_change(buff, gain)
 	
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
 	if buff == 'Weakness' then
-		if gain then
-			send_command('timers create "Weakness" 300 up abilities/00255.png')
-		else
+		if not gain then
 			send_command('timers delete "Weakness"')
 		end
 	end
