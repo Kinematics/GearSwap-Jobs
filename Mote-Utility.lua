@@ -86,10 +86,18 @@ function utility.auto_change_target(spell, action, spellMap)
 end
 
 
--------------------------------------------------------------------------------------------------------------------
 -- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
--------------------------------------------------------------------------------------------------------------------
 
+
+
+-- Function to get the current weather intensity: 0 for none, 1 for single weather, 2 for double weather.
+function utility.get_weather_intensity()
+	if world.weather_id <= 3 then
+		return 0
+	else
+		return (world.weather_id % 2) + 1
+	end
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
