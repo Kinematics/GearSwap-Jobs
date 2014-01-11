@@ -3,10 +3,10 @@
 -- Kept separate from the main include so as to not get clobbered when the main is updated.
 -------------------------------------------------------------------------------------------------------------------
 
-local bindsInclude = {}
+local utility = {}
 
 -- Function to bind GearSwap binds when loading a GS script.
-function bindsInclude.binds_on_load()
+function utility.binds_on_load()
 	windower.send_command('bind f9 gs c cycle OffenseMode')
 	windower.send_command('bind ^f9 gs c cycle DefenseMode')
 	windower.send_command('bind !f9 gs c cycle WeaponskillMode')
@@ -22,7 +22,7 @@ function bindsInclude.binds_on_load()
 end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
-function bindsInclude.binds_on_unload()
+function utility.binds_on_unload()
 	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
 	windower.send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
 	windower.send_command('bind !f9 input /ma CombatMode Cycle(WS)')
@@ -37,4 +37,4 @@ function bindsInclude.binds_on_unload()
 	windower.send_command('bind !f12 input /ma Reset .Defense')
 end
 
-return bindsInclude
+return utility
