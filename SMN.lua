@@ -351,13 +351,11 @@ end
 
 -- Called for custom player commands.
 function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1]:lower() == 'siphon' then
-		if areas.Cities:contains(world.area) then
-			add_to_chat(122, 'Cannot use Elemental Siphon in a city area.')
-		else
-			handle_siphoning()
-		end
-
+	if cmdParams[1]:lower() == 'petweather' then
+		handle_petweather()
+		eventArgs.handled = true
+	elseif cmdParams[1]:lower() == 'siphon' then
+		handle_siphoning()
 		eventArgs.handled = true
 	elseif cmdParams[1]:lower() == 'pact' then
 		handle_pacts(cmdParams)
@@ -385,8 +383,45 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Cast the appopriate storm for the currently summoned avatar, if possible.
+function handle_petweather()
+	if player.sub_job ~= 'SCH' then
+		add_to_chat(122, "You can not cast storm spells")
+		return
+	end
+		
+	if not pet.isvalid then
+		add_to_chat(122, "You do not have an active avatar.")
+		return
+	end
+	
+	local element = pet.element
+	if element == 'Thunder' then
+		element = 'Lightning'
+	end
+	
+	if S{'Light','Dark','Lightning'}:contains(element) then
+		add_to_chat(122, 'You do not have access to '..storm_by_element[element]..'.')
+		return
+	end	
+	
+	local storm = storm_by_element[element]
+	
+	if storm then
+		send_command('input /ma "'..storm_by_element[element]..'" <me>')
+	else
+		add_to_chat(123, 'Error: Unknown element ('..tostring(element)..')')
+	end
+end
+
+
 -- Custom uber-handling of Elemental Siphon
 function handle_siphoning()
+	if areas.Cities:contains(world.area) then
+		add_to_chat(122, 'Cannot use Elemental Siphon in a city area.')
+		return
+	end
+
 	local siphonElement
 	local stormElementToUse
 	local releasedAvatar
@@ -473,3 +508,19 @@ function handle_siphoning()
 end
 
 
+-- Handles executing blood pacts in a generic, avatar-agnostic way.
+-- cmdParams is the split of the self-command.
+-- gs c [pact] [pacttype]
+function handle_pacts(cmdParams)
+	if not pet.isvalid then
+		add_to_chat(123,'No avatar currently available.')
+		return
+	end
+
+	if spirits:contains(pet.name) then
+		add_to_chat(123,'Cannot use pacts with spirits.')
+		return
+	end
+
+	
+end
