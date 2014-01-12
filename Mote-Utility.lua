@@ -87,6 +87,98 @@ end
 
 
 -- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
+-- Handle spell changes before attempting any precast stuff.
+-- Returns two values on completion:
+-- 1) bool of whether the original spell was cancelled
+-- 2) bool of whether the spell was changed to something new
+function refine_waltz(spell, action, spellMap, eventArgs)
+	-- Don't modify anything for Healing Waltz or Divine Waltzes
+	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
+		return
+	end
+
+	-- Can only calculate healing amounts for ourself.
+	if spell.target.type ~= "SELF" then
+		return
+	end
+	
+	local missingHP = player.max_hp - player.hp
+	local newWaltz
+	
+	if player.main_job == 'DNC' then
+		if missingHP < 40 then
+			-- not worth curing
+		elseif missingHP < 200 then
+			newWaltz = 'Curing Waltz'
+		elseif missingHP < 500 then
+			newWaltz = 'Curing Waltz II'
+		elseif missingHP < 1100 then
+			newWaltz = 'Curing Waltz III'
+		elseif missingHP < 1500 then
+			newWaltz = 'Curing Waltz IV'
+		else
+			newWaltz = 'Curing Waltz V'
+		end
+	elseif player.sub_job == 'DNC' then
+		if missingHP < 40 then
+			-- not worth curing
+		elseif missingHP < 150 then
+			newWaltz = 'Curing Waltz'
+		elseif missingHP < 300 then
+			newWaltz = 'Curing Waltz II'
+		else
+			newWaltz = 'Curing Waltz III'
+		end
+	else
+		return
+	end
+	
+	if not newWaltz then
+		add_to_chat(122,'Full HP!')
+		eventArgs.cancel = true
+		return
+	end
+	
+	local tpCost = waltzTPCost[newWaltz]
+	
+	-- Downgrade the spell to what we can afford
+	if player.tp < tpCost and not buffactive.trance then
+		--[[ Costs:
+			Curing Waltz:     20 TP
+			Curing Waltz II:  35 TP
+			Curing Waltz III: 50 TP
+			Curing Waltz IV:  65 TP
+			Curing Waltz V:   80 TP
+			Divine Waltz:     40 TP
+			Divine Waltz II:  80 TP
+		--]]
+		
+		if player.tp < 20 then
+			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Cancelling.')
+			eventArgs.cancel = true
+			return
+		elseif player.tp < 35 then
+			newWaltz = 'Curing Waltz'
+		elseif player.tp < 50 then
+			newWaltz = 'Curing Waltz II'
+		elseif player.tp < 65 then
+			newWaltz = 'Curing Waltz III'
+		elseif player.tp < 80 then
+			newWaltz = 'Curing Waltz IV'
+		end
+		
+		add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz..'.')
+	end
+
+	
+	if newWaltz ~= spell.english then
+		send_command('wait 0.03;input /ja "'..newWaltz..'" <me>')
+		eventArgs.cancel = true
+		return
+	end
+
+	add_to_chat(122,'Using '..newWaltz..' to cure '..tostring(missingHP)..' HP.')
+end
 
 
 
