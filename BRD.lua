@@ -40,24 +40,18 @@ function get_sets()
 	-- Fast cast sets for spells
 	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
 		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Aoidos' Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
+		back="Swith Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
 	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range="Daurdabla"})
 		
-	sets.precast.FC.Cure = {
-		head="Nahtirah Hat",ear2="Loquac. Earring",
-		body="Heka's Kalasiris",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Pahtli Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris",back="Pahtli Cape"})
 
-	sets.precast.FC.EnhancingMagic = {
-		head="Nahtirah Hat",ear2="Loquac. Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	
 	-- Precast sets to enhance JAs
