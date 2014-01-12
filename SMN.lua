@@ -584,7 +584,8 @@ function handle_pacts(cmdParams)
 	end
 
 	if not pet.isvalid then
-		add_to_chat(122,'No avatar currently available.')
+		add_to_chat(122,'No avatar currently available. Returning to macro set 4.')
+		set_macro_page(4)
 		return
 	end
 
