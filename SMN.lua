@@ -240,7 +240,7 @@ function get_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
-	set_macro_page(1, 16)
+	set_macro_page(4, 16)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
