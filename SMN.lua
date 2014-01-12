@@ -83,7 +83,7 @@ function get_sets()
 	pacts.buffspecial = {['Garuda']='Fleet Wind', ['Titan']='Earthen Armor', ['Diabolos']='Dream Shroud', ['Carbuncle']='Soothing Ruby'}
 	pacts.debuff1 = {['Shiva']='Diamond Storm', ['Ramuh']='Shock Squall', ['Leviathan']='Tidal Roar', ['Fenrir']='Lunar Cry',
 		['Diabolos']='Pavor Nocturnus'}
-	pacts.debuff2 = {['Leviathan']='Slowga', ['Fenrir']='Lunar Roar', ['Diabolos']='Somnolence'}
+	pacts.debuff2 = {['Shiva']='Sleepga', ['Leviathan']='Slowga', ['Fenrir']='Lunar Roar', ['Diabolos']='Somnolence'}
 	pacts.sleep = {['Shiva']='Sleepga', ['Diabolos']='Nightmare'}
 	pacts.nuke2 = {['Ifrit']='Fire II', ['Shiva']='Blizzard II', ['Garuda']='Aero II', ['Titan']='Stone II',
 		['Ramuh']='Thunder II', ['Leviathan']='Water II'}
