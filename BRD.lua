@@ -41,7 +41,11 @@ function get_sets()
 	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
-		
+
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris",back="Pahtli Cape"})
+
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+
 	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
 		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
@@ -49,10 +53,6 @@ function get_sets()
 
 	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range="Daurdabla"})
 		
-	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris",back="Pahtli Cape"})
-
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
-
 	
 	-- Precast sets to enhance JAs
 	
