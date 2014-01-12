@@ -327,7 +327,7 @@ end
 function job_pet_status_change(newStatus, oldStatus, eventArgs)
 	if newStatus == 'Engaged dead' then
 		state.Buff.Pet = false
-	elseif newStatus == 'Engaged' or oldStatus == 'Engaged' then
+	elseif newStatus == 'Engaged' or oldStatus == 'Engaged' and not midaction() then
 		handle_equipping_gear(player.status, newStatus)
 	end
 end
