@@ -629,7 +629,7 @@ end
 function MoteInclude.get_current_idle_set()
 	local idleScope = ''
 	local idleSet = sets.idle
-
+	
 	if buffactive.weakness then
 		idleScope = 'Weak'
 	elseif areas.Cities[world.area] then
@@ -648,7 +648,7 @@ function MoteInclude.get_current_idle_set()
 		idleSet = idleSet[state.IdleMode]
 	end
 	
-	if pet.isvalid or state.Buff.Pet and idleSet.Pet then
+	if (pet.isvalid or state.Buff.Pet) and idleSet.Pet then
 		idleSet = idleSet.Pet
 	end
 
