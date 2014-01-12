@@ -647,6 +647,10 @@ function MoteInclude.get_current_idle_set()
 	if idleSet[state.IdleMode] then
 		idleSet = idleSet[state.IdleMode]
 	end
+	
+	if pet.isvalid and idleSet.Pet then
+		idleSet = idleSet.Pet
+	end
 
 	for i = 1,#classes.CustomIdleGroups do
 		if idleSet[classes.CustomIdleGroups[i]] then
