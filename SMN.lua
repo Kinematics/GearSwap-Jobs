@@ -339,6 +339,8 @@ end
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
+	elseif storms:contains(buff) then
+		handle_equipping_gear(player.status)
 	end
 end
 
