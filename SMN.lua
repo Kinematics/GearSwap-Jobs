@@ -615,7 +615,7 @@ function handle_pacts(cmdParams)
 		-- Leave out target; let Shortcuts auto-determine it.
 		send_command('input /pet "'..pacts[pact][pet.name]..'"')
 	else
-		add_to_chat(122,pet.name..' does not have a pact of type '..pact..'.')
+		add_to_chat(122,pet.name..' does not have a pact of type ['..pact..'].')
 	end
 end
 
