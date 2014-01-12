@@ -391,10 +391,19 @@ function handle_siphoning()
 	local stormElementToUse
 	local releasedAvatar
 	
+	-- If we already have a spirit out, just use that.
+	if pet.isvalid and spirits:contains(pet.name) then
+		siphonElement = pet.element
+		-- If current weather doesn't match the spirit, but the spirit matches the day, try to cast the storm.
+		if player.sub_job == 'SCH' and pet.element == world.day_element and pet.element ~= world.weather_element then
+			if not S{'Light','Dark','Lightning'}:contains(pet.element) then
+				stormElementToUse = pet.element
+			end
+		end
 	-- If we're subbing /sch, there are some conditions where we want to make sure specific weather is up.
 	-- If current (single) weather is opposed by the current day, we want to change the weather to match
 	-- the current day, if possible.
-	if player.sub_job == 'SCH' and world.weather_element ~= 'None' then
+	elseif player.sub_job == 'SCH' and world.weather_element ~= 'None' then
 		local intense = get_weather_intensity()
 		-- We can override single-intensity weather; leave double weather alone, since even if
 		-- it's partially countered by the day, it's not worth changing.
@@ -416,19 +425,8 @@ function handle_siphoning()
 		end
 	end
 	
-	-- If we already have a spirit out, just use that.
-	if pet.isvalid and spirits:contains(pet.name) then
-		siphonElement = pet.element
-		if player.sub_job == 'SCH' and pet.element == world.day_element and pet.element ~= world.weather_element then
-			if not S{'Light','Dark','Lightning'}:contains(pet.element) then
-				stormElementToUse = pet.element
-			else
-				stormElementToUse = nil
-			end
-		else
-			stormElementToUse = nil
-		end
-	elseif stormElementToUse then
+	-- If we decided to use a storm, set that as the spirit element to cast.
+	if stormElementToUse then
 		siphonElement = stormElementToUse
 	elseif world.weather_element ~= 'None' and world.weather_element ~= weak_by_element[world.day_element] then
 		siphonElement = world.weather_element
@@ -437,22 +435,30 @@ function handle_siphoning()
 	end
 	
 	local command = ''
+	local releaseWait = 0
 	
 	if pet.isvalid and avatars:contains(pet.name) then
 		command = command..'input /pet "Release" <me>;wait 1.1;'
 		releasedAvatar = pet.name
+		releaseWait = 10
 	end
 	
 	if stormElementToUse then
 		command = command..'input /ma "'..storm_by_element[stormElementToUse]..'" <me>;wait 4;'
+		releaseWait = releaseWait - 4
 	end
 	
-	command = command..'input /ma "'..spirit_by_element[siphonElement]..'" <me>;wait 4;'
+	if not (pet.isvalid and spirits:contains(pet.name)) then
+		command = command..'input /ma "'..spirit_by_element[siphonElement]..'" <me>;wait 4;'
+		releaseWait = releaseWait - 4
+	end
 	
 	command = command..'input /ja "Elemental Siphon" <me>;'
+	releaseWait = releaseWait - 1
+	releaseWait = releaseWait + 0.1
 	
-	if releasedAvatar and not stormElementToUse then
-		command = command..'wait 5.1;'
+	if releaseWait > 0 then
+		command = command..'wait '..tostring(releaseWait)..';'
 	else
 		command = command..'wait 1.1;'
 	end
