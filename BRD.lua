@@ -159,17 +159,17 @@ function get_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {main=gear.Staff.PDT, sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Paguroidea Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 
 	sets.idle.Town = {main=gear.Staff.PDT, sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Paguroidea Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 	
 	sets.idle.Weak = {main=gear.Staff.PDT,sub="Quire Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Meridian Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	
@@ -177,7 +177,7 @@ function get_sets()
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',ring2='Dark Ring',
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',
 		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Quire Grip",
@@ -213,6 +213,7 @@ function get_sets()
 
 
 	windower.send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
+	-- default: set 2 of book 18
 	set_macro_page(2, 18)
 	binds_on_load()
 
