@@ -4,6 +4,41 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and it's supplementary files) to go with this.
 
+--[[
+	Custom commands:
+	
+	gs c petweather
+		Automatically casts the storm appropriate for the current avatar, if possible.
+	
+	gs c siphon
+		Automatically run the process to: dismiss the current avatar; cast appropriate
+		weather; summon the appropriate spirit; Elemental Siphon; release the spirit;
+		and re-summon the avatar.
+		
+		Will not cast weather you do not have access to.
+		Will not re-summon the avatar if one was not out in the first place.
+		Will not release the spirit if it was out before the command was issued.
+		
+	gs c pact [PactType]
+		Attempts to use the indicated pact type for the current avatar.
+		PactType can be one of:
+			cure
+			curaga
+			buffOffense
+			buffDefense
+			buffSpecial
+			debuff1
+			debuff2
+			sleep
+			nuke2
+			nuke4
+			bp70
+			bp75 (merits and lvl 75-80 pacts)
+			astralflow
+
+--]]
+
+
 function get_sets()
 	-- Load and initialize the include file that this depends on.
 	include('Mote-Include.lua')
@@ -24,6 +59,46 @@ function get_sets()
 	state.Buff["Avatar's Favor"] = buffactive["Avatar's Favor"] or false
 	state.Buff.Pet = pet.isvalid or false
 	
+	-- misc vars
+
+	spirits = S{"Light Spirit", "Dark Spirit", "Fire Spirit", "Earth Spirit", "Water Spirit", "Air Spirit", "Ice Spirit", "Thunder Spirit"}
+	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander"}
+
+	magicalRagePacts = S{
+		'Inferno','Earthen Fury','Tidal Wave','Aerial Blast','Diamond Dust','Judgement Bolt','Searing Light','Howling Moon','Ruinous Omen',
+		'Fire II','Stone II','Water II','Aero II','Blizzard II','Thunder II',
+		'Fire IV','Stone IV','Water IV','Aero IV','Blizzard IV','Thunder IV',
+		'Thunderspark','Burning Strike','Meteorite','Nether Blast','Flaming Crush',
+		'Meteor Strike','Heavenly Strike','Wind Blade','Geocrush','Grand Fall','Thunderstorm',
+		'Holy Mist','Lunar Bay','Night Terror'}
+
+
+	pacts = {}
+	pacts.cure = {['Carbuncle']='Healing Ruby'}
+	pacts.curaga = {['Carbuncle']='Healing Ruby II', ['Garuda']='Whispering Wind', ['Leviathan']='Spring Water'}
+	pacts.buffoffense = {['Carbuncle']='Glittering Ruby', ['Ifrit']='Inferno Howl', ['Garuda']='Hastega', ['Ramuh']='Rolling Thunder',
+		['Fenrir']='Ecliptic Growl'}
+	pacts.buffdefense = {['Carbuncle']='Shining Ruby', ['Shiva']='Frost Armor', ['Garuda']='Aerial Armor', ['Titan']='Earthen Ward',
+		['Ramuh']='Lightning Armor', ['Fenrir']='Ecliptic Howl', ['Diabolos']='Noctoshield'}
+	pacts.buffspecial = {['Garuda']='Fleet Wind', ['Titan']='Earthen Armor', ['Diabolos']='Dream Shroud', ['Carbuncle']='Soothing Ruby'}
+	pacts.debuff1 = {['Shiva']='Diamond Storm', ['Ramuh']='Shock Squall', ['Leviathan']='Tidal Roar', ['Fenrir']='Lunar Cry',
+		['Diabolos']='Pavor Nocturnus'}
+	pacts.debuff2 = {['Leviathan']='Slowga', ['Fenrir']='Lunar Roar', ['Diabolos']='Somnolence'}
+	pacts.sleep = {['Shiva']='Sleepga', ['Diabolos']='Nightmare'}
+	pacts.nuke2 = {['Ifrit']='Fire II', ['Shiva']='Blizzard II', ['Garuda']='Aero II', ['Titan']='Stone II',
+		['Ramuh']='Thunder II', ['Leviathan']='Water II'}
+	pacts.nuke4 = {['Ifrit']='Fire IV', ['Shiva']='Blizzard IV', ['Garuda']='Aero IV', ['Titan']='Stone IV',
+		['Ramuh']='Thunder IV', ['Leviathan']='Water IV'}
+	pacts.bp70 = {['Ifrit']='Flaming Crush', ['Shiva']='Rush', ['Garuda']='Predator Claws', ['Titan']='Mountain Buster',
+		['Ramuh']='Chaotic Strike', ['Leviathan']='Spinning Dive', ['Carbuncle']='Meteorite', ['Fenrir']='Eclipse Bite',
+		['Diabolos']='Nether Blast'}
+	pacts.bp75 = {['Ifrit']='Meteor Strike', ['Shiva']='Heavenly Strike', ['Garuda']='Wind Blade', ['Titan']='Geocrush',
+		['Ramuh']='Thunderstorm', ['Leviathan']='Grand Fall', ['Carbuncle']='Holy Mist', ['Fenrir']='Lunar Bay'},
+		['Diabolos']='Night Terror'}
+	pacts.astralflow = {['Ifrit']='Inferno', ['Shiva']='Diamond Dust', ['Garuda']='Aerial Blast', ['Titan']='Earthen Fury',
+		['Ramuh']='Judgment Bolt', ['Leviathan']='Tidal Wave', ['Carbuncle']='Searing Light', ['Fenrir']='Howling Moon',
+		['Diabolos']='Ruinous Omen'}
+
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -164,17 +239,6 @@ function get_sets()
 		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-
-	spirits = S{"Light Spirit", "Dark Spirit", "Fire Spirit", "Earth Spirit", "Water Spirit", "Air Spirit", "Ice Spirit", "Thunder Spirit"}
-	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander"}
-
-	magicalRagePacts = S{
-		'Inferno','Earthen Fury','Tidal Wave','Aerial Blast','Diamond Dust','Judgement Bolt','Searing Light','Howling Moon','Ruinous Omen',
-		'Fire II','Stone II','Water II','Aero II','Blizzard II','Thunder II',
-		'Fire IV','Stone IV','Water IV','Aero IV','Blizzard IV','Thunder IV',
-		'Thunderspark','Burning Strike','Meteorite','Nether Blast','Flaming Crush',
-		'Meteor Strike','Heavenly Strike','Wind Blade','Geocrush','Grand Fall','Thunderstorm',
-		'Holy Mist','Lunar Bay','Night Terror'}
 
 	set_macro_page(1, 16)
 	binds_on_load()
@@ -515,14 +579,32 @@ end
 -- gs c [pact] [pacttype]
 function handle_pacts(cmdParams)
 	if not pet.isvalid then
-		add_to_chat(123,'No avatar currently available.')
+		add_to_chat(122,'No avatar currently available.')
 		return
 	end
 
 	if spirits:contains(pet.name) then
-		add_to_chat(123,'Cannot use pacts with spirits.')
+		add_to_chat(122,'Cannot use pacts with spirits.')
 		return
 	end
 
+	if not cmdParams[2] then
+		add_to_chat(123,'No pact type given.')
+		return
+	end
 	
+	local pact = cmdParams[2]:lower()
+	
+	if not pacts[pact] then
+		add_to_chat(123,'Unknown pact type: '..tostring(pact))
+		return
+	end
+	
+	if pacts[pact][pet.name] then
+		-- Leave out target; let Shortcuts auto-determine it.
+		send_command('input /pet "'..pacts[pact][pet.name]..'"')
+	else
+		add_to_chat(122,pet.name..' does not have a pact of type '..pact..'.')
+	end
 end
+
