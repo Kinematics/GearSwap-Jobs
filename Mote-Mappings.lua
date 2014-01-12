@@ -12,6 +12,9 @@ mappings.weak_by_element = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', 
 mappings.strong_by_element = {['Light']='Dark', ['Dark']='Light', ['Fire']='Water', ['Ice']='Fire', ['Wind']='Ice', ['Earth']='Wind',
 		['Lightning']='Earth', ['Water']='Lightning'}
 
+mappings.storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm",
+		"Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
+		
 mappings.storm_by_element = {['Light']="Aurorastorm", ['Dark']="Voidstorm", ['Fire']="Firestorm", ['Earth']="Sandstorm",
 		['Water']="Rainstorm", ['Wind']="Windstorm", ['Ice']="Hailstorm", ['Lightning']="Thunderstorm"}
 
