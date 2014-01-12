@@ -122,7 +122,7 @@ function get_sets()
 	-- For song defbuffs
 	sets.midcast.SongDebuff = {main="Soothsayer Staff",sub="Quire Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Mediator's Ring",
+		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Aoidos' Rhing. +2",feet="Bokwus Boots"}
 
 	-- Song-specific recast reduction

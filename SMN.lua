@@ -64,7 +64,7 @@ function get_sets()
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Myrkr'] = {
 		head="Nahtirah Hat",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Convoker's Doublet",hands="Caller's Bracers +2",ring1="Evoker's Ring",ring2="Mediator's Ring",
+		body="Convoker's Doublet",hands="Caller's Bracers +2",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Pahtli Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	
@@ -359,6 +359,9 @@ function job_self_command(cmdParams, eventArgs)
 		end
 
 		eventArgs.handled = true
+	elseif cmdParams[1]:lower() == 'pact' then
+		handle_pacts(cmdParams)
+		eventArgs.handled = true
 	end
 end
 
@@ -393,12 +396,16 @@ function handle_siphoning()
 	-- the current day, if possible.
 	if player.sub_job == 'SCH' and world.weather_element ~= 'None' then
 		local intense = get_weather_intensity()
-		-- We can override single-intensity weather; leave double weather alone
+		-- We can override single-intensity weather; leave double weather alone, since even if
+		-- it's partially countered by the day, it's not worth changing.
 		if intense == 1 then
 			-- If current weather is weak to the current day, it cancels the benefits for
-			-- siphon.  Change it to the day's weather if possible, or any non-weak
+			-- siphon.  Change it to the day's weather if possible (+0 to +20%), or any non-weak
 			-- weather if not.
-			if world.weather_element == weak_by_element[world.day_element] then
+			-- If the current weather matches the current avatar's element (being used to reduce
+			-- perpetuation), don't change it; just accept the penalty on Siphon.
+			if world.weather_element == weak_by_element[world.day_element] and
+				(not pet.isvalid or world.weather_element ~= pet.element) then
 				-- We can't cast lightning/dark/light weather, so use a neutral element
 				if S{'Light','Dark','Lightning'}:contains(world.day_element) then
 					stormElementToUse = 'Wind'
@@ -406,9 +413,6 @@ function handle_siphoning()
 					stormElementToUse = world.day_element
 				end
 			end
-		end
-		
-		if stormElementToUse then
 		end
 	end
 	

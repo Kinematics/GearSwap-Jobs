@@ -53,7 +53,7 @@ function get_sets()
 
 	sets.precast.Flourish1 = {}
 	sets.precast.Flourish1['Violent Flourish'] = {ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Etoile Casaque +2",ring1="Mediator's Ring",ring2="Sangoma Ring",feet="Iuitl Gaiters"} -- magic accuracy
+		body="Etoile Casaque +2",ring2="Sangoma Ring",feet="Iuitl Gaiters"} -- magic accuracy
 	sets.precast.Flourish1['Desperate Flourish'] = {} -- acc gear
 
 	sets.precast.Flourish2 = {}

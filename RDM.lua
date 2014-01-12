@@ -97,7 +97,7 @@ function get_sets()
 	
 	sets.midcast.EnfeeblingMagic = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Mediator's Ring",
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Cascade Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	sets.midcast['Dia III'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
@@ -111,7 +111,7 @@ function get_sets()
 
 	sets.midcast.DarkMagic = {
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Mediator's Ring",
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	--sets.midcast.Drain = set_combine(sets.midcast.DarkMagic, {ring2="Excelsis Ring"})
