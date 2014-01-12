@@ -434,10 +434,10 @@ function handle_siphoning()
 	end
 	
 	if stormElementToUse then
-		command = command..'input /ma "'..storm_by_element[stormElementToUse]..'" <me>;wait 3;'
+		command = command..'input /ma "'..storm_by_element[stormElementToUse]..'" <me>;wait 4;'
 	end
 	
-	command = command..'input /ma "'..spirit_by_element[siphonElement]..'" <me>;wait 3;'
+	command = command..'input /ma "'..spirit_by_element[siphonElement]..'" <me>;wait 4;'
 	
 	command = command..'input /ja "Elemental Siphon" <me>;wait 1.1;input /pet "Release" <me>'
 	
