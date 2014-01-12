@@ -578,6 +578,11 @@ end
 -- cmdParams is the split of the self-command.
 -- gs c [pact] [pacttype]
 function handle_pacts(cmdParams)
+	if areas.Cities:contains(world.area) then
+		add_to_chat(122, 'You cannot use pacts in town.')
+		return
+	end
+
 	if not pet.isvalid then
 		add_to_chat(122,'No avatar currently available.')
 		return
