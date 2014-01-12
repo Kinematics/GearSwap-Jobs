@@ -229,7 +229,6 @@ end
 -- Runs when a pet initiates an action.
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_pet_midcast(spell, action, spellMap, eventArgs)
-	add_to_chat(122,'spell skill='..tostring(spell.skill)..', type='..tostring(spell.type))
 	if spirits:contains(pet.name) then
 		classes.CustomClass = 'Spirit'
 	elseif magicalRagePacts:contains(spell.english) then
