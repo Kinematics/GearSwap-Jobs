@@ -11,9 +11,11 @@ local utility = {}
 
 function utility.set_macro_page(set,book)
 	if not tonumber(set) then error('Macro page: Set not a valid number ('..tostring(set)..')', 2) end
+	if set < 1 or set > 10 then error('Macro page: Set can only be between 1 and 10', 2) end
 
 	if book then
 		if not tonumber(book) then error('Macro page: Book not a valid number ('..tostring(book)..')', 2) end
+		if book < 1 or book > 20 then error('Macro page: Book can only be between 1 and 20', 2) end
 		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
 	else
 		windower.send_command('input /macro set '..tostring(set))
