@@ -386,6 +386,7 @@ end
 function handle_siphoning()
 	local siphonElement
 	local stormElementToUse
+	local releasedAvatar
 	
 	-- If we're subbing /sch, there are some conditions where we want to make sure specific weather is up.
 	-- If current (single) weather is opposed by the current day, we want to change the weather to match
@@ -435,6 +436,7 @@ function handle_siphoning()
 	
 	if pet.isvalid and avatars:contains(pet.name) then
 		command = command..'input /pet "Release" <me>;wait 1.1;'
+		releasedAvatar = pet.name
 	end
 	
 	if stormElementToUse then
@@ -443,7 +445,19 @@ function handle_siphoning()
 	
 	command = command..'input /ma "'..spirit_by_element[siphonElement]..'" <me>;wait 4;'
 	
-	command = command..'input /ja "Elemental Siphon" <me>;wait 1.1;input /pet "Release" <me>'
+	command = command..'input /ja "Elemental Siphon" <me>;'
+	
+	if releasedAvatar and not stormElementToUse then
+		command = command..'wait 5.1;'
+	else
+		command = command..'wait 1.1;'
+	end
+	
+	command = command..'input /pet "Release" <me>;'
+	
+	if releasedAvatar then
+		command = command..'wait 1.1;input /ma "'..releasedAvatar..'" <me>'
+	end
 	
 	send_command(command)
 end
