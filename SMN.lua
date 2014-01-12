@@ -601,6 +601,11 @@ function handle_pacts(cmdParams)
 	end
 	
 	if pacts[pact][pet.name] then
+		if pact == 'astralflow' and not buffactive['astral flow'] then
+			add_to_chat(122,'Cannot use Astral Flow pacts without 2hr active.')
+			return
+		end
+		
 		-- Leave out target; let Shortcuts auto-determine it.
 		send_command('input /pet "'..pacts[pact][pet.name]..'"')
 	else
