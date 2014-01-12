@@ -423,10 +423,12 @@ function handle_siphoning()
 	local siphonElement
 	local stormElementToUse
 	local releasedAvatar
+	local dontRelease
 	
 	-- If we already have a spirit out, just use that.
 	if pet.isvalid and spirits:contains(pet.name) then
 		siphonElement = pet.element
+		dontRelease = true
 		-- If current weather doesn't match the spirit, but the spirit matches the day, try to cast the storm.
 		if player.sub_job == 'SCH' and pet.element == world.day_element and pet.element ~= world.weather_element then
 			if not S{'Light','Dark','Lightning'}:contains(pet.element) then
@@ -490,13 +492,15 @@ function handle_siphoning()
 	releaseWait = releaseWait - 1
 	releaseWait = releaseWait + 0.1
 	
-	if releaseWait > 0 then
-		command = command..'wait '..tostring(releaseWait)..';'
-	else
-		command = command..'wait 1.1;'
+	if not dontRelease then
+		if releaseWait > 0 then
+			command = command..'wait '..tostring(releaseWait)..';'
+		else
+			command = command..'wait 1.1;'
+		end
+		
+		command = command..'input /pet "Release" <me>;'
 	end
-	
-	command = command..'input /pet "Release" <me>;'
 	
 	if releasedAvatar then
 		command = command..'wait 1.1;input /ma "'..releasedAvatar..'" <me>'
