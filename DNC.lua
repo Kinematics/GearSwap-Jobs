@@ -42,7 +42,7 @@ function get_sets()
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 	
-	sets.precast.Samba = {head="Charis Tiara +2"}
+	sets.precast.Samba = {head="Maxixi Tiara"}
 
 	sets.precast.Jig = {legs="Etoile Tights +2", feet="Maxixi Toeshoes"}
 
