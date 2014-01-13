@@ -32,10 +32,10 @@ function utility.auto_change_target(spell, action, spellMap)
 		return
 	end
 	
-	-- init a new eventArgs
-	local eventArgs = {handled = false, pcTargetMode = 'default', selectNPCTargets = false}
+	-- init a new eventArgs with current values
+	local eventArgs = {handled = false, PCTargetMode = state.PCTargetMode, SelectNPCTargets = state.SelectNPCTargets}
 
-	-- Allow the job to do custom handling
+	-- Allow the job to do custom handling, or override the default values.
 	-- They can completely handle it, or set one of the secondary eventArgs vars to selectively
 	-- override the default state vars.
 	if job_auto_change_target then
@@ -46,6 +46,9 @@ function utility.auto_change_target(spell, action, spellMap)
 	if eventArgs.handled then
 		return
 	end
+	
+	local pcTargetMode = eventArgs.PCTargetMode
+	local selectNPCTargets = eventArgs.SelectNPCTargets
 			
 
 	local canUseOnPlayer = spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC
@@ -54,19 +57,19 @@ function utility.auto_change_target(spell, action, spellMap)
 	
 	-- For spells that we can cast on players:
 	if canUseOnPlayer then
-		if eventArgs.pcTargetMode == 'stal' or state.PCTargetMode == 'stal' then
+		if pcTargetMode == 'stal' then
 			-- Use <stal> if possible, otherwise fall back to <stpt>.
 			if spell.validtarget.Ally then
 				newTarget = '<stal>'
 			elseif spell.validtarget.Party then
 				newTarget = '<stpt>'
 			end
-		elseif eventArgs.pcTargetMode == 'stpt' or state.PCTargetMode == 'stpt' then
+		elseif pcTargetMode == 'stpt' then
 			-- Even ally-possible spells are limited to the current party.
 			if spell.validtarget.Ally or spell.validtarget.Party then
 				newTarget = '<stpt>'
 			end
-		elseif eventArgs.pcTargetMode == 'stpc' or state.PCTargetMode == 'stpc' then
+		elseif pcTargetMode == 'stpc' then
 			-- If it's anything other than a self-only spell, can change to <stpc>.
 			if spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC then
 				newTarget = '<stpc>'
@@ -74,7 +77,7 @@ function utility.auto_change_target(spell, action, spellMap)
 		end
 	-- For spells that can be used on enemies:
 	elseif spell.validtarget.Enemy then
-		if eventArgs.selectNPCTargets or state.SelectNPCTargets then
+		if selectNPCTargets then
 			-- Note: this means macros should be written for <t>, and it will change to <stnpc>
 			-- if the flag is set.  It won't change <stnpc> back to <t>.
 			newTarget = '<stnpc>'
