@@ -141,59 +141,58 @@ function selfCommands.handle_cycle(cmdParams)
 	if #cmdParams > 0 then
 		-- identifier for the field we're toggling
 		local paramField = cmdParams[1]:lower()
+		local modeField = paramField
 
 		if paramField:endswith('mode') then
 			-- Remove 'mode' from the end of the string
-			local modeField = paramField:sub(1,#paramField-4)
-			-- Convert WS to Weaponskill
-			if modeField == "ws" then
-				modeField = "weaponskill"
-			end
-			-- Capitalize the field (for use on output display)
-			modeField = modeField:gsub("%f[%a]%a", string.upper)
+			modeField = paramField:sub(1,#paramField-4)
+		end
 
-			-- Get the options.XXXModes table, and the current state mode for the mode field.
-			local modeTable, currentValue = get_mode_table(modeField)
+		-- Convert WS to Weaponskill
+		if modeField == "ws" then
+			modeField = "weaponskill"
+		end
+		-- Capitalize the field (for use on output display)
+		modeField = modeField:gsub("%f[%a]%a", string.upper)
+		
+		-- Get the options.XXXModes table, and the current state mode for the mode field.
+		local modeTable, currentValue = get_mode_table(modeField)
 
-			if not modeTable then
-				if _global.debug_mode then add_to_chat(123,'Unknown mode : '..modeField..'.') end
-				return false
-			end
-
-			-- Get the index of the current mode.  'Normal' or undefined is treated as index 0.
-			local invertedTable = invert_table(modeTable)
-			local index = 0
-			if invertedTable[currentValue] then
-				index = invertedTable[currentValue]
-			end
-			
-			-- Increment to the next index in the available modes.
-			index = index + 1
-			if index > #modeTable then
-				index = 1
-			end
-			
-			-- Determine the new mode value based on the index.
-			local newModeValue = ''
-			if index and modeTable[index] then
-				newModeValue = modeTable[index]
-			else
-				newModeValue = 'Normal'
-			end
-			
-			-- And save that to the appropriate state field.
-			set_mode(modeField, newModeValue)
-			
-			if job_state_change then
-				job_state_change(modeField..'Mode', newModeValue)
-			end
-			
-			-- Display what got changed to the user.
-			add_to_chat(122,modeField..' mode is now '..newModeValue..'.')
-		else
-			if _global.debug_mode then add_to_chat(123,'Invalid cycle field (does not end in "mode"): '..paramField) end
+		if not modeTable then
+			if _global.debug_mode then add_to_chat(123,'Unknown mode : '..modeField..'.') end
 			return false
 		end
+
+		-- Get the index of the current mode.  'Normal' or undefined is treated as index 0.
+		local invertedTable = invert_table(modeTable)
+		local index = 0
+		if invertedTable[currentValue] then
+			index = invertedTable[currentValue]
+		end
+		
+		-- Increment to the next index in the available modes.
+		index = index + 1
+		if index > #modeTable then
+			index = 1
+		end
+		
+		-- Determine the new mode value based on the index.
+		local newModeValue = ''
+		if index and modeTable[index] then
+			newModeValue = modeTable[index]
+		else
+			newModeValue = 'Normal'
+		end
+		
+		-- And save that to the appropriate state field.
+		set_mode(modeField, newModeValue)
+		
+		if job_state_change then
+			job_state_change(modeField..'Mode', newModeValue)
+		end
+		
+		-- Display what got changed to the user.
+		add_to_chat(122,modeField..' mode is now '..newModeValue..'.')
 	else
 		if _global.debug_mode then add_to_chat(123,'--handle_cycle parameter failure: field not specified') end
 		return false
@@ -244,10 +243,33 @@ function selfCommands.handle_set(cmdParams)
 			-- Display what got changed to the user.
 			add_to_chat(122,fieldDesc..' is now '..on_off_names[setValue]..'.')
 
-		-- Or if we're dealing with a mode setting
-		elseif lowerField:endswith('mode') then
-			-- Remove 'mode' from the end of the string
-			modeField = lowerField:sub(1,#lowerField-4)
+		-- Or distance (where we may need to get game state info)
+		elseif lowerField == 'distance' then
+			if setField then
+				local possibleDistance = tonumber(setField)
+				if possibleDistance ~= nil then
+					state.MaxWeaponskillDistance = possibleDistance
+				else
+					add_to_chat(123,'Invalid distance value: '..setField)
+				end
+				
+				-- set max weaponskill distance to the current distance the player is from the mob.
+
+				add_to_chat(123,'Using max weaponskill distance is not implemented right now.')
+			else
+				-- Get current player distance and use that
+				add_to_chat(123,'TODO: get player distance.')
+			end
+
+		-- Otherwise assume we're dealing with some sort of cycle field.
+		else
+			modeField = lowerField
+			
+			-- Remove 'mode' from the end, if present
+			if lowerField:endswith('mode') then
+				-- Remove 'mode' from the end of the string
+				modeField = lowerField:sub(1,#lowerField-4)
+			end
 			-- Convert WS to Weaponskill
 			if modeField == "ws" then
 				modeField = "weaponskill"
@@ -273,27 +295,6 @@ function selfCommands.handle_set(cmdParams)
 			
 			-- Display what got changed to the user.
 			add_to_chat(122,modeField..' mode is now '..setField..'.')
-
-		-- Or issueing a command where the user may not provide the value
-		elseif lowerField == 'distance' then
-			if setField then
-				local possibleDistance = tonumber(setField)
-				if possibleDistance ~= nil then
-					state.MaxWeaponskillDistance = possibleDistance
-				else
-					add_to_chat(123,'Invalid distance value: '..setField)
-				end
-				
-				-- set max weaponskill distance to the current distance the player is from the mob.
-
-				add_to_chat(123,'Using max weaponskill distance is not implemented right now.')
-			else
-				-- Get current player distance and use that
-				add_to_chat(123,'TODO: get player distance.')
-			end
-		else
-			if _global.debug_mode then add_to_chat(123,'Unknown set handling: '..field..' : '..setField) end
-			return false
 		end
 	else
 		if _global.debug_mode then add_to_chat(123,'--handle_set parameter failure: insufficient fields') end
