@@ -71,6 +71,10 @@ function selfCommands.handle_toggle(cmdParams)
 			toggleDesc = 'NPC targetting'
 		elseif job_toggle then
 			toggleDesc, toggleVal = job_toggle(toggleField)
+			if not toggleDesc then
+				add_to_chat(123,'Job_toggle did not return a desciption for '..toggleField..'.')
+				toggleDesc = ''
+			end
 		else
 			if _global.debug_mode then add_to_chat(123,'Unknown toggle field: '..toggleField) end
 			return false
