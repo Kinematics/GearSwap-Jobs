@@ -434,9 +434,6 @@ function job_get_mode_list(field)
 	elseif field == 'Altstep' then
 		return options.StepModes, state.AltStep
 	end
-	
-	-- Return an error if we don't recognize the field requested.
-	return nil, nil, true
 end
 
 -- Set job-specific mode values.

@@ -415,9 +415,6 @@ function job_get_mode_list(field)
 	if field == 'Treasure' then
 		return options.TreasureModes, state.TreasureMode
 	end
-	
-	-- Return an error if we don't recognize the field requested.
-	return nil, nil, true
 end
 
 -- Set job-specific mode values.

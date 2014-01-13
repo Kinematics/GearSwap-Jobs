@@ -476,8 +476,8 @@ function selfCommands.get_mode_list(field)
 		currentValue = state.PCTargetMode
 	elseif job_get_mode_list then
 		-- Allow job scripts to expand the mode table lists
-		modeList, currentValue, err = job_get_mode_list(field)
-		if err then
+		modeList, currentValue = job_get_mode_list(field)
+		if not modeList then
 			if _global.debug_mode then add_to_chat(123,'Attempt to query unknown state field: '..field) end
 			return nil
 		end
