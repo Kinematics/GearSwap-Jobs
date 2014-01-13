@@ -415,6 +415,17 @@ end
 
 -- Hooks for step mode handling.
 
+-- Job-specific toggles.
+function job_toggle(field)
+	if field:lower() == 'selectsteptarget' then
+		state.SelectStepTarget = not state.SelectStepTarget
+		return "Select Step Target", state.SelectStepTarget
+	elseif field:lower() == 'usealtstep' then
+		state.UseAltStep = not state.UseAltStep
+		return "Use Alt Step", state.UseAltStep
+	end
+end
+
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_table(field)
@@ -437,17 +448,6 @@ function job_set_mode(field, val)
 	elseif field == 'Altstep' then
 		state.AltStep = val
 		return true
-	end
-end
-
--- Job-specific toggles.
-function job_toggle(field)
-	if field:lower() == 'selectsteptarget' then
-		state.SelectStepTarget = not state.SelectStepTarget
-		return "Select Step Target", state.SelectStepTarget
-	elseif field:lower() == 'usealtstep' then
-		state.UseAltStep = not state.UseAltStep
-		return "Use Alt Step", state.UseAltStep
 	end
 end
 
