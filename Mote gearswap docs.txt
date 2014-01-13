@@ -87,7 +87,7 @@ Construct your sets with that in mind, and the Include will be able to handle 95
  ------   RULES   ------
 
 
- ---- Basics ----
+ ---- The Basics ----
  
  --- Actions ---
 
@@ -103,12 +103,14 @@ Each time these functions are called, the Include passes certain parameters:
 spell: All spell information provided by GearSwap.
 action: This no longer carries any information, but is passed through since it still exists within the GearSwap code.
 spellMap: This is the general mapping, if any, for the spell.  EG: If the spell.name is 'Choke', the spellMap value will be 'ElementalEnfeeble'.
-eventArgs: This is a means of flagging the Include that you don't wish for it to do its default processing.
+eventArgs: This is a means of flagging the Include that you don't wish for it to do its default processing, as well as a few other things.
 
 
-eventArgs will always have a sub-field of 'handled'.  If you set eventArgs.handled = true, the Include will not perform any default processing on that time slot (such as precast).  It may also have a sub-field of 'cancel', if it's in the pretarget or precast phase.  If you set eventArgs.cancel = true, the Include will cancel the spell and quit any further processing (note: don't call cancel_spell() yourself; the include handles that).
+eventArgs will always have a sub-field of 'handled'.  If you set eventArgs.handled = true, the Include will not perform any default processing on that time slot (such as precast).  It will still call job_post_precast (or equivalent), though.
 
-The reason for the pre, default, and post ordering for each section is to allow a logical layering of equipment at each level.  If you want to special-case a certain bit of equipment, put that in the Pre section and tell the Include that you handled choosing what gear to equip.  If you want the default gear to be equipped, but possibly make a small modification (eg: Orison Mitts +2 when casting a -na spell with Divine Caress active), put that in the Post section.
+It may also have a sub-field of 'cancel', if it's in the pretarget or precast phase.  If you set eventArgs.cancel = true, the Include will cancel the spell and quit any further processing (note: don't call cancel_spell() yourself; the include handles that).
+
+The reason for the pre, default, and post ordering for each section is to allow a logical layering of equipment at each level.  If you want to special-case equipment for a certain spell, put that in the Pre section and tell the Include that you handled choosing what gear to equip.  If you want the default gear to be equipped, but possibly make a small modification (eg: Orison Mitts +2 when casting a -na spell with Divine Caress active), put that in the Post section.
 
 
  --- Melee ---
@@ -123,27 +125,64 @@ customize_idle_set(idleSet)
 
 customize_melee_set(meleeSet)
 
-These functions allow you to modify the default constructed sets before they're actually equipped.  job_handle_equipping_gear can be used to set up information that may be needed in constructing the default sets (eg: setting up the CustomMeleeSet list).  The two customize functions are called after the default sets are defined.  Return the modified set at the end of the function for them.
+These functions allow you to modify the default constructed sets before they're actually equipped.  job_handle_equipping_gear can be used to set up information that may be needed in constructing the default sets (eg: setting up the CustomMeleeSet list).  The two customize functions are called after the default sets are defined.  Return the modified set at the end of those function.  Make sure not to modify the set directly, but only change it with set_combine().
 
 
  ---- Advanced ----
  
  --- States & Modes ---
+ 
+See section on self-commands.
 
  --- Setting Custom Classes ---
 
+There are (currently) four types of custom classes:
+
+classes.CustomClass = nil
+classes.CustomMeleeGroups = L{}
+classes.CustomIdleGroups = L{}
+classes.CustomDefenseGroups = L{}
+
+classes.CustomClass is a single string, and needs to be set each time a spell is used if you want it used.  It gets reset at the end of the aftercast (or pet_aftercast) section each time.
+
+The custom groups are persistant, and will remain until you change them.
+
+CustomClass changes the primary set to search for.  Instead of 'Cure II' (the spell), or 'Cure' (the spell map), you might want to use a special set (eg: 'CureSolace').  This will be checked before any of the other standard classifications (spell name, spell map, spell skill, spell type).
+
+The custom groups are added on to the default selected group for custom sets to use under various circumstances.  At the moment, idle and defense groups are added on to the end of the normal set hierarch, while the melee groups are added on at the beginning of the hierarchy.  I'm still considering whether to move the melee groups to the end.
 
 
 
- ---- Custom controls ----
+ ---- Utility ----
  
-State values (ie: information about what type of state you're in, such as accuracy-focused melee, or PDT idle, or kiting, etc) are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments (you can find those near the bottom of the Include file).
+Mote-Utility has various utility functions that may be useful in general.
 
-Since commands are sent directly to GearSwap, there are three ways to format the sending depending on where it originates from:
+set_macro_page(set,book) -- This allows you to go to the specified macro set for a given macro book, just giving the numbers.  The book parameter is optional.
+
+This function is currently used in the various job files at the end of get_sets() in order to set the default macro book/set on load (eg: set_macro_page(1,20) will put you on set 1 of book 20).  You might also use throughout the rule file to adjust which macro set to be on (eg: set_macro_page(3) will change you to macro set 3 of your current book).
+
+auto_change_target() -- This is a utility function for the main include, and shouldn't be called directly from any job files.  However it does call into job files to allow modifying its behavior.
+
+If the job file has a job_auto_change_target function, it will call job_auto_change_target(spell, action, spellMap, eventArgs).  eventArgs contains the fields: handled, PCTargetMode, SelectNPCTargets.  Set handled to true to prevent auto_change_target from running any of its own code. Set PCTargetMode if you want to modify that behavior (values of: 'default', 'stpc', 'stpt', 'stal').  Set SelectNPCTargets to override whether or not to attempt to change target selection for moves that have enemy targets (weaponskills, steps, etc).  If true, it will force <stnpc>.  Otherwise it will leave it as originally entered.
+
+refine_waltz(spell, action, spellMap, eventArgs) -- This function will adjust which curing waltz to use if your target is yourself, based on how much HP you're missing, and capping based on available TP.  Call it during precast() with the default values that precast is called with.  If you have too little TP, or not enough HP missing to be worth curing, it will handle cancelling the action.
+
+
+get_weather_intensity() -- Returns 0 for no weather, 1 for normal weather, and 2 for double weather.
+
+There are a few other functions in the utility file, but mainly only of interest to the needs of the main include file.
+
+
+
+ ---- Self commands: Adjusting state ----
+ 
+State values (ie: information about what type of state you're in, such as accuracy-focused melee, or PDT idle, or kiting, etc) are controlled via custom commands sent through GearSwap.  There are multiple ways of manipulating each state, as well as a default set of binds for the most common adjustments (available in the UserGlobals file, which you can adjust to personal preference).
+
+Since commands are sent directly to GearSwap, there are three ways to format them depending on where it originates from:
 
 From the command line:  //gs c <command>
 From a macro: /console gs c <command>
-From a bind: gs c <command>
+From a bind (which goes directly to the console): gs c <command>
 
 General command format:
 
@@ -161,7 +200,7 @@ There are two types of <state>:
 <mode> is for lists of values.  You can use cycle to increment over that list, returning to the first value after passing the end of the list.  You can use set to assign a specific value, and a reset will return it to the first value of the list.
 
 
-The valid togglable fields are:
+The global togglable fields are:
 
 Defense - for all-out defense, either physical or magical (the exact type is set with Activate)
 Kiting - for wearing +movement speed above any other gear
@@ -176,7 +215,7 @@ Target - for determination of whether to force use of <stnpc> when performing ac
 
 
 
-The valid cycle-able modes are:
+The global cyclable modes are:
 
 OffenseMode - the offense portion of the hybrid melee set (eg: acc, crit, etc)
 DefenseMode - the defense portion of the hybrid melee set (eg: evasion, pdt, etc)
@@ -188,10 +227,42 @@ PhysicalDefenseMode - the type of physical defense gear when the all-out defense
 MagicalDefenseMode - the type of magical defense gear when the all-out defense mode is activated (eg: mdt, resist)
 TargetMode - the type of target selection method to use with player-targettable spells (eg: stal, stpc, stpt).  Note: predefined, you shouldn't change this.
 
-In addition, you can create additional job-specific modes that are handled via the cycle command.  See thf as an example with TreasureMode.
+
+You can also create job-specific states that get handled via this mechanism.  The Mote-SelfCommands file will call into the job file at certain points.  Note that you could just intercept the self_command and handle it all yourself, but this keeps it somewhat clean in your function definitions.
+
+For toggles:
+
+job_toggle(field) -- This is called when the user enters "gs c toggle <field>".  For each state you wish to toggle, check for the field value passed in, adjust it, and return a text description of the field you changed, along with its new state.  EG:
+
+function job_toggle(field)
+    if field:lower() == 'selectsteptarget' then
+        state.SelectStepTarget = not state.SelectStepTarget
+        return "Select Step Target", state.SelectStepTarget
+    end
+end
 
 
-Note that all modes /should/ have a value of 'Normal' available, usually in the first position of the list so that it can be considered the default value (and thus doesn't need to be specifically named when constructing sets).  There are some cases where you may want to deviate from that.  For example, I set the default (first) position of OffenseMode to 'None' for my mage jobs, and put 'Normal' in the second position, which allows me to use that to determine whether or not to lock the weapon slots.
+For states that can cycle through various values:
+
+job_get_mode_list(field) -- This is called to get the list of valid values to cycle through, and the current value, to allow the cycle code to work.  The field will always be sent with the first letter capitalized and the rest lowercase.
+
+function job_get_mode_list(field)
+	if field == 'Mainstep' then
+		return options.StepModes, state.MainStep
+	end
+end
+
+And:
+function job_set_mode(field, val)
+	if field == 'Mainstep' then
+		state.MainStep = val
+		return true
+	end
+end
+
+(Return true if a value was properly set.)
+
+
 
 
 Reset works on certain general types:
@@ -202,4 +273,13 @@ Melee - returns OffenseMode and DefenseMode to their default (first) values
 Casting - returns CastingMode to its default (first) value
 Target - resets both NPC targetting and PC targetting, to turn off any overriding being done
 All - resets all fields and modes to their defaults
+
+The job file may also handle resets with its own hook:
+
+function job_reset(resetType)
+    if resetType == 'all' then
+        state.MainStep = options.StepModes[1]
+    end
+end
+
 
