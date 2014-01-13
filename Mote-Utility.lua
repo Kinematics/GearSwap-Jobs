@@ -93,7 +93,7 @@ end
 -- Returns two values on completion:
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
-function refine_waltz(spell, action, spellMap, eventArgs)
+function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	-- Don't modify anything for Healing Waltz or Divine Waltzes
 	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
 		return
