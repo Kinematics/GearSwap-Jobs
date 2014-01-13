@@ -19,6 +19,26 @@ function get_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'Evasion'
+
+
+	options.StepModes = {'Box Step', 'Quickstep', 'Feather Step', 'Stutter Step'}
+	state.MainStep = 'Box Step'
+	state.AltStep = 'Quickstep'
+	state.CurrentStep = 'Main'
+	state.UseAltStep = false
+	state.SelectStepTarget = false
+	state.IgnoreTargetting = false
+	
+	windower.send_command('bind ^= gs c cycle mainstep')
+	windower.send_command('bind != gs c cycle altstep')
+	windower.send_command('bind ^- gs c toggle selectsteptarget')
+	windower.send_command('bind !- gs c toggle usealtstep')
+
+
+	skillchainPending = false
+	
+	waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
+	
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -257,16 +277,9 @@ function get_sets()
 	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
 	sets.buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
 
-	skillchainPending = false
 	
-	waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
-	
-	
-	set_macro_page(2, 20)
+	set_macro_page(5, 20)
 	binds_on_load()
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
 
 	windower.send_command('bind ^` input /ja "Chocobo Jig" <me>')
 	windower.send_command('bind !` input /ja "Chocobo Jig II" <me>')
@@ -375,6 +388,22 @@ end
 function job_self_command(cmdParams, eventArgs)
 	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
 		skillchainPending = false
+	elseif cmdParams[1] == 'step' then
+		if cmdParams[2] == 't' then
+			state.IgnoreTargetting = true
+		end
+
+		local doStep = state.MainStep
+		if state.UseAltStep then
+			doStep = state[state.CurrentStep..'Step']
+			if state.CurrentStep == 'Main' then
+				state.CurrentStep = 'Alt'
+			else
+				state.CurrentStep = 'Main'
+			end
+		end
+		
+		send_command('input /ja "'..doStep..'" <t>')
 	end
 end
 
@@ -384,6 +413,53 @@ function job_update(cmdParams, eventArgs)
 	determine_haste_group()
 end
 
+-- Hooks for step mode handling.
+
+-- Request job-specific mode tables.
+-- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+function job_get_mode_table(field)
+	if field == 'Mainstep' then
+		return options.StepModes, state.MainStep
+	elseif field == 'Altstep' then
+		return options.StepModes, state.AltStep
+	end
+	
+	-- Return an error if we don't recognize the field requested.
+	return nil, nil, true
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_mode(field, val)
+	if field == 'Mainstep' then
+		state.MainStep = val
+		return true
+	elseif field == 'Altstep' then
+		state.AltStep = val
+		return true
+	end
+end
+
+-- Job-specific toggles.
+function job_toggle(field)
+	if field:lower() == 'selectsteptarget' then
+		state.SelectStepTarget = not state.SelectStepTarget
+		return "Select Step Target", state.SelectStepTarget
+	elseif field:lower() == 'usealtstep' then
+		state.UseAltStep = not state.UseAltStep
+		return "Use Alt Step", state.UseAltStep
+	end
+end
+
+-- Handle auto-targetting based on local setup.
+function job_auto_change_target(spell, action, spellMap, eventArgs)
+	if state.IgnoreTargetting then
+		state.IgnoreTargetting = false
+		eventArgs.handled = true
+	end
+	
+	eventArgs.SelectNPCTargets = state.SelectStepTarget
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
