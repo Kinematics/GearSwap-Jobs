@@ -339,10 +339,10 @@ end
 function customize_melee_set(meleeSet)
 	if not state.Defense.Active then
 		if buffactive['saber dance'] then
-			meleeSet = set_combine(meleeSet, sets.Buff['Saber Dance'])
+			meleeSet = set_combine(meleeSet, sets.buff['Saber Dance'])
 		end
 		if buffactive['climactic flourish'] then
-			meleeSet = set_combine(meleeSet, sets.Buff['Climactic Flourish'])
+			meleeSet = set_combine(meleeSet, sets.buff['Climactic Flourish'])
 		end
 	end
 	
