@@ -113,6 +113,9 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	if player.main_job == 'DNC' then
 		if missingHP < 40 then
 			-- not worth curing
+			add_to_chat(122,'Full HP!')
+			eventArgs.cancel = true
+			return
 		elseif missingHP < 200 then
 			newWaltz = 'Curing Waltz'
 		elseif missingHP < 500 then
@@ -127,6 +130,9 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	elseif player.sub_job == 'DNC' then
 		if missingHP < 40 then
 			-- not worth curing
+			add_to_chat(122,'Full HP!')
+			eventArgs.cancel = true
+			return
 		elseif missingHP < 150 then
 			newWaltz = 'Curing Waltz'
 		elseif missingHP < 300 then
@@ -135,12 +141,6 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 			newWaltz = 'Curing Waltz III'
 		end
 	else
-		return
-	end
-	
-	if not newWaltz then
-		add_to_chat(122,'Full HP!')
-		eventArgs.cancel = true
 		return
 	end
 	
