@@ -164,15 +164,15 @@ function selfCommands.handle_cycle(cmdParams)
 		modeField = modeField:gsub("%f[%a]%a", string.upper)
 		
 		-- Get the options.XXXModes table, and the current state mode for the mode field.
-		local modeTable, currentValue = get_mode_table(modeField)
+		local modeList, currentValue = get_mode_list(modeField)
 
-		if not modeTable then
+		if not modeList then
 			if _global.debug_mode then add_to_chat(123,'Unknown mode : '..modeField..'.') end
 			return false
 		end
 
 		-- Get the index of the current mode.  'Normal' or undefined is treated as index 0.
-		local invertedTable = invert_table(modeTable)
+		local invertedTable = invert_table(modeList)
 		local index = 0
 		if invertedTable[currentValue] then
 			index = invertedTable[currentValue]
@@ -180,14 +180,14 @@ function selfCommands.handle_cycle(cmdParams)
 		
 		-- Increment to the next index in the available modes.
 		index = index + 1
-		if index > #modeTable then
+		if index > #modeList then
 			index = 1
 		end
 		
 		-- Determine the new mode value based on the index.
 		local newModeValue = ''
-		if index and modeTable[index] then
-			newModeValue = modeTable[index]
+		if index and modeList[index] then
+			newModeValue = modeList[index]
 		else
 			newModeValue = 'Normal'
 		end
@@ -288,9 +288,9 @@ function selfCommands.handle_set(cmdParams)
 			modeField = modeField:gsub("%a", string.upper, 1)
 			
 			-- Get the options.XXXModes table, and the current state mode for the mode field.
-			local modeTable, currentValue = get_mode_table(modeField)
+			local modeList, currentValue = get_mode_list(modeField)
 			
-			if not modeTable or not modeTable[setField] then
+			if not modeList or not modeList[setField] then
 				if _global.debug_mode then add_to_chat(123,'Unknown mode value: '..setField..' for '..modeField..' mode.') end
 				return false
 			end
