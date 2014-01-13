@@ -81,28 +81,28 @@ function get_sets()
 	sets.precast.WS['Exenterator'] = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Houyi's Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Atheling Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist="Thunder Belt"})
 
 	sets.precast.WS['Pyrrhic Kleos'] = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
+		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	sets.precast.WS['Pyrrhic Kleos'].Acc = set_combine(sets.precast.WS['Pyrrhic Kleos'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Pyrrhic Kleos'].Mod = set_combine(sets.precast.WS['Pyrrhic Kleos'], {waist="Soil Belt"})
 
 	sets.precast.WS['Dancing Edge'] = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Soil Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
+		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	sets.precast.WS['Dancing Edge'].Acc = set_combine(sets.precast.WS['Dancing Edge'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Dancing Edge'].Mod = set_combine(sets.precast.WS['Dancing Edge'], {waist="Soil Belt"})
 
 	sets.precast.WS['Evisceration'] = {ammo="Charis Feather",
 		head="Whirlpool Mask",neck="Rancor Collar",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mangle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
+		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist="Soil Belt"})
 
