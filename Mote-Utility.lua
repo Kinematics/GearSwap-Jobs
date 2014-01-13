@@ -49,14 +49,14 @@ function utility.auto_change_target(spell, action, spellMap)
 	
 	local pcTargetMode = eventArgs.PCTargetMode
 	local selectNPCTargets = eventArgs.SelectNPCTargets
-			
+	
+	local canUseOnPlayer = spell.validtarget and 
+		(spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC)
 
-	local canUseOnPlayer = spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC
-
-	local newTarget = ''
+	local newTarget
 	
 	-- For spells that we can cast on players:
-	if canUseOnPlayer then
+	if canUseOnPlayer and pcTargetMode ~= 'default' then
 		if pcTargetMode == 'stal' then
 			-- Use <stal> if possible, otherwise fall back to <stpt>.
 			if spell.validtarget.Ally then
@@ -76,16 +76,14 @@ function utility.auto_change_target(spell, action, spellMap)
 			end
 		end
 	-- For spells that can be used on enemies:
-	elseif spell.validtarget.Enemy then
-		if selectNPCTargets then
-			-- Note: this means macros should be written for <t>, and it will change to <stnpc>
-			-- if the flag is set.  It won't change <stnpc> back to <t>.
-			newTarget = '<stnpc>'
-		end
+	elseif spell.validtarget and spell.validtarget.Enemy and selectNPCTargets then
+		-- Note: this means macros should be written for <t>, and it will change to <stnpc>
+		-- if the flag is set.  It won't change <stnpc> back to <t>.
+		newTarget = '<stnpc>'
 	end
 	
 	-- If a new target was selected and is different from the original, call the change function.
-	if newTarget ~= '' and newTarget ~= spell.target.raw then
+	if newTarget and newTarget ~= spell.target.raw then
 		change_target(newTarget)
 	end
 end
