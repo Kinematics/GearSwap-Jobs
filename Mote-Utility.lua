@@ -147,6 +147,7 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	end
 	
 	local tpCost = waltzTPCost[newWaltz]
+	local downgrade
 	
 	-- Downgrade the spell to what we can afford
 	if player.tp < tpCost and not buffactive.trance then
@@ -174,7 +175,7 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 			newWaltz = 'Curing Waltz IV'
 		end
 		
-		add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz..'.')
+		downgrade = 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz..'.'
 	end
 
 	
@@ -184,6 +185,9 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 		return
 	end
 
+	if downgrade then
+		add_to_chat(122, downgrade)
+	end
 	add_to_chat(122,'Using '..newWaltz..' to cure '..tostring(missingHP)..' HP.')
 end
 
