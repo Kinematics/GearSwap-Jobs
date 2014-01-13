@@ -291,6 +291,14 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_midcast(spell, action, spellMap, eventArgs)
+	if spell.action_type == 'Magic' then
+		-- Default base equipment layer of fast recast.
+		equip(sets.midcast.FastRecast)
+	end
+end
+
 -- Run after the general midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
