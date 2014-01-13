@@ -188,7 +188,7 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	if downgrade then
 		add_to_chat(122, downgrade)
 	end
-	add_to_chat(122,'Using '..newWaltz..' to cure '..tostring(missingHP)..' HP.')
+	add_to_chat(122,'Using '..newWaltz..' for -'..tostring(missingHP)..' HP.')
 end
 
 
