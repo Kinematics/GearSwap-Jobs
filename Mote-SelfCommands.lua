@@ -565,7 +565,9 @@ end
 
 -- A function for testing lua code.  Called via "gs c test".
 function selfCommands.handle_test(cmdParams)
-	add_to_chat(123,'did test')
+	if user_test then
+		user_test(cmdParams)
+	end
 end
 
 
