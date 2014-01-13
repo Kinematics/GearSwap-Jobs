@@ -303,7 +303,7 @@ end
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	if state.Buff.Doom then
-		equip(sets.Buff.Doom)
+		equip(sets.buff.Doom)
 	end
 end
 
@@ -331,10 +331,10 @@ end
 function customize_idle_set(idleSet)
 	idleSet = set_combine(idleSet, select_movement())
 	if state.Buff.Migawari then
-		idleSet = set_combine(idleSet, sets.Buff.Migawari)
+		idleSet = set_combine(idleSet, sets.buff.Migawari)
 	end
 	if state.Buff.Doom then
-		idleSet = set_combine(idleSet, sets.Buff.Doom)
+		idleSet = set_combine(idleSet, sets.buff.Doom)
 	end
 	return idleSet
 end
@@ -342,10 +342,10 @@ end
 -- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
 	if state.Buff.Migawari then
-		meleeSet = set_combine(meleeSet, sets.Buff.Migawari)
+		meleeSet = set_combine(meleeSet, sets.buff.Migawari)
 	end
 	if state.Buff.Doom then
-		meleeSet = set_combine(meleeSet, sets.Buff.Doom)
+		meleeSet = set_combine(meleeSet, sets.buff.Doom)
 	end
 	return meleeSet
 end
