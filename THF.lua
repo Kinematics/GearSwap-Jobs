@@ -411,7 +411,7 @@ end
 
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_mode_table(field)
+function job_get_mode_list(field)
 	if field == 'Treasure' then
 		return options.TreasureModes, state.TreasureMode
 	end
