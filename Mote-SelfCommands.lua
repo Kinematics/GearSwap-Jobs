@@ -346,17 +346,16 @@ function selfCommands.handle_reset(cmdParams)
 			state.PCTargetMode = 'default'
 			showSet = nil
 			add_to_chat(122,'Everything has been reset to defaults.')
-		else
-			if _global.debug_mode then add_to_chat(123,'--handle_reset unknown state to reset: '..resetState) end
+		elseif not job_reset then
+			if _global.debug_mode then add_to_chat(123,'handle_reset: unknown state to reset: '..resetState) end
 			return false
 		end
 		
-
 		if job_state_change then
 			job_state_change('Reset', resetState)
 		end
 	else
-		if _global.debug_mode then add_to_chat(123,'--handle_activate parameter failure: field not specified') end
+		if _global.debug_mode then add_to_chat(123,'handle_reset: parameter failure: reset type not specified') end
 		return false
 	end
 	
