@@ -461,6 +461,39 @@ function job_auto_change_target(spell, action, spellMap, eventArgs)
 	eventArgs.SelectNPCTargets = state.SelectStepTarget
 end
 
+
+-- Function to display the current relevant user state when doing an update.
+-- Set eventArgs.handled to true if display was handled, and you don't want the default info shown.
+function display_current_job_state(eventArgs)
+	local defenseString = ''
+	if state.Defense.Active then
+		local defMode = state.Defense.PhysicalMode
+		if state.Defense.Type == 'Magical' then
+			defMode = state.Defense.MagicalMode
+		end
+
+		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+	end
+	
+	local steps = ''
+	if state.UseAltStep then
+		steps = ', ['..state.MainStep..'/'..state.AltStep..']'
+	else
+		steps = ', ['..state.MainStep..']'
+	end
+
+	if state.SelectStepTarget then
+		steps = steps..' (Targetted)'
+	end
+
+
+	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
+		'Kiting: '..on_off_names[state.Kiting]..steps)
+
+	eventArgs.handled = true
+end
+
+
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
