@@ -442,41 +442,41 @@ end
 
 ------  Utility functions to support self commands. ------
 
--- Function to get the options.XXXModes table and the corresponding state value to make given state field.
-function selfCommands.get_mode_table(field)
-	local modeTable = {}
+-- Function to get the options.XXXModes list and the corresponding state value for the requested field.
+function selfCommands.get_mode_list(field)
+	local modeList = {}
 	local currentValue = ''
 
 	if field == 'Offense' then
-		modeTable = options.OffenseModes
+		modeList = options.OffenseModes
 		currentValue = state.OffenseMode
 	elseif field == 'Defense' then
-		modeTable = options.DefenseModes
+		modeList = options.DefenseModes
 		currentValue = state.DefenseMode
 	elseif field == 'Casting' then
-		modeTable = options.CastingModes
+		modeList = options.CastingModes
 		currentValue = state.CastingMode
 	elseif field == 'Weaponskill' then
-		modeTable = options.WeaponskillModes
+		modeList = options.WeaponskillModes
 		currentValue = state.WeaponskillMode
 	elseif field == 'Idle' then
-		modeTable = options.IdleModes
+		modeList = options.IdleModes
 		currentValue = state.IdleMode
 	elseif field == 'Resting' then
-		modeTable = options.RestingModes
+		modeList = options.RestingModes
 		currentValue = state.RestingMode
 	elseif field == 'Physicaldefense' then
-		modeTable = options.PhysicalDefenseModes
+		modeList = options.PhysicalDefenseModes
 		currentValue = state.Defense.PhysicalMode
 	elseif field == 'Magicaldefense' then
-		modeTable = options.MagicalDefenseModes
+		modeList = options.MagicalDefenseModes
 		currentValue = state.Defense.MagicalMode
 	elseif field == 'Target' then
-		modeTable = options.TargetModes
+		modeList = options.TargetModes
 		currentValue = state.PCTargetMode
-	elseif job_get_mode_table then
+	elseif job_get_mode_list then
 		-- Allow job scripts to expand the mode table lists
-		modeTable, currentValue, err = job_get_mode_table(field)
+		modeList, currentValue, err = job_get_mode_list(field)
 		if err then
 			if _global.debug_mode then add_to_chat(123,'Attempt to query unknown state field: '..field) end
 			return nil
@@ -486,7 +486,7 @@ function selfCommands.get_mode_table(field)
 		return nil
 	end
 	
-	return modeTable, currentValue
+	return modeList, currentValue
 end
 
 -- Function to set the appropriate state value for the specified field.
