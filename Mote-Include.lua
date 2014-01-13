@@ -104,6 +104,7 @@ function MoteInclude.init_include()
 	-- Custom groups used for defining melee and idle sets.  Persists long-term.
 	classes.CustomMeleeGroups = L{}
 	classes.CustomIdleGroups = L{}
+	classes.CustomDefenseGroups = L{}
 
 	-- Var for use in melee set construction.
 	TPWeapon = 'Normal'
@@ -746,6 +747,12 @@ function MoteInclude.apply_defense(baseSet)
 				defenseSet = sets.defense[state.Defense.MagicalMode]
 			else
 				defenseSet = sets.defense
+			end
+		end
+		
+		for i = 1,#classes.CustomDefenseGroups do
+			if defenseSet[classes.CustomDefenseGroups[i]] then
+				defenseSet = defenseSet[classes.CustomDefenseGroups[i]]
 			end
 		end
 
