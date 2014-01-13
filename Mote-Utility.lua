@@ -97,6 +97,10 @@ end
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
 function utility.refine_waltz(spell, action, spellMap, eventArgs)
+	if spell.type ~= 'Waltz' then
+		return
+	end
+	
 	-- Don't modify anything for Healing Waltz or Divine Waltzes
 	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
 		return
