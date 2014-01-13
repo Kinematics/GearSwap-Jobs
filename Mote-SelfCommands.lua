@@ -69,12 +69,14 @@ function selfCommands.handle_toggle(cmdParams)
 			state.SelectNPCTargets = not state.SelectNPCTargets
 			toggleVal = state.SelectNPCTargets
 			toggleDesc = 'NPC targetting'
+		elseif job_toggle then
+			toggleDesc, toggleVal = job_toggle(toggleField)
 		else
 			if _global.debug_mode then add_to_chat(123,'Unknown toggle field: '..toggleField) end
 			return false
 		end
 
-		if job_state_change then
+		if job_state_change and toggleDesc then
 			job_state_change(toggleDesc, toggleVal)
 		end
 
@@ -110,13 +112,15 @@ function selfCommands.handle_activate(cmdParams)
 		elseif activateState == 'target' then
 			state.SelectNPCTargets = true
 			activateDesc = 'NPC targetting'
+		elseif job_activate then
+			activateDesc = job_activate(activateState)
 		else
 			if _global.debug_mode then add_to_chat(123,'--handle_activate unknown state to activate: '..activateState) end
 			return false
 		end
 
 		-- Notify the job of the change.
-		if job_state_change then
+		if job_state_change and activateDesc then
 			job_state_change(activateDesc, true)
 		end
 
@@ -229,6 +233,8 @@ function selfCommands.handle_set(cmdParams)
 			elseif lowerField == 'target' then
 				state.SelectNPCTargets = setValue
 				fieldDesc = 'NPC targetting'
+			elseif job_setbool then
+				fieldDesc = job_setbool(lowerField, setValue)
 			else
 				if _global.debug_mode then add_to_chat(123,'Unknown field to set: '..field) end
 				return false
@@ -236,7 +242,7 @@ function selfCommands.handle_set(cmdParams)
 
 
 			-- Notify the job of the change.
-			if job_state_change then
+			if job_state_change and fieldDesc then
 				job_state_change(fieldDesc, setValue)
 			end
 	
