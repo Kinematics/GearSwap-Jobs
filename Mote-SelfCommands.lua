@@ -310,6 +310,10 @@ end
 function selfCommands.handle_reset(cmdParams)
 	if #cmdParams > 0 then
 		resetState = cmdParams[1]:lower()
+
+		if job_reset then
+			job_reset(resetState)
+		end
 		
 		if resetState == 'defense' then
 			state.Defense.Active = false
