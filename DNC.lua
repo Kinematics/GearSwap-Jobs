@@ -453,12 +453,14 @@ end
 
 -- Handle auto-targetting based on local setup.
 function job_auto_change_target(spell, action, spellMap, eventArgs)
-	if state.IgnoreTargetting then
-		state.IgnoreTargetting = false
-		eventArgs.handled = true
+	if spell.type == 'Step' then
+		if state.IgnoreTargetting then
+			state.IgnoreTargetting = false
+			eventArgs.handled = true
+		end
+		
+		eventArgs.SelectNPCTargets = state.SelectStepTarget
 	end
-	
-	eventArgs.SelectNPCTargets = state.SelectStepTarget
 end
 
 
