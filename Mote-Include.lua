@@ -583,6 +583,12 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 		if equipSet[state.CastingMode] then
 			equipSet = equipSet[state.CastingMode]
 		end
+	elseif sets.midcast[spell.type] then
+		if sets.midcast[spell.type][spell.english] then
+			equipSet = sets.midcast[spell.type][spell.english]
+		else
+			equipSet = sets.midcast[spell.type]
+		end
 	end
 
 	return equipSet
