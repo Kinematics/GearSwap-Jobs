@@ -247,7 +247,7 @@ function get_sets()
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
-	set_macro_page(1, 2)
+	set_macro_page(2, 1)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
