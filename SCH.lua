@@ -244,21 +244,19 @@ function get_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.Buff = {}
-	
-	sets.Buff['Ebullience'] = {head="Savant's Bonnet +2"}
-	sets.Buff['Rapture'] = {head="Savant's Bonnet +2"}
-	sets.Buff['Perpetuance'] = {hands="Savant's Bracers +2"}
-	sets.Buff['Immanence'] = {hands="Savant's Bracers +2"}
-	sets.Buff['Penury'] = {legs="Savant's Pants +2"}
-	sets.Buff['Parsimony'] = {legs="Savant's Pants +2"}
-	sets.Buff['Celerity'] = {feet="Argute Loafers +2"}
-	sets.Buff['Alacrity'] = {feet="Argute Loafers +2"}
+	sets.buff['Ebullience'] = {head="Savant's Bonnet +2"}
+	sets.buff['Rapture'] = {head="Savant's Bonnet +2"}
+	sets.buff['Perpetuance'] = {hands="Savant's Bracers +2"}
+	sets.buff['Immanence'] = {hands="Savant's Bracers +2"}
+	sets.buff['Penury'] = {legs="Savant's Pants +2"}
+	sets.buff['Parsimony'] = {legs="Savant's Pants +2"}
+	sets.buff['Celerity'] = {feet="Argute Loafers +2"}
+	sets.buff['Alacrity'] = {feet="Argute Loafers +2"}
 
-	sets.Buff['Klimaform'] = {feet="Savant's Loafers +2"}
+	sets.buff['Klimaform'] = {feet="Savant's Loafers +2"}
 
-	sets.Buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Argute Gown +2"}
-	sets.Buff.PDTSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring"}
+	sets.buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Argute Gown +2"}
+	sets.buff.PDTSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring"}
 
 	--sets.Buff['Sandstorm'] = {feet="Desert Boots"}
 
@@ -333,9 +331,9 @@ end
 function customize_idle_set(idleSet)
 	if state.Buff.Sublimation then
 		if state.IdleMode == 'Normal' then
-			idleSet = set_combine(idleSet, sets.Buff.FullSublimation)
+			idleSet = set_combine(idleSet, sets.buff.FullSublimation)
 		elseif state.IdleMode == 'PDT' then
-			idleSet = set_combine(idleSet, sets.Buff.PDTSublimation)
+			idleSet = set_combine(idleSet, sets.buff.PDTSublimation)
 		end
 	end
 	
@@ -411,18 +409,18 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function apply_grimoire_bonuses(spell, action, spellMap)
-	if buffactive.ebullience then equip(sets.Buff['Ebullience']) end
-	if buffactive.rapture then equip(sets.Buff['Rapture']) end
-	if buffactive.perpetuance then equip(sets.Buff['Perpetuance']) end
-	if buffactive.immanence then equip(sets.Buff['Immanence']) end
-	if buffactive.penury then equip(sets.Buff['Penury']) end
-	if buffactive.parsimony then equip(sets.Buff['Parsimony']) end
-	if buffactive.celerity then equip(sets.Buff['Celerity']) end
-	if buffactive.alacrity then equip(sets.Buff['Alacrity']) end
+	if buffactive.ebullience then equip(sets.buff['Ebullience']) end
+	if buffactive.rapture then equip(sets.buff['Rapture']) end
+	if buffactive.perpetuance then equip(sets.buff['Perpetuance']) end
+	if buffactive.immanence then equip(sets.buff['Immanence']) end
+	if buffactive.penury then equip(sets.buff['Penury']) end
+	if buffactive.parsimony then equip(sets.buff['Parsimony']) end
+	if buffactive.celerity then equip(sets.buff['Celerity']) end
+	if buffactive.alacrity then equip(sets.buff['Alacrity']) end
 	
 	if buffactive.Klimaform and spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and
 		spell.element == world.weather_element then
-		equip(sets.Buff['Klimaform'])
+		equip(sets.buff['Klimaform'])
 	end
 end
 
