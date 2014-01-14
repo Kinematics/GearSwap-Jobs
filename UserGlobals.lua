@@ -80,7 +80,7 @@ end
 
 
 function user.user_test(params)
-	check_for_extras()
+
 end
 
 
