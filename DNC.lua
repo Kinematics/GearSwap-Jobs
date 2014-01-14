@@ -57,7 +57,7 @@ function get_sets()
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Etoile Tiara +2",ear1="Roundel Earring",
 		body="Maxixi Casaque",hands="Buremte Gloves",
-		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
+		back="Shadow Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
@@ -131,15 +131,15 @@ function get_sets()
 	-- Midcast Sets
 	
 	sets.midcast.FastRecast = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
+		head="Felistris Mask",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Ix Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {
-		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
+		head="Felistris Mask",neck="Torero Torque",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Ix Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -160,12 +160,12 @@ function get_sets()
 	sets.idle.Field = {ammo="Charis Feather",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+		back="Shadow Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
 
 	sets.idle.Weak = {ammo="Charis Feather",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+		back="Shadow Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
 	
 	-- Defense sets
 
@@ -213,7 +213,7 @@ function get_sets()
 	sets.engaged.PDT = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+		back="Shadow Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
@@ -239,7 +239,7 @@ function get_sets()
 	sets.engaged.HighHaste.PDT = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
+		back="Shadow Mantle",waist="Patentia Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 	sets.engaged.HighHaste.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
@@ -265,7 +265,7 @@ function get_sets()
 	sets.engaged.MaxHaste.PDT = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
+		back="Shadow Mantle",waist="Windbuffet Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 	sets.engaged.MaxHaste.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
