@@ -11,7 +11,7 @@ local selfCommands = {}
 function selfCommands.self_command(commandArgs)
 	local commandArgs = commandArgs
 	if type(commandArgs) == 'string' then
-		commandArgs = commandArgs:split(' ')
+		commandArgs = T(commandArgs:split(' '))
 		if #commandArgs == 0 then
 			return
 		end
