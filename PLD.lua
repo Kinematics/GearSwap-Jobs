@@ -13,7 +13,7 @@ function get_sets()
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal'}
+	options.DefenseModes = {'Normal', Shield}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
@@ -49,7 +49,10 @@ function get_sets()
 	
 
 	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {}
+	sets.precast.Waltz = {
+		head="Yaoyotl Helm",
+		body="Reverence Surcoat",hands="Reverence Gauntlets",
+		back="Iximulew Cape",waist="Caudata Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
@@ -58,40 +61,56 @@ function get_sets()
 	
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Cizin Helm",ear2="Loquacious Earring"
+		ring1="Prolix Ring",
 		legs="Enif Cosciales"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {})
+
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
-	sets.precast.WS = {body="Phorcys Korazin"}
+	sets.precast.WS = {
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Atheling Mantle",waist="Caudata Belt",legs="Cizin Breeches",feet="Cizin Greaves"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {})
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {neck="Soil Gorget",
+		ring1="Aquasoul Ring",ring2="Aquasoul Ring",waist="Soil Belt"})
 
-	sets.precast.WS['Aeolian Edge'] = {
-		neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		back="Toro Cape",waist="Thunder Belt"}
+	sets.precast.WS['Vorpal Blade'] = set_combine(sets.precast.WS, {neck="Soil Gorget",waist="Soil Belt"})
+
+	sets.precast.WS['Chant du Cygne'] = set_combine(sets.precast.WS, {neck="Snow Gorget",waist="Snow Belt"})
+
+	sets.precast.WS['Sanguine Blade'] = {
+		head="Yaoyotl Helm",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Reverence Surcoat",hands="Cizin Mufflers",
+		back="Toro Cape",legs="Reverence Breeches",feet="Reverence Leggings"}
 	
 	
 	-- Midcast Sets
-	sets.midcast.FastRecast = {}
+	sets.midcast.FastRecast = {
+		head="Yaoyotl Helm",
+		body="Reverence Surcoat",hands="Cizin Mufflers",
+		waist="Zoran's Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
 		
-	-- Specific spells
-	sets.midcast.Utsusemi = {}
-
 	sets.midcast.Enmity = {ammo="Iron Gobbet",
 		head="Reverence Coronet",neck="Invidia Torque",
-		body="Reverence Surcoat",hands="Reverence Gauntlets",
-		legs="Reverence Breeches"}
+		body="Reverence Surcoat",hands="Reverence Gauntlets",ring1="Vexer Ring",
+		back="Fierabras's Mantle",waist="Goading Belt",legs="Reverence Breeches"}
+
+	sets.midcast.Flash = set_combine(sets.midcast.Enmity, {legs="Enif Cosciales",feet="Cizin Greaves"})
+	
+	sets.midcast.Cure = set_combine(sets.midcast.Enmity, {head="Adaman Barbuta",ear1="Hospitaler Earring",back="Fierabras's Mantle"})
 	
 	-- Sets to return to when not performing an action.
 
 	sets.Reraise = {head="Twilight Helm", body="Twilight Mail"}
 	
 	-- Resting sets
-	sets.resting = {}
+	sets.resting = {head="Twilight Helm",neck="Creed Collar",body="Twilight Mail",ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
 	-- Idle sets
@@ -150,9 +169,16 @@ function get_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {}
-	
-	sets.engaged.Acc = {}
+	sets.engaged = {
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Atheling Mantle",waist="Caudata Belt",legs="Cizin Breeches",feet="Cizin Greaves"}
+
+	sets.engaged.Shield = {
+		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Reverence Surcoat",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Atheling Mantle",waist="Flume Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+
 
 	sets.buff.Cover = {head="Reverence Coronet", body="Valor Surcoat +2"}
 	
