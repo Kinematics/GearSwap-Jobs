@@ -126,5 +126,14 @@ mappings.areas.Adoulin = S{
 }
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- Lists of certain NPCs.
+-------------------------------------------------------------------------------------------------------------------
+
+mappings.npcs = {}
+mappings.npcs.Trust = S{'Ayame','Naji','Nanaa Mihgo','Tenzen','Volker','Zeid',
+	'Ajido-Marujido','Shantotto','Curilla','Excenmille','Trion','Valaineral',
+	'Kupipi','Mihli Aliapoh','Joachim','Lion'}
+
 return mappings
 
