@@ -35,7 +35,7 @@ function utility.set_macro_page(set,book)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Utility function for changing target types in an automatic manner.
+-- Utility functions for changing target types and spells in an automatic manner.
 -------------------------------------------------------------------------------------------------------------------
 
 function utility.auto_change_target(spell, action, spellMap)
@@ -204,6 +204,9 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 end
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- Environment utility functions.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Function to get the current weather intensity: 0 for none, 1 for single weather, 2 for double weather.
 function utility.get_weather_intensity()
