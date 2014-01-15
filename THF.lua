@@ -282,8 +282,7 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 end
 
 
--- Return true if we handled the aftercast work.  Otherwise it will fall back
--- to the general aftercast() code in Mote-Include.
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
 	-- Update the state of certain buff JAs if the action wasn't interrupted.
 	if not spell.interrupted then
