@@ -45,7 +45,7 @@ function get_sets()
 	sets.precast.JA['Flee'] = {feet="Pillager's Poulaines"}
 	sets.precast.JA['Hide'] = {body="Pillager's Vest"}
 	sets.precast.JA['Conspirator'] = {} -- {body="Raider's Vest +2"}
-	sets.precast.JA['Steal'] = {head="Assassin's Bonnet +2",hands="Pillager's Armlets",feet="Pillager's Poulaines"}
+	sets.precast.JA['Steal'] = {head="Assassin's Bonnet +2",hands="Pillager's Armlets +1",feet="Pillager's Poulaines"}
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
 	sets.precast.JA['Perfect Dodge'] = {hands="Assassin's Armlets +2"}
 	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
@@ -58,7 +58,7 @@ function get_sets()
 
 	sets.precast.JA['Trick Attack'] = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Pillager's Armlets",ring1="Stormsoul Ring",ring2="Epona's Ring",
+		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Stormsoul Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 
@@ -82,67 +82,68 @@ function get_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
+		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {neck="Moepapa Medal",hands="Iuitl Wristbands",ring1="Stormsoul Ring",
-		legs="Nahtirah Trousers",feet="Iuitl Gaiters"})
+	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {neck="Moepapa Medal",ring1="Stormsoul Ring",
+		legs="Nahtirah Trousers"})
 	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist="Thunder Belt"})
 	sets.precast.WS['Exenterator'].SA = set_combine(sets.precast.WS['Exenterator'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget"})
-	sets.precast.WS['Exenterator'].TA = set_combine(sets.precast.WS['Exenterator'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",hands="Pillager's Armlets"})
-	sets.precast.WS['Exenterator'].SATA = set_combine(sets.precast.WS['Exenterator'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",hands="Pillager's Armlets"})
+	sets.precast.WS['Exenterator'].TA = set_combine(sets.precast.WS['Exenterator'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget"})
+	sets.precast.WS['Exenterator'].SATA = set_combine(sets.precast.WS['Exenterator'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget"})
 
-	sets.precast.WS['Dancing Edge'] = set_combine(sets.precast.WS, {neck="Soil Gorget",feet="Iuitl Gaiters"})
+	sets.precast.WS['Dancing Edge'] = set_combine(sets.precast.WS, {neck="Soil Gorget"})
 	sets.precast.WS['Dancing Edge'].Acc = set_combine(sets.precast.WS['Dancing Edge'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Dancing Edge'].Mod = set_combine(sets.precast.WS['Dancing Edge'], {waist="Soil Belt"})
 	sets.precast.WS['Dancing Edge'].SA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum",neck="Moepapa Medal"})
-	sets.precast.WS['Dancing Edge'].TA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum",neck="Moepapa Medal",hands="Pillager's Armlets"})
-	sets.precast.WS['Dancing Edge'].SATA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum",neck="Moepapa Medal",hands="Pillager's Armlets"})
+	sets.precast.WS['Dancing Edge'].TA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum",neck="Moepapa Medal"})
+	sets.precast.WS['Dancing Edge'].SATA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum",neck="Moepapa Medal"})
 
 	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Qirmiz Tathlum",neck="Rancor Collar",
-		ear1="Brutal Earring",ear2="Moonshade Earring",feet="Iuitl Gaiters"})
+		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist="Soil Belt"})
 	sets.precast.WS['Evisceration'].SA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal"})
-	sets.precast.WS['Evisceration'].TA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal",hands="Pillager's Armlets"})
-	sets.precast.WS['Evisceration'].SATA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal",hands="Pillager's Armlets"})
+	sets.precast.WS['Evisceration'].TA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal"})
+	sets.precast.WS['Evisceration'].SATA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal"})
 
 	sets.precast.WS["Rudra's Storm"] = set_combine(sets.precast.WS, {neck="Moepapa Medal",
-		ear1="Brutal Earring",ear2="Moonshade Earring",feet="Iuitl Gaiters"})
+		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Rudra's Storm"].Acc = set_combine(sets.precast.WS["Rudra's Storm"], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS["Rudra's Storm"].Mod = set_combine(sets.precast.WS["Rudra's Storm"], {waist="Snow Belt"})
-	sets.precast.WS["Rudra's Storm"].SA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",body="Pillager's Vest"})
+	sets.precast.WS["Rudra's Storm"].SA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",
+		body="Pillager's Vest"})
 	sets.precast.WS["Rudra's Storm"].TA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",
-		body="Pillager's Vest",hands="Pillager's Armlets"})
+		body="Pillager's Vest"})
 	sets.precast.WS["Rudra's Storm"].SATA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",
-		body="Pillager's Vest",hands="Pillager's Armlets"})
+		body="Pillager's Vest"})
 
 	sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {neck="Thunder Gorget",
-		ear1="Brutal Earring",ear2="Moonshade Earring",feet="Iuitl Gaiters"})
+		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Shark Bite'].Acc = set_combine(sets.precast.WS['Shark Bite'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Shark Bite'].Mod = set_combine(sets.precast.WS['Shark Bite'], {waist="Thunder Belt"})
 	sets.precast.WS['Shark Bite'].SA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget"})
 	sets.precast.WS['Shark Bite'].TA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",
-		body="Pillager's Vest",hands="Pillager's Armlets"})
+		body="Pillager's Vest"})
 	sets.precast.WS['Shark Bite'].SATA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",neck="Thunder Gorget",
-		body="Pillager's Vest",hands="Pillager's Armlets"})
+		body="Pillager's Vest"})
 
 	sets.precast.WS['Mandalic Stab'] = set_combine(sets.precast.WS, {neck="Light Gorget",
-		ear1="Brutal Earring",ear2="Moonshade Earring",feet="Iuitl Gaiters"})
+		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Mandalic Stab'].Acc = set_combine(sets.precast.WS['Mandalic Stab'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Mandalic Stab'].Mod = set_combine(sets.precast.WS['Mandalic Stab'], {waist="Light Belt"})
 	sets.precast.WS['Mandalic Stab'].SA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",neck="Light Gorget"})
 	sets.precast.WS['Mandalic Stab'].TA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",neck="Light Gorget",
-		body="Pillager's Vest",hands="Pillager's Armlets"})
+		body="Pillager's Vest"})
 	sets.precast.WS['Mandalic Stab'].SATA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",neck="Light Gorget",
-		body="Pillager's Vest",hands="Pillager's Armlets"})
+		body="Pillager's Vest"})
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
+		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 	
 	
@@ -150,13 +151,13 @@ function get_sets()
 	
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",
 		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {
 		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",
 		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	
@@ -171,12 +172,12 @@ function get_sets()
 
 	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Patentia Sash",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 	
 	sets.idle.Field = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 
 	sets.idle.Weak = {ammo="Thew Bomblet",
@@ -190,7 +191,7 @@ function get_sets()
 
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Torero Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Dark Ring",
 		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
@@ -200,7 +201,7 @@ function get_sets()
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
