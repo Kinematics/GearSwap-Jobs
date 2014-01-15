@@ -31,7 +31,16 @@ local MoteInclude = {}
 -- These are accessible at the including job lua script's scope.
 -------------------------------------------------------------------------------------------------------------------
 
-function MoteInclude.init_include()
+-- If the job calling this include provides a version, check to see if that version matches
+-- the current api/behavior version of this file.  Provide a warning of the user version
+-- falls behind.
+function MoteInclude.init_include(version)
+	local currentVersion = 1
+	if version then
+		if version < currentVersion then
+			add_to_chat(123,'Warning: Job file specifies version '..tostring(version)..', but current version of main include is '..tostring(currentVersion)..'.')
+		end
+	end
 
 	-- Load externally-defined information (info that we don't want to change every time this file is updated).
 
