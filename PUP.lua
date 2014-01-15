@@ -52,7 +52,7 @@ function get_sets()
 	
 	sets.precast.JA['Repair'] = {feet="Puppetry Babouches +1"}
 
-	sets.precast.JA['Maneuver'] = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Puppetry Dastanas +1"}
+	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Puppetry Dastanas +1"}
 
 
 
