@@ -217,6 +217,41 @@ function utility.get_weather_intensity()
 	end
 end
 
+
+function utility.is_trust_party()
+	-- Check if we're solo
+	if party.count == 1 then
+		return false
+	end
+	
+	-- Can call a max of 3 Trust NPCs, so parties larger than that are out.
+	if party.count > 4 then
+		return false
+	end
+
+	-- If we're in an alliance, can't be a Trust party.
+	if alliance[2].count > 0 or alliance[3].count > 0 then
+		return false
+	end
+	
+	-- Check that, for each party position aside from our own, the party
+	-- member has one of the Trust NPC names, and that those party members
+	-- are flagged is_npc.
+	for i = 2,4 do
+		if party[i] then
+			if not npcs.Trust:contains(party[i].name) then
+				return false
+			end
+			if party[i].mob and party[i].mob.is_npc == false then
+				return false
+			end
+		end
+	end
+	
+	return true
+end
+
+
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------
