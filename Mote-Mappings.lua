@@ -4,22 +4,28 @@
 
 local mappings = {}
 
--- value == element that's weak to the key
-mappings.weak_by_element = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
+
+-------------------------------------------------------------------------------------------------------------------
+-- Elemental mappings for element relationships and certian types of spells.
+-------------------------------------------------------------------------------------------------------------------
+
+mappings.elements = {}
+
+mappings.elements.weak_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
 		['Lightning']='Water', ['Water']='Fire'}
 
--- value == element that's strong to the key
-mappings.strong_by_element = {['Light']='Dark', ['Dark']='Light', ['Fire']='Water', ['Ice']='Fire', ['Wind']='Ice', ['Earth']='Wind',
+mappings.elements.strong_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Water', ['Ice']='Fire', ['Wind']='Ice', ['Earth']='Wind',
 		['Lightning']='Earth', ['Water']='Lightning'}
 
-mappings.storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm",
-		"Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
-		
-mappings.storm_by_element = {['Light']="Aurorastorm", ['Dark']="Voidstorm", ['Fire']="Firestorm", ['Earth']="Sandstorm",
+mappings.elements.storm_of = {['Light']="Aurorastorm", ['Dark']="Voidstorm", ['Fire']="Firestorm", ['Earth']="Sandstorm",
 		['Water']="Rainstorm", ['Wind']="Windstorm", ['Ice']="Hailstorm", ['Lightning']="Thunderstorm"}
 
-mappings.spirit_by_element = {['Light']="Light Spirit", ['Dark']="Dark Spirit", ['Fire']="Fire Spirit", ['Earth']="Earth Spirit",
+mappings.elements.spirit_of = {['Light']="Light Spirit", ['Dark']="Dark Spirit", ['Fire']="Fire Spirit", ['Earth']="Earth Spirit",
 		['Water']="Water Spirit", ['Wind']="Air Spirit", ['Ice']="Ice Spirit", ['Lightning']="Thunder Spirit"}
+
+
+
+mappings.storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm", "Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
 
 
 -------------------------------------------------------------------------------------------------------------------

@@ -463,14 +463,14 @@ function handle_petweather()
 	end
 	
 	if S{'Light','Dark','Lightning'}:contains(element) then
-		add_to_chat(122, 'You do not have access to '..storm_by_element[element]..'.')
+		add_to_chat(122, 'You do not have access to '..elements.storm_of[element]..'.')
 		return
 	end	
 	
-	local storm = storm_by_element[element]
+	local storm = elements.storm_of[element]
 	
 	if storm then
-		send_command('input /ma "'..storm_by_element[element]..'" <me>')
+		send_command('input /ma "'..elements.storm_of[element]..'" <me>')
 	else
 		add_to_chat(123, 'Error: Unknown element ('..tostring(element)..')')
 	end
@@ -512,7 +512,7 @@ function handle_siphoning()
 			-- weather if not.
 			-- If the current weather matches the current avatar's element (being used to reduce
 			-- perpetuation), don't change it; just accept the penalty on Siphon.
-			if world.weather_element == weak_by_element[world.day_element] and
+			if world.weather_element == elements.weak_to[world.day_element] and
 				(not pet.isvalid or world.weather_element ~= pet.element) then
 				-- We can't cast lightning/dark/light weather, so use a neutral element
 				if S{'Light','Dark','Lightning'}:contains(world.day_element) then
@@ -527,7 +527,7 @@ function handle_siphoning()
 	-- If we decided to use a storm, set that as the spirit element to cast.
 	if stormElementToUse then
 		siphonElement = stormElementToUse
-	elseif world.weather_element ~= 'None' and world.weather_element ~= weak_by_element[world.day_element] then
+	elseif world.weather_element ~= 'None' and world.weather_element ~= elements.weak_to[world.day_element] then
 		siphonElement = world.weather_element
 	else
 		siphonElement = world.day_element
@@ -543,12 +543,12 @@ function handle_siphoning()
 	end
 	
 	if stormElementToUse then
-		command = command..'input /ma "'..storm_by_element[stormElementToUse]..'" <me>;wait 4;'
+		command = command..'input /ma "'..elements.storm_of[stormElementToUse]..'" <me>;wait 4;'
 		releaseWait = releaseWait - 4
 	end
 	
 	if not (pet.isvalid and spirits:contains(pet.name)) then
-		command = command..'input /ma "'..spirit_by_element[siphonElement]..'" <me>;wait 4;'
+		command = command..'input /ma "'..elements.spirit_of[siphonElement]..'" <me>;wait 4;'
 		releaseWait = releaseWait - 4
 	end
 	
