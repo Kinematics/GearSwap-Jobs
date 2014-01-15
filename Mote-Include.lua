@@ -563,38 +563,38 @@ end
 function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	if spell.action_type == 'Magic' then
-		-- Set selection ordering:
-		-- Custom class
-		-- Specific spell name
-		-- Class mapping
-		-- Skill
-		-- Spell type
-		if classes.CustomClass and sets.midcast[classes.CustomClass] then
-			equipSet = sets.midcast[classes.CustomClass]
-		elseif sets.midcast[spell.english] then
-			equipSet = sets.midcast[spell.english]
-		elseif spellMap and sets.midcast[spellMap] then
-			equipSet = sets.midcast[spellMap]
-		elseif sets.midcast[spell.skill] and
-			not (classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap]) then
-			equipSet = sets.midcast[spell.skill]
-		elseif sets.midcast[spell.type] then
-			equipSet = sets.midcast[spell.type]
-		else
-			equipSet = sets.midcast
-		end
+	-- Set selection ordering:
+	-- Custom class
+	-- Specific spell name
+	-- Class mapping
+	-- Skill
+	-- Spell type (which also checks class, name, and mapping)
 
-		-- Check for specialized casting modes for any given set selection.
-		if equipSet[state.CastingMode] then
-			equipSet = equipSet[state.CastingMode]
-		end
+	if classes.CustomClass and sets.midcast[classes.CustomClass] then
+		equipSet = sets.midcast[classes.CustomClass]
+	elseif sets.midcast[spell.english] then
+		equipSet = sets.midcast[spell.english]
+	elseif spellMap and sets.midcast[spellMap] then
+		equipSet = sets.midcast[spellMap]
+	elseif sets.midcast[spell.skill] and not (classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap]) then
+		equipSet = sets.midcast[spell.skill]
 	elseif sets.midcast[spell.type] then
-		if sets.midcast[spell.type][spell.english] then
+		if classes.CustomClass and sets.midcast[spell.type][classes.CustomClass] then
+			equipSet = sets.midcast[spell.type][classes.CustomClass]
+		elseif sets.midcast[spell.type][spell.english] then
 			equipSet = sets.midcast[spell.type][spell.english]
+		elseif spellMap and sets.midcast[spell.type][spellMap] then
+			equipSet = sets.midcast[spell.type][spellMap]
 		else
 			equipSet = sets.midcast[spell.type]
 		end
+	else
+		equipSet = sets.midcast
+	end
+
+	-- Check for specialized casting modes for magic spells.
+	if spell.action_type == 'Magic' and equipSet[state.CastingMode] then
+		equipSet = equipSet[state.CastingMode]
 	end
 
 	return equipSet
