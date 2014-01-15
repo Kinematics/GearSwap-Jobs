@@ -77,6 +77,12 @@ function get_sets()
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
+
+	-- Ranged gaer
+	sets.precast.Misc.Ranged = {head="Whirlpool Mask",neck="Peacock Charm",
+		body="Iuitl Vest",hands="Assassin's Armlets +2",
+		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
+
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
@@ -239,11 +245,6 @@ function get_sets()
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 
-
-	-- Ranged gaer
-	sets.ranged = {head="Whirlpool Mask",neck="Peacock Charm",
-		body="Iuitl Vest",hands="Assassin's Armlets +2",
-		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 
 	set_macro_page(2, 5)
