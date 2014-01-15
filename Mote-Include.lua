@@ -540,13 +540,19 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		if sets.precast.JA[spell.english] then
 			equipSet = sets.precast.JA[spell.english]
 		end
-	-- All other types, such as Waltz, Jig, Scholar, etc.
+	-- Other types, such as Waltz, Jig, Scholar, etc.
 	elseif sets.precast[spell.type] then
 		if sets.precast[spell.type][spell.english] then
 			equipSet = sets.precast[spell.type][spell.english]
 		else
 			equipSet = sets.precast[spell.type]
 		end
+	-- Also check custom class on its own.
+	elseif classes.CustomClass and sets.precast[classes.CustomClass] then
+		equipSet = sets.precast[classes.CustomClass]
+	-- And spell mapping on its own.
+	elseif spellMap and sets.precast[spellMap] then
+		equipSet = sets.precast[spellMap]
 	end
 
 	return equipSet
