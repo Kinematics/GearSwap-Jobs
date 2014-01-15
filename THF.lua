@@ -216,19 +216,19 @@ function get_sets()
 	-- Normal melee group
 	sets.engaged = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Thaumas Coat",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Thaumas Coat",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Evasion = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Ik Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 	sets.engaged.Acc.Evasion = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
