@@ -563,9 +563,6 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- JobAbility
 		-- Specialty (Jig, Waltz, Scholar, etc)
 		
-		-- Put the lowercast spell.type into a local var
-		local spell_type = spell.type:lower()
-		
 		if spell.type == 'JobAbility' then
 			-- Generic job abilities are under sets.precast.JA, and must be named.
 			if sets.precast.JA[spell.english] then
