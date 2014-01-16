@@ -611,6 +611,10 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 				elseif equipSet[spellMap] then
 					equipSet = equipSet[spellMap]
 				end
+			elseif classes.CustomClass and sets.precast[classes.CustomClass] then
+				equipSet = sets.precast[classes.CustomClass]
+			elseif sets.precast[spellMap] then
+				equipSet = sets.precast[spellMap]
 			end
 		end
 	end
@@ -674,6 +678,10 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 			elseif spellMap and equipSet[spellMap] then
 				equipSet = equipSet[spellMap]
 			end
+		elseif classes.CustomClass and sets.midcast[classes.CustomClass] then
+			equipSet = sets.midcast[classes.CustomClass]
+		elseif sets.midcast[spellMap] then
+			equipSet = sets.midcast[spellMap]
 		end
 	elseif spell.action_type == 'Item' then
 		-- no equip handling for item use
