@@ -429,6 +429,10 @@ function selfCommands.handle_show_set(cmdParams)
 	elseif showset_type == 'midcast' then
 		showSet = 'midcast'
 		add_to_chat(122,'GearSwap will now only equip up to midcast gear for spells.')
+	-- If given a param of 'midcast', block equipping aftercast sets
+	elseif showset_type == 'petmidcast' or showset_type == 'pet_midcast' then
+		showSet = 'pet_midcast'
+		add_to_chat(122,'GearSwap will now only equip up to pet midcast gear for spells.')
 	-- With a parameter of 'off', turn off showset functionality.
 	elseif showset_type == 'off' then
 		showSet = nil
