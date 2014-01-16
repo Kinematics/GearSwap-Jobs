@@ -704,9 +704,9 @@ function MoteInclude.get_current_idle_set()
 		idleSet = idleSet.Pet
 	end
 
-	for i = 1,#classes.CustomIdleGroups do
-		if idleSet[classes.CustomIdleGroups[i]] then
-			idleSet = idleSet[classes.CustomIdleGroups[i]]
+	for _,group in ipairs(classes.CustomIdleGroups) do
+		if idleSet[group] then
+			idleSet = idleSet[group]
 		end
 	end
 
@@ -729,9 +729,9 @@ end
 function MoteInclude.get_current_melee_set()
 	local meleeSet = sets.engaged
 
-	for i = 1,#classes.CustomMeleeGroups do
-		if meleeSet[classes.CustomMeleeGroups[i]] then
-			meleeSet = meleeSet[classes.CustomMeleeGroups[i]]
+	for _,group in ipairs(classes.CustomMeleeGroups) do
+		if meleeSet[group] then
+			meleeSet = meleeSet[group]
 		end
 	end
 
@@ -800,10 +800,10 @@ function MoteInclude.apply_defense(baseSet)
 				defenseSet = sets.defense
 			end
 		end
-		
-		for i = 1,#classes.CustomDefenseGroups do
-			if defenseSet[classes.CustomDefenseGroups[i]] then
-				defenseSet = defenseSet[classes.CustomDefenseGroups[i]]
+
+		for _,group in ipairs(classes.CustomDefenseGroups) do
+			if defenseSet[group] then
+				defenseSet = defenseSet[group]
 			end
 		end
 
