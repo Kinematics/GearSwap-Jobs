@@ -400,10 +400,12 @@ function MoteInclude.status_change(newStatus, oldStatus)
 		job_status_change(newStatus, oldStatus, eventArgs)
 	end
 
-
-	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
-	if oldStatus == 'Dead' then
-		send_command('timers create "Weakness" 300 up abilities/00255.png')
+	-- Allow a global function (ie: UserGlobals.lua) to be called on status change,
+	-- if the individual job didn't mark it as handled.
+	if not eventArgs.handled then
+		if user_status_change then
+			user_status_change(newStatus, oldStatus, eventArgs)
+		end
 	end
 
 	-- Equip default gear if not handled by the job.
