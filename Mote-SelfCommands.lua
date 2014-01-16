@@ -403,8 +403,13 @@ end
 
 -- showset: equip the current TP set for examination.
 function selfCommands.handle_show_set(cmdParams)
+	local showset_type
+	if cmdParams[1] then
+		showset_type = cmdParams[1]:lower()
+	end
+
 	-- If no extra parameters, or 'tp' as a parameter, show the current TP set.
-	if #cmdParams == 0 or cmdParams[1]:lower() == 'tp' then
+	if not showset_type or showset_type == 'tp' then
 		local meleeGroups = ''
 		if #classes.CustomMeleeGroups > 0 then
 			meleeGroups = ' ['
@@ -417,15 +422,15 @@ function selfCommands.handle_show_set(cmdParams)
 		add_to_chat(122,'Showing current TP set: ['..state.OffenseMode..'/'..state.DefenseMode..']'..meleeGroups)
 		equip(get_current_melee_set())
 	-- If given a param of 'precast', block equipping midcast/aftercast sets
-	elseif cmdParams[1]:lower() == 'precast' then
+	elseif showset_type == 'precast' then
 		showSet = 'precast'
 		add_to_chat(122,'GearSwap will now only equip up to precast gear for spells/actions.')
 	-- If given a param of 'midcast', block equipping aftercast sets
-	elseif cmdParams[1]:lower() == 'midcast' then
+	elseif showset_type == 'midcast' then
 		showSet = 'midcast'
 		add_to_chat(122,'GearSwap will now only equip up to midcast gear for spells.')
 	-- With a parameter of 'off', turn off showset functionality.
-	elseif cmdParams[1]:lower() == 'off' then
+	elseif showset_type == 'off' then
 		showSet = nil
 		add_to_chat(122,'Show Sets is turned off.')
 	end
