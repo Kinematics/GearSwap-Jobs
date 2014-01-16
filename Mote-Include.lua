@@ -562,13 +562,13 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- Put the lowercast spell.type into a local var
 		local spell_type = spell.type:lower()
 		
-		-- Custom handling for weaponskills
 		if spell.type == 'JobAbility' then
 			-- Generic job abilities are under sets.precast.JA, and must be named.
 			if sets.precast.JA[spell.english] then
 				equipSet = sets.precast.JA[spell.english]
 			end
 		elseif spell.type == 'WeaponSkill' then
+			-- Custom handling for weaponskills
 			local ws_mode = state.WeaponskillMode
 			local custom_wsmode
 	
