@@ -43,12 +43,15 @@ function MoteInclude.init_include(version)
 
 	-- Load externally-defined information (info that we don't want to change every time this file is updated).
 
-	-- Used to define functions to set the user's desired global binds.
+	-- Used to define misc utility functions that may be useful for this include
+	-- or any job files.
 	include('Mote-Utility')
 	-- Used to define various types of data mappings.
 	include('Mote-Mappings')
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
+	-- Include general user globals, such as custom binds or gear tables.
+	include('UserGlobals')
 
 
 	-- Var for tracking state values
@@ -141,9 +144,6 @@ function MoteInclude.init_include(version)
 	sets.engaged = {}
 	sets.defense = {}
 	sets.buff = {}
-
-	-- Include general user globals (eg: the 'gear' table).
-	include('UserGlobals')
 end
 
 
