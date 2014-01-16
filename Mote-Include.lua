@@ -395,7 +395,7 @@ function MoteInclude.status_change(newStatus, oldStatus)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
-	-- Allow jobs to override this code
+	-- Allow jobs to handle status change events.
 	if job_status_change then
 		job_status_change(newStatus, oldStatus, eventArgs)
 	end
@@ -408,16 +408,16 @@ function MoteInclude.status_change(newStatus, oldStatus)
 		end
 	end
 
-	-- Equip default gear if not handled by the job.
+	-- Handle equipping default gear if the job didn't mark this as handled.
 	if not eventArgs.handled then
 		handle_equipping_gear(newStatus)
 	end
 end
 
 
--- Called when the player's status changes.
+-- Called when the player's pet's status changes.
 function MoteInclude.pet_status_change(newStatus, oldStatus)
-	-- init a new eventArgs
+	-- Init a new eventArgs
 	local eventArgs = {handled = false}
 
 	-- Allow jobs to override this code
@@ -506,7 +506,8 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	if spell.action_type == 'Magic' then
-		-- Call this to break 'precast.FC' into a proper set.
+		-- Precast for magic is fast cast.
+		-- Therefore our base set is sets.precast.FC.
 		equipSet = sets.precast.FC
 
 		-- Set determination ordering:
@@ -532,7 +533,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[state.CastingMode]
 		end
 
-		-- Magian staves with fast cast on them
+		-- Magian staves with fast cast on them may be stored under FC.[element]
 		if sets.precast.FC[tostring(spell.element)] then
 			equipSet = set_combine(equipSet, baseSet[tostring(spell.element)])
 		end
@@ -641,10 +642,9 @@ end
 
 
 -- Get the default pet midcast gear set.
+-- This is built in sets.midcast.Pet.
 function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
-
-	-- TODO: examine possible values in pet actions
 
 	-- Set selection ordering:
 	-- Custom class
@@ -678,9 +678,11 @@ end
 
 
 -- Returns the appropriate idle set based on current state.
+-- Set construction order (all of which are optional):
+-- sets.idle[idleScope][state.IdleMode][Pet][CustomIdleGroups]
 function MoteInclude.get_current_idle_set()
-	local idleScope = ''
 	local idleSet = sets.idle
+	local idleScope
 	
 	if buffactive.weakness then
 		idleScope = 'Weak'
@@ -775,6 +777,9 @@ function MoteInclude.get_current_resting_set()
 	return restingSet
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- Functions for optional supplemental gear overriding the default sets defined above.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Function to apply any active defense set on top of the supplied set
 -- @param baseSet : The set that any currently active defense set will be applied on top of. (gear set table)
@@ -815,7 +820,7 @@ end
 
 
 -- Function to add kiting gear on top of the base set if kiting state is true.
--- @param baseSet : The set that the kiting gear will be applied on top of. (gear set table)
+-- @param baseSet : The gear set that the kiting gear will be applied on top of.
 function MoteInclude.apply_kiting(baseSet)
 	if state.Kiting then
 		if sets.Kiting then
