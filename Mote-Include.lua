@@ -780,8 +780,8 @@ end
 -- @param baseSet : The set that any currently active defense set will be applied on top of. (gear set table)
 function MoteInclude.apply_defense(baseSet)
 	if state.Defense.Active then
-		local defenseSet = {}
-		local defMode = ''
+		local defenseSet
+		local defMode
 
 		if state.Defense.Type == 'Physical' then
 			defMode = state.Defense.PhysicalMode
