@@ -210,6 +210,11 @@ function MoteInclude.precast(spell, action)
 	if job_post_precast then
 		job_post_precast(spell, action, spellMap, eventArgs)
 	end
+
+	-- If showSet is flagged for precast, notify that we won't try to equip additional gear.
+	if showSet == 'precast' then
+		add_to_chat(122, 'Show Sets: Stopping at precast.')
+	end
 end
 
 
@@ -218,9 +223,8 @@ end
 -- Midcast gear selected should be for potency, recast, etc.  It should take effect
 -- regardless of the spell cast speed.
 function MoteInclude.midcast(spell,action)
-	-- If we have showSet active for precast, don't try to equip midcast gear.
+	-- If showSet is flagged for precast, don't try to equip midcast/aftercast gear.
 	if showSet == 'precast' then
-		add_to_chat(122, 'Show Sets: Stopping at precast.')
 		return
 	end
 
@@ -243,16 +247,18 @@ function MoteInclude.midcast(spell,action)
 	if job_post_midcast then
 		job_post_midcast(spell, action, spellMap, eventArgs)
 	end
+
+	-- If showSet is flagged for midcast, notify that we won't try to equip additional gear.
+	if showSet == 'midcast' then
+		add_to_chat(122, 'Show Sets: Stopping at midcast.')
+	end
 end
 
 
 -- Called when an action has been completed (eg: spell finished casting, or failed to cast).
 function MoteInclude.aftercast(spell,action)
-	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
-	if showSet == 'midcast' then
-		add_to_chat(122, 'Show Sets: Stopping at midcast.')
-		return
-	elseif showSet == 'precast' then
+	-- If showSet is flagged for midcast, don't try to equip midcast/aftercast gear.
+	if showSet == 'precast' or showSet == 'midcast' then
 		return
 	end
 
