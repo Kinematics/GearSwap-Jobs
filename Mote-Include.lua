@@ -732,8 +732,6 @@ function MoteInclude.get_current_idle_set()
 		idleScope = 'Field'
 	end
 
-	if _global.debug_mode then add_to_chat(123,'Debug: Idle scope for '..world.area..' is '..idleScope) end
-
 	if idleSet[idleScope] then
 		idleSet = idleSet[idleScope]
 	end
