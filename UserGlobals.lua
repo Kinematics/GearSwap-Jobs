@@ -87,6 +87,16 @@ function user_status_change(newStatus, oldStatus, eventArgs)
 end
 
 
+function user_buff_change(buff, gain, eventArgs)
+	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
+	if buff == 'Weakness' then
+		if not gain then
+			send_command('timers delete "Weakness"')
+		end
+	end
+end
+
+
 function user.user_test(params)
 
 end
