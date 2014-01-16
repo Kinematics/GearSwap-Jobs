@@ -616,7 +616,8 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 		equipSet = sets.midcast[spell.english]
 	elseif spellMap and sets.midcast[spellMap] then
 		equipSet = sets.midcast[spellMap]
-	elseif sets.midcast[spell.skill] and not (classes.NoSkillSpells[spell.english] or classes.NoSkillSpells[spellMap]) then
+	elseif sets.midcast[spell.skill] and
+		 not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then
 		equipSet = sets.midcast[spell.skill]
 	elseif sets.midcast[spell.type] then
 		if classes.CustomClass and sets.midcast[spell.type][classes.CustomClass] then
@@ -686,7 +687,7 @@ function MoteInclude.get_current_idle_set()
 	
 	if buffactive.weakness then
 		idleScope = 'Weak'
-	elseif areas.Cities[world.area] then
+	elseif areas.Cities:contains(world.area) then
 		idleScope = 'Town'
 	else
 		idleScope = 'Field'
