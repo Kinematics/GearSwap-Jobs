@@ -100,7 +100,7 @@ function MoteInclude.init_include(version)
 	classes = {}
 	-- Basic spell mappings are based on common spell series.
 	-- EG: 'Cure' for Cure, Cure II, Cure III, Cure IV, Cure V, or Cure VI.
-	classes.spellMappings = spell_maps
+	classes.SpellMaps = spell_maps
 	-- List of spells and spell maps that don't benefit from greater skill (though
 	-- they may benefit from spell-specific augments, such as improved regen or refresh).
 	-- Spells that fall under this category will be skipped when searching for
@@ -158,7 +158,7 @@ end
 -- This is the only function where it will be valid to use change_target().
 function MoteInclude.pretarget(spell,action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.spellMappings[spell.english]
+	local spellMap = classes.SpellMaps[spell.english]
 
 	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
@@ -187,7 +187,7 @@ end
 -- Equip any gear that should be on before the spell or ability is used.
 function MoteInclude.precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.spellMappings[spell.english]
+	local spellMap = classes.SpellMaps[spell.english]
 
 	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
@@ -231,7 +231,7 @@ function MoteInclude.midcast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.spellMappings[spell.english]
+	local spellMap = classes.SpellMaps[spell.english]
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -276,7 +276,7 @@ function MoteInclude.aftercast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.spellMappings[spell.english]
+	local spellMap = classes.SpellMaps[spell.english]
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -321,7 +321,7 @@ function MoteInclude.pet_midcast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.spellMappings[spell.english]
+	local spellMap = classes.SpellMaps[spell.english]
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -357,7 +357,7 @@ function MoteInclude.pet_aftercast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.spellMappings[spell.english]
+	local spellMap = classes.SpellMaps[spell.english]
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
