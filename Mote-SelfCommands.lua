@@ -462,6 +462,9 @@ function selfCommands.get_mode_list(field)
 	elseif field == 'Defense' then
 		modeList = options.DefenseModes
 		currentValue = state.DefenseMode
+	elseif field == 'Ranged' then
+		modeList = options.RangedModes
+		currentValue = state.RangedMode
 	elseif field == 'Casting' then
 		modeList = options.CastingModes
 		currentValue = state.CastingMode
@@ -504,6 +507,8 @@ function selfCommands.set_mode(field, val)
 		state.OffenseMode = val
 	elseif field == 'Defense' then
 		state.DefenseMode = val
+	elseif field == 'Ranged' then
+		state.RangedMode = val
 	elseif field == 'Casting' then
 		state.CastingMode = val
 	elseif field == 'Weaponskill' then
