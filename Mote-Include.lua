@@ -436,18 +436,20 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function MoteInclude.buff_change(buff, gain)
-	-- Global actions on buff effects
+	-- Init a new eventArgs
+	local eventArgs = {handled = false}
 
-	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
-	if buff == 'Weakness' then
-		if not gain then
-			send_command('timers delete "Weakness"')
-		end
+	-- Allow jobs to handle buff change events.
+	if job_buff_change then
+		job_buff_change(buff, gain, eventArgs)
 	end
 
-	-- Any job-specific handling.
-	if job_buff_change then
-		job_buff_change(buff, gain)
+	-- Allow a global function (ie: UserGlobals.lua) to be called on buff change,
+	-- if the individual job didn't mark it as handled.
+	if not eventArgs.handled then
+		if user_buff_change then
+			user_buff_change(buff, gain, eventArgs)
+		end
 	end
 end
 
