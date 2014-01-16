@@ -620,45 +620,65 @@ end
 
 
 -- Get the default midcast gear set.
--- This is built on sets.midcast.
+-- This builds on sets.midcast.
 function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	-- Set selection ordering:
-	-- Custom class
-	-- Specific spell name
-	-- Class mapping
-	-- Skill
-	-- Spell type (which also checks class, name, and mapping)
-
-	if classes.CustomClass and sets.midcast[classes.CustomClass] then
-		equipSet = sets.midcast[classes.CustomClass]
-	elseif sets.midcast[spell.english] then
-		equipSet = sets.midcast[spell.english]
-	elseif spellMap and sets.midcast[spellMap] then
-		equipSet = sets.midcast[spellMap]
-	elseif sets.midcast[spell.skill] and
-		 not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then
-		equipSet = sets.midcast[spell.skill]
-	elseif sets.midcast[spell.type] then
-		if classes.CustomClass and sets.midcast[spell.type][classes.CustomClass] then
-			equipSet = sets.midcast[spell.type][classes.CustomClass]
-		elseif sets.midcast[spell.type][spell.english] then
-			equipSet = sets.midcast[spell.type][spell.english]
-		elseif spellMap and sets.midcast[spell.type][spellMap] then
-			equipSet = sets.midcast[spell.type][spellMap]
-		else
-			equipSet = sets.midcast[spell.type]
-		end
-	else
+	if spell.action_type == 'Magic' then
 		equipSet = sets.midcast
-	end
 
-	-- Check for specialized casting modes for magic spells.
-	if spell.action_type == 'Magic' and equipSet[state.CastingMode] then
-		equipSet = equipSet[state.CastingMode]
-	end
+		-- Set determination ordering:
+		-- Custom class
+		-- Class mapping
+		-- Specific spell name
+		-- Skill
+		-- Spell type
+		if classes.CustomClass and equipSet[classes.CustomClass] then
+			equipSet = equipSet[classes.CustomClass]
+		elseif equipSet[spell.english] then
+			equipSet = equipSet[spell.english]
+		elseif spellMap and equipSet[spellMap] then
+			equipSet = equipSet[spellMap]
+		elseif equipSet[spell.skill] and
+			 not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then
+			equipSet = equipSet[spell.skill]
+		elseif equipSet[spell.type] then
+			equipSet = equipSet[spell.type]
+		end
 
+		-- Check for specialized casting modes for any given set selection.
+		if equipSet[state.CastingMode] then
+			equipSet = equipSet[state.CastingMode]
+		end
+	elseif spell.action_type == 'Ranged Attack' then
+		equipSet = sets.midcast.Ranged
+
+		-- Custom class modification
+		if classes.CustomClass and equipSet[classes.CustomClass] then
+			equipSet = equipSet[classes.CustomClass]
+		end
+
+		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
+		if equipSet[state.RangedMode] then
+			equipSet = equipSet[state.RangedMode]
+		end
+	elseif spell.action_type == 'Abiliity' then
+		if sets.midcast[spell.type] then
+			equipSet = sets.midcast[spell.type]
+	
+			-- Allow some customizations of ability-types during midcast
+			if classes.CustomClass and equipSet[classes.CustomClass] then
+				equipSet = equipSet[classes.CustomClass]
+			elseif equipSet[spell.english] then
+				equipSet = equipSet[spell.english]
+			elseif spellMap and equipSet[spellMap] then
+				equipSet = equipSet[spellMap]
+			end
+		end
+	elseif spell.action_type == 'Item' then
+		-- no equip handling for item use
+	end
+	
 	return equipSet
 end
 
