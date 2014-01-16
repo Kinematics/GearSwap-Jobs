@@ -535,64 +535,84 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 
 		-- Magian staves with fast cast on them may be stored under FC.[element]
 		if sets.precast.FC[tostring(spell.element)] then
-			equipSet = set_combine(equipSet, baseSet[tostring(spell.element)])
+			equipSet = set_combine(equipSet, sets.precast[tostring(spell.element)])
 		end
-	elseif spell.type:lower() == 'weaponskill' then
-		local modeToUse = state.WeaponskillMode
-		local job_wsmode = nil
+	elseif spell.action_type == 'Ranged Attack' then
+		-- Ranged attacks use sets.precast.Ranged.
+		equipSet = sets.precast.Ranged
 
-		-- Allow the job file to specify a weaponskill mode
-		if get_job_wsmode then
-			job_wsmode = get_job_wsmode(spell, action, spellMap)
+		-- Custom class modification
+		if classes.CustomClass and equipSet[classes.CustomClass] then
+			equipSet = equipSet[classes.CustomClass]
 		end
 
-		-- If the job file returned a weaponskill mode, use that.
-		if job_wsmode then
-			modeToUse = job_wsmode
-		elseif state.WeaponskillMode == 'Normal' then
-			-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
-			-- corresponding to the current offense mode.  If so, use that.
-			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes)[state.OffenseMode] then
-				modeToUse = state.OffenseMode
+		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
+		if equipSet[state.RangedMode] then
+			equipSet = equipSet[state.RangedMode]
+		end
+	elseif spell.action_type == 'Item' then
+		-- How to handle item uses?
+
+	elseif spell.action_type == 'Abiliity' then
+		-- Abilities are further broken down:
+		-- Weaponskill
+		-- JobAbility
+		-- Specialty (Jig, Waltz, Scholar, etc)
+		
+		-- Put the lowercast spell.type into a local var
+		local spell_type = spell.type:lower()
+		
+		-- Custom handling for weaponskills
+		if spell.type == 'JobAbility' then
+			-- Generic job abilities are under sets.precast.JA, and must be named.
+			if sets.precast.JA[spell.english] then
+				equipSet = sets.precast.JA[spell.english]
 			end
-		end
-
-		if sets.precast.WS[spell.english] then
-			if sets.precast.WS[spell.english][modeToUse] then
-				equipSet = sets.precast.WS[spell.english][modeToUse]
-			else
-				equipSet = sets.precast.WS[spell.english]
+		elseif spell.type == 'WeaponSkill' then
+			local ws_mode = state.WeaponskillMode
+			local job_wsmode = nil
+	
+			-- Allow the job file to specify a preferred weaponskill mode
+			if get_job_wsmode then
+				job_wsmode = get_job_wsmode(spell, action, spellMap)
 			end
-		elseif classes.CustomClass and sets.precast.WS[classes.CustomClass] then
-			if sets.precast.WS[classes.CustomClass][modeToUse] then
-				equipSet = sets.precast.WS[classes.CustomClass][modeToUse]
-			else
-				equipSet = sets.precast.WS[classes.CustomClass]
+	
+			-- If the job file returned a weaponskill mode, use that.
+			if job_wsmode then
+				ws_mode = job_wsmode
+			elseif state.WeaponskillMode == 'Normal' then
+				-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
+				-- corresponding to the current offense mode.  If so, use that.
+				if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes):contains(state.OffenseMode) then
+					ws_mode = state.OffenseMode
+				end
+			end
+			
+			equipSet = sets.precast.WS
+
+			if equipSet[spell.english] then
+				equipSet = equipSet[spell.english]
+			elseif classes.CustomClass and equipSet[classes.CustomClass] then
+				equipSet = equipSet[classes.CustomClass]
+			end
+
+			if equipSet[ws_mode] then
+				equipSet = equipSet[ws_mode]
 			end
 		else
-			if sets.precast.WS[modeToUse] then
-				equipSet = sets.precast.WS[modeToUse]
-			else
-				equipSet = sets.precast.WS
+			-- All other ability types, such as Waltz, Jig, Scholar, etc.
+			-- These may use the generic type, or be refined for the individual action,
+			-- either by name or by spell map.
+			if sets.precast[spell.type] then
+				equipSet = sets.precast[spell.type]
+				
+				if equipSet[spell.english] then
+					equipSet = equipSet[spell.english]
+				elseif equipSet[spellMap] then
+					equipSet = equipSet[spellMap]
+				end
 			end
 		end
-	elseif spell.type:lower() == 'jobability' then
-		if sets.precast.JA[spell.english] then
-			equipSet = sets.precast.JA[spell.english]
-		end
-	-- Other types, such as Waltz, Jig, Scholar, etc.
-	elseif sets.precast[spell.type] then
-		if sets.precast[spell.type][spell.english] then
-			equipSet = sets.precast[spell.type][spell.english]
-		else
-			equipSet = sets.precast[spell.type]
-		end
-	-- Also check custom class on its own.
-	elseif classes.CustomClass and sets.precast[classes.CustomClass] then
-		equipSet = sets.precast[classes.CustomClass]
-	-- And spell mapping on its own.
-	elseif spellMap and sets.precast[spellMap] then
-		equipSet = sets.precast[spellMap]
 	end
 
 	return equipSet
