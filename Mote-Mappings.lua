@@ -11,6 +11,8 @@ local mappings = {}
 
 mappings.elements = {}
 
+mappings.elements.list = {'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
+
 mappings.elements.weak_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
 		['Lightning']='Water', ['Water']='Fire'}
 
@@ -26,6 +28,23 @@ mappings.elements.spirit_of = {['Light']="Light Spirit", ['Dark']="Dark Spirit",
 
 
 mappings.storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm", "Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
+
+
+mappings.skillchain_elements = {}
+mappings.skillchain_elements.Light = S{'Light','Fire','Wind','Lightning'}
+mappings.skillchain_elements.Dark = S{'Dark','Ice','Earth','Water'}
+mappings.skillchain_elements.Fusion = S{'Light','Fire'}
+mappings.skillchain_elements.Fragmentation = S{'Wind','Lightning'}
+mappings.skillchain_elements.Distortion = S{'Ice','Water'}
+mappings.skillchain_elements.Gravitation = S{'Dark','Earth'}
+mappings.skillchain_elements.Transfixion = S{'Light'}
+mappings.skillchain_elements.Compression = S{'Dark'}
+mappings.skillchain_elements.Liquification = S{'Fire'}
+mappings.skillchain_elements.Induration = S{'Ice'}
+mappings.skillchain_elements.Detonation = S{'Wind'}
+mappings.skillchain_elements.Scission = S{'Earth'}
+mappings.skillchain_elements.Impaction = S{'Lightning'}
+mappings.skillchain_elements.Reverberation = S{'Water'}
 
 
 -------------------------------------------------------------------------------------------------------------------
