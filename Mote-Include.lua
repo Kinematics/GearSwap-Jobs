@@ -133,7 +133,9 @@ function MoteInclude.init_include(version)
 	sets.precast.FC = {}
 	sets.precast.JA = {}
 	sets.precast.WS = {}
+	sets.precast.Ranged = {}
 	sets.midcast = {}
+	sets.midcast.Ranged = {}
 	sets.midcast.Pet = {}
 	sets.idle = {}
 	sets.resting = {}
