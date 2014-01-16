@@ -600,6 +600,7 @@ end
 
 
 -- Get the default midcast gear set.
+-- This is built on sets.midcast.
 function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
