@@ -649,7 +649,7 @@ function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventA
 	-- Custom class
 	-- Specific spell name
 	-- Class mapping
-	-- Skill
+	-- Skill is not checked, since that's meaningless for pet actions
 	-- Spell type
 	if sets.midcast.Pet then
 		if classes.CustomClass and sets.midcast.Pet[classes.CustomClass] then
@@ -658,8 +658,6 @@ function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventA
 			equipSet = sets.midcast.Pet[spell.english]
 		elseif spellMap and sets.midcast.Pet[spellMap] then
 			equipSet = sets.midcast.Pet[spellMap]
-		elseif sets.midcast.Pet[spell.skill] then
-			equipSet = sets.midcast.Pet[spell.skill]
 		elseif sets.midcast.Pet[spell.type] then
 			equipSet = sets.midcast.Pet[spell.type]
 		else
