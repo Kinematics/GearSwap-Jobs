@@ -483,10 +483,8 @@ function MoteInclude.equip_gear_by_status(status)
 
 	-- If status not defined, treat as idle.
 	-- Be sure to check for positive HP to make sure they're not dead.
-	if status == nil or status == '' then
-		if player.hp > 0 then
-			equip(get_current_idle_set())
-		end
+	if (status == nil or status == '') and player.hp > 0 then
+		equip(get_current_idle_set())
 	elseif status == 'Idle' then
 		equip(get_current_idle_set())
 	elseif status == 'Engaged' then
