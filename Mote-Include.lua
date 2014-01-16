@@ -213,7 +213,7 @@ function MoteInclude.precast(spell, action)
 
 	-- If showSet is flagged for precast, notify that we won't try to equip additional gear.
 	if showSet == 'precast' then
-		add_to_chat(122, 'Show Sets: Stopping at precast.')
+		add_to_chat(104, 'Show Sets: Stopping at precast.')
 	end
 end
 
@@ -250,7 +250,7 @@ function MoteInclude.midcast(spell,action)
 
 	-- If showSet is flagged for midcast, notify that we won't try to equip additional gear.
 	if showSet == 'midcast' then
-		add_to_chat(122, 'Show Sets: Stopping at midcast.')
+		add_to_chat(104, 'Show Sets: Stopping at midcast.')
 	end
 end
 
