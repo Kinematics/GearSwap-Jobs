@@ -550,9 +550,6 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		if equipSet[state.RangedMode] then
 			equipSet = equipSet[state.RangedMode]
 		end
-	elseif spell.action_type == 'Item' then
-		-- How to handle item uses?
-
 	elseif spell.action_type == 'Abiliity' then
 		-- Abilities are further broken down:
 		-- Weaponskill
@@ -617,6 +614,8 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = sets.precast[spellMap]
 			end
 		end
+	elseif spell.action_type == 'Item' then
+		-- How to handle item uses?
 	end
 
 	return equipSet
