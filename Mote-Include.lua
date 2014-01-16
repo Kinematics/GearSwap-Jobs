@@ -1,5 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Common variables and functions to be included in job scripts.
+-- Common variables and functions to be included in job scripts, for general default handling.
+--
 -- Include this file in the get_sets() function with the command:
 -- include('Mote-Include.lua')
 --
@@ -11,16 +12,14 @@
 -- Mote-SelfCommands
 -- UserGlobals
 --
--- It should be the first command in the get_sets() function, but must at least be executed before
--- any included vars are referenced.
+-- It should be included as the first command in the job file's get_sets() function, but must at least
+-- be executed before any included vars are referenced.
 --
 -- Included variables and functions are considered to be at the same scope level as
 -- the job script itself, and can be used as such.
 --
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
-
--- Last Modified: 1/11/2014 3:44:45 PM
 
 -- Define the include module as a table (clean, forwards compatible with lua 5.2).
 local MoteInclude = {}
@@ -31,14 +30,14 @@ local MoteInclude = {}
 -- These are accessible at the including job lua script's scope.
 -------------------------------------------------------------------------------------------------------------------
 
--- If the job calling this include provides a version, check to see if that version matches
--- the current api/behavior version of this file.  Provide a warning of the user version
--- falls behind.
 function MoteInclude.init_include(version)
 	local currentVersion = 1
+
+	-- If the job calling this include provides a version, check to see if that version matches
+	-- the current api version of this file.  Provide a warning if the user version falls behind.
 	if version then
 		if version < currentVersion then
-			add_to_chat(123,'Warning: Job file specifies version '..tostring(version)..', but current version of main include is '..tostring(currentVersion)..'.')
+			add_to_chat(123,'Warning: Job file specifies version '..tostring(version)..' of Mote-Include, but current version is '..tostring(currentVersion)..'.')
 		end
 	end
 
