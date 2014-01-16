@@ -58,6 +58,7 @@ function MoteInclude.init_include(version)
 	-- General melee offense/defense modes, allowing for hybrid set builds, as well as idle/resting/weaponskill.
 	state.OffenseMode     = 'Normal'
 	state.DefenseMode     = 'Normal'
+	state.RangedMode      = 'Normal'
 	state.WeaponskillMode = 'Normal'
 	state.CastingMode     = 'Normal'
 	state.IdleMode        = 'Normal'
@@ -82,14 +83,15 @@ function MoteInclude.init_include(version)
 	-- Vars for specifying valid mode values.
 	-- Defaults here are just for example. Set them properly in each job file.
 	options = {}
-	options.OffenseModes = {'Normal', 'Acc','Crit'}
-	options.DefenseModes = {'Normal', 'PDT', 'Evasion','Counter'}
-	options.WeaponskillModes = {'Normal', 'PDT', 'Evasion','Counter'}
+	options.OffenseModes = {'Normal'}
+	options.DefenseModes = {'Normal'}
+	options.RangedModes = {'Normal'}
+	options.WeaponskillModes = {'Normal'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
-	options.MagicalDefenseModes = {'MDT', 'Resist'}
+	options.PhysicalDefenseModes = {'PDT'}
+	options.MagicalDefenseModes = {'MDT'}
 
 	options.TargetModes = {'default', 'stpc', 'stpt', 'stal'}
 
