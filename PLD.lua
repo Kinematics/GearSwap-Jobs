@@ -13,7 +13,7 @@ function get_sets()
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal', Shield}
+	options.DefenseModes = {'Normal', 'Shield'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
@@ -40,12 +40,17 @@ function get_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Invincible'] = {legs="Valor Breeches +2"}
 	sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings"}
-	sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
+	--sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
 	sets.precast.JA['Sentinel'] = {feet="Valor Leggings"}
 	sets.precast.JA['Rampart'] = {head="Valor Coronet"}
-	sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
-	sets.precast.JA['Chivalry'] = {hands="Valor Gauntlets +2"}
-	sets.precast.JA['Divine Emblem'] = {} -- {feet="Creed Sabatons +2"}
+	--sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
+	--sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
+
+	-- add mnd for Chivalry
+	sets.precast.JA['Chivalry'] = {
+		head="Yaoyotl Helm",
+		body="Reverence Surcoat",hands="Buremte Gloves",
+		legs"Reverence Breeches",feet="Whirlpool Greaves"}
 	
 
 	-- Waltz set (chr and vit)
@@ -60,13 +65,17 @@ function get_sets()
 	-- Fast cast sets for spells
 	
 	sets.precast.FC = {ammo="Incantor Stone",
-		head="Cizin Helm",ear2="Loquacious Earring"
+		head="Cizin Helm",ear2="Loquacious Earring",
 		ring1="Prolix Ring",
 		legs="Enif Cosciales"}
 
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC, {})
+	sets.precast.FC.Cure = set_combine(sets.precast.FC,
+		{body="Twilight Mail",hands="Buremte Gloves",ring2="Dark Ring",
+		waist="Flume Belt",feet="Karieyh Sollerets +1"})
 
        
 	-- Weaponskill sets
@@ -94,7 +103,7 @@ function get_sets()
 	sets.midcast.FastRecast = {
 		head="Yaoyotl Helm",
 		body="Reverence Surcoat",hands="Cizin Mufflers",
-		waist="Zoran's Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+		waist="Zoran's Belt",legs="Enif Cosciales",feet="Reverence Leggings"}
 		
 	sets.midcast.Enmity = {ammo="Iron Gobbet",
 		head="Reverence Coronet",neck="Invidia Torque",
@@ -103,26 +112,43 @@ function get_sets()
 
 	sets.midcast.Flash = set_combine(sets.midcast.Enmity, {legs="Enif Cosciales",feet="Cizin Greaves"})
 	
-	sets.midcast.Cure = set_combine(sets.midcast.Enmity, {head="Adaman Barbuta",ear1="Hospitaler Earring",back="Fierabras's Mantle"})
+	sets.midcast.Stun = sets.midcast.Flash
+	
+	sets.midcast.Cure = {ammo="Iron Gobbet",
+		head="Adaman Barbuta",neck="Invidia Torque",ear1="Hospitaler Earring",ear2="Bloodgem Earring",
+		body="Reverence Surcoat",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
+		back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches",feet="Reverence Leggings"}
+
+	sets.midcast.EnhancingMagic = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches"}
+	
+	sets.midcast.Protect = {ring1="Sheltered Ring"}
+	sets.midcast.Shell = {ring1="Sheltered Ring"}
 	
 	-- Sets to return to when not performing an action.
 
 	sets.Reraise = {head="Twilight Helm", body="Twilight Mail"}
 	
 	-- Resting sets
-	sets.resting = {head="Twilight Helm",neck="Creed Collar",body="Twilight Mail",ring1="Sheltered Ring",ring2="Paguroidea Ring"}
+	sets.resting = {head="Twilight Helm",neck="Creed Collar",
+		body="Twilight Mail",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		waist="Austerity Belt"}
 	
 
 	-- Idle sets
 	sets.idle = {ammo="Iron Gobbet",
-		neck="Creed Collar"}
+		head="Reverence Coronet",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
+		body="Reverence Surcoat",hands="Reverence Gauntlets",ring1="Sheltered Ring",ring2="Meridian Ring",
+		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 
 	sets.idle.Town = {main="Buramenk'ah", sub="Killedar Shield",ammo="Incantor Stone",
 		head="Reverence Coronet",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
-		body="Reverence Surcoat",hands="Reverence Gauntlets",
-		legs="Crimson Cuisses"}
+		body="Reverence Surcoat",hands="Reverence Gauntlets",ring1="Sheltered Ring",ring2="Meridian Ring",
+		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 	
-	sets.idle.Weak = {ammo="Iron Gobbet"}
+	sets.idle.Weak = {ammo="Iron Gobbet",
+		head="Reverence Coronet",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
+		body="Reverence Surcoat",hands="Reverence Gauntlets",ring1="Sheltered Ring",ring2="Meridian Ring",
+		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 	
 	sets.idle.Weak.Reraise = set_combine(sets.idle.Weak, sets.Reraise)
 	
@@ -172,20 +198,18 @@ function get_sets()
 	sets.engaged = {
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Cizin Breeches",feet="Cizin Greaves"}
+		back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
 	sets.engaged.Shield = {
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Reverence Surcoat",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Flume Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Boxer's Mantle",waist="Flume Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
 
 
 	sets.buff.Cover = {head="Reverence Coronet", body="Valor Surcoat +2"}
 	
 
-
-	-- default: set 1 of book 20
-	set_macro_page(1, 20)
+	set_macro_page(2, 2)
 	binds_on_load()
 
 	windower.send_command('bind ^- gs c toggle target')
@@ -209,7 +233,10 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-
+	-- Don't gearswap for weaponskills when Defense is on.
+	if spell.type:lower() == 'weaponskill' and state.Defense.Active then
+		eventArgs.handled = true
+	end
 end
 
 -- Return a customized weaponskill mode to use for weaponskill sets.
