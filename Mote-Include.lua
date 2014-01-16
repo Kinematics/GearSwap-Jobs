@@ -114,6 +114,7 @@ function MoteInclude.init_include(version)
 	classes.CustomClass = nil
 	-- Custom groups used for defining melee and idle sets.  Persists long-term.
 	classes.CustomMeleeGroups = L{}
+	classes.CustomRangedGroups = L{}
 	classes.CustomIdleGroups = L{}
 	classes.CustomDefenseGroups = L{}
 
@@ -550,6 +551,12 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		if equipSet[state.RangedMode] then
 			equipSet = equipSet[state.RangedMode]
 		end
+
+		for _,group in ipairs(classes.CustomRangedGroups) do
+			if equipSet[group] then
+				equipSet = equipSet[group]
+			end
+		end
 	elseif spell.action_type == 'Abiliity' then
 		-- Abilities are further broken down:
 		-- Weaponskill
@@ -664,6 +671,12 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
 		if equipSet[state.RangedMode] then
 			equipSet = equipSet[state.RangedMode]
+		end
+
+		for _,group in ipairs(classes.CustomRangedGroups) do
+			if equipSet[group] then
+				equipSet = equipSet[group]
+			end
 		end
 	elseif spell.action_type == 'Abiliity' then
 		if sets.midcast[spell.type] then
