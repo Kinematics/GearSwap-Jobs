@@ -557,7 +557,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = equipSet[group]
 			end
 		end
-	elseif spell.action_type == 'Abiliity' then
+	elseif spell.action_type == 'Ability' then
 		-- Abilities are further broken down:
 		-- Weaponskill
 		-- JobAbility
