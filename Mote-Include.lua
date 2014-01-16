@@ -120,7 +120,7 @@ function MoteInclude.init_include(version)
 	-- Var for use in melee set construction.
 	TPWeapon = 'Normal'
 
-	-- Special var for displaying sets at certain cast times.
+	-- Special control flags.
 	mote_flags = {}
 	mote_flags.show_set = nil
 
