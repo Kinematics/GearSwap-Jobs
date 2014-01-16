@@ -157,22 +157,24 @@ end
 -- initiated target selection for <st*> target types.
 -- This is the only function where it will be valid to use change_target().
 function MoteInclude.pretarget(spell,action)
+	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- init a new eventArgs
+	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
 
-	-- Allow the job to handle it.
+	-- Call the job file first, if it has a function to handle this.
 	if job_pretarget then
 		job_pretarget(spell, action, spellMap, eventArgs)
 	end
 
+	-- If a cancel is requested, cancel_spell and finish.
 	if eventArgs.cancel then
 		cancel_spell()
 		return
 	end
 
-	-- If the job didn't handle things themselves, continue..
+	-- If the job didn't handle things themselves, continue.
 	if not eventArgs.handled then
 		-- Handle optional target conversion.
 		auto_change_target(spell, action, spellMap)
@@ -183,35 +185,35 @@ end
 -- Called after the text command has been processed (and target selected), but
 -- before the packet gets pushed out.
 -- Equip any gear that should be on before the spell or ability is used.
--- Define the set to be equipped at this point in time based on the type of action.
 function MoteInclude.precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- init a new eventArgs
+	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
 
-	-- Allow jobs to have first shot at setting up the precast gear.
+	-- Call the job file first, if it has a function to handle this.
 	if job_precast then
 		job_precast(spell, action, spellMap, eventArgs)
 	end
 
+	-- If a cancel is requested, cancel_spell and finish.
 	if eventArgs.cancel then
 		cancel_spell()
 		return
 	end
 
-	-- Perform default equips if the job didn't handle it.
+	-- Equip default precast gear if the job didn't mark this as handled.
 	if not eventArgs.handled then
 		equip(get_default_precast_set(spell, action, spellMap, eventArgs))
 	end
 
-	-- Allow followup code to add to what was done here
+	-- Allow the job to add additional gear on top of the default set.
 	if job_post_precast then
 		job_post_precast(spell, action, spellMap, eventArgs)
 	end
 
-	-- If showSet is flagged for precast, notify that we won't try to equip additional gear.
+	-- If showSet is flagged for precast, notify that we won't try to equip later gear.
 	if showSet == 'precast' then
 		add_to_chat(104, 'Show Sets: Stopping at precast.')
 	end
@@ -223,42 +225,47 @@ end
 -- Midcast gear selected should be for potency, recast, etc.  It should take effect
 -- regardless of the spell cast speed.
 function MoteInclude.midcast(spell,action)
-	-- If showSet is flagged for precast, don't try to equip midcast/aftercast gear.
+	-- If showSet is flagged for precast, don't try to equip midcast gear.
 	if showSet == 'precast' then
 		return
 	end
 
+	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- init a new eventArgs
+	-- Init a new eventArgs
 	local eventArgs = {handled = false}
 
-	-- Allow jobs to override this code
+	-- Call the job file first, if it has a function to handle this.
 	if job_midcast then
 		job_midcast(spell, action, spellMap, eventArgs)
 	end
 
-	-- Perform default equips if the job didn't handle it.
+	-- Equip default midcast gear if the job didn't mark this as handled.
 	if not eventArgs.handled then
 		equip(get_default_midcast_set(spell, action, spellMap, eventArgs))
 	end
 
-	-- Allow followup code to add to what was done here
+	-- Allow the job to add additional gear on top of the default set.
 	if job_post_midcast then
 		job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 
-	-- If showSet is flagged for midcast, notify that we won't try to equip additional gear.
+	-- If showSet is flagged for midcast, notify that we won't try to equip later gear.
 	if showSet == 'midcast' then
 		add_to_chat(104, 'Show Sets: Stopping at midcast.')
 	end
 end
 
 
--- Called when an action has been completed (eg: spell finished casting, or failed to cast).
+-- Called when an action has been completed (ie: spell finished casting, weaponskill
+-- did damage, spell was interrupted, etc).
 function MoteInclude.aftercast(spell,action)
-	-- If showSet is flagged for midcast, don't try to equip midcast/aftercast gear.
-	if showSet == 'precast' or showSet == 'midcast' then
+	-- If showSet is flagged for precast or midcast, don't try to equip aftercast gear.
+	if showSet == 'precast' or showSet == 'midcast' or showSet == 'pet_midcast' then
+		if not pet_midaction() then
+			classes.CustomClass = nil
+		end
 		return
 	end
 
@@ -268,16 +275,20 @@ function MoteInclude.aftercast(spell,action)
 		return
 	end
 
+	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- init a new eventArgs
+	-- Init a new eventArgs
 	local eventArgs = {handled = false}
 
-	-- Allow jobs to override this code
+	-- Call the job file first, if it has a function to handle this.
 	if job_aftercast then
 		job_aftercast(spell, action, spellMap, eventArgs)
 	end
 
+	-- Handle equipping default gear if the job didn't mark this as handled, and
+	-- if the pet isn't in mid-action (thus triggering calls to pet_midcast before
+	-- this and pet_aftercast after this).
 	if not eventArgs.handled and not pet_midaction() then
 		if spell.interrupted then
 			-- Wait a half-second to update so that aftercast equip will actually be worn.
@@ -287,12 +298,14 @@ function MoteInclude.aftercast(spell,action)
 		end
 	end
 
-	-- Allow followup code to add to what was done here
+	-- Allow the job to take additional actions after the default gear handling.
 	if job_post_aftercast then
 		job_post_aftercast(spell, action, spellMap, eventArgs)
 	end
 
-	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
+	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value,
+	-- if we're not in the middle of a pet action.  If so, pet_aftercast will handle
+	-- clearing it.
 	if not pet_midaction() then
 		classes.CustomClass = nil
 	end
@@ -301,18 +314,19 @@ end
 
 -- Called when the pet readies an action.
 function MoteInclude.pet_midcast(spell,action)
-	-- If we have showSet active for precast, don't try to equip midcast gear.
-	if showSet == 'precast' then
-		add_to_chat(122, 'Show Sets: Stopping at precast.')
+	-- If we have showSet active for precast or midcast, don't try to equip pet midcast gear.
+	if showSet == 'precast' or showSet == 'midcast' then
+		add_to_chat(104, 'Show Sets: Pet midcast not equipped.')
 		return
 	end
 
+	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- init a new eventArgs
+	-- Init a new eventArgs
 	local eventArgs = {handled = false}
 
-	-- Allow jobs to override this code
+	-- Call the job file first, if it has a function to handle this.
 	if job_pet_midcast then
 		job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
@@ -322,29 +336,33 @@ function MoteInclude.pet_midcast(spell,action)
 		equip(get_default_pet_midcast_set(spell, action, spellMap, eventArgs))
 	end
 
-	-- Allow followup code to add to what was done here
+	-- Allow the job to add additional gear on top of the default set.
 	if job_post_pet_midcast then
 		job_post_pet_midcast(spell, action, spellMap, eventArgs)
+	end
+
+	-- If showSet is flagged for pet midcast, notify that we won't try to equip later gear.
+	if showSet == 'pet_midcast' then
+		add_to_chat(104, 'Show Sets: Stopping at pet midcast.')
 	end
 end
 
 
 -- Called when the pet's action is complete.
 function MoteInclude.pet_aftercast(spell,action)
-	-- If we have showSet active for precast or midcast, don't try to equip aftercast gear.
-	if showSet == 'midcast' then
-		add_to_chat(122, 'Show Sets: Stopping at midcast.')
-		return
-	elseif showSet == 'precast' then
+	-- If showSet is flagged for precast or midcast, don't try to equip aftercast gear.
+	if showSet == 'precast' or showSet == 'midcast' or showSet == 'pet_midcast' then
+		classes.CustomClass = nil
 		return
 	end
 
+	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.spellMappings[spell.english]
 
-	-- init a new eventArgs
+	-- Init a new eventArgs
 	local eventArgs = {handled = false}
 
-	-- Allow jobs to override this code
+	-- Call the job file first, if it has a function to handle this.
 	if job_pet_aftercast then
 		job_pet_aftercast(spell, action, spellMap, eventArgs)
 	end
@@ -358,7 +376,7 @@ function MoteInclude.pet_aftercast(spell,action)
 		end
 	end
 
-	-- Allow followup code to add to what was done here
+	-- Allow the job to take additional actions after the default gear handling.
 	if job_post_pet_aftercast then
 		job_post_pet_aftercast(spell, action, spellMap, eventArgs)
 	end
