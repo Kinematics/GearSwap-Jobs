@@ -121,7 +121,8 @@ function MoteInclude.init_include(version)
 	TPWeapon = 'Normal'
 
 	-- Special var for displaying sets at certain cast times.
-	showSet = nil
+	mote_flags = {}
+	mote_flags.show_set = nil
 
 	-- Display text mapping.
 	on_off_names = {[true] = 'on', [false] = 'off'}
@@ -214,8 +215,8 @@ function MoteInclude.precast(spell, action)
 		job_post_precast(spell, action, spellMap, eventArgs)
 	end
 
-	-- If showSet is flagged for precast, notify that we won't try to equip later gear.
-	if showSet == 'precast' then
+	-- If show_set is flagged for precast, notify that we won't try to equip later gear.
+	if mote_flags.show_set == 'precast' then
 		add_to_chat(104, 'Show Sets: Stopping at precast.')
 	end
 end
@@ -226,8 +227,8 @@ end
 -- Midcast gear selected should be for potency, recast, etc.  It should take effect
 -- regardless of the spell cast speed.
 function MoteInclude.midcast(spell,action)
-	-- If showSet is flagged for precast, don't try to equip midcast gear.
-	if showSet == 'precast' then
+	-- If show_set is flagged for precast, don't try to equip midcast gear.
+	if mote_flags.show_set == 'precast' then
 		return
 	end
 
@@ -252,8 +253,8 @@ function MoteInclude.midcast(spell,action)
 		job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 
-	-- If showSet is flagged for midcast, notify that we won't try to equip later gear.
-	if showSet == 'midcast' then
+	-- If show_set is flagged for midcast, notify that we won't try to equip later gear.
+	if mote_flags.show_set == 'midcast' then
 		add_to_chat(104, 'Show Sets: Stopping at midcast.')
 	end
 end
@@ -262,8 +263,8 @@ end
 -- Called when an action has been completed (ie: spell finished casting, weaponskill
 -- did damage, spell was interrupted, etc).
 function MoteInclude.aftercast(spell,action)
-	-- If showSet is flagged for precast or midcast, don't try to equip aftercast gear.
-	if showSet == 'precast' or showSet == 'midcast' or showSet == 'pet_midcast' then
+	-- If show_set is flagged for precast or midcast, don't try to equip aftercast gear.
+	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' or mote_flags.show_set == 'pet_midcast' then
 		if not pet_midaction() then
 			classes.CustomClass = nil
 		end
@@ -315,8 +316,8 @@ end
 
 -- Called when the pet readies an action.
 function MoteInclude.pet_midcast(spell,action)
-	-- If we have showSet active for precast or midcast, don't try to equip pet midcast gear.
-	if showSet == 'precast' or showSet == 'midcast' then
+	-- If we have show_set active for precast or midcast, don't try to equip pet midcast gear.
+	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' then
 		add_to_chat(104, 'Show Sets: Pet midcast not equipped.')
 		return
 	end
@@ -342,8 +343,8 @@ function MoteInclude.pet_midcast(spell,action)
 		job_post_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 
-	-- If showSet is flagged for pet midcast, notify that we won't try to equip later gear.
-	if showSet == 'pet_midcast' then
+	-- If show_set is flagged for pet midcast, notify that we won't try to equip later gear.
+	if mote_flags.show_set == 'pet_midcast' then
 		add_to_chat(104, 'Show Sets: Stopping at pet midcast.')
 	end
 end
@@ -351,8 +352,8 @@ end
 
 -- Called when the pet's action is complete.
 function MoteInclude.pet_aftercast(spell,action)
-	-- If showSet is flagged for precast or midcast, don't try to equip aftercast gear.
-	if showSet == 'precast' or showSet == 'midcast' or showSet == 'pet_midcast' then
+	-- If show_set is flagged for precast or midcast, don't try to equip aftercast gear.
+	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' or mote_flags.show_set == 'pet_midcast' then
 		classes.CustomClass = nil
 		return
 	end

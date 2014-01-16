@@ -359,7 +359,7 @@ function selfCommands.handle_reset(cmdParams)
 			state.MaxWeaponskillDistance = 0
 			state.SelectNPCTargets = false
 			state.PCTargetMode = 'default'
-			showSet = nil
+			mote_flags.show_set = nil
 			add_to_chat(122,'Everything has been reset to defaults.')
 		elseif not job_reset then
 			if _global.debug_mode then add_to_chat(123,'handle_reset: unknown state to reset: '..resetState) end
@@ -423,19 +423,19 @@ function selfCommands.handle_show_set(cmdParams)
 		equip(get_current_melee_set())
 	-- If given a param of 'precast', block equipping midcast/aftercast sets
 	elseif showset_type == 'precast' then
-		showSet = 'precast'
+		mote_flags.show_set = 'precast'
 		add_to_chat(122,'GearSwap will now only equip up to precast gear for spells/actions.')
 	-- If given a param of 'midcast', block equipping aftercast sets
 	elseif showset_type == 'midcast' then
-		showSet = 'midcast'
+		mote_flags.show_set = 'midcast'
 		add_to_chat(122,'GearSwap will now only equip up to midcast gear for spells.')
 	-- If given a param of 'midcast', block equipping aftercast sets
 	elseif showset_type == 'petmidcast' or showset_type == 'pet_midcast' then
-		showSet = 'pet_midcast'
+		mote_flags.show_set = 'pet_midcast'
 		add_to_chat(122,'GearSwap will now only equip up to pet midcast gear for spells.')
 	-- With a parameter of 'off', turn off showset functionality.
 	elseif showset_type == 'off' then
-		showSet = nil
+		mote_flags.show_set = nil
 		add_to_chat(122,'Show Sets is turned off.')
 	end
 end
@@ -568,8 +568,8 @@ function selfCommands.display_current_state()
 			'Kiting: '..on_off_names[state.Kiting]..pcTarget..npcTarget)
 	end
 	
-	if showSet then
-		add_to_chat(122,'Show Sets it currently showing ['..showSet..'] sets.  Use "//gs c showset off" to turn it off.')
+	if mote_flags.show_set then
+		add_to_chat(122,'Show Sets it currently showing ['..mote_flags.show_set..'] sets.  Use "//gs c showset off" to turn it off.')
 	end
 end
 
