@@ -272,7 +272,7 @@ function MoteInclude.aftercast(spell,action)
 		job_aftercast(spell, action, spellMap, eventArgs)
 	end
 
-	if not eventArgs.handled then
+	if not eventArgs.handled and not pet_midaction() then
 		if spell.interrupted then
 			-- Wait a half-second to update so that aftercast equip will actually be worn.
 			windower.send_command('wait 0.6;gs c update')
@@ -287,7 +287,9 @@ function MoteInclude.aftercast(spell,action)
 	end
 
 	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
-	classes.CustomClass = nil
+	if not pet_midaction() then
+		classes.CustomClass = nil
+	end
 end
 
 
