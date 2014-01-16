@@ -719,8 +719,6 @@ function MoteInclude.get_current_idle_set()
 		idleSet = customize_idle_set(idleSet)
 	end
 
-	--if _global.debug_mode then print_set(idleSet, 'Final Idle Set') end
-
 	return idleSet
 end
 
@@ -756,8 +754,6 @@ function MoteInclude.get_current_melee_set()
 		meleeSet = customize_melee_set(meleeSet)
 	end
 
-	--if _global.debug_mode then print_set(meleeSet, 'Melee set') end
-
 	return meleeSet
 end
 
@@ -771,8 +767,6 @@ function MoteInclude.get_current_resting_set()
 	else
 		restingSet = sets.resting
 	end
-
-	--if _global.debug_mode then print_set(restingSet, 'Resting Set') end
 
 	return restingSet
 end
