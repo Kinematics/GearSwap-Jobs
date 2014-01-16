@@ -349,7 +349,7 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-	if cmdParams[1] == 'user' and not areas.Cities[world.area] then
+	if cmdParams[1] == 'user' and not areas.Cities:contains(world.area) then
 		local needsArts = player.sub_job:lower() == 'sch' and
 			not buffactive['Light Arts'] and not buffactive['Addendum: White'] and
 			not buffactive['Dark Arts'] and not buffactive['Addendum: Black']
