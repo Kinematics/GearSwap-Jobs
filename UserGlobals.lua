@@ -78,6 +78,14 @@ function user.add_obi(spell_element)
 	end
 end
 
+-- Global intercept on user status change.
+function user_status_change(newStatus, oldStatus, eventArgs)
+	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
+	if oldStatus == 'Dead' then
+		send_command('timers create "Weakness" 300 up abilities/00255.png')
+	end
+end
+
 
 function user.user_test(params)
 
