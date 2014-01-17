@@ -281,9 +281,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 end
 
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and state.CastingMode ~= 'Proc' then
-		equip(get_obi(spell))
-	end
+
 end
 
 
