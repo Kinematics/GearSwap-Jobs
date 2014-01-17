@@ -58,7 +58,7 @@ function self_initialize()
 	-- Precast Sets
 
 	-- Fast cast sets for spells
-	sets.precast.FC = {ammo="Incantor Stone",
+	sets.precast.FC = {main=gear.FastcastStaff,ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
@@ -76,7 +76,6 @@ function self_initialize()
 		back="Pahtli Cape",waist="Witful Belt",feet="Cure Clogs"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
-
 	
 	-- Precast sets to enhance JAs
 	sets.precast.JA.Benediction = {body="Cleric's Briault +2"}
@@ -123,22 +122,22 @@ function self_initialize()
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	
 	sets.midcast.Cursna = {
@@ -177,7 +176,7 @@ function self_initialize()
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
+		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
@@ -276,6 +275,12 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.handled = true
 	else
 		classes.CustomClass = get_spell_class(spell, action, spellMap)
+	end
+	
+	if spell.skill == 'HealingMagic' then
+		gear.default.obi_back = "Refraction Cape"
+	else
+		gear.default.obi_back = "Toro Cape"
 	end
 end
 
