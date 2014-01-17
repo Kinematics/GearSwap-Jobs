@@ -11,7 +11,7 @@ local mappings = {}
 
 mappings.elements = {}
 
-mappings.elements.list = {'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
+mappings.elements.list = L{'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
 
 mappings.elements.weak_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
 		['Lightning']='Water', ['Water']='Fire'}
