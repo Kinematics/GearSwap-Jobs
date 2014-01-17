@@ -536,7 +536,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 
 		-- Magian staves with fast cast on them may be stored under FC.[element]
 		if sets.precast.FC[tostring(spell.element)] then
-			equipSet = set_combine(equipSet, sets.precast[tostring(spell.element)])
+			equipSet = set_combine(equipSet, sets.precast.FC[tostring(spell.element)])
 		end
 	elseif spell.action_type == 'Ranged Attack' then
 		-- Ranged attacks use sets.precast.Ranged.
