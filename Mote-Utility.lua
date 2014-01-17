@@ -333,6 +333,42 @@ function utility.set_spell_obi_cape_ring(spell)
 end
 
 
+-- Function to get an appropriate gorget and belt for the current weaponskill.
+function utility.set_fastcast_staff(spell)
+	if spell.action_type ~= 'Magic' then
+		return
+	end
+
+	local staff = gear.FastcastStaff or {name=""}
+	
+	if gear_map['FastcastStaff'][spell.element] and player.inventory[gear_map['FastcastStaff'][spell.element]] then
+		staff.name = gear_map['FastcastStaff'][spell.element]
+	else
+		staff.name = gear.default.fastcast_staff or ""
+	end
+
+	return staff
+end
+
+
+-- Function to get an appropriate gorget and belt for the current weaponskill.
+function utility.set_recast_staff(spell)
+	if spell.action_type ~= 'Magic' then
+		return
+	end
+
+	local staff = gear.RecastStaff or {name=""}
+	
+	if gear_map['RecastStaff'][spell.element] and player.inventory[gear_map['RecastStaff'][spell.element]] then
+		staff.name = gear_map['RecastStaff'][spell.element]
+	else
+		staff.name = gear.default.recast_staff or ""
+	end
+
+	return staff
+end
+
+
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------

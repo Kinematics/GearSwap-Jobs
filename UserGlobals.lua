@@ -29,6 +29,8 @@ user.gear.ElementalBelt = {name=""}
 user.gear.ElementalObi = {name=""}
 user.gear.ElementalCape = {name=""}
 user.gear.ElementalRing = {name=""}
+user.gear.FastcastStaff = {name=""}
+user.gear.RecastStaff = {name=""}
 
 user.gear.default = {}
 user.gear.default.weaponskill_neck = "Asperity Necklace"
@@ -36,6 +38,8 @@ user.gear.default.weaponskill_waist = "Caudata Belt"
 user.gear.default.obi_waist = "Cognition Belt"
 user.gear.default.obi_back = "Toro Cape"
 user.gear.default.obi_ring = "Strendu Ring"
+user.gear.default.fastcast_staff = ""
+user.gear.default.recast_staff = ""
 
 
 

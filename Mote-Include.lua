@@ -509,6 +509,8 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	-- Update defintions for element-specific gear that can be used.
 	set_spell_obi_cape_ring(spell)
 	set_weaponskill_gorget_belt(spell)
+	set_fastcast_staff(spell)
+	set_recast_staff(spell)
 	
 	if spell.action_type == 'Magic' then
 		-- Precast for magic is fast cast.
@@ -536,11 +538,6 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- Check for specialized casting modes for any given set selection.
 		if equipSet[state.CastingMode] then
 			equipSet = equipSet[state.CastingMode]
-		end
-
-		-- Magian staves with fast cast on them may be stored under FC.[element]
-		if sets.precast.FC[tostring(spell.element)] then
-			equipSet = set_combine(equipSet, sets.precast.FC[tostring(spell.element)])
 		end
 	elseif spell.action_type == 'Ranged Attack' then
 		-- Ranged attacks use sets.precast.Ranged.
