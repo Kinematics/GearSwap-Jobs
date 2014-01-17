@@ -157,5 +157,22 @@ mappings.npcs.Trust = S{'Ayame','Naji','Nanaa Mihgo','Tenzen','Volker','Zeid',
 	'Ajido-Marujido','Shantotto','Curilla','Excenmille','Trion','Valaineral',
 	'Kupipi','Mihli Aliapoh','Joachim','Lion'}
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- Mappings for elemental gear
+-------------------------------------------------------------------------------------------------------------------
+
+mappings.gear_map = {}
+
+mappings.gear_map.Obi =  {['Light']='Korin Obi', ['Dark']='Anrin Obi', ['Fire']='Karin Obi', ['Ice']='Hyorin Obi', ['Wind']='Furin Obi',
+	 ['Earth']='Dorin Obi', ['Lightning']='Rairin Obi', ['Water']='Suirin Obi'}
+
+mappings.gear_map.Gorget =  {['Light']='Light Gorget', ['Dark']='Shadow Gorget', ['Fire']='Flame Gorget', ['Ice']='Snow Gorget',
+	['Wind']='Wind Gorget', ['Earth']='Soil Gorget', ['Lightning']='Thunder Gorget', ['Water']='Aqua Gorget'}
+
+mappings.gear_map.Belt =  {['Light']='Light Belt', ['Dark']='Shadow Belt', ['Fire']='Flame Belt', ['Ice']='Snow Belt',
+	['Wind']='Wind Belt', ['Earth']='Soil Belt', ['Lightning']='Thunder Belt', ['Water']='Aqua Belt'}
+
+
 return mappings
 
