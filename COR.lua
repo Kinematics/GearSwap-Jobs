@@ -10,8 +10,8 @@ function get_sets()
 	init_include()
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal'}
+	options.OffenseModes = {'Normal', 'Acc'}
+	options.RangedModes = {'Normal', 'Acc'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
@@ -102,10 +102,12 @@ function get_sets()
 	sets.engaged = {}
 	sets.engaged.Acc = {}
 
+	define_roll_values()
 
-	-- default: set 1 of book 20
-	set_macro_page(1, 20)
+	set_macro_page(1, 19)
 	binds_on_load()
+	-- Cor doesn't use hybrid defense mode; using that for ranged mode adjustments.
+	windower.send_command('bind ^f9 gs c cycle RangedMode')
 
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind ^= gs c cycle targetmode')
@@ -149,21 +151,11 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 
 end
 
--- Runs when a pet initiates an action.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_pet_midcast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the default pet midcast() is done.
--- eventArgs is the same one used in job_pet_midcast, in case information needs to be persisted.
-function job_pet_post_midcast(spell, action, spellMap, eventArgs)
-
-end
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if spell.type == 'CorsairRoll' and not spell.interrupted then
+		display_roll_info(spell)
+	end
 end
 
 -- Run after the default aftercast() is done.
@@ -171,18 +163,6 @@ end
 function job_post_aftercast(spell, action, spellMap, eventArgs)
 
 end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_pet_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the default pet aftercast() is done.
--- eventArgs is the same one used in job_pet_aftercast, in case information needs to be persisted.
-function job_pet_post_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
@@ -217,11 +197,6 @@ end
 
 -- Called when the player's status changes.
 function job_status_change(newStatus, oldStatus, eventArgs)
-
-end
-
--- Called when the player's pet's status changes.
-function job_pet_status_change(newStatus, oldStatus, eventArgs)
 
 end
 
@@ -261,4 +236,47 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+function define_roll_values()
+	rolls = {
+		"Corsair's Roll"   = {lucky=5, unlucky=9, bonus="Experience Points"},
+		"Ninja Roll"       = {lucky=4, unlucky=8, bonus="Evasion"},
+		"Hunter's Roll"    = {lucky=4, unlucky=8, bonus="Accuracy"},
+		"Chaos Roll"       = {lucky=4, unlucky=8, bonus="Attack"},
+		"Magus's Roll"     = {lucky=2, unlucky=6, bonus="Magic Defense"},
+		"Healer's Roll"    = {lucky=3, unlucky=7, bonus="Cure Potency Received"},
+		"Puppet Roll"      = {lucky=4, unlucky=8, bonus="Pet Magic Accuracy/Attack"},
+		"Choral Roll"      = {lucky=2, unlucky=6, bonus="Spell Interruption Rate"},
+		"Monk's Roll"      = {lucky=3, unlucky=7, bonus="Subtle Blow"},
+		"Beast Roll"       = {lucky=4, unlucky=8, bonus="Pet Attack"},
+		"Samurai Roll"     = {lucky=2, unlucky=6, bonus="Store TP"},
+		"Evoker's Roll"    = {lucky=5, unlucky=9, bonus="Refresh"},
+		"Rogue's Roll"     = {lucky=5, unlucky=9, bonus="Critical Hit Rate"},
+		"Warlock's Roll"   = {lucky=4, unlucky=8, bonus="Magic Accuracy"},
+		"Fighter's Roll"   = {lucky=5, unlucky=9, bonus="Double Attack Rate"},
+		"Drachen Roll"     = {lucky=3, unlucky=7, bonus="Pet Accuracy"},
+		"Gallant's Roll"   = {lucky=3, unlucky=7, bonus="Defense"},
+		"Wizard's Roll"    = {lucky=5, unlucky=9, bonus="Magic Attack"},
+		"Dancer's Roll"    = {lucky=3, unlucky=7, bonus="Regen"},
+		"Scholar's Roll"   = {lucky=2, unlucky=6, bonus="Conserve MP"},
+		"Bolter's Roll"    = {lucky=3, unlucky=9, bonus="Movement Speed"},
+		"Caster's Roll"    = {lucky=2, unlucky=7, bonus="Fast Cast"},
+		"Courser's Roll"   = {lucky=3, unlucky=9, bonus="Snapshot"},
+		"Blitzer's Roll"   = {lucky=4, unlucky=9, bonus="Attack Delay"},
+		"Tactician's Roll" = {lucky=5, unlucky=8, bonus="Regain"},
+		"Allies's Roll"    = {lucky=3, unlucky=10, bonus="Skillchain Damage"},
+		"Miser's Roll"     = {lucky=5, unlucky=7, bonus="Save TP"},
+		"Companion's Roll" = {lucky=2, unlucky=10, bonus="Pet Regain and Regen"},
+		"Avenger's Roll"   = {lucky=4, unlucky=8, bonus="Counter Rate"},
+	}
+end
+
+function display_roll_info(spell)
+	rollinfo = rolls[spell.english]
+	if rollinfo then
+		add_to_chat(104, spell.english..' provides a bonus to '..rollinfo.bonus..'. Lucky roll is '..
+			tostring(rollinfo.lucky)..', Unlucky roll is '..tostring(rollinfo.unlucky)..'.'
+	end
+end
+
 
