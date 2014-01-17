@@ -2,8 +2,6 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- Last Modified: 1/4/2014 6:07:55 PM
-
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
 function get_sets()
