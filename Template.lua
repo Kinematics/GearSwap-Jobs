@@ -248,6 +248,28 @@ function job_update(cmdParams, eventArgs)
 
 end
 
+-- Job-specific toggles.
+function job_toggle(field)
+
+end
+
+-- Request job-specific mode lists.
+-- Return the list, and the current value for the requested field.
+function job_get_mode_list(field)
+
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_mode(field, val)
+
+end
+
+-- Handle auto-targetting based on local setup.
+function job_auto_change_target(spell, action, spellMap, eventArgs)
+
+end
+
 -- Handle notifications of user state values being changed.
 function job_state_change(stateField, newValue)
 
