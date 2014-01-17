@@ -253,6 +253,74 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
+-- Gear utility functions.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Function to get an appropriate gorget and belt for the current weaponskill.
+-- May pass in default vars to be filled in with the name of the item chosen.
+function utility.set_gorget_and_belt(spell, defaultNeck, defaultWaist)
+	if spell.type ~= 'WeaponSkill' then
+		return
+	end
+	
+	-- Get the union of all the skillchain elements for the weaponskill
+	weaponskill_elements = S{}:union(skillchain_elements[spell.wsA]):
+		union(skillchain_elements[spell.wsB]):
+		union(skillchain_elements[spell.wsC])
+	
+	-- Hook to the default gear vars, if available.
+	gorget = gear.ElementalGorget or {name=""}
+	belt = gear.ElementalBelt or {name=""}
+	
+	select_elemental_item(gorget, 'Gorget', weaponskill_elements, defaultNeck)
+	select_elemental_item(belt, 'Belt', weaponskill_elements, defaultWaist)
+	
+	return gorget, belt
+end
+
+
+-- Pick an item to use based on required elemental properties.
+-- Compares the elements to search with those listed in gear.[itemtype].Ordering
+-- if such a list exists, or defaults to the entire elements.list mapping if not.
+-- For each element, it checks to see if it has been defined in the gear table for
+-- the specified item type.
+-- It sets the item name to the first found match.  Otherwise the name is left
+-- as the empty string.
+function utility.select_elemental_item(itemvar, itemtype, elements_to_search, defaultItem)
+	if defaultItem and type(defaultItem) == 'string' then
+		itemvar.name = defaultItem
+	else
+		itemvar.name = ""
+	end
+
+	if gear[itemtype] then
+		local element_list = elements.list
+		if gear[itemtype].Ordering then
+			element_list = gear[itemtype].Ordering
+		end
+
+		for _,element in ipairs(element_list) do
+			if elements_to_search:contains(element) and gear[itemtype][element] then
+				itemvar.name = gear[itemtype][element]
+				break
+			end
+		end
+	end
+end
+
+
+-- Creates a set containing the appropriate obi, if day or weather matches the spell.
+function utility.get_obi(spell)
+	local obi = {}
+	if gear.Obi and gear.Obi[spell.element] and
+		(world.weather_element == spell.element or world.day_element == spell.element) then
+		obi = {waist=gear.Obi[spell.element]}
+	end
+	return obi
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------
 

@@ -71,12 +71,34 @@ user.gear.Staff.HMP = 'Chatoyant Staff'
 user.gear.Staff.PDT = 'Earth Staff'
 
 
--- Add the obi for the given element if it matches either the current weather or day.
-function user.add_obi(spell_element)
-	if gear.Obi[spell_element] and (world.weather_element == spell_element or world.day_element == spell_element) then
-		equip({waist=gear.Obi[spell_element]})
-	end
-end
+user.gear.Gorget = {}
+user.gear.Gorget.Light = "Light Gorget"
+--user.gear.Gorget.Dark = "Shadow Gorget"
+--user.gear.Gorget.Fire = "Flame Gorget"
+user.gear.Gorget.Ice = "Snow Gorget"
+--user.gear.Gorget.Wind = "Wind Gorget"
+user.gear.Gorget.Earth = "Soil Gorget"
+user.gear.Gorget.Lightning = "Thunder Gorget"
+--user.gear.Gorget.Water = "Aqua Gorget"
+
+user.gear.Gorget.Ordering = L{'Earth','Lightning','Ice','Light','Dark'}
+user.gear.Gorget.DefaultItem = "Asperity Necklace"
+user.gear.ElementalGorget = {name=""}
+
+user.gear.Belt = {}
+user.gear.Belt.Light = "Light Belt"
+user.gear.Belt.Dark = "Shadow Belt"
+user.gear.Belt.Fire = "Flame Belt"
+user.gear.Belt.Ice = "Snow Belt"
+user.gear.Belt.Wind = "Wind Belt"
+user.gear.Belt.Earth = "Soil Belt"
+user.gear.Belt.Lightning = "Thunder Belt"
+user.gear.Belt.Water = "Aqua Belt"
+
+user.gear.Belt.Ordering = L{'Earth','Lightning','Ice','Light','Dark'}
+user.gear.Belt.DefaultItem = "Caudata Belt"
+user.gear.ElementalBelt = {name=""}
+
 
 -- Global intercept on user status change.
 function user_status_change(newStatus, oldStatus, eventArgs)

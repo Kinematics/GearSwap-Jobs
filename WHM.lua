@@ -268,9 +268,9 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 		if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 			equip(sets.Buff['Divine Caress'])
 		elseif spellMap == 'Cure' or spellMap == 'Curaga' then
-			add_obi(spell.element)
+			equip(get_obi(spell))
 		elseif spell.skill == 'DivineMagic' and spell.english ~= 'Flash' then
-			add_obi(spell.element)
+			equip(get_obi(spell))
 		end
 	end
 	
@@ -297,9 +297,9 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 		equip(sets.Buff['Divine Caress'])
 	elseif spellMap == 'Cure' or spellMap == 'Curaga' then
-		add_obi(spell.element)
+		equip(get_obi(spell))
 	elseif spell.skill == 'DivineMagic' and spell.english ~= 'Flash' then
-		add_obi(spell.element)
+		equip(get_obi(spell))
 	end
 end
 

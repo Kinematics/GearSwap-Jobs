@@ -569,6 +569,8 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = sets.precast.JA[spell.english]
 			end
 		elseif spell.type == 'WeaponSkill' then
+			set_gorget_and_belt(spell, gear.Gorget.DefaultItem, gear.Belt.DefaultItem)
+			
 			-- Custom handling for weaponskills
 			local ws_mode = state.WeaponskillMode
 			local custom_wsmode
