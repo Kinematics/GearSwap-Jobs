@@ -12,38 +12,6 @@
 local user = {}
 
 -------------------------------------------------------------------------------------------------------------------
--- Define globally-accessible tables here.  EG: user.gear defines the gear table, which
--- any job will be able to access.
--------------------------------------------------------------------------------------------------------------------
-
--- Special gear info that may be useful across jobs.
-user.gear = {}
-
--- Staffs
-user.gear.Staff = {}
-user.gear.Staff.HMP = 'Chatoyant Staff'
-user.gear.Staff.PDT = 'Earth Staff'
-
-user.gear.ElementalGorget = {name=""}
-user.gear.ElementalBelt = {name=""}
-user.gear.ElementalObi = {name=""}
-user.gear.ElementalCape = {name=""}
-user.gear.ElementalRing = {name=""}
-user.gear.FastcastStaff = {name=""}
-user.gear.RecastStaff = {name=""}
-
-user.gear.default = {}
-user.gear.default.weaponskill_neck = "Asperity Necklace"
-user.gear.default.weaponskill_waist = "Caudata Belt"
-user.gear.default.obi_waist = "Cognition Belt"
-user.gear.default.obi_back = "Toro Cape"
-user.gear.default.obi_ring = "Strendu Ring"
-user.gear.default.fastcast_staff = ""
-user.gear.default.recast_staff = ""
-
-
-
--------------------------------------------------------------------------------------------------------------------
 -- Modify the sets table.  Any gear sets that are added to the sets table need to
 -- be defined within this function, because sets isn't available until after the
 -- include is complete.  It is called at the end of basic initialization in Mote-Include.
@@ -51,6 +19,22 @@ user.gear.default.recast_staff = ""
 
 function user.define_global_sets()
 	sets.precast.FC.Ice = {main="Vourukasha I",sub="Achaq Grip"}
+
+	-- Special gear info that may be useful across jobs.
+
+	-- Staffs
+	gear.Staff = {}
+	gear.Staff.HMP = 'Chatoyant Staff'
+	gear.Staff.PDT = 'Earth Staff'
+	
+	-- Default items for utility gear values.
+	gear.default.weaponskill_neck = "Asperity Necklace"
+	gear.default.weaponskill_waist = "Caudata Belt"
+	gear.default.obi_waist = "Cognition Belt"
+	gear.default.obi_back = "Toro Cape"
+	gear.default.obi_ring = "Strendu Ring"
+	gear.default.fastcast_staff = ""
+	gear.default.recast_staff = ""
 end
 
 -------------------------------------------------------------------------------------------------------------------
