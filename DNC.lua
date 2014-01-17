@@ -10,13 +10,13 @@ function get_sets()
 	include('Mote-Include.lua')
 	init_include()
 	
-	-- Define sets and vars used by this job file.
-	self_initialize()
-
 	-- UserGlobals may define additional sets to be added to the local ones.
 	if define_global_sets then
 		define_global_sets()
 	end
+
+	-- Define sets and vars used by this job file.
+	self_initialize()
 
 	-- Default macro set/book
 	set_macro_page(5, 20)

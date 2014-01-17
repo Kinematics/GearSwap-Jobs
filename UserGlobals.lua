@@ -18,8 +18,6 @@ local user = {}
 -------------------------------------------------------------------------------------------------------------------
 
 function user.define_global_sets()
-	sets.precast.FC.Ice = {main="Vourukasha I",sub="Achaq Grip"}
-
 	-- Special gear info that may be useful across jobs.
 
 	-- Staffs
