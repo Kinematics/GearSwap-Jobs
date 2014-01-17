@@ -506,6 +506,10 @@ end
 function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
+	-- Update defintions for element-specific gear that can be used.
+	set_spell_obi_cape_ring(spell)
+	set_weaponskill_gorget_belt(spell)
+	
 	if spell.action_type == 'Magic' then
 		-- Precast for magic is fast cast.
 		-- Therefore our base set is sets.precast.FC.
@@ -569,8 +573,6 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = sets.precast.JA[spell.english]
 			end
 		elseif spell.type == 'WeaponSkill' then
-			set_gorget_and_belt(spell, gear.Gorget.DefaultItem, gear.Belt.DefaultItem)
-			
 			-- Custom handling for weaponskills
 			local ws_mode = state.WeaponskillMode
 			local custom_wsmode

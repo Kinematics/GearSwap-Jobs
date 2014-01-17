@@ -256,67 +256,80 @@ end
 -- Gear utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Pick an item to use based on required elemental properties.
+-- Cycles through the list of all elements until it matches one of the
+-- provided elements to search, and checks whether an appropriate item
+-- of that type exists in inventory.  If so, uses that.
+-- It may optionally provide a list of valid elements, rather than
+-- searching all possible elements.
+-- Returns the item var if it found a match and the item was in inventory.
+function utility.select_elemental_item(itemvar, itemtype, elements_to_search, valid_elements)
+	local elements_list = valid_elements or elements.list
+	
+	for _,element in ipairs(elements_list) do
+		if elements_to_search:contains(element) and player.inventory[gear_map[itemtype][element]] then
+			itemvar.name = gear_map[itemtype][element]
+			return itemvar
+		end
+	end
+end
+
+
 -- Function to get an appropriate gorget and belt for the current weaponskill.
--- May pass in default vars to be filled in with the name of the item chosen.
-function utility.set_gorget_and_belt(spell, defaultNeck, defaultWaist)
+function utility.set_weaponskill_gorget_belt(spell)
 	if spell.type ~= 'WeaponSkill' then
 		return
 	end
-	
+
 	-- Get the union of all the skillchain elements for the weaponskill
-	weaponskill_elements = S{}:union(skillchain_elements[spell.wsA]):
+	local weaponskill_elements = S{}:
+		union(skillchain_elements[spell.wsA]):
 		union(skillchain_elements[spell.wsB]):
 		union(skillchain_elements[spell.wsC])
 	
 	-- Hook to the default gear vars, if available.
-	gorget = gear.ElementalGorget or {name=""}
-	belt = gear.ElementalBelt or {name=""}
+	local gorget = gear.ElementalGorget or {name=""}
+	gorget.name = gear.default.weaponskill_neck or ""
+	local belt = gear.ElementalBelt or {name=""}
+	belt.name = gear.default.weaponskill_waist or ""
 	
-	select_elemental_item(gorget, 'Gorget', weaponskill_elements, defaultNeck)
-	select_elemental_item(belt, 'Belt', weaponskill_elements, defaultWaist)
+	select_elemental_item(gorget, 'Gorget', weaponskill_elements)
+	select_elemental_item(belt, 'Belt', weaponskill_elements)
 	
 	return gorget, belt
 end
 
 
--- Pick an item to use based on required elemental properties.
--- Compares the elements to search with those listed in gear.[itemtype].Ordering
--- if such a list exists, or defaults to the entire elements.list mapping if not.
--- For each element, it checks to see if it has been defined in the gear table for
--- the specified item type.
--- It sets the item name to the first found match.  Otherwise the name is left
--- as the empty string.
-function utility.select_elemental_item(itemvar, itemtype, elements_to_search, defaultItem)
-	if defaultItem and type(defaultItem) == 'string' then
-		itemvar.name = defaultItem
-	else
-		itemvar.name = ""
+-- Function to get an appropriate obi/cape/ring for the current spell.
+function utility.set_spell_obi_cape_ring(spell)
+	if spell.element == 'None' then
+		return
 	end
-
-	if gear[itemtype] then
-		local element_list = elements.list
-		if gear[itemtype].Ordering then
-			element_list = gear[itemtype].Ordering
+	
+	local world_elements = S{}
+	world_elements:add(world.weather_element)
+	world_elements:add(world.day_element)
+	
+	local obi = gear.ElementalObi or {name=""}
+	obi.name = gear.default.obi_waist or ""
+	local cape = gear.ElementalCape or {name=""}
+	cape.name = gear.default.obi_back or ""
+	local ring = gear.ElementalRing or {name=""}
+	ring.name = gear.default.obi_ring or ""
+	
+	local got_obi = select_elemental_item(obi, 'Obi', S{spell.element}, world_elements)
+	
+	if got_obi then
+		if player.inventory['Twilight Cape'] then
+			cape.name = "Twilight Cape"
 		end
-
-		for _,element in ipairs(element_list) do
-			if elements_to_search:contains(element) and gear[itemtype][element] then
-				itemvar.name = gear[itemtype][element]
-				break
-			end
+		if player.inventory['Zodiac Ring'] and spell.english ~= 'Impact' and
+			not S{'DivineMagic','DarkMagic','HealingMagic'}:contains(spell.skill) then
+			ring.name = "Zodiac Ring"
 		end
 	end
-end
-
-
--- Creates a set containing the appropriate obi, if day or weather matches the spell.
-function utility.get_obi(spell)
-	local obi = {}
-	if gear.Obi and gear.Obi[spell.element] and
-		(world.weather_element == spell.element or world.day_element == spell.element) then
-		obi = {waist=gear.Obi[spell.element]}
-	end
-	return obi
+	
+	return obi, cape, ring
 end
 
 

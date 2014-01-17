@@ -53,51 +53,25 @@ end
 user.gear = {}
 
 
--- Obis
-user.gear.Obi = {}
-user.gear.Obi.Light = "Korin Obi"
---user.gear.Obi.Dark = "Anrin Obi"
-user.gear.Obi.Fire = "Karin Obi"
-user.gear.Obi.Ice = "Hyorin Obi"
---user.gear.Obi.Wind = "Furin Obi"
---user.gear.Obi.Earth = "Dorin Obi"
-user.gear.Obi.Lightning = "Rairin Obi"
---user.gear.Obi.Water = "Suirin Obi"
-
-
 -- Staffs
 user.gear.Staff = {}
 user.gear.Staff.HMP = 'Chatoyant Staff'
 user.gear.Staff.PDT = 'Earth Staff'
 
 
-user.gear.Gorget = {}
-user.gear.Gorget.Light = "Light Gorget"
---user.gear.Gorget.Dark = "Shadow Gorget"
---user.gear.Gorget.Fire = "Flame Gorget"
-user.gear.Gorget.Ice = "Snow Gorget"
---user.gear.Gorget.Wind = "Wind Gorget"
-user.gear.Gorget.Earth = "Soil Gorget"
-user.gear.Gorget.Lightning = "Thunder Gorget"
---user.gear.Gorget.Water = "Aqua Gorget"
-
-user.gear.Gorget.Ordering = L{'Earth','Lightning','Ice','Light','Dark'}
-user.gear.Gorget.DefaultItem = "Asperity Necklace"
 user.gear.ElementalGorget = {name=""}
-
-user.gear.Belt = {}
-user.gear.Belt.Light = "Light Belt"
-user.gear.Belt.Dark = "Shadow Belt"
-user.gear.Belt.Fire = "Flame Belt"
-user.gear.Belt.Ice = "Snow Belt"
-user.gear.Belt.Wind = "Wind Belt"
-user.gear.Belt.Earth = "Soil Belt"
-user.gear.Belt.Lightning = "Thunder Belt"
-user.gear.Belt.Water = "Aqua Belt"
-
-user.gear.Belt.Ordering = L{'Earth','Lightning','Ice','Light','Dark'}
-user.gear.Belt.DefaultItem = "Caudata Belt"
 user.gear.ElementalBelt = {name=""}
+user.gear.ElementalObi = {name=""}
+user.gear.ElementalCape = {name=""}
+user.gear.ElementalRing = {name=""}
+
+user.gear.default = {}
+user.gear.default.weaponskill_neck = "Asperity Necklace"
+user.gear.default.weaponskill_waist = "Caudata Belt"
+user.gear.default.obi_waist = "Cognition Belt"
+user.gear.default.obi_back = "Toro Cape"
+user.gear.default.obi_ring = "Strendu Ring"
+
 
 
 -- Global intercept on user status change.
@@ -120,7 +94,8 @@ end
 
 
 function user.user_test(params)
-
+	local t = is_trust_party()
+	print('trust='..tostring(t))
 end
 
 
