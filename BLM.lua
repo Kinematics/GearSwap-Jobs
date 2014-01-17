@@ -117,6 +117,11 @@ function get_sets()
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 
+	sets.midcast.ElementalEnfeeble = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
+
 	-- Elemental Magic sets are default for handling low-tier nukes.
 	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
