@@ -53,7 +53,6 @@ function MoteInclude.init_include(version)
 	-- Include general user globals, such as custom binds or gear tables.
 	include('UserGlobals')
 
-
 	-- Var for tracking state values
 	state = {}
 
@@ -146,6 +145,7 @@ function MoteInclude.init_include(version)
 	sets.engaged = {}
 	sets.defense = {}
 	sets.buff = {}
+
 end
 
 

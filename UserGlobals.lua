@@ -12,6 +12,44 @@
 local user = {}
 
 -------------------------------------------------------------------------------------------------------------------
+-- Define globally-accessible tables here.  EG: user.gear defines the gear table, which
+-- any job will be able to access.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Special gear info that may be useful across jobs.
+user.gear = {}
+
+-- Staffs
+user.gear.Staff = {}
+user.gear.Staff.HMP = 'Chatoyant Staff'
+user.gear.Staff.PDT = 'Earth Staff'
+
+user.gear.ElementalGorget = {name=""}
+user.gear.ElementalBelt = {name=""}
+user.gear.ElementalObi = {name=""}
+user.gear.ElementalCape = {name=""}
+user.gear.ElementalRing = {name=""}
+
+user.gear.default = {}
+user.gear.default.weaponskill_neck = "Asperity Necklace"
+user.gear.default.weaponskill_waist = "Caudata Belt"
+user.gear.default.obi_waist = "Cognition Belt"
+user.gear.default.obi_back = "Toro Cape"
+user.gear.default.obi_ring = "Strendu Ring"
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Modify the sets table.  Any gear sets that are added to the sets table need to
+-- be defined within this function, because sets isn't available until after the
+-- include is complete.  It is called at the end of basic initialization in Mote-Include.
+-------------------------------------------------------------------------------------------------------------------
+
+function user.define_global_sets()
+	sets.precast.FC.Ice = {main="Vourukasha I",sub="Achaq Grip"}
+end
+
+-------------------------------------------------------------------------------------------------------------------
 -- Functions to set user-specified binds, generally on load and unload.
 -- Kept separate from the main include so as to not get clobbered when the main is updated.
 -------------------------------------------------------------------------------------------------------------------
@@ -30,6 +68,9 @@ function user.binds_on_load()
 	windower.send_command('bind f12 gs c update user')
 	windower.send_command('bind ^f12 gs c cycle IdleMode')
 	windower.send_command('bind !f12 gs c reset defense')
+
+	windower.send_command('bind ^- gs c toggle target')
+	windower.send_command('bind ^= gs c cycle targetmode')
 end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
@@ -46,33 +87,15 @@ function user.binds_on_unload()
 	windower.send_command('bind f12 input /ma Update .Manual')
 	windower.send_command('bind ^f12 input /ma CycleIdleMode')
 	windower.send_command('bind !f12 input /ma Reset .Defense')
+
+	windower.send_command('unbind ^-')
+	windower.send_command('unbind ^=')
 end
 
 
--- Special gear info that may be useful across jobs.
-user.gear = {}
-
-
--- Staffs
-user.gear.Staff = {}
-user.gear.Staff.HMP = 'Chatoyant Staff'
-user.gear.Staff.PDT = 'Earth Staff'
-
-
-user.gear.ElementalGorget = {name=""}
-user.gear.ElementalBelt = {name=""}
-user.gear.ElementalObi = {name=""}
-user.gear.ElementalCape = {name=""}
-user.gear.ElementalRing = {name=""}
-
-user.gear.default = {}
-user.gear.default.weaponskill_neck = "Asperity Necklace"
-user.gear.default.weaponskill_waist = "Caudata Belt"
-user.gear.default.obi_waist = "Cognition Belt"
-user.gear.default.obi_back = "Toro Cape"
-user.gear.default.obi_ring = "Strendu Ring"
-
-
+-------------------------------------------------------------------------------------------------------------------
+-- Global event-handling functions.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Global intercept on user status change.
 function user_status_change(newStatus, oldStatus, eventArgs)
@@ -93,9 +116,12 @@ function user_buff_change(buff, gain, eventArgs)
 end
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- Test function to use to avoid modifying Mote-SelfCommands.
+-------------------------------------------------------------------------------------------------------------------
+
 function user.user_test(params)
-	local t = is_trust_party()
-	print('trust='..tostring(t))
+
 end
 
 
