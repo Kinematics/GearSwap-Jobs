@@ -427,7 +427,7 @@ function job_toggle(field)
 end
 
 -- Request job-specific mode tables.
--- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+-- Return the list, and the current value for the requested field.
 function job_get_mode_list(field)
 	if field == 'Mainstep' then
 		return options.StepModes, state.MainStep
