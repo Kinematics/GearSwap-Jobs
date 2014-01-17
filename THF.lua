@@ -4,11 +4,41 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+-- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- Define sets and vars used by this job file.
+	self_initialize()
+
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Default macro set/book
+	set_macro_page(2, 5)
+	
+	-- Global default binds
+	binds_on_load()
+	
+	-- Additional local binds
+	windower.send_command('bind ^` input /ja "Flee" <me>')
+	windower.send_command('bind ^= gs c cycle treasuremode')
+	windower.send_command('bind !- gs c cycle targetmode')
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()
+	windower.send_command('unbind ^`')
+	windower.send_command('unbind !-')
+end
+
+-- Define sets and vars used by this job file.
+function self_initialize()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
@@ -245,24 +275,8 @@ function get_sets()
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 
-
-
-	set_macro_page(2, 5)
-	binds_on_load()
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind !- gs c cycle targetmode')
-
-	windower.send_command('bind ^= gs c cycle treasuremode')
-	windower.send_command('bind ^` input /ja "Flee" <me>')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	--binds_on_unload()
-	
-	windower.send_command('unbind ^`')
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Job-specific hooks that are called to process player actions at specific points in time.

@@ -4,11 +4,38 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+-- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- Define sets and vars used by this job file.
+	self_initialize()
+
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Default macro set/book
+	set_macro_page(2, 1)
+	
+	-- Global default binds
+	binds_on_load()
+	
+	-- Additional local binds
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()
+end
+
+
+-- Define sets and vars used by this job file.
+function self_initialize()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc', 'Mod'}
 	options.DefenseModes = {'Normal', 'PDT', 'HP', 'Counter'}
@@ -245,18 +272,6 @@ function get_sets()
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-
-
-	set_macro_page(2, 1)
-	binds_on_load()
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
-end
-
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	--binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------

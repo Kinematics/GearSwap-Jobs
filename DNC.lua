@@ -4,11 +4,52 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+-- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- Define sets and vars used by this job file.
+	self_initialize()
+
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Default macro set/book
+	set_macro_page(5, 20)
+	
+	-- Global default binds
+	binds_on_load()
+	
+	-- Additional local binds
+	
+	windower.send_command('bind ^= gs c cycle mainstep')
+	windower.send_command('bind != gs c cycle altstep')
+	windower.send_command('bind ^- gs c toggle selectsteptarget')
+	windower.send_command('bind !- gs c toggle usealtstep')
+	windower.send_command('bind ^` input /ja "Chocobo Jig" <me>')
+	windower.send_command('bind !` input /ja "Chocobo Jig II" <me>')
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()
+	
+	windower.send_command('unbind ^`')
+	windower.send_command('unbind !`')
+	windower.send_command('unbind ^=')
+	windower.send_command('unbind !=')
+	windower.send_command('unbind ^-')
+	windower.send_command('unbind !-')
+end
+
+
+-- Define sets and vars used by this job file.
+function self_initialize()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
@@ -29,12 +70,6 @@ function get_sets()
 	state.SelectStepTarget = false
 	state.IgnoreTargetting = false
 	
-	windower.send_command('bind ^= gs c cycle mainstep')
-	windower.send_command('bind != gs c cycle altstep')
-	windower.send_command('bind ^- gs c toggle selectsteptarget')
-	windower.send_command('bind !- gs c toggle usealtstep')
-
-
 	skillchainPending = false
 	
 	waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
@@ -277,21 +312,8 @@ function get_sets()
 	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
 	sets.buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
 
-	
-	set_macro_page(5, 20)
-	binds_on_load()
-
-	windower.send_command('bind ^` input /ja "Chocobo Jig" <me>')
-	windower.send_command('bind !` input /ja "Chocobo Jig II" <me>')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	--binds_on_unload()
-	
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !`')
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Job-specific hooks that are called to process player actions at specific points in time.

@@ -4,11 +4,40 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+-- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- Define sets and vars used by this job file.
+	self_initialize()
+
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Default macro set/book
+	set_macro_page(2, 18)
+	
+	-- Global default binds
+	binds_on_load()
+	
+	-- Additional local binds
+	windower.send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()	
+	windower.send_command('unbind ^`')
+end
+
+
+-- Define sets and vars used by this job file.
+function self_initialize()
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
 	options.OffenseModes = {'None', 'Normal'}
@@ -25,7 +54,9 @@ function get_sets()
 	
 	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
 	
-	
+	-- For tracking current recast timers via the Timers plugin.
+	timer_reg = {}
+
 	-- Some vars.  Define at the top so that the sets can make use of them.
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
 
@@ -209,24 +240,6 @@ function get_sets()
 		body="Brioso Justaucorps",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
-
-	windower.send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
-	-- default: set 2 of book 18
-	set_macro_page(2, 18)
-	binds_on_load()
-
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
-
-	-- For tracking current recast timers via the Timers plugin.
-	timer_reg = {}
-end
-
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	windower.send_command('unbind ^`')
-	--binds_on_unload()	
 end
 
 

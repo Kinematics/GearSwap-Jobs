@@ -39,11 +39,38 @@
 --]]
 
 
+-- Initialization function for this job file.
 function get_sets()
-	-- Load and initialize the include file that this depends on.
+	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- Define sets and vars used by this job file.
+	self_initialize()
+
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Default macro set/book
+	set_macro_page(4, 14)
+	
+	-- Global default binds
+	binds_on_load()
+	
+	-- Additional local binds
+	
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()
+end
+
+
+-- Define sets and vars used by this job file.
+function self_initialize()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -245,11 +272,6 @@ function get_sets()
 
 	windower.send_command('bind ^- gs c toggle target')
 	windower.send_command('bind ^= gs c cycle targetmode')
-end
-
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	--binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------

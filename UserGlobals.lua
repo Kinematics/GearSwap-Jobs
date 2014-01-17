@@ -75,6 +75,8 @@ end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
 function user.binds_on_unload()
+	-- Commented out for now.
+	--[[
 	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
 	windower.send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
 	windower.send_command('bind !f9 input /ma CombatMode Cycle(WS)')
@@ -87,6 +89,7 @@ function user.binds_on_unload()
 	windower.send_command('bind f12 input /ma Update .Manual')
 	windower.send_command('bind ^f12 input /ma CycleIdleMode')
 	windower.send_command('bind !f12 input /ma Reset .Defense')
+	--]]
 
 	windower.send_command('unbind ^-')
 	windower.send_command('unbind ^=')
