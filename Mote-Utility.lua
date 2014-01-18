@@ -116,47 +116,60 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 		return
 	end
 
-	-- Can only calculate healing amounts for ourself.
-	if spell.target.type ~= "SELF" then
-		return
+	local newWaltz = spell.english
+	
+	local missingHP = 0
+	local targ
+	
+	-- If curing someone in our alliance, we can get their HP
+	if spell.target.type == "SELF" then
+		targ = alliance[1][1]
+		missingHP = player.max_hp - player.hp
+	elseif spell.target.isallymember then
+		targ = find_player_in_alliance(spell.target.name)
+		local est_max_hp = targ.hp / (targ.hpp/100)
+		missingHP = math.floor(est_max_hp - targ.hp)
 	end
 	
-	local missingHP = player.max_hp - player.hp
-	local newWaltz
-	
-	if player.main_job == 'DNC' then
-		if missingHP < 40 then
-			-- not worth curing
-			add_to_chat(122,'Full HP!')
-			eventArgs.cancel = true
-			return
-		elseif missingHP < 200 then
-			newWaltz = 'Curing Waltz'
-		elseif missingHP < 500 then
-			newWaltz = 'Curing Waltz II'
-		elseif missingHP < 1100 then
-			newWaltz = 'Curing Waltz III'
-		elseif missingHP < 1500 then
-			newWaltz = 'Curing Waltz IV'
+	-- If we can estimate missing HP, we can adjust the preferred tier used.
+	if targ then
+		add_to_chat(123,'missing hp='..tostring(missingHP))
+		if player.main_job == 'DNC' then
+			if missingHP < 40 then
+				-- not worth curing
+				add_to_chat(122,'Full HP!')
+				eventArgs.cancel = true
+				return
+			elseif missingHP < 200 then
+				newWaltz = 'Curing Waltz'
+			elseif missingHP < 500 then
+				newWaltz = 'Curing Waltz II'
+			elseif missingHP < 1100 then
+				newWaltz = 'Curing Waltz III'
+			elseif missingHP < 1500 then
+				newWaltz = 'Curing Waltz IV'
+			else
+				newWaltz = 'Curing Waltz V'
+			end
+		elseif player.sub_job == 'DNC' then
+			if missingHP < 40 then
+				-- not worth curing
+				add_to_chat(122,'Full HP!')
+				eventArgs.cancel = true
+				return
+			elseif missingHP < 150 then
+				newWaltz = 'Curing Waltz'
+			elseif missingHP < 300 then
+				newWaltz = 'Curing Waltz II'
+			else
+				newWaltz = 'Curing Waltz III'
+			end
 		else
-			newWaltz = 'Curing Waltz V'
-		end
-	elseif player.sub_job == 'DNC' then
-		if missingHP < 40 then
-			-- not worth curing
-			add_to_chat(122,'Full HP!')
-			eventArgs.cancel = true
 			return
-		elseif missingHP < 150 then
-			newWaltz = 'Curing Waltz'
-		elseif missingHP < 300 then
-			newWaltz = 'Curing Waltz II'
-		else
-			newWaltz = 'Curing Waltz III'
 		end
-	else
-		return
 	end
+
+		add_to_chat(123,'new waltz='..tostring(newWaltz))
 	
 	local tpCost = waltzTPCost[newWaltz]
 	local downgrade
@@ -192,7 +205,7 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 
 	
 	if newWaltz ~= spell.english then
-		send_command('wait 0.03;input /ja "'..newWaltz..'" <me>')
+		send_command('wait 0.03;input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
 		eventArgs.cancel = true
 		return
 	end
@@ -200,9 +213,19 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	if downgrade then
 		add_to_chat(122, downgrade)
 	end
-	add_to_chat(122,'Using '..newWaltz..' for -'..tostring(missingHP)..' HP.')
+	add_to_chat(122,'Trying to cure '..tostring(missingHP)..' HP using '..newWaltz..'.')
 end
 
+
+function utility.find_player_in_alliance(name)
+	for i,v in ipairs(alliance) do
+		for k,p in ipairs(v) do
+			if p.name == name then
+				return p
+			end
+		end
+	end
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Environment utility functions.
