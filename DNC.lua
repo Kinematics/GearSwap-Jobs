@@ -164,13 +164,13 @@ function self_initialize()
 	sets.midcast.FastRecast = {
 		head="Felistris Mask",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",
-		back="Ix Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+		back="Ik Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {
 		head="Felistris Mask",neck="Torero Torque",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Ix Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+		back="Ik Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 	
 	-- Sets to return to when not performing an action.
