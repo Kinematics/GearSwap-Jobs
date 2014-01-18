@@ -133,7 +133,6 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	
 	-- If we can estimate missing HP, we can adjust the preferred tier used.
 	if targ then
-		add_to_chat(123,'missing hp='..tostring(missingHP))
 		if player.main_job == 'DNC' then
 			if missingHP < 40 then
 				-- not worth curing
@@ -169,8 +168,6 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 		end
 	end
 
-		add_to_chat(123,'new waltz='..tostring(newWaltz))
-	
 	local tpCost = waltzTPCost[newWaltz]
 	local downgrade
 	
@@ -206,14 +203,16 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 	
 	if newWaltz ~= spell.english then
 		send_command('wait 0.03;input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
+		if downgrade then
+			add_to_chat(122, downgrade)
+		end
 		eventArgs.cancel = true
 		return
 	end
 
-	if downgrade then
-		add_to_chat(122, downgrade)
+	if missingHP > 0 then
+		add_to_chat(122,'Trying to cure '..tostring(missingHP)..' HP using '..newWaltz..'.')
 	end
-	add_to_chat(122,'Trying to cure '..tostring(missingHP)..' HP using '..newWaltz..'.')
 end
 
 
