@@ -368,7 +368,7 @@ end
 function job_buff_change(buff, gain)
 	if buff == "Sublimation: Activated" then
 		state.Buff.Sublimation = gain
-		update_gear_sets(player.status)
+		handle_equipping_gear(player.status)
 	end
 end
 
