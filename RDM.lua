@@ -184,12 +184,12 @@ function self_initialize()
 	sets.defense.PDT = {
 		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Shadow Mantle",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 
@@ -205,7 +205,7 @@ function self_initialize()
 	-- Normal melee group
 	sets.engaged = {
 		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Atrophy Tabard +1",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 end
