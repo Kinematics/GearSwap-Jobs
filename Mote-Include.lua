@@ -693,17 +693,20 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	elseif spell.action_type == 'Abiliity' then
 		if sets.midcast[spell.type] then
 			equipSet = sets.midcast[spell.type]
-	
-			-- Allow some customizations of ability-types during midcast
-			if classes.CustomClass and equipSet[classes.CustomClass] then
-				equipSet = equipSet[classes.CustomClass]
-			elseif equipSet[spell.english] then
-				equipSet = equipSet[spell.english]
+			
+			if equipSet[spell.english] then
+				equipSet = sets.midcast[spell.english]
 			elseif spellMap and equipSet[spellMap] then
 				equipSet = equipSet[spellMap]
 			end
+	
+			if classes.CustomClass and equipSet[classes.CustomClass] then
+				equipSet = equipSet[classes.CustomClass]
+			end
 		elseif classes.CustomClass and sets.midcast[classes.CustomClass] then
 			equipSet = sets.midcast[classes.CustomClass]
+		elseif sets.midcast[spell.english] then
+			equipSet = sets.midcast[spell.english]
 		elseif sets.midcast[spellMap] then
 			equipSet = sets.midcast[spellMap]
 		end
