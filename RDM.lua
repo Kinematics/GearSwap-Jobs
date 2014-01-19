@@ -92,7 +92,7 @@ function self_initialize()
 		ring1="Aquasoul Ring",ring2="Aquasoul Ring",waist="Soil Belt"})
 
 	sets.precast.WS['Sanguine Blade'] = {ammo="Witchstone",
-		head="Hagondes Hat",neck="Stoichean Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
@@ -130,7 +130,7 @@ function self_initialize()
 	sets.midcast['Slow II'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
 	
 	sets.midcast.ElementalMagic = {
-		head="Hagondes Hat",neck="Stoichean Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
