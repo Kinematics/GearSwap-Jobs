@@ -121,7 +121,7 @@ function self_initialize()
 
 	-- any ninjutsu cast on enemies
 	sets.midcast.Ninjutsu = {
-		head="Hachiya Hatsuburi",neck="Stoichean Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		head="Hachiya Hatsuburi",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		--ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Icesoul Ring",
 		back="Toro Cape",waist="Twilight Belt",legs="Nahtirah Troursers",feet="Hachiya Kyahan"}
