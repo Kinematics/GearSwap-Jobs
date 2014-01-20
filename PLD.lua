@@ -16,10 +16,9 @@ function get_sets()
 	end
 
 	-- Define sets and vars used by this job file.
-	init_gear_sets()
-
-	-- Default macro set/book
-	set_macro_page(2, 2)
+	if not load_user_gear(player.main_job) then
+		init_gear_sets()
+	end
 
 	-- Global default binds
 	binds_on_load()
@@ -35,6 +34,9 @@ end
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
+	-- Default macro set/book
+	set_macro_page(2, 2)
+
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal', 'Shield'}

@@ -4,11 +4,38 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
+-- Initialization function for this job file.
 function get_sets()
-	-- Load and initialize the include file that this depends on.
+	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Define sets and vars used by this job file.
+	if not load_user_gear(player.main_job) then
+		init_gear_sets()
+	end
+
+	-- Global default binds
+	binds_on_load()
+	
+	-- Additional local binds
+	
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()
+end
+
+function init_gear_sets()
+	-- Default macro set/book
+	set_macro_page(2, 2)
+
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -102,18 +129,6 @@ function get_sets()
 	sets.engaged = {}
 	sets.engaged.Acc = {}
 
-
-	-- default: set 1 of book 20
-	set_macro_page(1, 20)
-	binds_on_load()
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
-end
-
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	--binds_on_unload()
 end
 
 -------------------------------------------------------------------------------------------------------------------
