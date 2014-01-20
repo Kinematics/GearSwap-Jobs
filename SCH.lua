@@ -120,7 +120,7 @@ function self_initialize()
 	sets.midcast.EnhancingMagic = {ammo="Savant's Treatise",
 		head="Savant's Bonnet +2",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Ayao's Gages",
-		waist="Cascade Belt",legs="Portent Pants",feet="Literae Sabots"}
+		waist="Olympus Sash",legs="Portent Pants",feet="Literae Sabots"}
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
 

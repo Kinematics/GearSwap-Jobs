@@ -155,7 +155,7 @@ function self_initialize()
 	sets.midcast.Barspell = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Colossus's Torque",
 		body="Orison Bliaud +2",hands="Orison Mitts +2",
-		waist="Cascade Belt",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
 
 	sets.midcast.Regen = {
 		body="Cleric's Briault",hands="Orison Mitts +2",
