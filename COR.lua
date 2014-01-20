@@ -75,6 +75,13 @@ function init_gear_sets()
 	-- Whether to use Luzaf's Ring
 	state.LuzafRing = false
 	
+	gear.RAbullet = "Adlivun Bullet"
+	gear.WSbullet = "Adlivun Bullet"
+	gear.MAbullet = "Bronze Bullet"
+	gear.QDbullet = "Adlivun Bullet"
+	state.warned = false
+	options.warning_limit = 15
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -117,7 +124,7 @@ function init_gear_sets()
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
 
-	sets.precast.Ranged = {ammo="Adlivun Bullet",
+	sets.precast.Ranged = {ammo=gear.RAbullet,
 		head="Navarch's Tricorne +2",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",
 		back="Navarch's Mantle",waist="Impulse Belt",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
@@ -138,23 +145,23 @@ function init_gear_sets()
 
 	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {legs="Nahtirah Trousers"})
 
-	sets.precast.WS['Last Stand'] = {
+	sets.precast.WS['Last Stand'] = {ammo=gear.WSbullet,
 		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Clearview Earring",ear2="Moonshade Earring",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
 		back="Terebellum Mantle",waist=gear.ElementalBelt,legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
-	sets.precast.WS['Last Stand'].Acc = {
+	sets.precast.WS['Last Stand'].Acc = {ammo=gear.WSbullet,
 		head="Laksamana's Hat",neck=gear.ElementalGorget,ear1="Clearview Earring",ear2="Moonshade Earring",
 		body="Laksamana's Frac",hands="Buremte Gloves",ring1="Hajduk Ring",ring2="Stormsoul Ring",
 		back="Libeccio Mantle",waist=gear.ElementalBelt,legs="Thurandaut Tights +1",feet="Laksamana's Bottes"}
 
 
-	sets.precast.WS['Wildfire'] = {ammo="Bronze Bullet",
+	sets.precast.WS['Wildfire'] = {ammo=gear.MAbullet,
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters"}
 
-	sets.precast.WS['Wildfire'].Brew = {ammo="Bronze Bullet",
+	sets.precast.WS['Wildfire'].Brew = {ammo=gear.MAbullet,
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters"}
@@ -171,17 +178,17 @@ function init_gear_sets()
 	-- Specific spells
 	sets.midcast.Utsusemi = sets.midcast.FastRecast
 
-	sets.midcast.CorsairShot = {ammo="Adlivun Bullet",
+	sets.midcast.CorsairShot = {ammo=gear.QDbullet,
 		head="Blood Mask",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Laksamana's Frac",hands="Schutzen Mittens",ring1="Hajduk Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Aquiline Belt",legs="Iuitl Tights",feet="Commodore Bottes +2"}
 
-	sets.midcast.CorsairShot.Acc = {ammo="Adlivun Bullet",
+	sets.midcast.CorsairShot.Acc = {ammo=gear.QDbullet,
 		head="Laksamana's Hat",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Laksamana's Frac",hands="Schutzen Mittens",ring1="Stormsoul Ring",ring2="Sangoma Ring",
 		back="Navarch's Mantle",waist="Aquiline Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
 
-	sets.midcast.CorsairShot['Light Shot'] = {ammo="Adlivun Bullet",
+	sets.midcast.CorsairShot['Light Shot'] = {ammo=gear.QDbullet,
 		head="Laksamana's Hat",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Laksamana's Frac",hands="Schutzen Mittens",ring1="Stormsoul Ring",ring2="Sangoma Ring",
 		back="Navarch's Mantle",waist="Aquiline Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
@@ -190,12 +197,12 @@ function init_gear_sets()
 
 
 	-- Ranged gear
-	sets.midcast.Ranged = {
+	sets.midcast.Ranged = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Ocachi Gorget",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
 		back="Terebellum Mantle",waist="Commodore Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
-	sets.midcast.Ranged.Acc = {
+	sets.midcast.Ranged.Acc = {ammo=gear.RAbullet,
 		head="Laksamana's Hat",neck="Huani Collar",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Laksamana's Frac",hands="Buremte Gloves",ring1="Hajduk Ring",ring2="Stormsoul Ring",
 		back="Libeccio Mantle",waist="Commodore Belt",legs="Thurandaut Tights +1",feet="Laksamana's Bottes"}
@@ -208,12 +215,12 @@ function init_gear_sets()
 	
 
 	-- Idle sets
-	sets.idle = {ammo="Adlivun Bullet",
+	sets.idle = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 
-	sets.idle.Town = {main="Surcouf's Jambiya",range="Eminent Gun",ammo="Adlivun Bullet",
+	sets.idle.Town = {main="Surcouf's Jambiya",range="Eminent Gun",ammo=gear.RAbullet,
 		head="Laksamana's Hat",neck="Wiglen Gorget",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
@@ -240,28 +247,28 @@ function init_gear_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged.Melee = {ammo="Adlivun Bullet",
+	sets.engaged.Melee = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	
-	sets.engaged.Acc = {ammo="Adlivun Bullet",
+	sets.engaged.Acc = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 
-	sets.engaged.Melee.DW = {ammo="Adlivun Bullet",
+	sets.engaged.Melee.DW = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	
-	sets.engaged.Acc.DW = {ammo="Adlivun Bullet",
+	sets.engaged.Acc.DW = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 
 
-	sets.engaged.Ranged = {ammo="Adlivun Bullet",
+	sets.engaged.Ranged = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Dark Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
@@ -279,14 +286,58 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
+
+	-- bullet checks
+	local check_bullet
+	local check_bullet_count = 1
+	if spell.type == 'WeaponSkill' and bow_gun_weaponskills:contains(spell.english) then
+		if spell.element == 'None' then
+			-- physical weaponskills
+			check_bullet = gear.WSbullet
+		else
+			-- magical weaponskills
+			check_bullet = gear.MAbullet
+		end
+	elseif spell.type == 'CorsairShot' then
+		check_bullet = gear.QDbullet
+	elseif spell.action_type == 'Ranged Attack' then
+		check_bullet = gear.RAbullet
+		if buffactive['Triple Shot'] then
+			check_bullet_count = 3
+		end
+	end
+	
+	if check_bullet then
+		if not player.inventory[check_bullet] then
+			add_to_chat(104, 'No ammo available for that action.')
+			eventArgs.cancel = true
+			return
+		end
+		
+		if check_bullet == gear.QDbullet and spell.type ~= 'CorsairShot' and
+		   player.inventory[check_bullet].count <= check_bullet_count then
+			add_to_chat(104, 'No ammo will be left for Quick Draw.  Cancelling.')
+			eventArgs.cancel = true
+			return
+		end
+		
+		if player.inventory[check_bullet].count <= options.warning_limit and
+		   player.inventory[check_bullet].count > 1 and not state.warned then
+			add_to_chat(104, '*****************************')
+			add_to_chat(104, '*****  LOW AMMO WARNING *****')
+			add_to_chat(104, '*****************************')
+			state.warned = true
+		elseif player.inventory[check_bullet].count > warning_limit and state.warned then
+			state.warned = false
+		end
+	end
+	
+
+	-- gear sets
 	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.LuzafRing then
 		equip(sets.precast.LuzafRing)
 	elseif spell.type == 'CorsairShot' and state.CastingMode == 'Resistant' then
 		classes.CustomClass = 'Acc'
-	elseif spell.action_type == 'Ranged Attack' and
-		(not player.inventory['Adlivun Bullet'] or player.inventory['Adlivun Bullet'].count < 5) then
-		add_to_chat(123, 'Insufficient ammo to continue firing.')
-		eventArgs.cancel = true
 	elseif spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
