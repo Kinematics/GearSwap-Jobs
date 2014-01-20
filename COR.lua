@@ -32,7 +32,25 @@ function get_sets()
 
 	-- Global default binds
 	binds_on_load()
-	
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	binds_on_unload()
+
+	if unload_user_gear then
+		unload_user_gear()
+	else
+		windower.send_command('unbind ^`')
+		windower.send_command('unbind !`')
+	end
+end
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
+	-- Default macro set/book
+	set_macro_page(1, 19)
+
 	-- Additional local binds
 
 	-- Cor doesn't use hybrid defense mode; using that for ranged mode adjustments.
@@ -40,19 +58,7 @@ function get_sets()
 
 	windower.send_command('bind ^` input /ja "Double-up" <me>')
 	windower.send_command('bind !` input /ja "Bolter\'s Roll" <me>')
-end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	binds_on_unload()
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !`')
-end
-
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(1, 19)
 
 	-- Options: Override default values
 	options.OffenseModes = {'Ranged', 'Melee', 'Acc'}

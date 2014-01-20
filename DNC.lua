@@ -22,15 +22,6 @@ function get_sets()
 
 	-- Global default binds
 	binds_on_load()
-	
-	-- Additional local binds
-	
-	windower.send_command('bind ^= gs c cycle mainstep')
-	windower.send_command('bind != gs c cycle altstep')
-	windower.send_command('bind ^- gs c toggle selectsteptarget')
-	windower.send_command('bind !- gs c toggle usealtstep')
-	windower.send_command('bind ^` input /ja "Chocobo Jig" <me>')
-	windower.send_command('bind !` input /ja "Chocobo Jig II" <me>')
 end
 
 
@@ -38,12 +29,16 @@ end
 function file_unload()
 	binds_on_unload()
 	
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !`')
-	windower.send_command('unbind ^=')
-	windower.send_command('unbind !=')
-	windower.send_command('unbind ^-')
-	windower.send_command('unbind !-')
+	if unload_user_gear then
+		unload_user_gear()
+	else
+		send_command('unbind ^`')
+		send_command('unbind !`')
+		send_command('unbind ^=')
+		send_command('unbind !=')
+		send_command('unbind ^-')
+		send_command('unbind !-')
+	end
 end
 
 
@@ -51,6 +46,15 @@ end
 function init_gear_sets()
 	-- Default macro set/book
 	set_macro_page(5, 20)
+
+	-- Additional local binds
+	send_command('bind ^= gs c cycle mainstep')
+	send_command('bind != gs c cycle altstep')
+	send_command('bind ^- gs c toggle selectsteptarget')
+	send_command('bind !- gs c toggle usealtstep')
+	send_command('bind ^` input /ja "Chocobo Jig" <me>')
+	send_command('bind !` input /ja "Chocobo Jig II" <me>')
+
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}

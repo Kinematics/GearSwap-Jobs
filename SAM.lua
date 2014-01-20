@@ -22,18 +22,19 @@ function get_sets()
 
 	-- Global default binds
 	binds_on_load()
-	
-	-- Additional local binds
-	windower.send_command('bind ^` input /ja "Hasso" <me>')
-	windower.send_command('bind !` input /ja "Seigan" <me>')
 end
 
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	binds_on_unload()
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !`')
+
+	if unload_user_gear then
+		unload_user_gear()
+	else
+		windower.send_command('unbind ^`')
+		windower.send_command('unbind !-')
+	end
 end
 
 
@@ -41,6 +42,10 @@ end
 function init_gear_sets()
 	-- Default macro set/book
 	set_macro_page(2, 11)
+	
+	-- Additional local binds
+	windower.send_command('bind ^` input /ja "Hasso" <me>')
+	windower.send_command('bind !` input /ja "Seigan" <me>')
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}

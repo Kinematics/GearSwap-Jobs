@@ -23,8 +23,6 @@ function get_sets()
 	-- Global default binds
 	binds_on_load()
 	
-	-- Additional local binds
-
 	determine_haste_group()
 end
 
@@ -32,6 +30,10 @@ end
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	binds_on_unload()
+
+	if unload_user_gear then
+		unload_user_gear()
+	end
 end
 
 
