@@ -47,6 +47,21 @@ mappings.skillchain_elements.Impaction = S{'Lightning'}
 mappings.skillchain_elements.Reverberation = S{'Water'}
 
 
+
+-- list of weaponskills that use ammo
+mappings.bow_gun_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arrow", "Sidewinder", "Blast Arrow",
+	"Arching Arrow", "Empyreal Arrow", "Refulgent Arrow", "Apex Arrow", "Namas Arrow", "Jishnu's Radiance",
+	"Hot Shot", "Split Shot", "Sniper Shot", "Slug Shot", "Blast Shot", "Heavy Shot", "Detonator",
+	"Numbing Shot", "Last Stand", "Coronach", "Trueflight", "Leaden Salute", "Wildfire"}
+
+-- list of weaponskills that can be used at greater than melee range
+mappings.ranged_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arrow", "Sidewinder", "Arching Arrow",
+	"Empyreal Arrow", "Refulgent Arrow", "Apex Arrow", "Namas Arrow", "Jishnu's Radiance",
+	"Hot Shot", "Split Shot", "Sniper Shot", "Slug Shot", "Heavy Shot", "Detonator", "Last Stand",
+	"Coronach", "Trueflight", "Leaden Salute", "Wildfire",
+	"Myrkr"}
+
+
 -------------------------------------------------------------------------------------------------------------------
 -- Spell mappings allow defining a general category or description that each of sets of related
 -- spells all fall under.
