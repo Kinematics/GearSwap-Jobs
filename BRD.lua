@@ -20,9 +20,6 @@ function get_sets()
 		init_gear_sets()
 	end
 
-	-- Default macro set/book
-	set_macro_page(2, 18)
-	
 	-- Global default binds
 	binds_on_load()
 	
@@ -40,6 +37,9 @@ end
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
+	-- Default macro set/book
+	set_macro_page(2, 18)
+	
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
 	options.OffenseModes = {'None', 'Normal'}
