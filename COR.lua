@@ -38,8 +38,8 @@ end
 function file_unload()
 	binds_on_unload()
 
-	if unload_user_gear then
-		unload_user_gear()
+	if user_unload then
+		user_unload()
 	else
 		windower.send_command('unbind ^`')
 		windower.send_command('unbind !`')
