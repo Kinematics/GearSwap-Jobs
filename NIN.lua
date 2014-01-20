@@ -25,6 +25,8 @@ function get_sets()
 	binds_on_load()
 	
 	-- Additional local binds
+
+	determine_haste_group()
 end
 
 
@@ -373,12 +375,20 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
+	-- If we gain or lose any haste buffs, adjust which gear set we target.
+	if S{'haste','march','embrava','haste samba'}:contains(buff:lower()) then
+		determine_haste_group()
+		handle_equipping_gear(player.status)
+	elseif state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
 		handle_equipping_gear(player.status)
 	end
 end
 
+-- Called by the default 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	determine_haste_group()
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
