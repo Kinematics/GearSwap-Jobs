@@ -695,7 +695,7 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 			equipSet = sets.midcast[spell.type]
 			
 			if equipSet[spell.english] then
-				equipSet = sets.midcast[spell.english]
+				equipSet = equipSet[spell.english]
 			elseif spellMap and equipSet[spellMap] then
 				equipSet = equipSet[spellMap]
 			end
@@ -713,7 +713,7 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 	elseif spell.action_type == 'Item' then
 		-- no equip handling for item use
 	end
-	
+
 	return equipSet
 end
 
