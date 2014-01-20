@@ -16,7 +16,9 @@ function get_sets()
 	end
 
 	-- Define sets and vars used by this job file.
-	self_initialize()
+	if not load_user_gear(player.main_job) then
+		init_gear_sets()
+	end
 
 	-- Default macro set/book
 	set_macro_page(4, 14)
@@ -35,7 +37,7 @@ end
 
 
 -- Define sets and vars used by this job file.
-function self_initialize()
+function init_gear_sets()
 	-- Options: Override default values
 	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}

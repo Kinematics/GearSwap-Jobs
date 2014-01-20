@@ -16,7 +16,9 @@ function get_sets()
 	end
 
 	-- Define sets and vars used by this job file.
-	init_gear_sets()
+	if not load_user_gear(player.main_job) then
+		init_gear_sets()
+	end
 
 	-- Default macro set/book
 	set_macro_page(5, 20)
