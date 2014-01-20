@@ -16,7 +16,7 @@ function get_sets()
 	end
 
 	-- Define sets and vars used by this job file.
-	self_initialize()
+	init_gear_sets()
 
 	-- Default macro set/book
 	set_macro_page(3, 4)
@@ -35,7 +35,7 @@ end
 
 
 -- Define sets and vars used by this job file.
-function self_initialize()
+function init_gear_sets()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
