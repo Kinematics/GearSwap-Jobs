@@ -80,7 +80,7 @@ function init_gear_sets()
 	gear.MAbullet = "Bronze Bullet"
 	gear.QDbullet = "Adlivun Bullet"
 	state.warned = false
-	options.warning_limit = 15
+	options.ammo_warning_limit = 15
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -309,26 +309,32 @@ function job_precast(spell, action, spellMap, eventArgs)
 	
 	if check_bullet then
 		if not player.inventory[check_bullet] then
-			add_to_chat(104, 'No ammo available for that action.')
-			eventArgs.cancel = true
-			return
+			if spell.type == 'CorsairShot' and player.equipment.ammo ~= 'empty' then
+				add_to_chat(104, 'No Quick Draw ammo left.  Using what\'s currently equipped ('..player.equipment.ammo..').')
+			else
+				add_to_chat(104, 'No ammo available for that action.')
+				eventArgs.cancel = true
+				return
+			end
 		end
 		
-		if check_bullet == gear.QDbullet and spell.type ~= 'CorsairShot' and
-		   player.inventory[check_bullet].count <= check_bullet_count then
-			add_to_chat(104, 'No ammo will be left for Quick Draw.  Cancelling.')
-			eventArgs.cancel = true
-			return
-		end
-		
-		if player.inventory[check_bullet].count <= options.warning_limit and
-		   player.inventory[check_bullet].count > 1 and not state.warned then
-			add_to_chat(104, '*****************************')
-			add_to_chat(104, '*****  LOW AMMO WARNING *****')
-			add_to_chat(104, '*****************************')
-			state.warned = true
-		elseif player.inventory[check_bullet].count > warning_limit and state.warned then
-			state.warned = false
+		if spell.type ~= 'CorsairShot' then
+			if check_bullet == gear.QDbullet and
+			   player.inventory[check_bullet].count <= check_bullet_count then
+				add_to_chat(104, 'No ammo will be left for Quick Draw.  Cancelling.')
+				eventArgs.cancel = true
+				return
+			end
+			
+			if player.inventory[check_bullet].count <= options.ammo_warning_limit and
+			   player.inventory[check_bullet].count > 1 and not state.warned then
+				add_to_chat(104, '*****************************')
+				add_to_chat(104, '*****  LOW AMMO WARNING *****')
+				add_to_chat(104, '*****************************')
+				state.warned = true
+			elseif player.inventory[check_bullet].count > warning_limit and state.warned then
+				state.warned = false
+			end
 		end
 	end
 	
