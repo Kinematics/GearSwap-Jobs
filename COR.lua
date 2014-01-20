@@ -4,6 +4,16 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
+--[[
+	gs c toggle luzaf -- Toggles use of Luzaf Ring on and off
+	
+	Offense mode is melee or ranged.  Used ranged offense mode if you are engaged
+	for ranged weaponskills, but not actually meleeing.
+	Acc on offense mode (which is intended for melee) will currently use .Acc weaponskill
+	mode for both melee and ranged weaponskills.  Need to fix that in core.
+--]]
+
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
@@ -55,7 +65,7 @@ function self_initialize()
 	state.Defense.PhysicalMode = 'PDT'
 
 	-- Whether to use Luzaf's Ring
-	state.UseLuzafRing = false
+	state.LuzafRing = false
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -118,6 +128,8 @@ function self_initialize()
 
 	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {legs="Nahtirah Trousers"})
 
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {legs="Nahtirah Trousers"})
+
 	sets.precast.WS['Last Stand'] = {
 		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Clearview Earring",ear2="Moonshade Earring",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
@@ -131,8 +143,15 @@ function self_initialize()
 
 	sets.precast.WS['Wildfire'] = {ammo="Bronze Bullet",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Hajduk Ring",ring2="Demon's Ring",
+		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters"}
+
+	sets.precast.WS['Wildfire'].Brew = {ammo="Bronze Bullet",
+		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Manibozho Jerkin",hands="Iuitl Wristbands",ring1="Stormsoul Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters"}
+	
+	sets.precast.WS['Leaden Salute'] = sets.precast.WS['Wildfire']
 	
 	
 	-- Midcast Sets
@@ -252,7 +271,7 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.UseLuzafRing then
+	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.LuzafRing then
 		equip(sets.precast.LuzafRing)
 	elseif spell.action_type == 'Ranged Attack' and
 		(not player.inventory['Adlivun Bullet'] or player.inventory['Adlivun Bullet'].count < 5) then
@@ -318,8 +337,8 @@ end
 -- Job-specific toggles.
 function job_toggle(field)
 	if field:lower() == 'luzaf' then
-		state.UseLuzafRing = not state.UseLuzafRing
-		return "Use of Luzaf Ring", state.UseLuzafRing
+		state.LuzafRing = not state.LuzafRing
+		return "Use of Luzaf Ring", state.LuzafRing
 	end
 end
 
@@ -392,9 +411,13 @@ end
 
 function display_roll_info(spell)
 	rollinfo = rolls[spell.english]
+	local rollsize = 'Small'
+	if state.LuzafRing then
+		rollsize = 'Large'
+	end
 	if rollinfo then
-		add_to_chat(104, spell.english..' provides a bonus to '..rollinfo.bonus..'. Lucky roll is '..
-			tostring(rollinfo.lucky)..', Unlucky roll is '..tostring(rollinfo.unlucky)..'.')
+		add_to_chat(104, spell.english..' provides a bonus to '..rollinfo.bonus..'.  Roll size: '..rollsize)
+		add_to_chat(104, 'Lucky roll is '..tostring(rollinfo.lucky)..', Unlucky roll is '..tostring(rollinfo.unlucky)..'.')
 	end
 end
 
