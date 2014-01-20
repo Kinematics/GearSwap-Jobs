@@ -158,7 +158,9 @@ function MoteInclude.init_include(version)
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
 	-- Include general user globals, such as custom binds or gear tables.
-	include('Mote-Globals')
+	if not load_user_globals() then
+		include('Mote-Globals')
+	end
 
 end
 

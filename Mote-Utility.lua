@@ -392,6 +392,47 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
+-- Utility functions for including local user files.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Attempt to load user gear files in place of default gear sets.
+-- Return true if one exists and was loaded.
+function utility.load_user_gear(job)
+	if not job then return false end
+	
+	-- filename format example for user-local files: whm_gear.lua, or playername_whm_gear.lua
+	local filenames = {player.name..'_'..job..'_gear.lua', job..'_gear.lua'}
+
+	if optional_include(filenames) then
+		if init_user_gear_sets then
+			init_user_gear_sets()
+			return true
+		end
+	end
+end
+
+-- Attempt to include user-globals.  Return true if it exists and was loaded.
+function utility.load_user_globals()
+	local filenames = {'user-globals.lua'}
+
+	return optional_include(filenames)
+end
+
+-- Optional version of include().  If file does not exist, does not
+-- attempt to load, and does not throw an error.
+-- filenames takes an array of possible file names to include and checks
+-- each one.
+function utility.optional_include(filenames)
+	for _,v in pairs(filenames) do
+		local path = gearswap.pathsearch({v})
+		if path then
+			include(v)
+			return true
+		end
+	end
+end
+
+-------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------
 
