@@ -364,6 +364,11 @@ function display_current_job_state(eventArgs)
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
 	
+	local rollsize = 'Small'
+	if state.LuzafRing then
+		rollsize = 'Large'
+	end
+	
 	local pcTarget = ''
 	if state.PCTargetMode ~= 'default' then
 		pcTarget = ', Target PC: '..state.PCTargetMode
@@ -376,7 +381,8 @@ function display_current_job_state(eventArgs)
 	
 
 	add_to_chat(122,'Offense: '..state.OffenseMode..', Ranged: '..state.RangedMode..', WS: '..state.WeaponskillMode..
-		', Quick Draw: '..state.CastingMode..', '..defenseString..'Kiting: '..on_off_names[state.Kiting]..pcTarget..npcTarget)
+		', Quick Draw: '..state.CastingMode..', '..defenseString..'Kiting: '..on_off_names[state.Kiting]..
+		', Roll Size: '..rollsize..pcTarget..npcTarget)
 
 	eventArgs.handled = true
 end
