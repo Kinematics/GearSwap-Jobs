@@ -273,6 +273,8 @@ end
 function job_precast(spell, action, spellMap, eventArgs)
 	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.LuzafRing then
 		equip(sets.precast.LuzafRing)
+	elseif spell.type == 'CorsairShot' and state.CastingMode == 'Resistant' then
+		classes.CustomClass = 'Acc'
 	elseif spell.action_type == 'Ranged Attack' and
 		(not player.inventory['Adlivun Bullet'] or player.inventory['Adlivun Bullet'].count < 5) then
 		add_to_chat(123, 'Insufficient ammo to continue firing.')
