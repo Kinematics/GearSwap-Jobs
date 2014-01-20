@@ -183,6 +183,7 @@ function self_initialize()
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
+	sets.midcast.Stun = set_combine(sets.midcast.DarkMagic, {main=gear.RecastStaff})
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
