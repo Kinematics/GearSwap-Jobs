@@ -37,6 +37,17 @@ Within whm_gear.lua, create a function called init_user_gear_sets().  When first
 These sidecar files will not be part of the repository, and thus will not be updated or modified when you keep your files updated to the latest public version.
 
 
+Example code:
+
+local user = {}
+
+function user.init_user_gear_sets()
+    add_to_chat(123,'sidecar load')
+end
+
+return user
+
+
 
 
 
