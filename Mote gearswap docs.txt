@@ -29,10 +29,10 @@ Main file - whm.lua
 User file - whm_gear.lua  (or playername_whm_gear.lua)
 
 Functions:
-init_user_gear_sets
-user_unload
+init_gear_sets
+file_unload
 
-Within whm_gear.lua, create a function called init_user_gear_sets().  When first created you can copy everything from the main file's init_gear_sets() function, and then fill in your own actual gear.  user_unload() is called when the file is unloaded, if you need any custom unload logic.
+Within whm_gear.lua, create a function called init_gear_sets().  When first created you can copy everything from the main file's init_gear_sets() function, and then fill in your own actual gear.  file_unload() is called when the file is unloaded, if you need any custom unload logic.
 
 These sidecar files will not be part of the repository, and thus will not be updated or modified when you keep your files updated to the latest public version.
 
@@ -41,11 +41,11 @@ Example code:
 
 local user = {}
 
-function user.init_user_gear_sets()
+function user.init_gear_sets()
     -- Put all set definitions here, as well as any other customization that is user-specific.
 end
 
-function user.user_unload()
+function user.file_unload()
     -- Called on unload, if needed
 end
 
