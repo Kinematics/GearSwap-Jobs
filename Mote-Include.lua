@@ -523,7 +523,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	-- Update defintions for element-specific gear that can be used.
-	set_spell_obi_cape_ring(spell)
+	--set_spell_obi_cape_ring(spell)
 	set_weaponskill_gorget_belt(spell)
 	set_fastcast_staff(spell)
 	set_recast_staff(spell)
