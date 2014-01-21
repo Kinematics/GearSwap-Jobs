@@ -93,6 +93,7 @@ function init_gear_sets()
 	sets.precast.JA['Triple Shot'] = {body="Navarch's Frac +2"}
 	sets.precast.JA['Snake Eye'] = {legs="Commodore Culottes +2"}
 	sets.precast.JA['Wild Card'] = {feet="Commodore Bottes +2"}
+	sets.precast.JA['Random Deal'] = {body="Commodore Frac"}
 
 	
 	sets.precast.CorsairRoll = {head="Commodore's Tricorne +2",hands="Navarch's Gants +2"}
