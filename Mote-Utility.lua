@@ -168,6 +168,7 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 		end
 	end
 
+	local waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
 	local tpCost = waltzTPCost[newWaltz]
 	local downgrade
 	

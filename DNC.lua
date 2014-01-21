@@ -78,9 +78,6 @@ function init_gear_sets()
 	
 	skillchainPending = false
 	
-	waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
-	
-	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
