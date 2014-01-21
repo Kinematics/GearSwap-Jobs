@@ -15,10 +15,10 @@ function get_sets()
 		define_global_sets()
 	end
 
-	-- Define sets and vars used by this job file.
-	if not load_user_gear(player.main_job) then
-		init_gear_sets()
-	end
+	-- Optional: load a sidecar version of the init and unload functions.
+	load_user_gear(player.main_job)
+	
+	init_gear_sets()
 
 	-- Global default binds
 	binds_on_load()
@@ -27,10 +27,6 @@ end
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	binds_on_unload()
-
-	if user_unload then
-		user_unload()
-	end
 end
 
 -- Define sets and vars used by this job file.
