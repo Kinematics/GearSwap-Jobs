@@ -42,7 +42,11 @@ Example code:
 local user = {}
 
 function user.init_user_gear_sets()
-    add_to_chat(123,'sidecar load')
+    -- Put all set definitions here, as well as any other customization that is user-specific.
+end
+
+function user.user_unload()
+    -- Called on unload, if needed
 end
 
 return user
