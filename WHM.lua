@@ -170,7 +170,7 @@ function init_gear_sets()
 	-- Spell skill categories
 	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
 		body="Manasa Chasuble",hands="Dynasty Mitts",
-		legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
 
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
