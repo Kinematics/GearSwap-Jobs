@@ -187,7 +187,7 @@ function init_gear_sets()
 	
 	sets.midcast.Pet.PhysicalBloodPactRage = set_combine(sets.midcast.Pet.BloodPactWard,
 		{head="Bokwus Circlet",body="Convoker's Doublet",
-		back="Tiresias' Cape",legs="Caller's Spats +2",feet="Summoner's Pigaches"})
+		back="Tiresias' Cape",legs="Convoker's Spats",feet="Convoker's Pigaches"})
 
 	sets.midcast.Pet.MagicalBloodPactRage = set_combine(sets.midcast.Pet.BloodPactWard,
 		{main="Uffrat +1",head="Bokwus Circlet",body="Convoker's Doublet",
@@ -218,7 +218,7 @@ function init_gear_sets()
 	sets.idle.Pet = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Caller's Pigaches +2"}
+		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
 	sets.idle.PDT.Pet = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
@@ -242,13 +242,13 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {main=gear.Staff.PDT,
 		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.defense.MDT = {
 		head="Hagondes Hat",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 
