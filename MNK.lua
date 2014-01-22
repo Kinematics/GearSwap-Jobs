@@ -56,7 +56,7 @@ function init_gear_sets()
 	-- Precast sets to enhance JAs on use
 	sets.precast.JA['Hundred Fists'] = {legs="Melee Hose +2"}
 
-	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves"}
+	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves +1"}
 
 	sets.precast.JA['Dodge'] = {feet="Temple Gaiters +1"}
 
@@ -103,13 +103,13 @@ function init_gear_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Manibozho Jerkin",hands="Anchorite's Gloves +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS["Victory Smite"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",hands="Anchorite's Gloves"})
-	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",hands="Anchorite's Gloves"})
+	sets.precast.WS["Victory Smite"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
+	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], {waist="Thunder Belt",feet="Otronif Boots"})
 
 	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck="Light Gorget"})
@@ -137,7 +137,7 @@ function init_gear_sets()
 		waist="Black Belt",feet="Otronif Boots"}
 		
 	-- Specific spells
-	sets.midcast.Utsusemi = {
+	sets.midcast.Utsusemi = {ammo="Impatiens",
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Otronif Harness",hands="Thaumas Gloves",
 		waist="Black Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
@@ -193,12 +193,12 @@ function init_gear_sets()
 	
 	-- Normal melee group
 	sets.engaged = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Mod = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -241,7 +241,7 @@ function init_gear_sets()
 
 	-- Hundred Fists melee group
 	sets.engaged.HF = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.HF.Acc = {ammo="Honed Tathlum",
@@ -249,7 +249,7 @@ function init_gear_sets()
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.HF.PDT = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.HF.Acc.PDT = {ammo="Honed Tathlum",
@@ -257,7 +257,7 @@ function init_gear_sets()
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.HF.Impetus = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.HF.Impetus.Acc = {ammo="Honed Tathlum",
@@ -265,7 +265,7 @@ function init_gear_sets()
 		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.HF.Impetus.PDT = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.HF.Impetus.Acc.PDT = {ammo="Honed Tathlum",
