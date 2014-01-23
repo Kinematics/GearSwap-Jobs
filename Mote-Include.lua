@@ -434,23 +434,6 @@ function MoteInclude.status_change(newStatus, oldStatus)
 end
 
 
--- Called when the player's pet's status changes.
-function MoteInclude.pet_status_change(newStatus, oldStatus)
-	-- Init a new eventArgs
-	local eventArgs = {handled = false}
-
-	-- Allow jobs to override this code
-	if job_pet_status_change then
-		job_pet_status_change(newStatus, oldStatus, eventArgs)
-	end
-
-	-- Equip default gear if not handled by the job.
-	if not eventArgs.handled then
-		handle_equipping_gear(player.status, newStatus)
-	end
-end
-
-
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
@@ -469,6 +452,40 @@ function MoteInclude.buff_change(buff, gain)
 		if user_buff_change then
 			user_buff_change(buff, gain, eventArgs)
 		end
+	end
+end
+
+
+-- Called when a player gains or loses a pet.
+-- pet == pet gained or lost
+-- gain == true if the pet was gained, false if it was lost.
+function MoteInclude.pet_change(pet, gain)
+	-- Init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to handle pet change events.
+	if job_pet_change then
+		job_pet_change(pet, gain, eventArgs)
+	end
+
+	-- Equip default gear if not handled by the job.
+	if not eventArgs.handled then
+		handle_equipping_gear(player.status)
+	end
+end
+
+
+-- Called when the player's pet's status changes.
+-- Note that this is also called after pet_change when the pet is released.
+-- As such, don't automatically handle gear equips.  Only do so if directed
+-- to do so by the job.
+function MoteInclude.pet_status_change(newStatus, oldStatus)
+	-- Init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to override this code
+	if job_pet_status_change then
+		job_pet_status_change(newStatus, oldStatus, eventArgs)
 	end
 end
 
