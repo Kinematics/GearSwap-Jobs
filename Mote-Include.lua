@@ -128,9 +128,9 @@ function MoteInclude.init_include(version)
 	sets.precast.FC = {}
 	sets.precast.JA = {}
 	sets.precast.WS = {}
-	sets.precast.Ranged = {}
+	sets.precast.RangedAttack = {}
 	sets.midcast = {}
-	sets.midcast.Ranged = {}
+	sets.midcast.RangedAttack = {}
 	sets.midcast.Pet = {}
 	sets.idle = {}
 	sets.resting = {}
@@ -557,7 +557,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		end
 	elseif spell.action_type == 'Ranged Attack' then
 		-- Ranged attacks use sets.precast.Ranged.
-		equipSet = sets.precast.Ranged
+		equipSet = sets.precast.RangedAttack
 
 		-- Custom class modification
 		if classes.CustomClass and equipSet[classes.CustomClass] then
@@ -675,7 +675,7 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[state.CastingMode]
 		end
 	elseif spell.action_type == 'Ranged Attack' then
-		equipSet = sets.midcast.Ranged
+		equipSet = sets.midcast.RangedAttack
 
 		-- Custom class modification
 		if classes.CustomClass and equipSet[classes.CustomClass] then

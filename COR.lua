@@ -121,7 +121,7 @@ function init_gear_sets()
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
 
-	sets.precast.Ranged = {ammo=gear.RAbullet,
+	sets.precast.RangedAttack = {ammo=gear.RAbullet,
 		head="Navarch's Tricorne +2",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",
 		back="Navarch's Mantle",waist="Impulse Belt",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
@@ -194,12 +194,12 @@ function init_gear_sets()
 
 
 	-- Ranged gear
-	sets.midcast.Ranged = {ammo=gear.RAbullet,
+	sets.midcast.RangedAttack = {ammo=gear.RAbullet,
 		head="Whirlpool Mask",neck="Ocachi Gorget",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
 		back="Terebellum Mantle",waist="Commodore Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
-	sets.midcast.Ranged.Acc = {ammo=gear.RAbullet,
+	sets.midcast.RangedAttack.Acc = {ammo=gear.RAbullet,
 		head="Laksamana's Hat",neck="Huani Collar",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Laksamana's Frac",hands="Buremte Gloves",ring1="Hajduk Ring",ring2="Stormsoul Ring",
 		back="Libeccio Mantle",waist="Commodore Belt",legs="Thurandaut Tights +1",feet="Laksamana's Bottes"}

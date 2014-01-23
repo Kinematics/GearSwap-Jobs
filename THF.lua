@@ -113,7 +113,7 @@ function init_gear_sets()
 
 
 	-- Ranged gaer
-	sets.precast.Ranged = {head="Whirlpool Mask",neck="Peacock Charm",
+	sets.precast.RangedAttack = {head="Whirlpool Mask",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Assassin's Armlets +2",
 		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
