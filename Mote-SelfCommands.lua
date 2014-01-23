@@ -4,11 +4,9 @@
 -- allows the user to hook into the cycle command.
 -------------------------------------------------------------------------------------------------------------------
 
-local selfCommands = {}
-
 -- Routing function for general known self_commands.
 -- Handles splitting the provided command line up into discrete words, for the other functions to use.
-function selfCommands.self_command(commandArgs)
+function self_command(commandArgs)
 	local commandArgs = commandArgs
 	if type(commandArgs) == 'string' then
 		commandArgs = T(commandArgs:split(' '))
@@ -45,7 +43,7 @@ end
 -- Valid toggles: Defense, Kiting
 -- Returns true if a known toggle was handled.  Returns false if not.
 -- User command format: gs c toggle [field]
-function selfCommands.handle_toggle(cmdParams)
+function handle_toggle(cmdParams)
 	if #cmdParams > 0 then
 		-- identifier for the field we're toggling
 		local toggleField = cmdParams[1]:lower()
@@ -97,7 +95,7 @@ end
 
 -- Function to handle turning on particular states, while possibly also setting a mode value.
 -- User command format: gs c activate [field]
-function selfCommands.handle_activate(cmdParams)
+function handle_activate(cmdParams)
 	if #cmdParams > 0 then
 		activateState = cmdParams[1]:lower()
 		local activateDesc = ''
@@ -145,7 +143,7 @@ end
 -- All fields must end in 'Mode'
 -- Returns true if a known toggle was handled.  Returns false if not.
 -- User command format: gs c cycle [field]
-function selfCommands.handle_cycle(cmdParams)
+function handle_cycle(cmdParams)
 	if #cmdParams > 0 then
 		-- identifier for the field we're toggling
 		local paramField = cmdParams[1]:lower()
@@ -211,7 +209,7 @@ end
 
 -- Function to set various states to specific values directly.
 -- User command format: gs c set [field] [value]
-function selfCommands.handle_set(cmdParams)
+function handle_set(cmdParams)
 	if #cmdParams > 1 then
 		-- identifier for the field we're setting
 		local field = cmdParams[1]
@@ -318,7 +316,7 @@ end
 
 -- Function to turn off togglable features, or reset values to their defaults.
 -- User command format: gs c reset [field]
-function selfCommands.handle_reset(cmdParams)
+function handle_reset(cmdParams)
 	if #cmdParams > 0 then
 		resetState = cmdParams[1]:lower()
 
@@ -382,7 +380,7 @@ end
 -- User command format: gs c update [option]
 -- Where [option] can be 'user' to display current state.
 -- Otherwise, generally refreshes current gear used.
-function selfCommands.handle_update(cmdParams)
+function handle_update(cmdParams)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -402,7 +400,7 @@ end
 
 
 -- showset: equip the current TP set for examination.
-function selfCommands.handle_show_set(cmdParams)
+function handle_show_set(cmdParams)
 	local showset_type
 	if cmdParams[1] then
 		showset_type = cmdParams[1]:lower()
@@ -443,7 +441,7 @@ end
 -- Minor variation on the GearSwap "gs equip naked" command, that ensures that
 -- all slots are enabled before removing gear.
 -- Command: "gs c naked"
-function selfCommands.handle_naked(cmdParams)
+function handle_naked(cmdParams)
 	enable('main','sub','range','ammo','head','neck','lear','rear','body','hands','lring','rring','back','waist','legs','feet')
 	equip(sets.naked)
 end
@@ -452,7 +450,7 @@ end
 ------  Utility functions to support self commands. ------
 
 -- Function to get the options.XXXModes list and the corresponding state value for the requested field.
-function selfCommands.get_mode_list(field)
+function get_mode_list(field)
 	local modeList = {}
 	local currentValue = ''
 
@@ -502,7 +500,7 @@ function selfCommands.get_mode_list(field)
 end
 
 -- Function to set the appropriate state value for the specified field.
-function selfCommands.set_mode(field, val)
+function set_mode(field, val)
 	if field == 'Offense' then
 		state.OffenseMode = val
 	elseif field == 'Defense' then
@@ -536,7 +534,7 @@ end
 
 -- Function to display the current relevant user state when doing an update.
 -- Uses display_current_job_state instead if that is defined in the job lua.
-function selfCommands.display_current_state()
+function display_current_state()
 	local eventArgs = {handled = false}
 	if display_current_job_state then
 		display_current_job_state(eventArgs)
@@ -578,7 +576,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- A function for testing lua code.  Called via "gs c test".
-function selfCommands.handle_test(cmdParams)
+function handle_test(cmdParams)
 	if user_test then
 		user_test(cmdParams)
 	end
@@ -590,16 +588,14 @@ end
 -- The below table maps text commands to the above handler functions.
 -------------------------------------------------------------------------------------------------------------------
 
-selfCommands.selfCommandMaps = {
-	['toggle']   = selfCommands.handle_toggle,
-	['activate'] = selfCommands.handle_activate,
-	['cycle']    = selfCommands.handle_cycle,
-	['set']      = selfCommands.handle_set,
-	['reset']    = selfCommands.handle_reset,
-	['update']   = selfCommands.handle_update,
-	['showset']  = selfCommands.handle_show_set,
-	['naked']    = selfCommands.handle_naked,
-	['test']     = selfCommands.handle_test}
+selfCommandMaps = {
+	['toggle']   = handle_toggle,
+	['activate'] = handle_activate,
+	['cycle']    = handle_cycle,
+	['set']      = handle_set,
+	['reset']    = handle_reset,
+	['update']   = handle_update,
+	['showset']  = handle_show_set,
+	['naked']    = handle_naked,
+	['test']     = handle_test}
 
-
-return selfCommands

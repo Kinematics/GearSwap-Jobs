@@ -3,13 +3,11 @@
 -- include file deals with.
 -------------------------------------------------------------------------------------------------------------------
 
-local utility = {}
-
 -------------------------------------------------------------------------------------------------------------------
 -- Function to easily change to a given macro set or book.  Book value is optional.
 -------------------------------------------------------------------------------------------------------------------
 
-function utility.set_macro_page(set,book)
+function set_macro_page(set,book)
 	if not tonumber(set) then
 		add_to_chat(123,'Error setting macro page: Set is not a valid number ('..tostring(set)..').')
 		return
@@ -38,7 +36,7 @@ end
 -- Utility functions for changing target types and spells in an automatic manner.
 -------------------------------------------------------------------------------------------------------------------
 
-function utility.auto_change_target(spell, action, spellMap)
+function auto_change_target(spell, action, spellMap)
 	-- Do not modify target for spells where we get <lastst> or <me>.
 	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
@@ -106,7 +104,7 @@ end
 -- Returns two values on completion:
 -- 1) bool of whether the original spell was cancelled
 -- 2) bool of whether the spell was changed to something new
-function utility.refine_waltz(spell, action, spellMap, eventArgs)
+function refine_waltz(spell, action, spellMap, eventArgs)
 	if spell.type ~= 'Waltz' then
 		return
 	end
@@ -217,7 +215,7 @@ function utility.refine_waltz(spell, action, spellMap, eventArgs)
 end
 
 
-function utility.find_player_in_alliance(name)
+function find_player_in_alliance(name)
 	for i,v in ipairs(alliance) do
 		for k,p in ipairs(v) do
 			if p.name == name then
@@ -232,7 +230,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Function to get the current weather intensity: 0 for none, 1 for single weather, 2 for double weather.
-function utility.get_weather_intensity()
+function get_weather_intensity()
 	if world.weather_id <= 3 then
 		return 0
 	else
@@ -241,7 +239,7 @@ function utility.get_weather_intensity()
 end
 
 
-function utility.is_trust_party()
+function is_trust_party()
 	-- Check if we're solo
 	if party.count == 1 then
 		return false
@@ -286,7 +284,7 @@ end
 -- It may optionally provide a list of valid elements, rather than
 -- searching all possible elements.
 -- Returns the item var if it found a match and the item was in inventory.
-function utility.select_elemental_item(itemvar, itemtype, elements_to_search, valid_elements)
+function select_elemental_item(itemvar, itemtype, elements_to_search, valid_elements)
 	local elements_list = valid_elements or elements.list
 	
 	for _,element in ipairs(elements_list) do
@@ -299,7 +297,7 @@ end
 
 
 -- Function to get an appropriate gorget and belt for the current weaponskill.
-function utility.set_weaponskill_gorget_belt(spell)
+function set_weaponskill_gorget_belt(spell)
 	if spell.type ~= 'WeaponSkill' then
 		return
 	end
@@ -324,7 +322,7 @@ end
 
 
 -- Function to get an appropriate obi/cape/ring for the current spell.
-function utility.set_spell_obi_cape_ring(spell)
+function set_spell_obi_cape_ring(spell)
 	if spell.element == 'None' then
 		return
 	end
@@ -357,7 +355,7 @@ end
 
 
 -- Function to get an appropriate gorget and belt for the current weaponskill.
-function utility.set_fastcast_staff(spell)
+function set_fastcast_staff(spell)
 	if spell.action_type ~= 'Magic' then
 		return
 	end
@@ -375,7 +373,7 @@ end
 
 
 -- Function to get an appropriate gorget and belt for the current weaponskill.
-function utility.set_recast_staff(spell)
+function set_recast_staff(spell)
 	if spell.action_type ~= 'Magic' then
 		return
 	end
@@ -398,7 +396,7 @@ end
 
 -- Attempt to load user gear files in place of default gear sets.
 -- Return true if one exists and was loaded.
-function utility.load_user_gear(job)
+function load_user_gear(job)
 	if not job then return false end
 	
 	-- filename format example for user-local files: whm_gear.lua, or playername_whm_gear.lua
@@ -407,7 +405,7 @@ function utility.load_user_gear(job)
 end
 
 -- Attempt to include user-globals.  Return true if it exists and was loaded.
-function utility.load_user_globals()
+function load_user_globals()
 	local filenames = {'user-globals.lua'}
 	return optional_include(filenames)
 end
@@ -416,7 +414,7 @@ end
 -- attempt to load, and does not throw an error.
 -- filenames takes an array of possible file names to include and checks
 -- each one.
-function utility.optional_include(filenames)
+function optional_include(filenames)
 	for _,v in pairs(filenames) do
 		local path = gearswap.pathsearch({v})
 		if path then
@@ -432,7 +430,7 @@ end
 
 -- Invert a table such that the keys are values and the values are keys.
 -- Use this to look up the index value of a given entry.
-function utility.invert_table(t)
+function invert_table(t)
 	if t == nil then error('Attempting to invert table, received nil.', 2) end
 	
 	local i={}
@@ -444,7 +442,7 @@ end
 
 -- Gets sub-tables based on baseSet from the string str that may be in dot form
 -- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
-function utility.get_expanded_set(baseSet, str)
+function get_expanded_set(baseSet, str)
 	local cur = baseSet
 	for i in str:gmatch("[^.]+") do
 		cur = cur[i]
@@ -454,5 +452,3 @@ function utility.get_expanded_set(baseSet, str)
 end
 
 
-
-return utility
