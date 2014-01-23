@@ -135,7 +135,7 @@ function init_gear_sets()
 	sets.defense.MDT = {range="Matre Bell",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
-		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Umbra Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 

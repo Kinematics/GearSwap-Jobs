@@ -235,7 +235,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Tuilha Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Tuilha Cape",waist="Hierarch Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 

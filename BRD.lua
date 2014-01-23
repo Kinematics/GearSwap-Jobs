@@ -216,7 +216,7 @@ function init_gear_sets()
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',--[[ring2="Shadow Ring",
-		back="Engulfer Cape",]]waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Engulfer Cape",]]waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 

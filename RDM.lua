@@ -189,7 +189,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		back="Engulfer Cape",waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 
