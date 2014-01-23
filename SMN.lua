@@ -185,13 +185,15 @@ function init_gear_sets()
 		body="Caller's Doublet +2",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
 	
-	sets.midcast.Pet.PhysicalBloodPactRage = set_combine(sets.midcast.Pet.BloodPactWard,
-		{head="Bokwus Circlet",body="Convoker's Doublet",
-		back="Tiresias' Cape",legs="Convoker's Spats",feet="Convoker's Pigaches"})
+	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Caller's Pendant",
+		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
-	sets.midcast.Pet.MagicalBloodPactRage = set_combine(sets.midcast.Pet.BloodPactWard,
-		{main="Uffrat +1",head="Bokwus Circlet",body="Convoker's Doublet",
-		back="Tiresias' Cape",legs="Caller's Spats +2",feet="Hagondes Sabots"})
+	sets.midcast.Pet.MagicalBloodPactRage = {main="Uffrat +1",ammo="Eminent Sachet",
+		head="Bokwus Circlet",neck="Caller's Pendant",
+		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
 	
 	sets.midcast.Pet.Spirit = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})
 
@@ -217,13 +219,13 @@ function init_gear_sets()
 
 	sets.idle.Pet = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
 	sets.idle.PDT.Pet = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
-		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		head="Convoker's Horn",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Evoker's Ring",ring2="Dark Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Convoker's Pigaches"}
 
 	sets.idle.Town = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
