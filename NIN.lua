@@ -9,6 +9,9 @@ function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
+
+	-- Global default binds
+	binds_on_load()
 	
 	-- UserGlobals may define additional sets to be added to the local ones.
 	if define_global_sets then
@@ -19,11 +22,6 @@ function get_sets()
 	load_user_gear(player.main_job)
 	
 	init_gear_sets()
-
-	-- Global default binds
-	binds_on_load()
-	
-	determine_haste_group()
 end
 
 
@@ -37,6 +35,8 @@ end
 function init_gear_sets()
 	-- Default macro set/book
 	set_macro_page(1, 3)
+	
+	determine_haste_group()
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}

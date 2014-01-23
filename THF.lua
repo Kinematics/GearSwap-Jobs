@@ -10,6 +10,9 @@ function get_sets()
 	include('Mote-Include.lua')
 	init_include()
 	
+	-- Global default binds
+	binds_on_load()
+
 	-- UserGlobals may define additional sets to be added to the local ones.
 	if define_global_sets then
 		define_global_sets()
@@ -19,9 +22,6 @@ function get_sets()
 	load_user_gear(player.main_job)
 	
 	init_gear_sets()
-
-	-- Global default binds
-	binds_on_load()
 end
 
 -- Called when this job file is unloaded (eg: job change)

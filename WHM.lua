@@ -9,6 +9,9 @@ function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 	init_include()
+
+	-- Global default binds
+	binds_on_load()
 	
 	-- UserGlobals may define additional sets to be added to the local ones.
 	if define_global_sets then
@@ -19,9 +22,6 @@ function get_sets()
 	load_user_gear(player.main_job)
 	
 	init_gear_sets()
-
-	-- Global default binds
-	binds_on_load()
 end
 
 -- Called when this job file is unloaded (eg: job change)
@@ -95,7 +95,7 @@ function init_gear_sets()
 	
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Hexa Strike'] = {
-		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Nahtirah Hat",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Tuilha Cape",waist="Light Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
@@ -252,7 +252,7 @@ function init_gear_sets()
 	-- Basic set for if no TP weapon is defined.
 	sets.engaged = {
 		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Gendewitha Bliaut",hands="Dynasty Mitts",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 
