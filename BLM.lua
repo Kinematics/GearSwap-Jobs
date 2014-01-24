@@ -68,7 +68,7 @@ function init_gear_sets()
 
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
@@ -97,7 +97,7 @@ function init_gear_sets()
 
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
@@ -116,19 +116,19 @@ function init_gear_sets()
 
 	sets.midcast.EnfeeblingMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast.EnfeeblingMagic
 
 	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Goetia Sabots +2"}
 	
 	sets.midcast.Aspir = sets.midcast.Drain
@@ -140,13 +140,13 @@ function init_gear_sets()
 
 	sets.midcast.BardSong = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 
 	sets.midcast.ElementalEnfeeble = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
@@ -234,7 +234,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Tuilha Cape",waist="Hierarch Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}

@@ -64,17 +64,17 @@ function init_gear_sets()
 	
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
 
 	sets.precast.FC.EnhancingMagic = {ammo="Incantor Stone",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
 
 	sets.precast.FC.ElementalMagic = {ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Stoicheion Medal",ear2="Loquacious Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
 
 	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
@@ -93,9 +93,9 @@ function init_gear_sets()
 	-- Midcast Sets
 	
 	sets.midcast.FastRecast = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="",
+		back="",waist="",legs="",feet=""}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
@@ -161,7 +161,7 @@ function init_gear_sets()
 
 	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Bokwus Boots"}
 
 
@@ -249,7 +249,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
 		back="Tuilha Cape",waist="Hierarch Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}

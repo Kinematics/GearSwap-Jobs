@@ -129,7 +129,7 @@ function init_gear_sets()
 	-- General set for recast times.
 	sets.midcast.FastRecast = {range="Angel Lyre",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Goliard Saio",hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
 	-- Gear to enhance certain classes of songs.  No instruments added here since Gjallarhorn is being used.

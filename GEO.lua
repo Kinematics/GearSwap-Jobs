@@ -59,12 +59,12 @@ function init_gear_sets()
 	
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Cure = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Heka's Kalasiris",ring1="Prolix Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
        
@@ -134,7 +134,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {range="Matre Bell",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}

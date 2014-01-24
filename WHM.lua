@@ -59,7 +59,7 @@ function init_gear_sets()
 	-- Fast cast sets for spells
 	sets.precast.FC = {main=gear.FastcastStaff,ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
-		hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
@@ -106,7 +106,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Flash Nova'] = {
 		head="Nahtirah Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Bokwus Robe",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="Strendu Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	
@@ -114,7 +114,7 @@ function init_gear_sets()
 	
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Goliard Saio",hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 	
 	-- Cure sets
@@ -146,7 +146,7 @@ function init_gear_sets()
 
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",
 		back="Swith Cape",waist="Siegel Sash",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Auspice = {feet="Orison Duckbills +2"}
@@ -174,25 +174,25 @@ function init_gear_sets()
 
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
 		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast.Stun = set_combine(sets.midcast.DarkMagic, {main=gear.RecastStaff})
+	--sets.midcast.Stun = set_combine(sets.midcast.DarkMagic, {main=gear.RecastStaff})
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
 	sets.midcast.IntEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Orvail Pants +1",feet="Bokwus Boots"}
 
 	
@@ -237,7 +237,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Theophany Cap +1",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1=leftDarkRing,ring2="Shadow Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1=leftDarkRing,ring2="Shadow Ring",
 		back="Tuilha Cape",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
@@ -252,7 +252,7 @@ function init_gear_sets()
 	-- Basic set for if no TP weapon is defined.
 	sets.engaged = {
 		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Gendewitha Bliaut",hands="Dynasty Mitts",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Vanir Cotehardie",hands="Dynasty Mitts",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 
