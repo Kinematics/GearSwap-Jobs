@@ -365,8 +365,33 @@ end
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
+		handle_equipping_gear(player.status)
 	elseif storms:contains(buff) then
 		handle_equipping_gear(player.status)
+	end
+end
+
+
+-- Called when the player's pet's status changes.
+-- This is also called after pet_change after a pet is released.  Check for pet validity.
+function job_pet_status_change(newStatus, oldStatus, eventArgs)
+	if pet.isvalid and newStatus == 'Engaged' or oldStatus == 'Engaged' and not midaction() then
+		handle_equipping_gear(player.status, newStatus)
+	end
+end
+
+
+-- Called when a player gains or loses a pet.
+-- pet == pet structure
+-- gain == true if the pet was gained, false if it was lost.
+function job_pet_change(petparam, gain)
+	classes.CustomIdleGroups:clear()
+	if gain then
+		if avatars:contains(pet.name) then
+			classes.CustomIdleGroups:append('Avatar')
+		elseif spirits:contains(pet.name) then
+			classes.CustomIdleGroups:append('Spirit')
+		end
 	end
 end
 
