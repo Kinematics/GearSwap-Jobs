@@ -60,7 +60,7 @@ function init_gear_sets()
 	sets.precast.FC = {main=gear.FastcastStaff,ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -68,11 +68,7 @@ function init_gear_sets()
 
 	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {
-		ammo="Impatiens",
-		head="Theophany Cap +1",
-		body="Heka's Kalasiris",
-		back="Pahtli Cape",waist="Witful Belt",feet="Cure Clogs"})
+	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 	
@@ -82,76 +78,78 @@ function init_gear_sets()
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {
 		head="Nahtirah Hat",ear1="Roundel Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",
 		back="Refraction Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	
 	-- Weaponskill sets
+
 	-- Default set for any weaponskill that isn't any more specifically defined
+	gear.default.weaponskill_neck = "Asperity Necklace"
+	gear.default.weaponskill_waist = ""
 	sets.precast.WS = {
-		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Tuilha Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
-	
-	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Hexa Strike'] = {
 		head="Nahtirah Hat",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Tuilha Cape",waist="Light Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
-
-	sets.precast.WS['Mystic Boon'] = {
-		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Tuilha Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
-
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Refraction Cape",waist=gear.ElementalBelt,legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+	
 	sets.precast.WS['Flash Nova'] = {
 		head="Nahtirah Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
-	
+
 	-- Midcast Sets
 	
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
+		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	-- Cure sets
+	gear.default.obi_waist = "Goading Belt"
+	gear.default.obi_back = "Swith Cape"
+
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
-		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
+		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
 		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
+		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
 		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
+		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
 		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
+		head="Theophany Cap +1",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
 		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
-	
 	sets.midcast.Cursna = {
 		head="Orison Cap +2",neck="Malison Medallion",
 		hands="Hieros Mittens",ring1="Ephedra Ring",
 		legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 
+	sets.midcast.StatusRemoval = {
+		head="Orison Cap +2",legs="Orison Pantaloons +2"}
+
+
+	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
+		body="Manasa Chasuble",hands="Dynasty Mitts",
+		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",
-		back="Swith Cape",waist="Siegel Sash",feet="Gendewitha Galoshes"}
+		back="Swith Cape",waist="Siegel Sash",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Auspice = {feet="Orison Duckbills +2"}
 
-	sets.midcast.Barspell = {main="Beneficus",sub="Genbu's Shield",
+	sets.midcast.BarElement = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Colossus's Torque",
 		body="Orison Bliaud +2",hands="Orison Mitts +2",
 		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
@@ -160,17 +158,10 @@ function init_gear_sets()
 		body="Cleric's Briault",hands="Orison Mitts +2",
 		legs="Theophany Pantaloons"}
 
-	sets.midcast.StatusRemoval = {
-		head="Orison Cap +2",legs="Orison Pantaloons +2"}
-
 	sets.midcast.Protectra = {ring1="Sheltered Ring"}
 
 	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Cleric's Pantaloons +2"}
 
-	-- Spell skill categories
-	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
-		body="Manasa Chasuble",hands="Dynasty Mitts",
-		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
 
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
@@ -188,12 +179,12 @@ function init_gear_sets()
 	sets.midcast.MndEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Gendewitha Spats",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	sets.midcast.IntEnfeebles = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Orvail Pants +1",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -232,12 +223,12 @@ function init_gear_sets()
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1=leftDarkRing,ring2=rightDarkRing,
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
 		back="Umbra Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Theophany Cap +1",neck="Twilight Torque",
-		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1=leftDarkRing,ring2="Shadow Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Tuilha Cape",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
@@ -251,7 +242,7 @@ function init_gear_sets()
 	
 	-- Basic set for if no TP weapon is defined.
 	sets.engaged = {
-		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Theophany Cap +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Dynasty Mitts",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
@@ -285,22 +276,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 
-function job_post_precast(spell, action, spellMap, eventArgs)
-	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
-	if eventArgs.useMidcastGear then
-		if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
-			equip(sets.buff['Divine Caress'])
-		end
-	end
-	
-	-- Ionis gives us an extra 3% fast cast, so we can drop Incantor Stone for Impatiens.
-	--if (classes.CustomClass == 'CureSolace' or classes.CustomClass == 'CureMelee') and
-	--	buffactive.ionis and areas.Adoulin[world.area:lower()] then
-	--	equip({ammo="Impatiens"})
-	--end
-end
-
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
@@ -311,12 +286,14 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end
 
+
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	-- Apply Divine Caress boosting items as highest priority over other gear, if applicable.
 	if spellMap == 'StatusRemoval' and buffactive['Divine Caress'] then
 		equip(sets.buff['Divine Caress'])
 	end
 end
+
 
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
@@ -429,7 +406,7 @@ function get_spell_class(spell, action, spellMap)
 		else
 			if spellMap == 'Cure' and state.Buff['Afflatus Solace'] then
 				return "CureSolace"
-			elseif (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' and player.equipment.main == 'Mondaha Cudgel' then
+			elseif (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' and player.equipment.main ~= 'Tamaxchi' then
 				return "CureMelee"
 			end
 		end
