@@ -26,17 +26,7 @@
 -- These are accessible at the including job lua script's scope.
 -------------------------------------------------------------------------------------------------------------------
 
-function init_include(version)
-	local currentVersion = 1
-
-	-- If the job calling this include provides a version, check to see if that version matches
-	-- the current api version of this file.  Provide a warning if the user version falls behind.
-	if version then
-		if version < currentVersion then
-			add_to_chat(123,'Warning: Job file specifies version '..tostring(version)..' of Mote-Include, but current version is '..tostring(currentVersion)..'.')
-		end
-	end
-
+function init_include()
 	-- Used to define various types of data mappings.  These may be used in this include,
 	-- so load it up front.
 	include('Mote-Mappings')
