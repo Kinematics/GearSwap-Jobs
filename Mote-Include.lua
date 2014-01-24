@@ -24,6 +24,8 @@
 -------------------------------------------------------------------------------------------------------------------
 -- Initialization function that defines variables to be used.
 -- These are accessible at the including job lua script's scope.
+--
+-- Auto-initialize after defining this function.
 -------------------------------------------------------------------------------------------------------------------
 
 function init_include()
@@ -150,7 +152,8 @@ function init_include()
 	end
 end
 
-end
+-- Auto-initialize the include
+init_include()
 
 
 -------------------------------------------------------------------------------------------------------------------
