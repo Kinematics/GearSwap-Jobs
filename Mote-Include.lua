@@ -10,7 +10,7 @@
 -- Mote-Utility
 -- Mote-Mappings
 -- Mote-SelfCommands
--- UserGlobals
+-- Mote-Globals
 --
 -- It should be included as the first command in the job file's get_sets() function, but must at least
 -- be executed before any included vars are referenced.
@@ -144,9 +144,11 @@ function init_include()
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
 	-- Include general user globals, such as custom binds or gear tables.
+	-- If the user defined their own globals, use that; otherwise use Mote-Globals.
 	if not load_user_globals() then
 		include('Mote-Globals')
 	end
+end
 
 end
 
@@ -377,7 +379,6 @@ function pet_aftercast(spell,action)
 			-- Wait a half-second to update so that aftercast equip will actually be worn.
 			windower.send_command('wait 0.6;gs c update')
 		else
-			add_to_chat(123,'equipping in pet_aftercast')
 			handle_equipping_gear(player.status)
 		end
 	end
