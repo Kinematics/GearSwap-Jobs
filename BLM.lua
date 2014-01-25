@@ -281,10 +281,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
-function job_post_midcast(spell, action, spellMap, eventArgs)
-
-end
-
 
 function job_aftercast(spell, action, spellMap, eventArgs)
 	-- Lock feet after using Mana Wall.
@@ -297,9 +293,6 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
-function customize_idle_set(idleSet)
-	return idleSet
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
