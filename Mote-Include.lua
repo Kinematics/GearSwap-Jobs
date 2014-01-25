@@ -28,6 +28,7 @@
 -- Auto-initialize after defining this function.
 -------------------------------------------------------------------------------------------------------------------
 
+
 function init_include()
 	-- Used to define various types of data mappings.  These may be used in this include,
 	-- so load it up front.
@@ -150,6 +151,20 @@ function init_include()
 	if not load_user_globals() then
 		include('Mote-Globals')
 	end
+
+
+	-- Global default binds
+	binds_on_load()
+	
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Optional: load a sidecar version of the init and unload functions.
+	load_user_gear(player.main_job)
+	
+	init_gear_sets()
 end
 
 -- Auto-initialize the include
