@@ -266,6 +266,17 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted then
+		if state.Buff[spell.name] ~= nil then
+			state.Buff[spell.name] = true
+		end
+	end
+end
+
+
 -- Runs when a pet initiates an action.
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_pet_midcast(spell, action, spellMap, eventArgs)
@@ -278,34 +289,10 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
-function job_pet_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		end
-	end
-	
-	if pet_midaction() then
-		eventArgs.handled = true
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called before the Include starts constructing melee/idle/resting sets.
--- Can customize state or custom melee class values at this point.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_handle_equipping_gear(status, eventArgs)
-
-end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
@@ -334,11 +321,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
