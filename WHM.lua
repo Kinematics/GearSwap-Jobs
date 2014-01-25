@@ -235,9 +235,6 @@ function init_gear_sets()
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
 	sets.buff['Divine Caress'] = {hands="Orison Mitts +2"}
-
-
-	gear.default.obi_waist = "Goading Belt"
 end
 
 -------------------------------------------------------------------------------------------------------------------
