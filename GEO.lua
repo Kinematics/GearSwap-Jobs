@@ -8,20 +8,6 @@
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
-	init_include()
-
-	-- Global default binds
-	binds_on_load()
-	
-	-- UserGlobals may define additional sets to be added to the local ones.
-	if define_global_sets then
-		define_global_sets()
-	end
-
-	-- Optional: load a sidecar version of the init and unload functions.
-	load_user_gear(player.main_job)
-	
-	init_gear_sets()
 end
 
 
@@ -59,12 +45,12 @@ function init_gear_sets()
 	
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Cure = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Heka's Kalasiris",ring1="Prolix Ring",
 		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
        
@@ -134,8 +120,8 @@ function init_gear_sets()
 
 	sets.defense.MDT = {range="Matre Bell",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
-		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		back="Umbra Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 

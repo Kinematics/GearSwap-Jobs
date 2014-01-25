@@ -10,7 +10,7 @@
 -- Mote-Utility
 -- Mote-Mappings
 -- Mote-SelfCommands
--- UserGlobals
+-- Mote-Globals
 --
 -- It should be included as the first command in the job file's get_sets() function, but must at least
 -- be executed before any included vars are referenced.
@@ -21,26 +21,15 @@
 -- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
--- Define the include module as a table (clean, forwards compatible with lua 5.2).
-local MoteInclude = {}
-
-
 -------------------------------------------------------------------------------------------------------------------
 -- Initialization function that defines variables to be used.
 -- These are accessible at the including job lua script's scope.
+--
+-- Auto-initialize after defining this function.
 -------------------------------------------------------------------------------------------------------------------
 
-function MoteInclude.init_include(version)
-	local currentVersion = 1
 
-	-- If the job calling this include provides a version, check to see if that version matches
-	-- the current api version of this file.  Provide a warning if the user version falls behind.
-	if version then
-		if version < currentVersion then
-			add_to_chat(123,'Warning: Job file specifies version '..tostring(version)..' of Mote-Include, but current version is '..tostring(currentVersion)..'.')
-		end
-	end
-
+function init_include()
 	-- Used to define various types of data mappings.  These may be used in this include,
 	-- so load it up front.
 	include('Mote-Mappings')
@@ -128,9 +117,9 @@ function MoteInclude.init_include(version)
 	sets.precast.FC = {}
 	sets.precast.JA = {}
 	sets.precast.WS = {}
-	sets.precast.Ranged = {}
+	sets.precast.RangedAttack = {}
 	sets.midcast = {}
-	sets.midcast.Ranged = {}
+	sets.midcast.RangedAttack = {}
 	sets.midcast.Pet = {}
 	sets.idle = {}
 	sets.resting = {}
@@ -158,11 +147,28 @@ function MoteInclude.init_include(version)
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
 	-- Include general user globals, such as custom binds or gear tables.
+	-- If the user defined their own globals, use that; otherwise use Mote-Globals.
 	if not load_user_globals() then
 		include('Mote-Globals')
 	end
 
+
+	-- Global default binds
+	binds_on_load()
+	
+	-- UserGlobals may define additional sets to be added to the local ones.
+	if define_global_sets then
+		define_global_sets()
+	end
+
+	-- Optional: load a sidecar version of the init and unload functions.
+	load_user_gear(player.main_job)
+	
+	init_gear_sets()
 end
+
+-- Auto-initialize the include
+init_include()
 
 
 -------------------------------------------------------------------------------------------------------------------
@@ -175,7 +181,7 @@ end
 -- before the game has done any processing on it.  In particular, it hasn't
 -- initiated target selection for <st*> target types.
 -- This is the only function where it will be valid to use change_target().
-function MoteInclude.pretarget(spell,action)
+function pretarget(spell,action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.SpellMaps[spell.english]
 
@@ -204,7 +210,7 @@ end
 -- Called after the text command has been processed (and target selected), but
 -- before the packet gets pushed out.
 -- Equip any gear that should be on before the spell or ability is used.
-function MoteInclude.precast(spell, action)
+function precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
 	local spellMap = classes.SpellMaps[spell.english]
 
@@ -243,7 +249,7 @@ end
 -- will be sent out at the same time (packet contains precastgear:action:midcastgear).
 -- Midcast gear selected should be for potency, recast, etc.  It should take effect
 -- regardless of the spell cast speed.
-function MoteInclude.midcast(spell,action)
+function midcast(spell,action)
 	-- If show_set is flagged for precast, don't try to equip midcast gear.
 	if mote_flags.show_set == 'precast' then
 		return
@@ -279,7 +285,7 @@ end
 
 -- Called when an action has been completed (ie: spell finished casting, weaponskill
 -- did damage, spell was interrupted, etc).
-function MoteInclude.aftercast(spell,action)
+function aftercast(spell,action)
 	-- If show_set is flagged for precast or midcast, don't try to equip aftercast gear.
 	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' or mote_flags.show_set == 'pet_midcast' then
 		if not pet_midaction() then
@@ -332,7 +338,7 @@ end
 
 
 -- Called when the pet readies an action.
-function MoteInclude.pet_midcast(spell,action)
+function pet_midcast(spell,action)
 	-- If we have show_set active for precast or midcast, don't try to equip pet midcast gear.
 	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' then
 		add_to_chat(104, 'Show Sets: Pet midcast not equipped.')
@@ -368,7 +374,7 @@ end
 
 
 -- Called when the pet's action is complete.
-function MoteInclude.pet_aftercast(spell,action)
+function pet_aftercast(spell,action)
 	-- If show_set is flagged for precast or midcast, don't try to equip aftercast gear.
 	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' or mote_flags.show_set == 'pet_midcast' then
 		classes.CustomClass = nil
@@ -410,7 +416,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function MoteInclude.status_change(newStatus, oldStatus)
+function status_change(newStatus, oldStatus)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -434,27 +440,10 @@ function MoteInclude.status_change(newStatus, oldStatus)
 end
 
 
--- Called when the player's pet's status changes.
-function MoteInclude.pet_status_change(newStatus, oldStatus)
-	-- Init a new eventArgs
-	local eventArgs = {handled = false}
-
-	-- Allow jobs to override this code
-	if job_pet_status_change then
-		job_pet_status_change(newStatus, oldStatus, eventArgs)
-	end
-
-	-- Equip default gear if not handled by the job.
-	if not eventArgs.handled then
-		handle_equipping_gear(player.status, newStatus)
-	end
-end
-
-
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
-function MoteInclude.buff_change(buff, gain)
+function buff_change(buff, gain)
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -473,13 +462,47 @@ function MoteInclude.buff_change(buff, gain)
 end
 
 
+-- Called when a player gains or loses a pet.
+-- pet == pet gained or lost
+-- gain == true if the pet was gained, false if it was lost.
+function pet_change(pet, gain)
+	-- Init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to handle pet change events.
+	if job_pet_change then
+		job_pet_change(pet, gain, eventArgs)
+	end
+
+	-- Equip default gear if not handled by the job.
+	if not eventArgs.handled then
+		handle_equipping_gear(player.status)
+	end
+end
+
+
+-- Called when the player's pet's status changes.
+-- Note that this is also called after pet_change when the pet is released.
+-- As such, don't automatically handle gear equips.  Only do so if directed
+-- to do so by the job.
+function pet_status_change(newStatus, oldStatus)
+	-- Init a new eventArgs
+	local eventArgs = {handled = false}
+
+	-- Allow jobs to override this code
+	if job_pet_status_change then
+		job_pet_status_change(newStatus, oldStatus, eventArgs)
+	end
+end
+
+
 -------------------------------------------------------------------------------------------------------------------
 -- Generalized functions for selecting and equipping gear sets.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Central point to call to equip gear based on status.
 -- Status - Player status that we're using to define what gear to equip.
-function MoteInclude.handle_equipping_gear(playerStatus, petStatus)
+function handle_equipping_gear(playerStatus, petStatus)
 	-- init a new eventArgs
 	local eventArgs = {handled = false}
 
@@ -497,7 +520,7 @@ end
 
 -- Function to wrap logic for equipping gear on aftercast, status change, or user update.
 -- @param status : The current or new player status that determines what sort of gear to equip.
-function MoteInclude.equip_gear_by_status(status)
+function equip_gear_by_status(status)
 	if _global.debug_mode then add_to_chat(123,'Debug: Equip gear for status ['..tostring(status)..'], HP='..tostring(player.hp)) end
 
 	-- If status not defined, treat as idle.
@@ -519,7 +542,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Get the default precast gear set.
-function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
+function get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	-- Update defintions for element-specific gear that can be used.
@@ -557,7 +580,7 @@ function MoteInclude.get_default_precast_set(spell, action, spellMap, eventArgs)
 		end
 	elseif spell.action_type == 'Ranged Attack' then
 		-- Ranged attacks use sets.precast.Ranged.
-		equipSet = sets.precast.Ranged
+		equipSet = sets.precast.RangedAttack
 
 		-- Custom class modification
 		if classes.CustomClass and equipSet[classes.CustomClass] then
@@ -645,7 +668,7 @@ end
 
 -- Get the default midcast gear set.
 -- This builds on sets.midcast.
-function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
+function get_default_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	if spell.action_type == 'Magic' then
@@ -675,7 +698,7 @@ function MoteInclude.get_default_midcast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[state.CastingMode]
 		end
 	elseif spell.action_type == 'Ranged Attack' then
-		equipSet = sets.midcast.Ranged
+		equipSet = sets.midcast.RangedAttack
 
 		-- Custom class modification
 		if classes.CustomClass and equipSet[classes.CustomClass] then
@@ -722,7 +745,7 @@ end
 
 -- Get the default pet midcast gear set.
 -- This is built in sets.midcast.Pet.
-function MoteInclude.get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
+function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	-- Set selection ordering:
@@ -757,7 +780,7 @@ end
 -- Returns the appropriate idle set based on current state.
 -- Set construction order (all of which are optional):
 -- sets.idle[idleScope][state.IdleMode][Pet][CustomIdleGroups]
-function MoteInclude.get_current_idle_set()
+function get_current_idle_set()
 	local idleSet = sets.idle
 	local idleScope
 	
@@ -801,7 +824,7 @@ end
 -- Returns the appropriate melee set based on current state.
 -- Set construction order (all sets after sets.engaged are optional):
 --   sets.engaged[classes.CustomMeleeGroups (any number)][TPWeapon][state.OffenseMode][state.DefenseMode]
-function MoteInclude.get_current_melee_set()
+function get_current_melee_set()
 	local meleeSet = sets.engaged
 
 	for _,group in ipairs(classes.CustomMeleeGroups) do
@@ -834,7 +857,7 @@ end
 
 
 -- Returns the appropriate resting set based on current state.
-function MoteInclude.get_current_resting_set()
+function get_current_resting_set()
 	local restingSet = {}
 
 	if sets.resting[state.RestingMode] then
@@ -852,7 +875,7 @@ end
 
 -- Function to apply any active defense set on top of the supplied set
 -- @param baseSet : The set that any currently active defense set will be applied on top of. (gear set table)
-function MoteInclude.apply_defense(baseSet)
+function apply_defense(baseSet)
 	if state.Defense.Active then
 		local defenseSet
 		local defMode
@@ -890,7 +913,7 @@ end
 
 -- Function to add kiting gear on top of the base set if kiting state is true.
 -- @param baseSet : The gear set that the kiting gear will be applied on top of.
-function MoteInclude.apply_kiting(baseSet)
+function apply_kiting(baseSet)
 	if state.Kiting then
 		if sets.Kiting then
 			baseSet = set_combine(baseSet, sets.Kiting)
@@ -901,6 +924,3 @@ function MoteInclude.apply_kiting(baseSet)
 end
 
 
-
--- Done with defining the module.  Return the table.
-return MoteInclude

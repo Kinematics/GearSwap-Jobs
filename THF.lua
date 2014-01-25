@@ -8,20 +8,6 @@
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
-	init_include()
-	
-	-- Global default binds
-	binds_on_load()
-
-	-- UserGlobals may define additional sets to be added to the local ones.
-	if define_global_sets then
-		define_global_sets()
-	end
-
-	-- Optional: load a sidecar version of the init and unload functions.
-	load_user_gear(player.main_job)
-	
-	init_gear_sets()
 end
 
 -- Called when this job file is unloaded (eg: job change)
@@ -113,7 +99,7 @@ function init_gear_sets()
 
 
 	-- Ranged gaer
-	sets.precast.Ranged = {head="Whirlpool Mask",neck="Peacock Charm",
+	sets.precast.RangedAttack = {head="Whirlpool Mask",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Assassin's Armlets +2",
 		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 

@@ -43,20 +43,6 @@
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
-	init_include()
-
-	-- Global default binds
-	binds_on_load()
-	
-	-- UserGlobals may define additional sets to be added to the local ones.
-	if define_global_sets then
-		define_global_sets()
-	end
-
-	-- Optional: load a sidecar version of the init and unload functions.
-	load_user_gear(player.main_job)
-	
-	init_gear_sets()
 end
 
 -- Called when this job file is unloaded (eg: job change)
@@ -75,7 +61,7 @@ function init_gear_sets()
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
 	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal', 'PDT'}
+	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
@@ -83,11 +69,10 @@ function init_gear_sets()
 	state.Defense.PhysicalMode = 'PDT'
 
 	state.Buff["Avatar's Favor"] = buffactive["Avatar's Favor"] or false
-	state.Buff.Pet = pet.isvalid or false
 	
 	-- misc vars
 
-	spirits = S{"Light Spirit", "Dark Spirit", "Fire Spirit", "Earth Spirit", "Water Spirit", "Air Spirit", "Ice Spirit", "Thunder Spirit"}
+	spirits = S{"LightSpirit", "DarkSpirit", "FireSpirit", "EarthSpirit", "WaterSpirit", "AirSpirit", "IceSpirit", "ThunderSpirit"}
 	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander"}
 
 	magicalRagePacts = S{
@@ -185,13 +170,15 @@ function init_gear_sets()
 		body="Caller's Doublet +2",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
 	
-	sets.midcast.Pet.PhysicalBloodPactRage = set_combine(sets.midcast.Pet.BloodPactWard,
-		{head="Bokwus Circlet",body="Convoker's Doublet",
-		back="Tiresias' Cape",legs="Convoker's Spats",feet="Convoker's Pigaches"})
+	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Caller's Pendant",
+		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
-	sets.midcast.Pet.MagicalBloodPactRage = set_combine(sets.midcast.Pet.BloodPactWard,
-		{main="Uffrat +1",head="Bokwus Circlet",body="Convoker's Doublet",
-		back="Tiresias' Cape",legs="Caller's Spats +2",feet="Hagondes Sabots"})
+	sets.midcast.Pet.MagicalBloodPactRage = {main="Uffrat +1",ammo="Eminent Sachet",
+		head="Bokwus Circlet",neck="Caller's Pendant",
+		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
 	
 	sets.midcast.Pet.Spirit = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})
 
@@ -215,23 +202,23 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
 
-	sets.idle.Pet = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
-		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+	sets.idle.Avatar = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
-	sets.idle.PDT.Pet = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
-		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+	sets.idle.Spirit = {main="Owleyes",sub="Genbu's Shield",ammo="Eminent Sachet",
+		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Paguroidea Ring",
+		back="Tiresias' Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Convoker's Pigaches"}
 
 	sets.idle.Town = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.Pet.Favor = {head="Caller's Horn +2"}
-	sets.idle.Pet.Melee = {hands="Summoner's Bracers",waist="Kuku Stone",legs="Convoker's Spats"}
+	sets.idle.Avatar.Favor = {head="Caller's Horn +2"}
+	sets.idle.Avatar.Melee = {hands="Summoner's Bracers",waist="Kuku Stone",legs="Convoker's Spats"}
 		
 	sets.perp = {}
 	sets.perp.Day = {hands="Caller's Bracers +2"}
@@ -247,8 +234,8 @@ function init_gear_sets()
 
 	sets.defense.MDT = {
 		head="Hagondes Hat",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Umbra Cape",waist="Hierarch Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 
@@ -277,36 +264,11 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
-function job_pretarget(spell, action, spellMap, eventArgs)
-
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-
-end
-
-
--- Run after the default precast() is done.
--- eventArgs is the same one used in job_precast, in case information needs to be persisted.
-function job_post_precast(spell, action, spellMap, eventArgs)
-
-end
-
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
 		equip(sets.midcast.FastRecast)
 	end
-end
-
--- Run after the default midcast() is done.
--- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
-function job_post_midcast(spell, action, spellMap, eventArgs)
-
 end
 
 -- Runs when a pet initiates an action.
@@ -321,9 +283,7 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Run after the default pet midcast() is done.
--- eventArgs is the same one used in job_pet_midcast, in case information needs to be persisted.
-function job_pet_post_midcast(spell, action, spellMap, eventArgs)
+function job_pet_aftercast(spell, action, spellMap, eventArgs)
 
 end
 
@@ -332,29 +292,12 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
 		if state.Buff[spell.name] ~= nil then
 			state.Buff[spell.name] = true
-		elseif spell.type == 'SummonerPact' then
-			state.Buff.Pet = true
-		elseif spell.english == 'Release' then
-			state.Buff.Pet = false
 		end
 	end
-end
-
--- Run after the default aftercast() is done.
--- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
-function job_post_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_pet_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the default pet aftercast() is done.
--- eventArgs is the same one used in job_pet_aftercast, in case information needs to be persisted.
-function job_pet_post_aftercast(spell, action, spellMap, eventArgs)
-
+	
+	if pet_midaction() then
+		eventArgs.handled = true
+	end
 end
 
 
@@ -371,7 +314,7 @@ end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
-	if state.Buff.Pet or pet.isvalid then
+	if pet.isvalid then
 		if pet.element == world.day_element then
 			idleSet = set_combine(idleSet, sets.perp.Day)
 		end
@@ -381,21 +324,17 @@ function customize_idle_set(idleSet)
 		if sets.perp[pet.name] then
 			idleSet = set_combine(idleSet, sets.perp[pet.name])
 		end
-		if state.Buff["Avatar's Favor"] then
-			idleSet = set_combine(idleSet, sets.idle.Pet.Favor)
+		if state.Buff["Avatar's Favor"] and avatars:contains(pet.name) then
+			idleSet = set_combine(idleSet, sets.idle.Avatar.Favor)
 		end
 		if pet.status == 'Engaged' then
-			idleSet = set_combine(idleSet, sets.idle.Pet.Melee)
+			idleSet = set_combine(idleSet, sets.idle.Avatar.Melee)
 		end
 	end
 	
 	return idleSet
 end
 
--- Modify the default melee set after it was constructed.
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
@@ -406,24 +345,39 @@ function job_status_change(newStatus, oldStatus, eventArgs)
 
 end
 
--- Called when the player's pet's status changes.
-function job_pet_status_change(newStatus, oldStatus, eventArgs)
-	if newStatus == 'Engaged dead' then
-		state.Buff.Pet = false
-	elseif newStatus == 'Engaged' or oldStatus == 'Engaged' and not midaction() then
-		handle_equipping_gear(player.status, newStatus)
-	end
-end
-
-
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
+		handle_equipping_gear(player.status)
 	elseif storms:contains(buff) then
 		handle_equipping_gear(player.status)
+	end
+end
+
+
+-- Called when the player's pet's status changes.
+-- This is also called after pet_change after a pet is released.  Check for pet validity.
+function job_pet_status_change(newStatus, oldStatus, eventArgs)
+	if pet.isvalid and newStatus == 'Engaged' or oldStatus == 'Engaged' and not midaction() then
+		handle_equipping_gear(player.status, newStatus)
+	end
+end
+
+
+-- Called when a player gains or loses a pet.
+-- pet == pet structure
+-- gain == true if the pet was gained, false if it was lost.
+function job_pet_change(petparam, gain)
+	classes.CustomIdleGroups:clear()
+	if gain then
+		if avatars:contains(pet.name) then
+			classes.CustomIdleGroups:append('Avatar')
+		elseif spirits:contains(pet.name) then
+			classes.CustomIdleGroups:append('Spirit')
+		end
 	end
 end
 
@@ -449,12 +403,14 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	state.Buff.Pet = pet.isvalid
-end
-
--- Handle notifications of user state values being changed.
-function job_state_change(stateField, newValue)
-
+	classes.CustomIdleGroups:clear()
+	if pet.isvalid then
+		if avatars:contains(pet.name) then
+			classes.CustomIdleGroups:append('Avatar')
+		elseif spirits:contains(pet.name) then
+			classes.CustomIdleGroups:append('Spirit')
+		end
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.

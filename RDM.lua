@@ -8,20 +8,6 @@
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
-	init_include()
-
-	-- Global default binds
-	binds_on_load()
-	
-	-- UserGlobals may define additional sets to be added to the local ones.
-	if define_global_sets then
-		define_global_sets()
-	end
-
-	-- Optional: load a sidecar version of the init and unload functions.
-	load_user_gear(player.main_job)
-	
-	init_gear_sets()
 end
 
 
@@ -189,7 +175,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
+		back="Engulfer Cape",waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 

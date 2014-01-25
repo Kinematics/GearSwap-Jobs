@@ -2,60 +2,57 @@
 -- Mappings, lists and sets to describe game relationships that aren't easily determinable otherwise.
 -------------------------------------------------------------------------------------------------------------------
 
-local mappings = {}
-
-
 -------------------------------------------------------------------------------------------------------------------
 -- Elemental mappings for element relationships and certian types of spells.
 -------------------------------------------------------------------------------------------------------------------
 
-mappings.elements = {}
+elements = {}
 
-mappings.elements.list = L{'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
+elements.list = L{'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
 
-mappings.elements.weak_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
+elements.weak_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
 		['Lightning']='Water', ['Water']='Fire'}
 
-mappings.elements.strong_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Water', ['Ice']='Fire', ['Wind']='Ice', ['Earth']='Wind',
+elements.strong_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Water', ['Ice']='Fire', ['Wind']='Ice', ['Earth']='Wind',
 		['Lightning']='Earth', ['Water']='Lightning'}
 
-mappings.elements.storm_of = {['Light']="Aurorastorm", ['Dark']="Voidstorm", ['Fire']="Firestorm", ['Earth']="Sandstorm",
+elements.storm_of = {['Light']="Aurorastorm", ['Dark']="Voidstorm", ['Fire']="Firestorm", ['Earth']="Sandstorm",
 		['Water']="Rainstorm", ['Wind']="Windstorm", ['Ice']="Hailstorm", ['Lightning']="Thunderstorm"}
 
-mappings.elements.spirit_of = {['Light']="Light Spirit", ['Dark']="Dark Spirit", ['Fire']="Fire Spirit", ['Earth']="Earth Spirit",
+elements.spirit_of = {['Light']="Light Spirit", ['Dark']="Dark Spirit", ['Fire']="Fire Spirit", ['Earth']="Earth Spirit",
 		['Water']="Water Spirit", ['Wind']="Air Spirit", ['Ice']="Ice Spirit", ['Lightning']="Thunder Spirit"}
 
 
 
-mappings.storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm", "Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
+storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm", "Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
 
 
-mappings.skillchain_elements = {}
-mappings.skillchain_elements.Light = S{'Light','Fire','Wind','Lightning'}
-mappings.skillchain_elements.Dark = S{'Dark','Ice','Earth','Water'}
-mappings.skillchain_elements.Fusion = S{'Light','Fire'}
-mappings.skillchain_elements.Fragmentation = S{'Wind','Lightning'}
-mappings.skillchain_elements.Distortion = S{'Ice','Water'}
-mappings.skillchain_elements.Gravitation = S{'Dark','Earth'}
-mappings.skillchain_elements.Transfixion = S{'Light'}
-mappings.skillchain_elements.Compression = S{'Dark'}
-mappings.skillchain_elements.Liquification = S{'Fire'}
-mappings.skillchain_elements.Induration = S{'Ice'}
-mappings.skillchain_elements.Detonation = S{'Wind'}
-mappings.skillchain_elements.Scission = S{'Earth'}
-mappings.skillchain_elements.Impaction = S{'Lightning'}
-mappings.skillchain_elements.Reverberation = S{'Water'}
+skillchain_elements = {}
+skillchain_elements.Light = S{'Light','Fire','Wind','Lightning'}
+skillchain_elements.Dark = S{'Dark','Ice','Earth','Water'}
+skillchain_elements.Fusion = S{'Light','Fire'}
+skillchain_elements.Fragmentation = S{'Wind','Lightning'}
+skillchain_elements.Distortion = S{'Ice','Water'}
+skillchain_elements.Gravitation = S{'Dark','Earth'}
+skillchain_elements.Transfixion = S{'Light'}
+skillchain_elements.Compression = S{'Dark'}
+skillchain_elements.Liquification = S{'Fire'}
+skillchain_elements.Induration = S{'Ice'}
+skillchain_elements.Detonation = S{'Wind'}
+skillchain_elements.Scission = S{'Earth'}
+skillchain_elements.Impaction = S{'Lightning'}
+skillchain_elements.Reverberation = S{'Water'}
 
 
 
 -- list of weaponskills that use ammo
-mappings.bow_gun_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arrow", "Sidewinder", "Blast Arrow",
+bow_gun_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arrow", "Sidewinder", "Blast Arrow",
 	"Arching Arrow", "Empyreal Arrow", "Refulgent Arrow", "Apex Arrow", "Namas Arrow", "Jishnu's Radiance",
 	"Hot Shot", "Split Shot", "Sniper Shot", "Slug Shot", "Blast Shot", "Heavy Shot", "Detonator",
 	"Numbing Shot", "Last Stand", "Coronach", "Trueflight", "Leaden Salute", "Wildfire"}
 
 -- list of weaponskills that can be used at greater than melee range
-mappings.ranged_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arrow", "Sidewinder", "Arching Arrow",
+ranged_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arrow", "Sidewinder", "Arching Arrow",
 	"Empyreal Arrow", "Refulgent Arrow", "Apex Arrow", "Namas Arrow", "Jishnu's Radiance",
 	"Hot Shot", "Split Shot", "Sniper Shot", "Slug Shot", "Heavy Shot", "Detonator", "Last Stand",
 	"Coronach", "Trueflight", "Leaden Salute", "Wildfire",
@@ -67,15 +64,15 @@ mappings.ranged_weaponskills = S{"Flaming Arrow", "Piercing Arrow", "Dulling Arr
 -- spells all fall under.
 -------------------------------------------------------------------------------------------------------------------
 
-mappings.spell_maps = {
+spell_maps = {
 	['Cure']='Cure',['Cure II']='Cure',['Cure III']='Cure',['Cure IV']='Cure',['Cure V']='Cure',['Cure VI']='Cure',
 	['Cura']='Curaga',['Cura II']='Curaga',['Cura III']='Curaga',
 	['Curaga']='Curaga',['Curaga II']='Curaga',['Curaga III']='Curaga',['Curaga IV']='Curaga',['Curaga V']='Curaga',
 	-- Status Removal doesn't include Esuna or Sacrifice, since they work differently than the rest
 	['Poisona']='StatusRemoval',['Paralyna']='StatusRemoval',['Silena']='StatusRemoval',['Blindna']='StatusRemoval',['Cursna']='StatusRemoval',
 	['Stona']='StatusRemoval',['Viruna']='StatusRemoval',['Erase']='StatusRemoval',
-	['Barfire']='Barspell',['Barstone']='Barspell',['Barwater']='Barspell',['Baraero']='Barspell',['Barblizzard']='Barspell',['Barthunder']='Barspell',
-	['Barfira']='Barspell',['Barstonra']='Barspell',['Barwatera']='Barspell',['Baraera']='Barspell',['Barblizzara']='Barspell',['Barthundra']='Barspell',
+	['Barfire']='BarElement',['Barstone']='BarElement',['Barwater']='BarElement',['Baraero']='BarElement',['Barblizzard']='BarElement',['Barthunder']='BarElement',
+	['Barfira']='BarElement',['Barstonra']='BarElement',['Barwatera']='BarElement',['Baraera']='BarElement',['Barblizzara']='BarElement',['Barthundra']='BarElement',
 	['Raise']='Raise',['Raise II']='Raise',['Raise III']='Raise',['Arise']='Raise',
 	['Reraise']='Reraise',['Reraise II']='Reraise',['Reraise III']='Reraise',
 	['Protect']='Protect',['Protect II']='Protect',['Protect III']='Protect',['Protect IV']='Protect',['Protect V']='Protect',
@@ -106,7 +103,7 @@ mappings.spell_maps = {
 	['Water Maneuver']='Maneuver',['Light Maneuver']='Maneuver',['Dark Maneuver']='Maneuver',
 }
 
-mappings.no_skill_spells_list = S{'Haste', 'Refresh', 'Regen', 'Protect', 'Protectra', 'Shell', 'Shellra',
+no_skill_spells_list = S{'Haste', 'Refresh', 'Regen', 'Protect', 'Protectra', 'Shell', 'Shellra',
 		'Raise', 'Reraise', 'Cursna'}
 
 
@@ -115,10 +112,10 @@ mappings.no_skill_spells_list = S{'Haste', 'Refresh', 'Regen', 'Protect', 'Prote
 -- Zone names provided by world.area/world.zone are currently in all-caps, so defining the same way here.
 -------------------------------------------------------------------------------------------------------------------
 
-mappings.areas = {}
+areas = {}
 
 -- City areas for town gear and behavior.
-mappings.areas.Cities = S{
+areas.Cities = S{
 	"Ru'lude Gardens",
 	"Upper Jeuno",
 	"Lower Jeuno",
@@ -146,7 +143,7 @@ mappings.areas.Cities = S{
 	"Kazham"
 }
 -- Adoulin areas, where Ionis will grant special stat bonuses.
-mappings.areas.Adoulin = S{
+areas.Adoulin = S{
 	"Yahse Hunting Grounds",
 	"Ceizak Battlegrounds",
 	"Foret de Hennetiel",
@@ -170,8 +167,8 @@ mappings.areas.Adoulin = S{
 -- Lists of certain NPCs.
 -------------------------------------------------------------------------------------------------------------------
 
-mappings.npcs = {}
-mappings.npcs.Trust = S{'Ayame','Naji','Nanaa Mihgo','Tenzen','Volker','Zeid',
+npcs = {}
+npcs.Trust = S{'Ayame','Naji','Nanaa Mihgo','Tenzen','Volker','Zeid',
 	'Ajido-Marujido','Shantotto','Curilla','Excenmille','Trion','Valaineral',
 	'Kupipi','Mihli Aliapoh','Joachim','Lion'}
 
@@ -180,22 +177,21 @@ mappings.npcs.Trust = S{'Ayame','Naji','Nanaa Mihgo','Tenzen','Volker','Zeid',
 -- Mappings for elemental gear
 -------------------------------------------------------------------------------------------------------------------
 
-mappings.gear_map = {}
+gear_map = {}
 
-mappings.gear_map.Obi = {['Light']='Korin Obi', ['Dark']='Anrin Obi', ['Fire']='Karin Obi', ['Ice']='Hyorin Obi', ['Wind']='Furin Obi',
+gear_map.Obi = {['Light']='Korin Obi', ['Dark']='Anrin Obi', ['Fire']='Karin Obi', ['Ice']='Hyorin Obi', ['Wind']='Furin Obi',
 	 ['Earth']='Dorin Obi', ['Lightning']='Rairin Obi', ['Water']='Suirin Obi'}
 
-mappings.gear_map.Gorget = {['Light']='Light Gorget', ['Dark']='Shadow Gorget', ['Fire']='Flame Gorget', ['Ice']='Snow Gorget',
+gear_map.Gorget = {['Light']='Light Gorget', ['Dark']='Shadow Gorget', ['Fire']='Flame Gorget', ['Ice']='Snow Gorget',
 	['Wind']='Wind Gorget', ['Earth']='Soil Gorget', ['Lightning']='Thunder Gorget', ['Water']='Aqua Gorget'}
 
-mappings.gear_map.Belt = {['Light']='Light Belt', ['Dark']='Shadow Belt', ['Fire']='Flame Belt', ['Ice']='Snow Belt',
+gear_map.Belt = {['Light']='Light Belt', ['Dark']='Shadow Belt', ['Fire']='Flame Belt', ['Ice']='Snow Belt',
 	['Wind']='Wind Belt', ['Earth']='Soil Belt', ['Lightning']='Thunder Belt', ['Water']='Aqua Belt'}
 
-mappings.gear_map.FastcastStaff = {['Light']='Arka I', ['Dark']='Xsaeta I', ['Fire']='Atar I', ['Ice']='Vourukasha I',
+gear_map.FastcastStaff = {['Light']='Arka I', ['Dark']='Xsaeta I', ['Fire']='Atar I', ['Ice']='Vourukasha I',
 	['Wind']='Vayuvata I', ['Earth']='Vishrava I', ['Lightning']='Apamajas I', ['Water']='Haoma I', ['Thunder']='Apamajas I'}
 
-mappings.gear_map.RecastStaff = {['Light']='Arka II', ['Dark']='Xsaeta II', ['Fire']='Atar II', ['Ice']='Vourukasha II',
+gear_map.RecastStaff = {['Light']='Arka II', ['Dark']='Xsaeta II', ['Fire']='Atar II', ['Ice']='Vourukasha II',
 	['Wind']='Vayuvata II', ['Earth']='Vishrava II', ['Lightning']='Apamajas II', ['Water']='Haoma II', ['Thunder']='Apamajas II'}
 
-return mappings
 

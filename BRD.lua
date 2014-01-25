@@ -8,20 +8,6 @@
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
-	init_include()
-
-	-- Global default binds
-	binds_on_load()
-	
-	-- UserGlobals may define additional sets to be added to the local ones.
-	if define_global_sets then
-		define_global_sets()
-	end
-
-	-- Optional: load a sidecar version of the init and unload functions.
-	load_user_gear(player.main_job)
-	
-	init_gear_sets()
 end
 
 
@@ -129,7 +115,7 @@ function init_gear_sets()
 	-- General set for recast times.
 	sets.midcast.FastRecast = {range="Angel Lyre",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Goliard Saio",hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
 	-- Gear to enhance certain classes of songs.  No instruments added here since Gjallarhorn is being used.
@@ -216,7 +202,7 @@ function init_gear_sets()
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',--[[ring2="Shadow Ring",
-		back="Engulfer Cape",]]waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Engulfer Cape",]]waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 

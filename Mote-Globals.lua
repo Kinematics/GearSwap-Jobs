@@ -9,15 +9,13 @@
 -- the 'gear' table.
 -------------------------------------------------------------------------------------------------------------------
 
-local user = {}
-
 -------------------------------------------------------------------------------------------------------------------
 -- Modify the sets table.  Any gear sets that are added to the sets table need to
 -- be defined within this function, because sets isn't available until after the
 -- include is complete.  It is called at the end of basic initialization in Mote-Include.
 -------------------------------------------------------------------------------------------------------------------
 
-function user.define_global_sets()
+function define_global_sets()
 	-- Special gear info that may be useful across jobs.
 
 	-- Staffs
@@ -41,7 +39,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Function to bind GearSwap binds when loading a GS script.
-function user.binds_on_load()
+function binds_on_load()
 	windower.send_command('bind f9 gs c cycle OffenseMode')
 	windower.send_command('bind ^f9 gs c cycle DefenseMode')
 	windower.send_command('bind !f9 gs c cycle WeaponskillMode')
@@ -60,7 +58,7 @@ function user.binds_on_load()
 end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
-function user.binds_on_unload()
+function binds_on_unload()
 	-- Commented out for now.
 	--[[
 	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
@@ -109,9 +107,7 @@ end
 -- Test function to use to avoid modifying Mote-SelfCommands.
 -------------------------------------------------------------------------------------------------------------------
 
-function user.user_test(params)
+function user_test(params)
 
 end
 
-
-return user
