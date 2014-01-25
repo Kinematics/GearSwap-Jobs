@@ -244,11 +244,11 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
+	classes.CustomClass = get_spell_class(spell, action, spellMap)
+
 	if spell.english == "Paralyna" and buffactive.Paralyzed then
 		-- no gear swaps if we're paralyzed, to avoid blinking while trying to remove it.
 		eventArgs.handled = true
-	else
-		classes.CustomClass = get_spell_class(spell, action, spellMap)
 	end
 	
 	if spell.skill == 'HealingMagic' then
@@ -265,8 +265,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 	end
-	
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end
 
 
@@ -325,9 +323,12 @@ end
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
 	if cmdParams[1] == 'user' and not areas.Cities:contains(world.area) then
-		local needsArts = player.sub_job:lower() == 'sch' and
-			not buffactive['Light Arts'] and not buffactive['Addendum: White'] and
-			not buffactive['Dark Arts'] and not buffactive['Addendum: Black']
+		local needsArts = 
+			player.sub_job:lower() == 'sch' and
+			not buffactive['Light Arts'] and
+			not buffactive['Addendum: White'] and
+			not buffactive['Dark Arts'] and
+			not buffactive['Addendum: Black']
 			
 		if not buffactive['Afflatus Solace'] and not buffactive['Afflatus Misery'] then
 			if needsArts then
@@ -338,6 +339,7 @@ function job_update(cmdParams, eventArgs)
 		end
 	end
 end
+
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue)
@@ -379,21 +381,23 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function get_spell_class(spell, action, spellMap)
+	local spellclass
+	
 	if spell.action_type == 'Magic' then
 		if spell.skill == "EnfeeblingMagic" then
 			if spell.type == "WhiteMagic" then
-				return "MndEnfeebles"
+				spellclass = "MndEnfeebles"
 			else
-				return "IntEnfeebles"
+				spellclass = "IntEnfeebles"
 			end
 		else
 			if spellMap == 'Cure' and state.Buff['Afflatus Solace'] then
-				return "CureSolace"
+				spellclass = "CureSolace"
 			elseif (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' and player.equipment.main ~= 'Tamaxchi' then
-				return "CureMelee"
+				spellclass = "CureMelee"
 			end
 		end
 	end
 	
-	return nil
+	return spellclass
 end
