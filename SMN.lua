@@ -53,9 +53,6 @@ end
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(4, 14)
-	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -255,9 +252,6 @@ function init_gear_sets()
 
 	set_macro_page(4, 16)
 	binds_on_load()
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
 end
 
 -------------------------------------------------------------------------------------------------------------------
