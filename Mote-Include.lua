@@ -415,6 +415,11 @@ end
 -- Hooks for non-action events.
 -------------------------------------------------------------------------------------------------------------------
 
+-- sub_job_change is not handled by this include.
+-- sub_job_change(new_subjob, old_subjob)
+
+
+
 -- Called when the player's status changes.
 function status_change(newStatus, oldStatus)
 	-- init a new eventArgs
