@@ -129,7 +129,7 @@ function init_gear_sets()
 	
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
@@ -139,7 +139,7 @@ function init_gear_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
 		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Convoker's Doublet",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Pahtli Cape",waist="Cascade Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
@@ -152,13 +152,13 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 
@@ -246,10 +246,11 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {ammo="Eminent Sachet",
 		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
+	-- Default macro set/book
 	set_macro_page(4, 16)
 	binds_on_load()
 end
