@@ -28,7 +28,7 @@ function init_gear_sets()
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
-	options.IdleModes = {'Normal'}
+	options.IdleModes = {'Normal', 'PDT'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
@@ -108,6 +108,11 @@ function init_gear_sets()
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
+	sets.idle.Field.PDT = {range="Matre Bell",
+		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
+		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
+
 	sets.idle.Weak = {range="Matre Bell",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
@@ -137,7 +142,7 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {range="Matre Bell",
 		head="Zelus Tiara",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="Paguroidea Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 end
 
