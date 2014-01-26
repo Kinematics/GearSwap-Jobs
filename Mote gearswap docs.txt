@@ -12,7 +12,7 @@ Mote-Utility.lua -- File for various utility functions that fall outside the gen
 
 Mote-SelfCommands.lua -- File for handling our predefined self-commands for adjusting state values (offense mode, casting mode, update, etc).
 
-UserGlobals.lua -- Any additional values or functions that the user wants access to globally, without needing to modify the main include file.
+Mote-Globals.lua -- Any additional values or functions that the user wants access to globally.  The user can override this version with a user-globals.lua file.
 
 
 The separation into individual files is both for code sanity (all the self-command code is difficult to wade through while you're trying to examine the main gear changing code), and so that updates won't overwrite user customizations.  It should always be safe to simply drop in new versions of the various Mote-* files.
@@ -39,17 +39,13 @@ These sidecar files will not be part of the repository, and thus will not be upd
 
 Example code:
 
-local user = {}
-
-function user.init_gear_sets()
+function init_gear_sets()
     -- Put all set definitions here, as well as any other customization that is user-specific.
 end
 
-function user.file_unload()
+function file_unload()
     -- Called on unload, if needed
 end
-
-return user
 
 
 
