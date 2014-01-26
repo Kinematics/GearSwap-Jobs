@@ -13,7 +13,9 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	binds_on_unload()	
+	if binds_on_unload then
+		binds_on_unload()
+	end
 
 	windower.send_command('unbind ^`')
 end
@@ -242,9 +244,9 @@ end
 function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
-		if spell.target.type == 'PLAYER' and not state.Buff['Pianissimo'] then
+		if spell.target.type == 'PLAYER' and not spell.target.charmed and not state.Buff['Pianissimo'] then
 			cancel_spell()
-			windower.send_command('@input /ja "Pianissimo" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
+			windower.send_command('@input /ja "Pianissimo" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
 			eventArgs.cancel = true
 			return
 		end

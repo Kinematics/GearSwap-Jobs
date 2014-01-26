@@ -47,15 +47,14 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	binds_on_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
 end
 
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(4, 14)
-	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -132,7 +131,7 @@ function init_gear_sets()
 	
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		ring1="Prolix Ring",
+		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
@@ -142,7 +141,7 @@ function init_gear_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
 		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Convoker's Doublet",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Pahtli Cape",waist="Cascade Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
@@ -155,13 +154,13 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 
@@ -249,15 +248,13 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {ammo="Eminent Sachet",
 		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
+	-- Default macro set/book
 	set_macro_page(4, 16)
 	binds_on_load()
-
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -271,6 +268,17 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+function job_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted then
+		if state.Buff[spell.name] ~= nil then
+			state.Buff[spell.name] = true
+		end
+	end
+end
+
+
 -- Runs when a pet initiates an action.
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_pet_midcast(spell, action, spellMap, eventArgs)
@@ -283,34 +291,10 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
-function job_pet_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		end
-	end
-	
-	if pet_midaction() then
-		eventArgs.handled = true
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called before the Include starts constructing melee/idle/resting sets.
--- Can customize state or custom melee class values at this point.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_handle_equipping_gear(status, eventArgs)
-
-end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
@@ -339,11 +323,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost

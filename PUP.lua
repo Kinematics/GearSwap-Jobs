@@ -13,7 +13,9 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	binds_on_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
 end
 
 
@@ -21,6 +23,11 @@ end
 function init_gear_sets()
 	-- Default macro set/book
 	set_macro_page(3, 9)
+
+	-- List of pet weaponskills to check for
+	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
+		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
+		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
@@ -217,11 +224,6 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Regimen Mittens",ring1="Dark Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
-
-
-	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
-		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
-		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
 end
 
 

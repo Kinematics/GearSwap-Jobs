@@ -4,7 +4,7 @@
 -- Include this file in the get_sets() function with the command:
 -- include('Mote-Include.lua')
 --
--- You then MUST run init_include()
+-- It will then automatically run its own init_include() function.
 --
 -- IMPORTANT: This include requires supporting include files:
 -- Mote-Utility
@@ -12,13 +12,10 @@
 -- Mote-SelfCommands
 -- Mote-Globals
 --
--- It should be included as the first command in the job file's get_sets() function, but must at least
--- be executed before any included vars are referenced.
+-- Place the include() directive at the start of a job's get_sets() function.
 --
 -- Included variables and functions are considered to be at the same scope level as
 -- the job script itself, and can be used as such.
---
--- This script has access to any vars defined at the job lua's scope, such as player and world.
 -------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------
@@ -30,7 +27,7 @@
 
 
 function init_include()
-	-- Used to define various types of data mappings.  These may be used in this include,
+	-- Used to define various types of data mappings.  These may be used in the initialization,
 	-- so load it up front.
 	include('Mote-Mappings')
 
@@ -141,29 +138,30 @@ function init_include()
 	
 	-- Load externally-defined information (info that we don't want to change every time this file is updated).
 
-	-- Used to define misc utility functions that may be useful for this include
-	-- or any job files.
+	-- Used to define misc utility functions that may be useful for this include or any job files.
 	include('Mote-Utility')
+	
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
+	
 	-- Include general user globals, such as custom binds or gear tables.
-	-- If the user defined their own globals, use that; otherwise use Mote-Globals.
+	-- If the user defined their own globals (user-globals.lua), use that; otherwise use Mote-Globals.
 	if not load_user_globals() then
 		include('Mote-Globals')
 	end
 
-
-	-- Global default binds
-	binds_on_load()
-	
-	-- UserGlobals may define additional sets to be added to the local ones.
+	-- user-globals.lua may define additional sets to be added to the local ones.
 	if define_global_sets then
 		define_global_sets()
 	end
 
-	-- Optional: load a sidecar version of the init and unload functions.
+	-- Global default binds (either from Mote-Globals or user-globals)
+	binds_on_load()
+	
+	-- Load a sidecar file for the job (if it exists) that may re-define init_gear_sets and file_unload.
 	load_user_gear(player.main_job)
 	
+	-- Load up all the job sets and job-specific initialization of variables and such.
 	init_gear_sets()
 end
 
@@ -415,6 +413,11 @@ end
 -- Hooks for non-action events.
 -------------------------------------------------------------------------------------------------------------------
 
+-- sub_job_change is not handled by this include.
+-- sub_job_change(new_subjob, old_subjob)
+
+
+
 -- Called when the player's status changes.
 function status_change(newStatus, oldStatus)
 	-- init a new eventArgs
@@ -546,7 +549,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	-- Update defintions for element-specific gear that can be used.
-	--set_spell_obi_cape_ring(spell)
+	set_spell_obi_cape_ring(spell)
 	set_weaponskill_gorget_belt(spell)
 	set_fastcast_staff(spell)
 	set_recast_staff(spell)
