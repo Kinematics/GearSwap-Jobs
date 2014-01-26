@@ -304,13 +304,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Handle spell changes before attempting any precast stuff.
--- Returns two values on completion:
--- 1) bool of whether the original spell was cancelled
--- 2) bool of whether the spell was changed to something new
-function job_pretarget(spell, action, spellMap, eventArgs)
-
-end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
@@ -319,6 +312,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
+
 
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type:lower() == "weaponskill" then
@@ -355,6 +349,7 @@ function customize_idle_set(idleSet)
 	
 	return idleSet
 end
+
 
 function customize_melee_set(meleeSet)
 	if not state.Defense.Active then
@@ -393,7 +388,7 @@ end
 
 -- Called for custom player commands.
 function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1] == 'clear' and cmdParams[2] == 'skillchainPending' then
+	if cmdParams[1] == 'clear' and cmdParams[2] and cmdParams[2]:lower() == 'skillchainpending' then
 		skillchainPending = false
 	elseif cmdParams[1] == 'step' then
 		if cmdParams[2] == 't' then
