@@ -39,17 +39,13 @@ These sidecar files will not be part of the repository, and thus will not be upd
 
 Example code:
 
-local user = {}
-
-function user.init_gear_sets()
+function init_gear_sets()
     -- Put all set definitions here, as well as any other customization that is user-specific.
 end
 
-function user.file_unload()
+function file_unload()
     -- Called on unload, if needed
 end
-
-return user
 
 
 
