@@ -13,7 +13,9 @@ end
 
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
-	binds_on_unload()	
+	if binds_on_unload then
+		binds_on_unload()
+	end
 
 	windower.send_command('unbind ^`')
 end
