@@ -343,7 +343,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
-	if player.hpp < 80 then
+	if player.hpp < 80 and not areas.Cities:contains(world.area) then
 		idleSet = set_combine(idleSet, sets.ExtraRegen)
 	end
 	
