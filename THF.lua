@@ -151,7 +151,7 @@ function init_gear_sets()
 	sets.precast.WS["Rudra's Storm"].SATA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",neck=gear.ElementalGorget,
 		body="Pillager's Vest"})
 
-	sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {neck="Thunder Gorget",
+	sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,
 		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Shark Bite'].Acc = set_combine(sets.precast.WS['Shark Bite'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Shark Bite'].Mod = set_combine(sets.precast.WS['Shark Bite'], {waist=gear.ElementalBelt})
@@ -161,7 +161,7 @@ function init_gear_sets()
 	sets.precast.WS['Shark Bite'].SATA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",neck=gear.ElementalGorget,
 		body="Pillager's Vest"})
 
-	sets.precast.WS['Mandalic Stab'] = set_combine(sets.precast.WS, {neck="Light Gorget",
+	sets.precast.WS['Mandalic Stab'] = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,
 		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Mandalic Stab'].Acc = set_combine(sets.precast.WS['Mandalic Stab'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Mandalic Stab'].Mod = set_combine(sets.precast.WS['Mandalic Stab'], {waist=gear.ElementalBelt})
@@ -182,29 +182,29 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Pillager's Armlets +1",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Ik Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {
 		head="Whirlpool Mask",neck="Torero Torque",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",
-		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Ik Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	-- Ranged gear -- acc + TH
 	sets.midcast.RangedAttack = {
 		head="Whirlpool Mask",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Hajduk Ring",
-		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.midcast.RangedAttack.TH = {
 		head="Pillager's Bonnet",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Assassin's Armlets +2",ring1="Beeline Ring",ring2="Hajduk Ring",
-		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
+		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 	sets.midcast.RangedAttack.Acc = {
 		head="Pillager's Bonnet",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
-		back="Libeccio Mantle",waist="Aqualine Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines"}
+		back="Libeccio Mantle",waist="Aquiline Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines"}
 	
 	-- Sets to return to when not performing an action.
 	
