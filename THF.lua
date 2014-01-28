@@ -312,38 +312,36 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 		if state.Buff[spell.name] ~= nil then
 			state.Buff[spell.name] = true
 		end
-	end
 		
-	-- Don't let aftercast revert gear set for SA/TA/Feint
-	if S{'Sneak Attack', 'Trick Attack', 'Feint'}:contains(spell.english) and not spell.interrupted then
-		eventArgs.handled = true
-	end
-	
-	-- If this wasn't an action that would have used up SATA/Feint, make sure to put gear back on.
-	if spell.type:lower() ~= 'weaponskill' and spell.type:lower() ~= 'step' then
-		-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
-		if state.Buff['Sneak Attack'] then
-			equip(sets.precast.JA['Sneak Attack'])
-			if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
-				equip(sets.TreasureHunter)
-			end
-			eventArgs.handled = true
-		elseif state.Buff['Trick Attack'] then
-			equip(sets.precast.JA['Trick Attack'])
-			if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
-				equip(sets.TreasureHunter)
-			end
-			eventArgs.handled = true
-		elseif state.Buff['Feint'] then
-			equip(sets.precast.JA['Feint'])
-			if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
-				equip(sets.TreasureHunter)
-			end
+		-- Don't let aftercast revert gear set for SA/TA/Feint
+		if S{'Sneak Attack', 'Trick Attack', 'Feint'}:contains(spell.english) then
 			eventArgs.handled = true
 		end
-	end
-	
-	if not spell.interrupted then
+		
+		-- If this wasn't an action that would have used up SATA/Feint, make sure to put gear back on.
+		if spell.type:lower() ~= 'weaponskill' and spell.type:lower() ~= 'step' then
+			-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
+			if state.Buff['Sneak Attack'] then
+				equip(sets.precast.JA['Sneak Attack'])
+				if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+					equip(sets.TreasureHunter)
+				end
+				eventArgs.handled = true
+			elseif state.Buff['Trick Attack'] then
+				equip(sets.precast.JA['Trick Attack'])
+				if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+					equip(sets.TreasureHunter)
+				end
+				eventArgs.handled = true
+			elseif state.Buff['Feint'] then
+				equip(sets.precast.JA['Feint'])
+				if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' or tag_with_th then
+					equip(sets.TreasureHunter)
+				end
+				eventArgs.handled = true
+			end
+		end
+		
 		if spell.target and spell.target.type == 'Enemy' then
 			tag_with_th = false
 			tp_on_engage = 0
