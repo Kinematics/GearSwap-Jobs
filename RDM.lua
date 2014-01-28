@@ -194,7 +194,7 @@ function init_gear_sets()
 	sets.engaged = {
 		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Atheling Mantle",waist="Goading Belt",legs="Osmium Cuisses",feet="Hagondes Sabots"}
 
 end
 
