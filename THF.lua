@@ -34,12 +34,14 @@ function init_gear_sets()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
+	options.RangedModes = {'Normal', 'TH', 'Acc'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 
+	state.RangedMode = 'TH'
 	state.Defense.PhysicalMode = 'Evasion'
 	
 	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
@@ -100,10 +102,8 @@ function init_gear_sets()
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
 
-	-- Ranged gaer
-	sets.precast.RangedAttack = {head="Whirlpool Mask",neck="Peacock Charm",
-		body="Iuitl Vest",hands="Assassin's Armlets +2",
-		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
+	-- Ranged snapshot gear
+	sets.precast.RangedAttack = {head="Aurore Beret",hands="Iuitl Wristbands",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
 
        
 	-- Weaponskill sets
@@ -190,6 +190,21 @@ function init_gear_sets()
 		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",
 		back="Ix Cape",waist="Twilight Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
+	-- Ranged gear -- acc + TH
+	sets.midcast.RangedAttack = {
+		head="Whirlpool Mask",neck="Peacock Charm",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Hajduk Ring",
+		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+
+	sets.midcast.RangedAttack.TH = {
+		head="Pillager's Bonnet",neck="Peacock Charm",
+		body="Iuitl Vest",hands="Assassin's Armlets +2",ring1="Beeline Ring",ring2="Hajduk Ring",
+		back="Libeccio Mantle",waist="Aqualine Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
+
+	sets.midcast.RangedAttack.Acc = {
+		head="Pillager's Bonnet",neck="Peacock Charm",
+		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
+		back="Libeccio Mantle",waist="Aqualine Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines"}
 	
 	-- Sets to return to when not performing an action.
 	
@@ -463,6 +478,42 @@ function job_update(cmdParams, eventArgs)
 	-- Don't allow normal gear equips if SA/TA/Feint is active.
 	if satafeint_active() then
 		eventArgs.handled = true
+	end
+end
+
+
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue)
+	if stateField == 'TreasureMode' then
+		local prevRangedMode = state.RangedMode
+		
+		if newValue == 'Tag' or newValue == 'SATA' then
+			state.RangedMode = 'TH'
+		elseif state.OffenseMode == 'Acc' then
+			state.RangedMode = 'Acc'
+		else
+			state.RangedMode = 'Normal'
+		end
+		
+		if state.RangedMode ~= prevRangedMode then
+			add_to_chat(121,'Ranged mode is now '..state.RangedMode)
+		end
+	elseif stateField == 'OffenseMode' then
+		if state.TreasureMode == 'None' or state.TreasureMode == 'Fulltime' then
+			local prevRangedMode = state.RangedMode
+
+			if newValue == 'Acc' then
+				state.RangedMode = 'Acc'
+			else
+				state.RangedMode = 'Normal'
+			end
+			
+			if state.RangedMode ~= prevRangedMode then
+				add_to_chat(121,'Ranged mode is now '..state.RangedMode)
+			end
+		end
+	elseif stateField == 'Reset' then
+		state.RangedMode = 'TH'
 	end
 end
 
