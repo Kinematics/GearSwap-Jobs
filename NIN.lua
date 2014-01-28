@@ -109,6 +109,8 @@ function init_gear_sets()
 	-- any ninjutsu cast on self
 	sets.midcast.SelfNinjutsu = set_combine(sets.midcast.FastRecast, {neck="Torero Torque",ring1="Beeline Ring",back="Ix Cape"})
 
+	sets.midcast.Utsusemi = set_combine(sets.midcast.SelfNinjutsu, {feet="Iga Kyahan +2"})
+
 	-- any ninjutsu cast on enemies
 	sets.midcast.Ninjutsu = {
 		head="Hachiya Hatsuburi",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
@@ -291,7 +293,7 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if spell.skill == "Ninjutsu" and spell.target.type:lower() == 'self' then
+	if spell.skill == "Ninjutsu" and spell.target.type:lower() == 'self' and spellMap ~= "Utsusemi" then
 		classes.CustomClass = "SelfNinjutsu"
 	end
 end

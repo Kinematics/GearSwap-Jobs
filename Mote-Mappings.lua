@@ -104,7 +104,7 @@ spell_maps = {
 }
 
 no_skill_spells_list = S{'Haste', 'Refresh', 'Regen', 'Protect', 'Protectra', 'Shell', 'Shellra',
-		'Raise', 'Reraise', 'Cursna'}
+		'Raise', 'Reraise', 'Cursna', 'Sneak', 'Invisible', 'Deodorize'}
 
 
 -------------------------------------------------------------------------------------------------------------------
