@@ -141,7 +141,7 @@ function init_gear_sets()
 		back="Harmony Cape",waist="Corvax Sash",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs
-	sets.midcast.SongDebuff = {main="Soothsayer Staff",sub="Quire Grip",range="Gjallarhorn",
+	sets.midcast.SongDebuff = {main="Izhiikoh",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Aoidos' Rhing. +2",feet="Bokwus Boots"}

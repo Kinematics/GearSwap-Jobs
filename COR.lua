@@ -82,11 +82,11 @@ function init_gear_sets()
 	
 	sets.precast.CorsairRoll = {head="Commodore's Tricorne +2",hands="Navarch's Gants +2"}
 	
-	sets.precast.CorsairRoll["Caster's Roll"] = set_combine(sets.precast.JA["Phantom Roll"], {legs="Navarch's Culottes +2"})
-	sets.precast.CorsairRoll["Courser's Roll"] = set_combine(sets.precast.JA["Phantom Roll"], {feet="Navarch's Bottes +2"})
-	sets.precast.CorsairRoll["Blitzer's Roll"] = set_combine(sets.precast.JA["Phantom Roll"], {head="Navarch's Tricorne +2"})
-	sets.precast.CorsairRoll["Tactician's Roll"] = set_combine(sets.precast.JA["Phantom Roll"], {body="Navarch's Frac +2"})
-	sets.precast.CorsairRoll["Allies' Roll"] = set_combine(sets.precast.JA["Phantom Roll"], {hands="Navarch's Gants +2"})
+	sets.precast.CorsairRoll["Caster's Roll"] = set_combine(sets.precast.CorsairRoll, {legs="Navarch's Culottes +2"})
+	sets.precast.CorsairRoll["Courser's Roll"] = set_combine(sets.precast.CorsairRoll, {feet="Navarch's Bottes +2"})
+	sets.precast.CorsairRoll["Blitzer's Roll"] = set_combine(sets.precast.CorsairRoll, {head="Navarch's Tricorne +2"})
+	sets.precast.CorsairRoll["Tactician's Roll"] = set_combine(sets.precast.CorsairRoll, {body="Navarch's Frac +2"})
+	sets.precast.CorsairRoll["Allies' Roll"] = set_combine(sets.precast.CorsairRoll, {hands="Navarch's Gants +2"})
 	
 	sets.precast.LuzafRing = {ring2="Luzaf's Ring"}
 	
