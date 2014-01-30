@@ -56,8 +56,8 @@ function init_include()
 	state.SelectNPCTargets     = false
 	state.PCTargetMode         = 'default'
 	
-	state.CombatWeapon
-	state.CombatForm
+	state.CombatWeapon = nil
+	state.CombatForm = nil
 
 	state.Buff = {}
 
