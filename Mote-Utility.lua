@@ -4,100 +4,30 @@
 -------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------
--- Function to easily change to a given macro set or book.  Book value is optional.
+-- Buff-cancelling utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
-function set_macro_page(set,book)
-	if not tonumber(set) then
-		add_to_chat(123,'Error setting macro page: Set is not a valid number ('..tostring(set)..').')
-		return
-	end
-	if set < 1 or set > 10 then
-		add_to_chat(123,'Error setting macro page: Macro set ('..tostring(set)..') must be between 1 and 10.')
-		return
-	end
-
-	if book then
-		if not tonumber(book) then
-			add_to_chat(123,'Error setting macro page: book is not a valid number ('..tostring(book)..').')
-			return
-		end
-		if book < 1 or book > 20 then
-			add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 20.')
-			return
-		end
-		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
-	else
-		windower.send_command('input /macro set '..tostring(set))
+-- Function to cancel buffs if they'd conflict with using the spell you're attempting.
+function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
+	if spell.name == 'Spectral Jig' and buffactive.sneak then
+		send_command('cancel sneak')
+	elseif spell.name == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
+		send_command('cancel sneak')
+	elseif (spell.name == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
+		send_command('cancel saber dance')
+	elseif spell.type=='Samba' and buffactive['fan dance'] then
+		send_command('cancel fan dance')
+	elseif spell.name:startswith('Monomi') then
+		send_command('@wait 1.7;cancel sneak')
+	elseif spell.name == 'Utsusemi: Ichi' then
+		send_command('@wait 1.7;cancel copy image*')
 	end
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for changing target types and spells in an automatic manner.
 -------------------------------------------------------------------------------------------------------------------
-
-function auto_change_target(spell, action, spellMap)
-	-- Do not modify target for spells where we get <lastst> or <me>.
-	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
-		return
-	end
-	
-	-- init a new eventArgs with current values
-	local eventArgs = {handled = false, PCTargetMode = state.PCTargetMode, SelectNPCTargets = state.SelectNPCTargets}
-
-	-- Allow the job to do custom handling, or override the default values.
-	-- They can completely handle it, or set one of the secondary eventArgs vars to selectively
-	-- override the default state vars.
-	if job_auto_change_target then
-		job_auto_change_target(spell, action, spellMap, eventArgs)
-	end
-	
-	-- If the job handled it, we're done.
-	if eventArgs.handled then
-		return
-	end
-	
-	local pcTargetMode = eventArgs.PCTargetMode
-	local selectNPCTargets = eventArgs.SelectNPCTargets
-	
-	local canUseOnPlayer = spell.validtarget and 
-		(spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC)
-
-	local newTarget
-	
-	-- For spells that we can cast on players:
-	if canUseOnPlayer and pcTargetMode ~= 'default' then
-		if pcTargetMode == 'stal' then
-			-- Use <stal> if possible, otherwise fall back to <stpt>.
-			if spell.validtarget.Ally then
-				newTarget = '<stal>'
-			elseif spell.validtarget.Party then
-				newTarget = '<stpt>'
-			end
-		elseif pcTargetMode == 'stpt' then
-			-- Even ally-possible spells are limited to the current party.
-			if spell.validtarget.Ally or spell.validtarget.Party then
-				newTarget = '<stpt>'
-			end
-		elseif pcTargetMode == 'stpc' then
-			-- If it's anything other than a self-only spell, can change to <stpc>.
-			if spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC then
-				newTarget = '<stpc>'
-			end
-		end
-	-- For spells that can be used on enemies:
-	elseif spell.validtarget and spell.validtarget.Enemy and selectNPCTargets then
-		-- Note: this means macros should be written for <t>, and it will change to <stnpc>
-		-- if the flag is set.  It won't change <stnpc> back to <t>.
-		newTarget = '<stnpc>'
-	end
-	
-	-- If a new target was selected and is different from the original, call the change function.
-	if newTarget and newTarget ~= spell.target.raw then
-		change_target(newTarget)
-	end
-end
-
 
 -- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
 -- Handle spell changes before attempting any precast stuff.
@@ -119,10 +49,11 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 	local missingHP = 0
 	local targ
 	
-	-- If curing someone in our alliance, we can get their HP
+	-- If curing ourself, get our exact missing HP
 	if spell.target.type == "SELF" then
 		targ = alliance[1][1]
 		missingHP = player.max_hp - player.hp
+	-- If curing someone in our alliance, we can estimate their missing HP
 	elseif spell.target.isallymember then
 		targ = find_player_in_alliance(spell.target.name)
 		local est_max_hp = targ.hp / (targ.hpp/100)
@@ -215,15 +146,69 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 end
 
 
-function find_player_in_alliance(name)
-	for i,v in ipairs(alliance) do
-		for k,p in ipairs(v) do
-			if p.name == name then
-				return p
+-- Function to allow for automatic adjustment of the spell target type based on preferences.
+function auto_change_target(spell, action, spellMap)
+	-- Do not modify target for spells where we get <lastst> or <me>.
+	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
+		return
+	end
+	
+	-- init a new eventArgs with current values
+	local eventArgs = {handled = false, PCTargetMode = state.PCTargetMode, SelectNPCTargets = state.SelectNPCTargets}
+
+	-- Allow the job to do custom handling, or override the default values.
+	-- They can completely handle it, or set one of the secondary eventArgs vars to selectively
+	-- override the default state vars.
+	if job_auto_change_target then
+		job_auto_change_target(spell, action, spellMap, eventArgs)
+	end
+	
+	-- If the job handled it, we're done.
+	if eventArgs.handled then
+		return
+	end
+	
+	local pcTargetMode = eventArgs.PCTargetMode
+	local selectNPCTargets = eventArgs.SelectNPCTargets
+	
+	local canUseOnPlayer = spell.validtarget and 
+		(spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC)
+
+	local newTarget
+	
+	-- For spells that we can cast on players:
+	if canUseOnPlayer and pcTargetMode ~= 'default' then
+		if pcTargetMode == 'stal' then
+			-- Use <stal> if possible, otherwise fall back to <stpt>.
+			if spell.validtarget.Ally then
+				newTarget = '<stal>'
+			elseif spell.validtarget.Party then
+				newTarget = '<stpt>'
+			end
+		elseif pcTargetMode == 'stpt' then
+			-- Even ally-possible spells are limited to the current party.
+			if spell.validtarget.Ally or spell.validtarget.Party then
+				newTarget = '<stpt>'
+			end
+		elseif pcTargetMode == 'stpc' then
+			-- If it's anything other than a self-only spell, can change to <stpc>.
+			if spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC then
+				newTarget = '<stpc>'
 			end
 		end
+	-- For spells that can be used on enemies:
+	elseif spell.validtarget and spell.validtarget.Enemy and selectNPCTargets then
+		-- Note: this means macros should be written for <t>, and it will change to <stnpc>
+		-- if the flag is set.  It won't change <stnpc> back to <t>.
+		newTarget = '<stnpc>'
+	end
+	
+	-- If a new target was selected and is different from the original, call the change function.
+	if newTarget and newTarget ~= spell.target.raw then
+		change_target(newTarget)
 	end
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Environment utility functions.
@@ -389,6 +374,35 @@ function set_recast_staff(spell)
 	return staff
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- Function to easily change to a given macro set or book.  Book value is optional.
+-------------------------------------------------------------------------------------------------------------------
+
+function set_macro_page(set,book)
+	if not tonumber(set) then
+		add_to_chat(123,'Error setting macro page: Set is not a valid number ('..tostring(set)..').')
+		return
+	end
+	if set < 1 or set > 10 then
+		add_to_chat(123,'Error setting macro page: Macro set ('..tostring(set)..') must be between 1 and 10.')
+		return
+	end
+
+	if book then
+		if not tonumber(book) then
+			add_to_chat(123,'Error setting macro page: book is not a valid number ('..tostring(book)..').')
+			return
+		end
+		if book < 1 or book > 20 then
+			add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 20.')
+			return
+		end
+		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
+	else
+		windower.send_command('input /macro set '..tostring(set))
+	end
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for including local user files.
@@ -427,6 +441,17 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Attempt to locate a specified name within the current alliance.
+function find_player_in_alliance(name)
+	for i,v in ipairs(alliance) do
+		for k,p in ipairs(v) do
+			if p.name == name then
+				return p
+			end
+		end
+	end
+end
 
 -- Invert a table such that the keys are values and the values are keys.
 -- Use this to look up the index value of a given entry.
