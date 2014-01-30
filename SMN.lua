@@ -261,7 +261,7 @@ function init_gear_sets()
 	durations['Earthen Armor'] = 232
 	durations['Shining Ruby'] = 340
 	durations['Dream Shroud'] = 352
-	durations['Noctoshield'] = 340
+	durations['Noctoshield'] = 352
 	durations['Inferno Howl'] = 232
 	durations['Hastega'] = 352
 	
