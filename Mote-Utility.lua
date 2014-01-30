@@ -4,38 +4,144 @@
 -------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------
--- Function to easily change to a given macro set or book.  Book value is optional.
+-- Buff-cancelling utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
-function set_macro_page(set,book)
-	if not tonumber(set) then
-		add_to_chat(123,'Error setting macro page: Set is not a valid number ('..tostring(set)..').')
-		return
-	end
-	if set < 1 or set > 10 then
-		add_to_chat(123,'Error setting macro page: Macro set ('..tostring(set)..') must be between 1 and 10.')
-		return
-	end
-
-	if book then
-		if not tonumber(book) then
-			add_to_chat(123,'Error setting macro page: book is not a valid number ('..tostring(book)..').')
-			return
-		end
-		if book < 1 or book > 20 then
-			add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 20.')
-			return
-		end
-		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
-	else
-		windower.send_command('input /macro set '..tostring(set))
+-- Function to cancel buffs if they'd conflict with using the spell you're attempting.
+function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
+	if spell.name == 'Spectral Jig' and buffactive.sneak then
+		send_command('cancel sneak')
+	elseif spell.name == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
+		send_command('cancel sneak')
+	elseif (spell.name == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
+		send_command('cancel saber dance')
+	elseif spell.type=='Samba' and buffactive['fan dance'] then
+		send_command('cancel fan dance')
+	elseif spell.name:startswith('Monomi') then
+		send_command('@wait 1.7;cancel sneak')
+	elseif spell.name == 'Utsusemi: Ichi' then
+		send_command('@wait 1.7;cancel copy image*')
 	end
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for changing target types and spells in an automatic manner.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
+-- Handle spell changes before attempting any precast stuff.
+-- Returns two values on completion:
+-- 1) bool of whether the original spell was cancelled
+-- 2) bool of whether the spell was changed to something new
+function refine_waltz(spell, action, spellMap, eventArgs)
+	if spell.type ~= 'Waltz' then
+		return
+	end
+	
+	-- Don't modify anything for Healing Waltz or Divine Waltzes
+	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
+		return
+	end
+
+	local newWaltz = spell.english
+	
+	local missingHP = 0
+	local targ
+	
+	-- If curing ourself, get our exact missing HP
+	if spell.target.type == "SELF" then
+		targ = alliance[1][1]
+		missingHP = player.max_hp - player.hp
+	-- If curing someone in our alliance, we can estimate their missing HP
+	elseif spell.target.isallymember then
+		targ = find_player_in_alliance(spell.target.name)
+		local est_max_hp = targ.hp / (targ.hpp/100)
+		missingHP = math.floor(est_max_hp - targ.hp)
+	end
+	
+	-- If we can estimate missing HP, we can adjust the preferred tier used.
+	if targ then
+		if player.main_job == 'DNC' then
+			if missingHP < 40 then
+				-- not worth curing
+				add_to_chat(122,'Full HP!')
+				eventArgs.cancel = true
+				return
+			elseif missingHP < 200 then
+				newWaltz = 'Curing Waltz'
+			elseif missingHP < 600 then
+				newWaltz = 'Curing Waltz II'
+			elseif missingHP < 1100 then
+				newWaltz = 'Curing Waltz III'
+			elseif missingHP < 1500 then
+				newWaltz = 'Curing Waltz IV'
+			else
+				newWaltz = 'Curing Waltz V'
+			end
+		elseif player.sub_job == 'DNC' then
+			if missingHP < 150 then
+				newWaltz = 'Curing Waltz'
+			elseif missingHP < 300 then
+				newWaltz = 'Curing Waltz II'
+			else
+				newWaltz = 'Curing Waltz III'
+			end
+		else
+			return
+		end
+	end
+
+	local waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
+	local tpCost = waltzTPCost[newWaltz]
+	local downgrade
+	
+	-- Downgrade the spell to what we can afford
+	if player.tp < tpCost and not buffactive.trance then
+		--[[ Costs:
+			Curing Waltz:     20 TP
+			Curing Waltz II:  35 TP
+			Curing Waltz III: 50 TP
+			Curing Waltz IV:  65 TP
+			Curing Waltz V:   80 TP
+			Divine Waltz:     40 TP
+			Divine Waltz II:  80 TP
+		--]]
+		
+		if player.tp < 20 then
+			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Cancelling.')
+			eventArgs.cancel = true
+			return
+		elseif player.tp < 35 then
+			newWaltz = 'Curing Waltz'
+		elseif player.tp < 50 then
+			newWaltz = 'Curing Waltz II'
+		elseif player.tp < 65 then
+			newWaltz = 'Curing Waltz III'
+		elseif player.tp < 80 then
+			newWaltz = 'Curing Waltz IV'
+		end
+		
+		downgrade = 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz..'.'
+	end
+
+	
+	if newWaltz ~= spell.english then
+		send_command('wait 0.03;input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
+		if downgrade then
+			add_to_chat(122, downgrade)
+		end
+		eventArgs.cancel = true
+		return
+	end
+
+	if missingHP > 0 then
+		add_to_chat(122,'Trying to cure '..tostring(missingHP)..' HP using '..newWaltz..'.')
+	end
+end
+
+
+-- Function to allow for automatic adjustment of the spell target type based on preferences.
 function auto_change_target(spell, action, spellMap)
 	-- Do not modify target for spells where we get <lastst> or <me>.
 	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
@@ -98,132 +204,6 @@ function auto_change_target(spell, action, spellMap)
 	end
 end
 
-
--- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
--- Handle spell changes before attempting any precast stuff.
--- Returns two values on completion:
--- 1) bool of whether the original spell was cancelled
--- 2) bool of whether the spell was changed to something new
-function refine_waltz(spell, action, spellMap, eventArgs)
-	if spell.type ~= 'Waltz' then
-		return
-	end
-	
-	-- Don't modify anything for Healing Waltz or Divine Waltzes
-	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
-		return
-	end
-
-	local newWaltz = spell.english
-	
-	local missingHP = 0
-	local targ
-	
-	-- If curing someone in our alliance, we can get their HP
-	if spell.target.type == "SELF" then
-		targ = alliance[1][1]
-		missingHP = player.max_hp - player.hp
-	elseif spell.target.isallymember then
-		targ = find_player_in_alliance(spell.target.name)
-		local est_max_hp = targ.hp / (targ.hpp/100)
-		missingHP = math.floor(est_max_hp - targ.hp)
-	end
-	
-	-- If we can estimate missing HP, we can adjust the preferred tier used.
-	if targ then
-		if player.main_job == 'DNC' then
-			if missingHP < 40 then
-				-- not worth curing
-				add_to_chat(122,'Full HP!')
-				eventArgs.cancel = true
-				return
-			elseif missingHP < 200 then
-				newWaltz = 'Curing Waltz'
-			elseif missingHP < 600 then
-				newWaltz = 'Curing Waltz II'
-			elseif missingHP < 1100 then
-				newWaltz = 'Curing Waltz III'
-			elseif missingHP < 1500 then
-				newWaltz = 'Curing Waltz IV'
-			else
-				newWaltz = 'Curing Waltz V'
-			end
-		elseif player.sub_job == 'DNC' then
-			if missingHP < 40 then
-				-- not worth curing
-				add_to_chat(122,'Full HP!')
-				eventArgs.cancel = true
-				return
-			elseif missingHP < 150 then
-				newWaltz = 'Curing Waltz'
-			elseif missingHP < 300 then
-				newWaltz = 'Curing Waltz II'
-			else
-				newWaltz = 'Curing Waltz III'
-			end
-		else
-			return
-		end
-	end
-
-	local waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
-	local tpCost = waltzTPCost[newWaltz]
-	local downgrade
-	
-	-- Downgrade the spell to what we can afford
-	if player.tp < tpCost and not buffactive.trance then
-		--[[ Costs:
-			Curing Waltz:     20 TP
-			Curing Waltz II:  35 TP
-			Curing Waltz III: 50 TP
-			Curing Waltz IV:  65 TP
-			Curing Waltz V:   80 TP
-			Divine Waltz:     40 TP
-			Divine Waltz II:  80 TP
-		--]]
-		
-		if player.tp < 20 then
-			add_to_chat(122, 'Insufficient TP ['..tostring(player.tp)..']. Cancelling.')
-			eventArgs.cancel = true
-			return
-		elseif player.tp < 35 then
-			newWaltz = 'Curing Waltz'
-		elseif player.tp < 50 then
-			newWaltz = 'Curing Waltz II'
-		elseif player.tp < 65 then
-			newWaltz = 'Curing Waltz III'
-		elseif player.tp < 80 then
-			newWaltz = 'Curing Waltz IV'
-		end
-		
-		downgrade = 'Insufficient TP ['..tostring(player.tp)..']. Downgrading to '..newWaltz..'.'
-	end
-
-	
-	if newWaltz ~= spell.english then
-		send_command('wait 0.03;input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
-		if downgrade then
-			add_to_chat(122, downgrade)
-		end
-		eventArgs.cancel = true
-		return
-	end
-
-	if missingHP > 0 then
-		add_to_chat(122,'Trying to cure '..tostring(missingHP)..' HP using '..newWaltz..'.')
-	end
-end
-
-
-function find_player_in_alliance(name)
-	for i,v in ipairs(alliance) do
-		for k,p in ipairs(v) do
-			if p.name == name then
-				return p
-			end
-		end
-	end
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Environment utility functions.
@@ -389,6 +369,35 @@ function set_recast_staff(spell)
 	return staff
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- Function to easily change to a given macro set or book.  Book value is optional.
+-------------------------------------------------------------------------------------------------------------------
+
+function set_macro_page(set,book)
+	if not tonumber(set) then
+		add_to_chat(123,'Error setting macro page: Set is not a valid number ('..tostring(set)..').')
+		return
+	end
+	if set < 1 or set > 10 then
+		add_to_chat(123,'Error setting macro page: Macro set ('..tostring(set)..') must be between 1 and 10.')
+		return
+	end
+
+	if book then
+		if not tonumber(book) then
+			add_to_chat(123,'Error setting macro page: book is not a valid number ('..tostring(book)..').')
+			return
+		end
+		if book < 1 or book > 20 then
+			add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 20.')
+			return
+		end
+		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
+	else
+		windower.send_command('input /macro set '..tostring(set))
+	end
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for including local user files.
@@ -427,6 +436,17 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions for vars or other data manipulation.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Attempt to locate a specified name within the current alliance.
+function find_player_in_alliance(name)
+	for i,v in ipairs(alliance) do
+		for k,p in ipairs(v) do
+			if p.name == name then
+				return p
+			end
+		end
+	end
+end
 
 -- Invert a table such that the keys are values and the values are keys.
 -- Use this to look up the index value of a given entry.

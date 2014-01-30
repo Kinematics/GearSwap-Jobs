@@ -71,7 +71,7 @@ function init_gear_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
 		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
@@ -140,7 +140,7 @@ function init_gear_sets()
 		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
 		legs="Estoqueur's Fuseau +2",feet="Estoqueur's Houseaux +2"}
 
-	sets.buff.Saboteur = {hands="Estoqueur's Gantherots"}
+	sets.buff.Saboteur = {hands="Estoqueur's Gantherots +2"}
 	
 
 	-- Sets to return to when not performing an action.
@@ -194,7 +194,7 @@ function init_gear_sets()
 	sets.engaged = {
 		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Goading Belt",legs="Osmium Cuisses",feet="Hagondes Sabots"}
+		back="Atheling Mantle",waist="Goading Belt",legs="Osmium Cuisses",feet="Atrophy Boots"}
 
 end
 

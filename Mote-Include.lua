@@ -655,6 +655,10 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 				elseif equipSet[spellMap] then
 					equipSet = equipSet[spellMap]
 				end
+
+				if classes.CustomClass and equipSet[classes.CustomClass] then
+					equipSet = equipSet[classes.CustomClass]
+				end
 			elseif classes.CustomClass and sets.precast[classes.CustomClass] then
 				equipSet = sets.precast[classes.CustomClass]
 			elseif sets.precast[spellMap] then

@@ -46,7 +46,7 @@ function init_gear_sets()
 
 	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves +1"}
 
-	sets.precast.JA['Dodge'] = {feet="Temple Gaiters +1"}
+	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters"}
 
 	sets.precast.JA['Focus'] = {head="Anchorite's Crown"}
 
@@ -81,8 +81,7 @@ function init_gear_sets()
 
 	-- Fast cast sets for spells
 	
-	sets.precast.FC = {ear2="Loquacious Earring",
-		hands="Thaumas Gloves"}
+	sets.precast.FC = {head="Haruspex hat",ear2="Loquacious Earring",hands="Thaumas Gloves"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
@@ -166,8 +165,8 @@ function init_gear_sets()
 		back="Shadow Mantle",waist="Black Belt",legs="Melee Hose +2",feet="Melee Gaiters +2"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
-		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		head="Haruspex hat",neck="Twilight Torque",
+		body="Otronif Harness",hands="Anchorite's Gloves +1",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Black Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
@@ -185,7 +184,7 @@ function init_gear_sets()
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Whirlpool Mask",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Mod = {ammo="Thew Bomblet",

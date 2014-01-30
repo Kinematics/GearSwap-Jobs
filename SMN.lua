@@ -55,6 +55,10 @@ end
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
+	-- Default macro set/book
+	set_macro_page(4, 16)
+	binds_on_load()
+
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -252,9 +256,30 @@ function init_gear_sets()
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
-	-- Default macro set/book
-	set_macro_page(4, 16)
-	binds_on_load()
+	-- Durations for wards we want to create custom timers for.
+	durations = {}
+	durations['Earthen Armor'] = 232
+	durations['Shining Ruby'] = 340
+	durations['Dream Shroud'] = 352
+	durations['Noctoshield'] = 352
+	durations['Inferno Howl'] = 232
+	durations['Hastega'] = 352
+	
+	-- Icons to use for the timers (from plugins/icons directory)
+	timer_icons = {}
+	-- 00054 for stoneskin, or 00299 for Titan
+	timer_icons['Earthen Armor'] = 'spells/00299.png'
+	-- 00043 for protect, or 00296 for Carby
+	timer_icons['Shining Ruby'] = 'spells/00043.png'
+	-- 00304 for Diabolos
+	timer_icons['Dream Shroud'] = 'spells/00304.png'
+	-- 00106 for phalanx, or 00304 for Diabolos
+	timer_icons['Noctoshield'] = 'spells/00106.png'
+	-- 00100 for enfire, or 00298 for Ifrit
+	timer_icons['Inferno Howl'] = 'spells/00298.png'
+	-- 00358 for hastega, or 00301 for Garuda
+	timer_icons['Hastega'] = 'spells/00358.png'
+	
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -288,6 +313,23 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 		classes.CustomClass = 'MagicalBloodPactRage'
 	else
 		classes.CustomClass = 'PhysicalBloodPactRage'
+	end
+end
+
+
+-- Runs when pet completes an action.
+function job_pet_aftercast(spell, action, spellMap, eventArgs)
+	if not spell.interrupted then
+		-- Create custom timers for ward pacts.
+		if durations[spell.english] then
+			local timer_cmd = 'timers c "'..spell.english..'" '..tostring(durations[spell.english])..' down'
+			
+			if timer_icons[spell.english] then
+				timer_cmd = timer_cmd..' '..timer_icons[spell.english]
+			end
+			
+			send_command(timer_cmd)
+		end
 	end
 end
 
