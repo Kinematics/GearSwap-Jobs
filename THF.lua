@@ -246,7 +246,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
