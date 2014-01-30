@@ -228,7 +228,7 @@ function init_gear_sets()
 		back="Atheling Mantle",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	-- Set if dual-wielding
-	sets.engaged.DualWield.Dagger = {range="Angel Lyre",
+	sets.engaged.DualWield = {range="Angel Lyre",
 		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Brioso Justaucorps",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
