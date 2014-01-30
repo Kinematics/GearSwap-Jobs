@@ -227,11 +227,14 @@ function init_gear_sets()
 		body="Brioso Justaucorps",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
-	sets.engaged.DWDagger = {range="Angel Lyre",
+	-- Set if dual-wielding
+	sets.engaged.DualWield.Dagger = {range="Angel Lyre",
 		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Brioso Justaucorps",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
+
+	brd_daggers = {'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 end
 
 
@@ -451,18 +454,17 @@ end
 
 -- Examine equipment to determine what our current TP weapon is.
 function pick_tp_weapon()
-	if player.equipment.main then
-		if string.find(player.equipment.main, 'Staff') then
-			TPWeapon = 'Staff'
-		elseif player.equipment.sub == empty or string.find(player.equipment.sub, 'Shield') then
-			TPWeapon = 'Dagger'
-		elseif T{'NIN','DNC'}:contains(player.sub_job) then
-			TPWeapon = 'DWDagger'
+	if brd_daggers:contains(player.equipment.main) then
+		state.CombatWeapon = 'Dagger'
+		
+		if S{'NIN','DNC'}:contains(player.sub_job) and brd_daggers:contains(player.equipment.sub) then
+			state.CombatForm = "DualWield"
 		else
-			TPWeapon = 'Dagger'
+			state.CombatForm = nil
 		end
 	else
-		TPWeapon = 'None'
+		state.CombatWeapon = nil
+		state.CombatForm = nil
 	end
 end
 
