@@ -492,7 +492,8 @@ end
 -- and the level of the sch.
 function get_current_strategem_count()
 	-- returns recast in seconds.
-	local currentRecast = windower.ffxi.get_ability_recasts(231)
+	local allRecasts = windower.ffxi.get_ability_recasts()
+	local stratsRecast = allRecasts[231]
 	
 	local maxStrategems
 	
@@ -512,7 +513,7 @@ function get_current_strategem_count()
 	
 	local fullRechargeTime = 4*60
 	
-	local currentCharges = math.floor(maxStrategems - maxStrategems * currentRecast / fullRechargeTime)
+	local currentCharges = math.floor(maxStrategems - maxStrategems * stratsRecast / fullRechargeTime)
 	
 	return currentCharges
 end
