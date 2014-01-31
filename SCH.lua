@@ -37,7 +37,7 @@ function init_gear_sets()
 	
 	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
 
-	reset_active_strategems()
+	update_active_strategems()
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -335,10 +335,6 @@ function customize_idle_set(idleSet)
 	return idleSet
 end
 
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
-
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
@@ -380,7 +376,7 @@ function job_update(cmdParams, eventArgs)
 		end
 	end
 	
-	reset_active_strategems()
+	update_active_strategems()
 end
 
 
@@ -408,7 +404,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Reset the state vars tracking strategems.
-function reset_active_strategems()
+function update_active_strategems()
 	state.Buff['Ebullience'] = buffactive['Ebullience'] or false
 	state.Buff['Rapture'] = buffactive['Rapture'] or false
 	state.Buff['Perpetuance'] = buffactive['Perpetuance'] or false
