@@ -316,7 +316,7 @@ function aftercast(spell,action)
 	if not eventArgs.handled and not pet_midaction() then
 		if spell.interrupted then
 			-- Wait a half-second to update so that aftercast equip will actually be worn.
-			windower.send_command('wait 0.6;gs c update')
+			send_command('wait 0.6;gs c update')
 		else
 			handle_equipping_gear(player.status)
 		end
@@ -394,7 +394,7 @@ function pet_aftercast(spell,action)
 	if not eventArgs.handled then
 		if spell.interrupted then
 			-- Wait a half-second to update so that aftercast equip will actually be worn.
-			windower.send_command('wait 0.6;gs c update')
+			send_command('wait 0.6;gs c update')
 		else
 			handle_equipping_gear(player.status)
 		end

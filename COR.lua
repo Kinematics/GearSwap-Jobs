@@ -26,8 +26,8 @@ function file_unload()
 		binds_on_unload()
 	end
 
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !`')
+	send_command('unbind ^`')
+	send_command('unbind !`')
 end
 
 -- Define sets and vars used by this job file.
@@ -38,10 +38,10 @@ function init_gear_sets()
 	-- Additional local binds
 
 	-- Cor doesn't use hybrid defense mode; using that for ranged mode adjustments.
-	windower.send_command('bind ^f9 gs c cycle RangedMode')
+	send_command('bind ^f9 gs c cycle RangedMode')
 
-	windower.send_command('bind ^` input /ja "Double-up" <me>')
-	windower.send_command('bind !` input /ja "Bolter\'s Roll" <me>')
+	send_command('bind ^` input /ja "Double-up" <me>')
+	send_command('bind !` input /ja "Bolter\'s Roll" <me>')
 
 
 	-- Options: Override default values

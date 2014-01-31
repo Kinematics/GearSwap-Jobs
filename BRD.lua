@@ -17,7 +17,7 @@ function file_unload()
 		binds_on_unload()
 	end
 
-	windower.send_command('unbind ^`')
+	send_command('unbind ^`')
 end
 
 
@@ -27,7 +27,7 @@ function init_gear_sets()
 	set_macro_page(2, 18)
 	
 	-- Additional local binds
-	windower.send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
+	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
 
 	
 	-- Options: Override default values
@@ -249,7 +249,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 		-- Auto-Pianissimo
 		if spell.target.type == 'PLAYER' and not spell.target.charmed and not state.Buff['Pianissimo'] then
 			cancel_spell()
-			windower.send_command('@input /ja "Pianissimo" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
+			send_command('@input /ja "Pianissimo" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
 			eventArgs.cancel = true
 			return
 		end

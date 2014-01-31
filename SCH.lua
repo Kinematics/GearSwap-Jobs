@@ -384,9 +384,9 @@ function job_update(cmdParams, eventArgs)
 	if cmdParams[1] == 'user' and not (buffactive['light arts']      or buffactive['dark arts'] or
 					   buffactive['addendum: white'] or buffactive['addendum: black']) then
 		if state.IdleMode == 'Stun' then
-			windower.send_command('input /ja "Dark Arts" <me>')
+			send_command('@input /ja "Dark Arts" <me>')
 		else
-			windower.send_command('input /ja "Light Arts" <me>')
+			send_command('@input /ja "Light Arts" <me>')
 		end
 	end
 	
@@ -406,8 +406,13 @@ function display_current_job_state(eventArgs)
 
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
+	
+	local meleeString = ''
+	if state.OffenseMode == 'Normal' then
+		meleeString = 'Melee: Weapons locked, '
+	end
 
-	add_to_chat(122,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
+	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
 	eventArgs.handled = true
@@ -473,45 +478,45 @@ function handle_strategems(cmdParams)
 	
 	if buffactive['light arts'] or buffactive['addendum: white'] then
 		if strategem == 'cost' then
-			windower.send_command('input /ja Penury <me>')
+			send_command('@input /ja Penury <me>')
 		elseif strategem == 'speed' then
-			windower.send_command('input /ja Celerity <me>')
+			send_command('@input /ja Celerity <me>')
 		elseif strategem == 'aoe' then
-			windower.send_command('input /ja Accession <me>')
+			send_command('@input /ja Accession <me>')
 		elseif strategem == 'power' then
-			windower.send_command('input /ja Rapture <me>')
+			send_command('@input /ja Rapture <me>')
 		elseif strategem == 'duration' then
-			windower.send_command('input /ja Perpetuance <me>')
+			send_command('@input /ja Perpetuance <me>')
 		elseif strategem == 'accuracy' then
-			windower.send_command('input /ja Altruism <me>')
+			send_command('@input /ja Altruism <me>')
 		elseif strategem == 'enmity' then
-			windower.send_command('input /ja Tranquility <me>')
+			send_command('@input /ja Tranquility <me>')
 		elseif strategem == 'skillchain' then
 			add_to_chat(122,'Error: Light Arts does not have a skillchain strategem.')
 		elseif strategem == 'addendum' then
-			windower.send_command('input /ja "Addendum: White" <me>')
+			send_command('@input /ja "Addendum: White" <me>')
 		else
 			add_to_chat(123,'Error: Unknown strategem ['..strategem..']')
 		end
 	elseif buffactive['dark arts']  or buffactive['addendum: black'] then
 		if strategem == 'cost' then
-			windower.send_command('input /ja Parsimony <me>')
+			send_command('@input /ja Parsimony <me>')
 		elseif strategem == 'speed' then
-			windower.send_command('input /ja Alacrity <me>')
+			send_command('@input /ja Alacrity <me>')
 		elseif strategem == 'aoe' then
-			windower.send_command('input /ja Manifestation <me>')
+			send_command('@input /ja Manifestation <me>')
 		elseif strategem == 'power' then
-			windower.send_command('input /ja Ebullience <me>')
+			send_command('@input /ja Ebullience <me>')
 		elseif strategem == 'duration' then
 			add_to_chat(122,'Error: Dark Arts does not have a duration strategem.')
 		elseif strategem == 'accuracy' then
-			windower.send_command('input /ja Focalization <me>')
+			send_command('@input /ja Focalization <me>')
 		elseif strategem == 'enmity' then
-			windower.send_command('input /ja Equanimity <me>')
+			send_command('@input /ja Equanimity <me>')
 		elseif strategem == 'skillchain' then
-			windower.send_command('input /ja Immanence <me>')
+			send_command('@input /ja Immanence <me>')
 		elseif strategem == 'addendum' then
-			windower.send_command('input /ja "Addendum: Black" <me>')
+			send_command('@input /ja "Addendum: Black" <me>')
 		else
 			add_to_chat(123,'Error: Unknown strategem ['..strategem..']')
 		end

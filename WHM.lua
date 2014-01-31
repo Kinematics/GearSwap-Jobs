@@ -334,9 +334,9 @@ function job_update(cmdParams, eventArgs)
 			
 		if not buffactive['Afflatus Solace'] and not buffactive['Afflatus Misery'] then
 			if needsArts then
-				windower.send_command('input /ja "Afflatus Solace" <me>;wait 1.2;input /ja "Light Arts" <me>')
+				send_command('@input /ja "Afflatus Solace" <me>;wait 1.2;input /ja "Light Arts" <me>')
 			else
-				windower.send_command('input /ja "Afflatus Solace" <me>')
+				send_command('@input /ja "Afflatus Solace" <me>')
 			end
 		end
 	end
@@ -371,8 +371,13 @@ function display_current_job_state(eventArgs)
 
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
+	
+	local meleeString = ''
+	if state.OffenseMode == 'Normal' then
+		meleeString = 'Melee: Weapons locked, '
+	end
 
-	add_to_chat(122,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
+	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
 	eventArgs.handled = true

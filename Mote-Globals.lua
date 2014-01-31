@@ -40,43 +40,43 @@ end
 
 -- Function to bind GearSwap binds when loading a GS script.
 function binds_on_load()
-	windower.send_command('bind f9 gs c cycle OffenseMode')
-	windower.send_command('bind ^f9 gs c cycle DefenseMode')
-	windower.send_command('bind !f9 gs c cycle WeaponskillMode')
-	windower.send_command('bind f10 gs c activate PhysicalDefense')
-	windower.send_command('bind ^f10 gs c cycle PhysicalDefenseMode')
-	windower.send_command('bind !f10 gs c toggle kiting')
-	windower.send_command('bind f11 gs c activate MagicalDefense')
-	windower.send_command('bind ^f11 gs c cycle CastingMode')
-	windower.send_command('bind !f11 gs c set CastingMode Dire')
-	windower.send_command('bind f12 gs c update user')
-	windower.send_command('bind ^f12 gs c cycle IdleMode')
-	windower.send_command('bind !f12 gs c reset defense')
+	send_command('bind f9 gs c cycle OffenseMode')
+	send_command('bind ^f9 gs c cycle DefenseMode')
+	send_command('bind !f9 gs c cycle WeaponskillMode')
+	send_command('bind f10 gs c activate PhysicalDefense')
+	send_command('bind ^f10 gs c cycle PhysicalDefenseMode')
+	send_command('bind !f10 gs c toggle kiting')
+	send_command('bind f11 gs c activate MagicalDefense')
+	send_command('bind ^f11 gs c cycle CastingMode')
+	send_command('bind !f11 gs c set CastingMode Dire')
+	send_command('bind f12 gs c update user')
+	send_command('bind ^f12 gs c cycle IdleMode')
+	send_command('bind !f12 gs c reset defense')
 
-	windower.send_command('bind ^- gs c toggle target')
-	windower.send_command('bind ^= gs c cycle targetmode')
+	send_command('bind ^- gs c toggle target')
+	send_command('bind ^= gs c cycle targetmode')
 end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
 function binds_on_unload()
 	-- Commented out for now.
 	--[[
-	windower.send_command('bind f9 input /ma CombatMode Cycle(Offense)')
-	windower.send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
-	windower.send_command('bind !f9 input /ma CombatMode Cycle(WS)')
-	windower.send_command('bind f10 input /ma PhysicalDefense .On')
-	windower.send_command('bind ^f10 input /ma PhysicalDefense .Cycle')
-	windower.send_command('bind !f10 input /ma CombatMode Toggle(Kite)')
-	windower.send_command('bind f11 input /ma MagicalDefense .On')
-	windower.send_command('bind ^f11 input /ma CycleCastingMode')
-	windower.send_command('bind !f11 input /ma CastingMode Dire')
-	windower.send_command('bind f12 input /ma Update .Manual')
-	windower.send_command('bind ^f12 input /ma CycleIdleMode')
-	windower.send_command('bind !f12 input /ma Reset .Defense')
+	send_command('bind f9 input /ma CombatMode Cycle(Offense)')
+	send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
+	send_command('bind !f9 input /ma CombatMode Cycle(WS)')
+	send_command('bind f10 input /ma PhysicalDefense .On')
+	send_command('bind ^f10 input /ma PhysicalDefense .Cycle')
+	send_command('bind !f10 input /ma CombatMode Toggle(Kite)')
+	send_command('bind f11 input /ma MagicalDefense .On')
+	send_command('bind ^f11 input /ma CycleCastingMode')
+	send_command('bind !f11 input /ma CastingMode Dire')
+	send_command('bind f12 input /ma Update .Manual')
+	send_command('bind ^f12 input /ma CycleIdleMode')
+	send_command('bind !f12 input /ma Reset .Defense')
 	--]]
 
-	windower.send_command('unbind ^-')
-	windower.send_command('unbind ^=')
+	send_command('unbind ^-')
+	send_command('unbind ^=')
 end
 
 
@@ -86,17 +86,16 @@ end
 
 -- Global intercept on user status change.
 function user_status_change(newStatus, oldStatus, eventArgs)
-	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
-	if oldStatus == 'Dead' then
-		send_command('timers create "Weakness" 300 up abilities/00255.png')
-	end
+
 end
 
 
 function user_buff_change(buff, gain, eventArgs)
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
-	if buff == 'Weakness' then
-		if not gain then
+	if buff:lower() == 'weakness' then
+		if gain then
+			send_command('timers create "Weakness" 300 up abilities/00255.png')
+		else
 			send_command('timers delete "Weakness"')
 		end
 	end

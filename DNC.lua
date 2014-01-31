@@ -409,7 +409,7 @@ function job_self_command(cmdParams, eventArgs)
 			end
 		end
 		
-		send_command('input /ja "'..doStep..'" <t>')
+		send_command('@input /ja "'..doStep..'" <t>')
 	end
 end
 
@@ -543,7 +543,7 @@ function auto_presto(spell)
 		
 		if player.main_job_level >= 77 and prestoCooldown < 1 and under3FMs then
 			cast_delay(1.1)
-			send_command('input /ja "Presto" <me>')
+			send_command('@input /ja "Presto" <me>')
 		end
 	end
 end

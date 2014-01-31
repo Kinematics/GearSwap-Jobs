@@ -10,12 +10,15 @@
 -- Function to cancel buffs if they'd conflict with using the spell you're attempting.
 function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 	if spell.name == 'Spectral Jig' and buffactive.sneak then
+		cast_delay(0.2)
 		send_command('cancel sneak')
 	elseif spell.name == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
 		send_command('cancel sneak')
 	elseif (spell.name == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
+		cast_delay(0.2)
 		send_command('cancel saber dance')
 	elseif spell.type=='Samba' and buffactive['fan dance'] then
+		cast_delay(0.2)
 		send_command('cancel fan dance')
 	elseif spell.name:startswith('Monomi') then
 		send_command('@wait 1.7;cancel sneak')
@@ -127,7 +130,7 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 
 	
 	if newWaltz ~= spell.english then
-		send_command('wait 0.03;input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
+		send_command('@input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
 		if downgrade then
 			add_to_chat(122, downgrade)
 		end
@@ -392,9 +395,9 @@ function set_macro_page(set,book)
 			add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 20.')
 			return
 		end
-		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
+		send_command('@input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
 	else
-		windower.send_command('input /macro set '..tostring(set))
+		send_command('@input /macro set '..tostring(set))
 	end
 end
 

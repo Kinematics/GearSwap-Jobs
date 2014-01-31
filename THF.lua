@@ -16,8 +16,8 @@ function file_unload()
 		binds_on_unload()
 	end
 
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !-')
+	send_command('unbind ^`')
+	send_command('unbind !-')
 end
 
 -- Define sets and vars used by this job file.
@@ -26,9 +26,9 @@ function init_gear_sets()
 	set_macro_page(2, 5)
 	
 	-- Additional local binds
-	windower.send_command('bind ^` input /ja "Flee" <me>')
-	windower.send_command('bind ^= gs c cycle treasuremode')
-	windower.send_command('bind !- gs c cycle targetmode')
+	send_command('bind ^` input /ja "Flee" <me>')
+	send_command('bind ^= gs c cycle treasuremode')
+	send_command('bind !- gs c cycle targetmode')
 
 
 	-- Options: Override default values
@@ -401,7 +401,7 @@ function job_status_change(newStatus, oldStatus, eventArgs)
 		equip(sets.TreasureHunter)
 		tag_with_th = true
 		tp_on_engage = player.tp
-		windower.send_command('wait 3;gs c update th')
+		send_command('wait 3;gs c update th')
 	elseif oldStatus == 'Engaged' then
 		tag_with_th = false
 		tp_on_engage = 0
@@ -464,7 +464,7 @@ function job_update(cmdParams, eventArgs)
 		tag_with_th = false
 		tp_on_engage = 0
 	elseif cmdParams[1] == 'th' and player.status == 'Engaged' then
-		windower.send_command('wait 3;gs c update th')
+		send_command('wait 3;gs c update th')
 	end
 	
 	-- Update the current state of state.Buff, in case buff_change failed
