@@ -4,6 +4,27 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+--[[
+	Custom commands:
+
+	Shorthand versions for each strategem type that uses the version appropriate for
+	the current Arts.
+
+					Light Arts		Dark Arts
+
+	gs c scholar cost		Penury			Parsimony
+	gs c scholar speed		Celerity		Alacrity
+	gs c scholar aoe		Accession		Manifestation
+	gs c scholar power		Rapture			Ebullience
+	gs c scholar duration		Perpetuance
+	gs c scholar accuracy		Altruism		Focalization
+	gs c scholar enmity		Tranquility		Equanimity
+	gs c scholar skillchain					Immanence
+	gs c scholar addendum		Addendum: White		Addendum: Black
+--]]
+
+
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
