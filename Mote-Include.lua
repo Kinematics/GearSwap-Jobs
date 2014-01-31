@@ -55,6 +55,9 @@ function init_include()
 
 	state.SelectNPCTargets     = false
 	state.PCTargetMode         = 'default'
+	
+	state.CombatWeapon = nil
+	state.CombatForm = nil
 
 	state.Buff = {}
 
@@ -95,8 +98,6 @@ function init_include()
 	classes.CustomIdleGroups = L{}
 	classes.CustomDefenseGroups = L{}
 
-	-- Var for use in melee set construction.
-	TPWeapon = 'Normal'
 
 	-- Special control flags.
 	mote_flags = {}
@@ -830,18 +831,16 @@ end
 
 -- Returns the appropriate melee set based on current state.
 -- Set construction order (all sets after sets.engaged are optional):
---   sets.engaged[classes.CustomMeleeGroups (any number)][TPWeapon][state.OffenseMode][state.DefenseMode]
+--   sets.engaged[state.CombatForm][state.CombatWeapon][state.OffenseMode][state.DefenseMode][classes.CustomMeleeGroups (any number)]
 function get_current_melee_set()
 	local meleeSet = sets.engaged
-
-	for _,group in ipairs(classes.CustomMeleeGroups) do
-		if meleeSet[group] then
-			meleeSet = meleeSet[group]
-		end
+	
+	if state.CombatForm and meleeSet[state.CombatForm] then
+		meleeSet = meleeSet[state.CombatForm]
 	end
 
-	if meleeSet[TPWeapon] then
-		meleeSet = meleeSet[TPWeapon]
+	if state.CombatWeapon and meleeSet[state.CombatWeapon] then
+		meleeSet = meleeSet[state.CombatWeapon]
 	end
 
 	if meleeSet[state.OffenseMode] then
@@ -850,6 +849,12 @@ function get_current_melee_set()
 
 	if meleeSet[state.DefenseMode] then
 		meleeSet = meleeSet[state.DefenseMode]
+	end
+
+	for _,group in ipairs(classes.CustomMeleeGroups) do
+		if meleeSet[group] then
+			meleeSet = meleeSet[group]
+		end
 	end
 
 	meleeSet = apply_defense(meleeSet)

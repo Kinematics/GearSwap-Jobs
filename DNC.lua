@@ -43,7 +43,7 @@ function init_gear_sets()
 
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
+	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
@@ -143,7 +143,7 @@ function init_gear_sets()
 	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
+		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters"}
 	
 	sets.precast.Skillchain = {hands="Charis Bangles +2"}
 	
@@ -218,6 +218,10 @@ function init_gear_sets()
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
+	sets.engaged.iLvl = {ammo="Charis Feather",
+		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
@@ -244,23 +248,23 @@ function init_gear_sets()
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.HighHaste.Acc = {ammo="Honed Tathlum",
+	sets.engaged.Acc.HighHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.HighHaste.Evasion = {ammo="Charis Feather",
+	sets.engaged.Evasion.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Ik Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.HighHaste.Acc.Evasion = {ammo="Honed Tathlum",
+	sets.engaged.Acc.Evasion.HighHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.HighHaste.PDT = {ammo="Charis Feather",
+	sets.engaged.PDT.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-	sets.engaged.HighHaste.Acc.PDT = {ammo="Honed Tathlum",
+	sets.engaged.Acc.PDT.HighHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
@@ -270,23 +274,23 @@ function init_gear_sets()
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.MaxHaste.Acc = {ammo="Honed Tathlum",
+	sets.engaged.Acc.MaxHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
-	sets.engaged.MaxHaste.Evasion = {ammo="Charis Feather",
+	sets.engaged.Evasion.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Ik Cape",waist="Windbuffet Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.MaxHaste.Acc.Evasion = {ammo="Honed Tathlum",
+	sets.engaged.Acc.Evasion.MaxHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
-	sets.engaged.MaxHaste.PDT = {ammo="Charis Feather",
+	sets.engaged.PDT.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Windbuffet Belt",legs="Iuitl Tights",feet="Iuitl Gaiters"}
-	sets.engaged.MaxHaste.Acc.PDT = {ammo="Honed Tathlum",
+	sets.engaged.Acc.PDT.MaxHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters"}
@@ -304,10 +308,10 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
+	--auto_presto(spell)
 	if spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
@@ -528,4 +532,20 @@ function determine_haste_group()
 		classes.CustomMeleeGroups:append('HighHaste')
 	end
 end
+
+
+-- Automatically use Presto for steps when it's available and we have less than 3 finishing moves
+function auto_presto(spell)
+	if spell.type == 'Step' then
+		local allRecasts = windower.ffxi.get_ability_recasts()
+		local prestoCooldown = allRecasts[236]
+		local under3FMs = not buffactive['Finishing Move 3'] and not buffactive['Finishing Move 4'] and not buffactive['Finishing Move 5']
+		
+		if player.main_job_level >= 77 and prestoCooldown < 1 and under3FMs then
+			cast_delay(1.1)
+			send_command('input /ja "Presto" <me>')
+		end
+	end
+end
+
 

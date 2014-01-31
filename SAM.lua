@@ -42,6 +42,8 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+
+	state.CombatForm = get_combat_form()
 	
 	state.Buff.Sekkanoki = buffactive.sekkanoki or false
 	state.Buff.Sengikori = buffactive.sengikori or false
@@ -302,10 +304,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	classes.CustomMeleeGroups:clear()
-	if areas.Adoulin:contains(world.area) and buffactive.ionis then
-		classes.CustomMeleeGroups:append('Adoulin')
-	end
+	state.CombatForm = get_combat_form()
 end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
@@ -316,4 +315,10 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+function get_combat_form()
+	if areas.Adoulin:contains(world.area) and buffactive.ionis then
+		return 'Adoulin'
+	end
+end
 

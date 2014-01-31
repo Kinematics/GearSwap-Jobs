@@ -34,6 +34,9 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+
+	state.CombatForm = get_combat_form()
+	update_melee_groups()
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -178,45 +181,63 @@ function init_gear_sets()
 	-- If you create a set with both offense and defense modes, the offense mode should be first.
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
-	-- Normal melee group
+	-- Normal melee sets
 	sets.engaged = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.HF = set_combine(sets.engaged, {feet="Manibozho Boots"})
+	sets.engaged.Impetus = set_combine(sets.engaged, {body="Tantra Cyclas +2"})
+	sets.engaged.HF.Impetus = set_combine(sets.engaged.HF, {body="Tantra Cyclas +2",feet="Manibozho Boots"})
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
+	sets.engaged.Acc.HF = set_combine(sets.engaged.Acc, {neck="Asperity Necklace",body="Thaumas Coat"})
+	sets.engaged.Acc.Impetus = set_combine(sets.engaged.Acc, {body="Tantra Cyclas +2"})
+	sets.engaged.Acc.HF.Impetus = set_combine(sets.engaged.Acc.HF, {body="Tantra Cyclas +2"})
 	sets.engaged.Mod = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Manibozho Boots"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
+	sets.engaged.PDT.HF = sets.engaged.PDT
+	sets.engaged.PDT.HF.Impetus = set_combine(sets.engaged.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+	sets.engaged.Acc.PDT.HF = sets.engaged.Acc.PDT
+	sets.engaged.Acc.PDT.HF.Impetus = set_combine(sets.engaged.Acc.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
+	sets.engaged.HP.HF = sets.engaged.HP
+	sets.engaged.HP.HF.Impetus = set_combine(sets.engaged.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
+	sets.engaged.Acc.HP.HF = sets.engaged.Acc.HP
+	sets.engaged.Acc.HP.HF.Impetus = set_combine(sets.engaged.Acc.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Counter = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Anchorite's Hose",feet="Otronif Boots"}
+	sets.engaged.Counter.HF = sets.engaged.Counter
+	sets.engaged.Counter.HF.Impetus = set_combine(sets.engaged.Counter, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.Counter = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Anchorite's Hose",feet="Otronif Boots"}
+	sets.engaged.Acc.Counter.HF = sets.engaged.Acc.Counter
+	sets.engaged.Acc.Counter.HF.Impetus = set_combine(sets.engaged.Acc.Counter, {body="Tantra Cyclas +2"})
 
-	-- Footwork melee group
+	-- Footwork combat form
 	sets.engaged.Footwork = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
@@ -226,39 +247,7 @@ function init_gear_sets()
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Anchorite's Gaiters"}
 
-	-- Hundred Fists melee group
-	sets.engaged.HF = {ammo="Thew Bomblet",
-		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.engaged.HF.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.engaged.HF.PDT = {ammo="Thew Bomblet",
-		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.HF.Acc.PDT = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.HF.Impetus = {ammo="Thew Bomblet",
-		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.engaged.HF.Impetus.Acc = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.engaged.HF.Impetus.PDT = {ammo="Thew Bomblet",
-		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots"}
-	sets.engaged.HF.Impetus.Acc.PDT = {ammo="Honed Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Tantra Cyclas +2",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots"}
+		
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -293,21 +282,30 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if buff == "Hundred Fists" or buff == "Impetus" or buff == "Footwork" then
-		local adjMeleeSet = ''
+	-- Set Footwork as combat form any time it's active and Hundred Fists is not.
+	if buff == 'Footwork' and gain and not buffactive['hundred fists'] then
+		state.CombatForm = 'Footwork'
+	elseif buff == "Hundred Fists" and not gain and buffactive.footwork then
+		state.CombatForm = 'Footwork'
+	else
+		state.CombatForm = nil
+	end
 	
+	-- Hundred Fists and Impetus modify the custom melee groups
+	if buff == "Hundred Fists" or buff == "Impetus" then
 		classes.CustomMeleeGroups:clear()
 		
 		if (buff == "Hundred Fists" and gain) or buffactive['hundred fists'] then
 			classes.CustomMeleeGroups:append('HF')
-		elseif buffactive.footwork then
-			classes.CustomMeleeGroups:append('Footwork')
 		end
 		
 		if (buff == "Impetus" and gain) or buffactive.impetus then
 			classes.CustomMeleeGroups:append('Impetus')
 		end
-	
+	end
+
+	-- Update gear if any of the above changed
+	if buff == "Hundred Fists" or buff == "Impetus" or buff == "Footwork" then
 		handle_equipping_gear(player.status)
 	end
 end
@@ -319,12 +317,26 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
+	state.CombatForm = get_combat_form()
+	update_melee_groups()
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Utility functions specific to this job.
+-------------------------------------------------------------------------------------------------------------------
+
+function get_combat_form()
+	if buffactive.footwork and not buffactive['hundred fists'] then
+		return 'Footwork'
+	end
+end
+
+function update_melee_groups()
 	classes.CustomMeleeGroups:clear()
 	
 	if buffactive['hundred fists'] then
 		classes.CustomMeleeGroups:append('HF')
-	elseif buffactive.footwork then
-		classes.CustomMeleeGroups:append('Footwork')
 	end
 	
 	if buffactive.impetus then
@@ -333,7 +345,4 @@ function job_update(cmdParams, eventArgs)
 end
 
 
--------------------------------------------------------------------------------------------------------------------
--- Utility functions specific to this job.
--------------------------------------------------------------------------------------------------------------------
-
+	

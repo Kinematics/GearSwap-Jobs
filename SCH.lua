@@ -4,6 +4,27 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+--[[
+	Custom commands:
+
+	Shorthand versions for each strategem type that uses the version appropriate for
+	the current Arts.
+
+					Light Arts		Dark Arts
+
+	gs c scholar cost		Penury			Parsimony
+	gs c scholar speed		Celerity		Alacrity
+	gs c scholar aoe		Accession		Manifestation
+	gs c scholar power		Rapture			Ebullience
+	gs c scholar duration		Perpetuance
+	gs c scholar accuracy		Altruism		Focalization
+	gs c scholar enmity		Tranquility		Equanimity
+	gs c scholar skillchain					Immanence
+	gs c scholar addendum		Addendum: White		Addendum: Black
+--]]
+
+
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
@@ -36,6 +57,8 @@ function init_gear_sets()
 	state.Defense.PhysicalMode = 'PDT'
 	
 	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
+
+	update_active_strategems()
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -53,47 +76,35 @@ function init_gear_sets()
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
 
-	sets.precast.FC.EnhancingMagic = {ammo="Incantor Stone",
-		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.ElementalMagic = {ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Stoicheion Medal",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
+	sets.precast.FC.ElementalMagic = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
-	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots"}
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"}) -- back="Pahtli Cape"
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
-	sets.precast.FC.Impact = {ammo="Incantor Stone",
-		head=empty,ear2="Loquacious Earring",
-		body="Twilight Cloak",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+	sets.precast.FC.Impact = set_combine(sets.precast.FC.ElementalMagic, {head=empty,body="Twilight Cloak"})
 
        
 	-- Midcast Sets
 	
-	sets.midcast.FastRecast = {
-		head="",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="",
-		back="",waist="",legs="",feet=""}
+	sets.midcast.FastRecast = {ammo="Incantor Stone",
+		head="Nahtirah Hat",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Swith Cape",waist="Goading Belt",legs="",feet="Academic's Loafers"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+		back="Swith Cape",waist="Goading Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
 
 	sets.midcast.CureWithLightWeather = {main="Chatoyant Staff",sub="Achaq Grip",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Twilight Cape",waist="Korin Obi",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+		back="Twilight Cape",waist="Korin Obi",legs="Nares Trews",feet="Academic's Loafers"}
 
 	sets.midcast.Curaga = sets.midcast.Cure
 
@@ -107,15 +118,18 @@ function init_gear_sets()
 	sets.midcast.EnhancingMagic = {ammo="Savant's Treatise",
 		head="Savant's Bonnet +2",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Ayao's Gages",
-		waist="Olympus Sash",legs="Portent Pants",feet="Literae Sabots"}
+		waist="Olympus Sash",legs="Portent Pants"}
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
 
 	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Argute Loafers +2"})
 
-	sets.midcast.Protectra = {ring1="Sheltered Ring"}
+	sets.midcast.Protect = {ring1="Sheltered Ring"}
+	sets.midcast.Protectra = sets.midcast.Protect
 
-	sets.midcast.Shellra = {ring1="Sheltered Ring"}
+	sets.midcast.Shell = {ring1="Sheltered Ring"}
+	sets.midcast.Shellra = sets.midcast.Shell
+
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
@@ -130,9 +144,9 @@ function init_gear_sets()
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast.IntEnfeebles
 
-	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Impatiens",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	sets.midcast.Kaustra = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
@@ -140,64 +154,66 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Impatiens",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Goetia Sabots +2"}
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Excelsis Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
 	
 	sets.midcast.Aspir = sets.midcast.Drain
 
-	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Impatiens",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Bokwus Boots"}
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
+
+	sets.midcast.Stun.Resistant = set_combine(sets.midcast.Stun, {main="Atinian Staff"})
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
 	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.ElementalMagic.Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	-- Custom classes for high-tier nukes.
 	sets.midcast.HighTierNuke = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.HighTierNuke.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 	
 	-- Sets for helixes
 	sets.midcast.Helix = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Helix.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	sets.midcast.Impact = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
 		head=empty,neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Twilight Cloak",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main="Owleyes",sub="Genbu's Shield",
-		head="Nefer Khat",neck="Wiglen Gorget",
-		body="Heka's Kalasiris",hands="Serpentes Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+	sets.resting = {main="Chatoyant Staff",sub="Mephitis Grip",
+		head="Nefer Khat +1",neck="Wiglen Gorget",
+		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		waist="Austerity Belt",legs="Nares Tres",feet="Serpentes Sabots"}
 	
 
@@ -210,7 +226,7 @@ function init_gear_sets()
 	
 	sets.idle.Field = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Serpentes Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
 	sets.idle.Field.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
@@ -220,8 +236,8 @@ function init_gear_sets()
 
 	sets.idle.Field.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Scholar's Loafers"}
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Swith Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
 
 	sets.idle.Weak = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
@@ -237,7 +253,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Tuilha Cape",waist="Hierarch Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
@@ -252,7 +268,7 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {
 		head="Zelus Tiara",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",
 		waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
@@ -282,10 +298,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
-function job_pretarget(spell, action, spellMap, eventArgs)
-end
-
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
@@ -296,32 +308,28 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Run after the general precast() is done.
-function job_post_precast(spell, action, spellMap, eventArgs)
-	if eventArgs.useMidcastGear and spell.english ~= 'Impact' then
-		apply_grimoire_bonuses(spell, action, spellMap)
-	end
-end
-
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
-		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 	end
 end
 
 -- Run after the general midcast() is done.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if spell.action_type == 'Magic' and spell.english ~= 'Impact' then
+	if spell.action_type == 'Magic' then
 		apply_grimoire_bonuses(spell, action, spellMap, eventArgs)
 	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
+	end
 end
 
 
@@ -341,10 +349,6 @@ function customize_idle_set(idleSet)
 	return idleSet
 end
 
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
-
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
@@ -356,6 +360,8 @@ function job_buff_change(buff, gain)
 	if buff == "Sublimation: Activated" then
 		state.Buff.Sublimation = gain
 		handle_equipping_gear(player.status)
+	elseif state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
 	end
 end
 
@@ -383,6 +389,8 @@ function job_update(cmdParams, eventArgs)
 			windower.send_command('input /ja "Light Arts" <me>')
 		end
 	end
+	
+	update_active_strategems()
 end
 
 
@@ -409,20 +417,45 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Reset the state vars tracking strategems.
+function update_active_strategems()
+	state.Buff['Ebullience'] = buffactive['Ebullience'] or false
+	state.Buff['Rapture'] = buffactive['Rapture'] or false
+	state.Buff['Perpetuance'] = buffactive['Perpetuance'] or false
+	state.Buff['Immanence'] = buffactive['Immanence'] or false
+	state.Buff['Penury'] = buffactive['Penury'] or false
+	state.Buff['Parsimony'] = buffactive['Parsimony'] or false
+	state.Buff['Celerity'] = buffactive['Celerity'] or false
+	state.Buff['Alacrity'] = buffactive['Alacrity'] or false
+
+	state.Buff['Klimaform'] = buffactive['Klimaform'] or false
+end
+
+
+-- Equip sets appropriate to the active buffs, relative to the spell being cast.
 function apply_grimoire_bonuses(spell, action, spellMap)
-	if buffactive.ebullience then equip(sets.buff['Ebullience']) end
-	if buffactive.rapture then equip(sets.buff['Rapture']) end
-	if buffactive.perpetuance then equip(sets.buff['Perpetuance']) end
-	if buffactive.immanence then equip(sets.buff['Immanence']) end
-	if buffactive.penury then equip(sets.buff['Penury']) end
-	if buffactive.parsimony then equip(sets.buff['Parsimony']) end
-	if buffactive.celerity then equip(sets.buff['Celerity']) end
-	if buffactive.alacrity then equip(sets.buff['Alacrity']) end
-	
-	if buffactive.Klimaform and spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and
-		spell.element == world.weather_element then
-		equip(sets.buff['Klimaform'])
+	if state.Buff.Perpetuance and spell.skill == 'EnhancingMagic' then
+		equip(sets.buff['Perpetuance'])
 	end
+	if state.Buff.Rapture and spellMap == 'Cure' or spellMap == 'Curaga' then
+		equip(sets.buff['Rapture'])
+	end
+	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' then
+		if state.Buff.Ebullience and spell.english ~= 'Impact' then
+			equip(sets.buff['Ebullience'])
+		end
+		if state.Buff.Immanence then
+			equip(sets.buff['Immanence'])
+		end
+		if state.Buff.Klimaform and spell.element == world.weather_element then
+			equip(sets.buff['Klimaform'])
+		end
+	end
+	
+	if state.Buff.Penury then equip(sets.buff['Penury']) end
+	if state.Buff.Parsimony then equip(sets.buff['Parsimony']) end
+	if state.Buff.Celerity then equip(sets.buff['Celerity']) end
+	if state.Buff.Alacrity then equip(sets.buff['Alacrity']) end
 end
 
 
@@ -492,7 +525,8 @@ end
 -- and the level of the sch.
 function get_current_strategem_count()
 	-- returns recast in seconds.
-	local currentRecast = windower.ffxi.get_ability_recasts(231)
+	local allRecasts = windower.ffxi.get_ability_recasts()
+	local stratsRecast = allRecasts[231]
 	
 	local maxStrategems
 	
@@ -512,10 +546,9 @@ function get_current_strategem_count()
 	
 	local fullRechargeTime = 4*60
 	
-	local currentCharges = math.floor(maxStrategems - maxStrategems * currentRecast / fullRechargeTime)
+	local currentCharges = math.floor(maxStrategems - maxStrategems * stratsRecast / fullRechargeTime)
 	
 	return currentCharges
 end
-
 
 

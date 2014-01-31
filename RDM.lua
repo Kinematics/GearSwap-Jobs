@@ -66,6 +66,7 @@ function init_gear_sets()
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
+	sets.precast.FC.Impact = set_combine(sets.precast.FC, {head=empty,body="Twilight Cloak"})
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
@@ -92,7 +93,7 @@ function init_gear_sets()
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Cure = {
+	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Gendewitha Caubeen",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Hagondes Sabots"}
@@ -122,10 +123,14 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
+	sets.midcast.Impact = set_combine(sets.midcast.ElementalMagic, {head=empty,body="Twilight Cloak"})
+
 	sets.midcast.DarkMagic = {
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Prolix Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
+
+	--sets.midcast.Stun = set_combine(sets.midcast.DarkMagic, {})
 
 	--sets.midcast.Drain = set_combine(sets.midcast.DarkMagic, {ring2="Excelsis Ring"})
 
@@ -153,17 +158,17 @@ function init_gear_sets()
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle.Town = {ammo="Impatiens",
+	sets.idle.Town = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 	
-	sets.idle.Field = {ammo="Impatiens",
+	sets.idle.Field = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
 		head="Duelist's Chapeau +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 
-	sets.idle.Weak = {ammo="Impatiens",
+	sets.idle.Weak = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
 		head="Duelist's Chapeau +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard +1",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}

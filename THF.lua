@@ -67,7 +67,7 @@ function init_gear_sets()
 	sets.precast.JA['Collaborator'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Accomplice'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Flee'] = {feet="Pillager's Poulaines"}
-	sets.precast.JA['Hide'] = {body="Pillager's Vest"}
+	sets.precast.JA['Hide'] = {body="Pillager's Vest +1"}
 	sets.precast.JA['Conspirator'] = {} -- {body="Raider's Vest +2"}
 	sets.precast.JA['Steal'] = {head="Assassin's Bonnet +2",hands="Pillager's Armlets +1",legs="Pillager's Culottes",feet="Pillager's Poulaines"}
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
@@ -77,12 +77,12 @@ function init_gear_sets()
 
 	sets.precast.JA['Sneak Attack'] = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Raider's Armlets +2",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Pillager's Vest +1",hands="Raider's Armlets +2",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Twilight Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 
 	sets.precast.JA['Trick Attack'] = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Stormsoul Ring",ring2="Epona's Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Stormsoul Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 
@@ -97,7 +97,7 @@ function init_gear_sets()
 	
 	-- Fast cast sets for spells
 	
-	sets.precast.FC = {ear2="Loquacious Earring",hands="Thaumas Gloves",ring1="Prolix Ring",legs="Enif Cosciales"}
+	sets.precast.FC = {head="Haruspex Hat",ear2="Loquacious Earring",hands="Thaumas Gloves",ring1="Prolix Ring",legs="Enif Cosciales"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
@@ -112,7 +112,7 @@ function init_gear_sets()
 	gear.default.weaponskill_waist = "Caudata Belt"
 	sets.precast.WS = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters"}
 	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum", back="Letalis Mantle"})
 
@@ -246,7 +246,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
