@@ -468,7 +468,7 @@ function handle_petweather()
 	local storm = elements.storm_of[element]
 	
 	if storm then
-		send_command('input /ma "'..elements.storm_of[element]..'" <me>')
+		send_command('@input /ma "'..elements.storm_of[element]..'" <me>')
 	else
 		add_to_chat(123, 'Error: Unknown element ('..tostring(element)..')')
 	end
@@ -611,7 +611,7 @@ function handle_pacts(cmdParams)
 		end
 		
 		-- Leave out target; let Shortcuts auto-determine it.
-		send_command('input /pet "'..pacts[pact][pet.name]..'"')
+		send_command('@input /pet "'..pacts[pact][pet.name]..'"')
 	else
 		add_to_chat(122,pet.name..' does not have a pact of type ['..pact..'].')
 	end

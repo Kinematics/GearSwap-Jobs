@@ -127,7 +127,7 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 
 	
 	if newWaltz ~= spell.english then
-		send_command('wait 0.03;input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
+		send_command('@input /ja "'..newWaltz..'" '..tostring(spell.target.raw))
 		if downgrade then
 			add_to_chat(122, downgrade)
 		end
@@ -392,9 +392,9 @@ function set_macro_page(set,book)
 			add_to_chat(123,'Error setting macro page: Macro book ('..tostring(book)..') must be between 1 and 20.')
 			return
 		end
-		windower.send_command('input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
+		send_command('@input /macro book '..tostring(book)..';wait .1;input /macro set '..tostring(set))
 	else
-		windower.send_command('input /macro set '..tostring(set))
+		send_command('@input /macro set '..tostring(set))
 	end
 end
 

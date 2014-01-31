@@ -17,8 +17,8 @@ function file_unload()
 		binds_on_unload()
 	end
 
-	windower.send_command('unbind ^`')
-	windower.send_command('unbind !-')
+	send_command('unbind ^`')
+	send_command('unbind !-')
 end
 
 
@@ -28,8 +28,8 @@ function init_gear_sets()
 	set_macro_page(2, 11)
 	
 	-- Additional local binds
-	windower.send_command('bind ^` input /ja "Hasso" <me>')
-	windower.send_command('bind !` input /ja "Seigan" <me>')
+	send_command('bind ^` input /ja "Hasso" <me>')
+	send_command('bind !` input /ja "Seigan" <me>')
 	
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
@@ -228,7 +228,7 @@ function job_pretarget(spell, action, spellMap, eventArgs)
 		-- Change any GK weaponskills to polearm weaponskill if we're using a polearm.
 		if player.equipment.main=='Quint Spear' or player.equipment.main=='Quint Spear' then
 			if spell.english:startswith("Tachi:") then
-				send_command('input /ws "Penta Thrust" '..spell.target.raw)
+				send_command('@input /ws "Penta Thrust" '..spell.target.raw)
 				eventArgs.cancel = true
 			end
 		end
