@@ -308,10 +308,10 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
+	--auto_presto(spell)
 	if spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
@@ -532,4 +532,20 @@ function determine_haste_group()
 		classes.CustomMeleeGroups:append('HighHaste')
 	end
 end
+
+
+-- Automatically use Presto for steps when it's available and we have less than 3 finishing moves
+function auto_presto(spell)
+	if spell.type == 'Step' then
+		local allRecasts = windower.ffxi.get_ability_recasts()
+		local prestoCooldown = allRecasts[236]
+		local under3FMs = not buffactive['Finishing Move 3'] and not buffactive['Finishing Move 4'] and not buffactive['Finishing Move 5']
+		
+		if player.main_job_level >= 77 and prestoCooldown < 1 and under3FMs then
+			cast_delay(1.1)
+			send_command('input /ja "Presto" <me>')
+		end
+	end
+end
+
 
