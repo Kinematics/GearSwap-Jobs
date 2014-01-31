@@ -398,17 +398,27 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function apply_grimoire_bonuses(spell, action, spellMap)
-	if buffactive.ebullience then equip(sets.buff['Ebullience']) end
-	if buffactive.rapture then equip(sets.buff['Rapture']) end
-	if buffactive.perpetuance then equip(sets.buff['Perpetuance']) end
-	if buffactive.immanence then equip(sets.buff['Immanence']) end
+	if buffactive.perpetuance and spell.skill == 'EnhancingMagic' then
+		equip(sets.buff['Perpetuance'])
+	end
+	if buffactive.rapture and spellMap == 'Cure' or spellMap == 'Curaga' then
+		equip(sets.buff['Rapture'])
+	end
+	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' then
+		if buffactive.ebullience then
+			equip(sets.buff['Ebullience'])
+		end
+		if buffactive.immanence then
+			equip(sets.buff['Immanence'])
+		end
+	end
+	
 	if buffactive.penury then equip(sets.buff['Penury']) end
 	if buffactive.parsimony then equip(sets.buff['Parsimony']) end
 	if buffactive.celerity then equip(sets.buff['Celerity']) end
 	if buffactive.alacrity then equip(sets.buff['Alacrity']) end
 	
-	if buffactive.Klimaform and spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and
-		spell.element == world.weather_element then
+	if buffactive.Klimaform and spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and spell.element == world.weather_element then
 		equip(sets.buff['Klimaform'])
 	end
 end
