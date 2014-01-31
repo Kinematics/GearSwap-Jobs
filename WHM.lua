@@ -371,8 +371,13 @@ function display_current_job_state(eventArgs)
 
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
+	
+	local meleeString = ''
+	if state.OffenseMode == 'Normal' then
+		meleeString = 'Melee: Weapons locked, '
+	end
 
-	add_to_chat(122,'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
+	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
 	eventArgs.handled = true

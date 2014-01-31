@@ -337,7 +337,7 @@ end
 function display_current_job_state(eventArgs)
 	local meleeString = ''
 	if state.OffenseMode == 'Normal' then
-		meleeString = 'Melee active, '
+		meleeString = 'Melee: Weapons locked, '
 	end
 	
 	local defenseString = ''
