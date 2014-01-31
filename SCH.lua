@@ -304,7 +304,7 @@ end
 
 -- Run after the general midcast() is done.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if spell.action_type == 'Magic' and spell.english ~= 'Impact' then
+	if spell.action_type == 'Magic' then
 		apply_grimoire_bonuses(spell, action, spellMap, eventArgs)
 	end
 end
@@ -431,7 +431,7 @@ function apply_grimoire_bonuses(spell, action, spellMap)
 		equip(sets.buff['Rapture'])
 	end
 	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' then
-		if state.Buff.Ebullience then
+		if state.Buff.Ebullience and spell.english ~= 'Impact' then
 			equip(sets.buff['Ebullience'])
 		end
 		if state.Buff.Immanence then
