@@ -86,17 +86,16 @@ end
 
 -- Global intercept on user status change.
 function user_status_change(newStatus, oldStatus, eventArgs)
-	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
-	if oldStatus == 'Dead' then
-		send_command('timers create "Weakness" 300 up abilities/00255.png')
-	end
+
 end
 
 
 function user_buff_change(buff, gain, eventArgs)
 	-- Create a timer when we gain weakness.  Remove it when weakness is gone.
-	if buff == 'Weakness' then
-		if not gain then
+	if buff:lower() == 'weakness' then
+		if gain then
+			send_command('timers create "Weakness" 300 up abilities/00255.png')
+		else
 			send_command('timers delete "Weakness"')
 		end
 	end
