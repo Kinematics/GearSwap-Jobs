@@ -10,12 +10,15 @@
 -- Function to cancel buffs if they'd conflict with using the spell you're attempting.
 function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 	if spell.name == 'Spectral Jig' and buffactive.sneak then
+		cast_delay(0.2)
 		send_command('cancel sneak')
 	elseif spell.name == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
 		send_command('cancel sneak')
 	elseif (spell.name == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
+		cast_delay(0.2)
 		send_command('cancel saber dance')
 	elseif spell.type=='Samba' and buffactive['fan dance'] then
+		cast_delay(0.2)
 		send_command('cancel fan dance')
 	elseif spell.name:startswith('Monomi') then
 		send_command('@wait 1.7;cancel sneak')
