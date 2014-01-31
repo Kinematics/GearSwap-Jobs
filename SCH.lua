@@ -57,27 +57,15 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
 
-	sets.precast.FC.EnhancingMagic = {ammo="Incantor Stone",
-		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
+	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.ElementalMagic = {ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Stoicheion Medal",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Siegel Sash",legs="Orvail Pants +1",feet="Chelona Boots"}
+	sets.precast.FC.ElementalMagic = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
-	sets.precast.FC.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots"}
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"}) -- back="Pahtli Cape"
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
-	sets.precast.FC.Impact = {ammo="Incantor Stone",
-		head=empty,ear2="Loquacious Earring",
-		body="Twilight Cloak",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+	sets.precast.FC.Impact = set_combine(sets.precast.FC.ElementalMagic, {head=empty,body="Twilight Cloak"})
 
        
 	-- Midcast Sets
