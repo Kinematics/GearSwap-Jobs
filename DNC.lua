@@ -43,7 +43,7 @@ function init_gear_sets()
 
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
+	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
@@ -217,6 +217,10 @@ function init_gear_sets()
 	sets.engaged = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
+	sets.engaged.iLvl = {ammo="Charis Feather",
+		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
