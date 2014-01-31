@@ -55,7 +55,7 @@ function init_gear_sets()
 	sets.precast.FC = {ammo="Incantor Stone",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -70,20 +70,20 @@ function init_gear_sets()
        
 	-- Midcast Sets
 	
-	sets.midcast.FastRecast = {
-		head="",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="",
-		back="",waist="",legs="",feet=""}
+	sets.midcast.FastRecast = {ammo="Incantor Stone",
+		head="Nahtirah Hat",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
+		back="Swith Cape",waist="Goading Belt",legs="",feet="Academic's Loafers"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+		back="Swith Cape",waist="Goading Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
 
 	sets.midcast.CureWithLightWeather = {main="Chatoyant Staff",sub="Achaq Grip",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Twilight Cape",waist="Korin Obi",legs="Orvail Pants +1",feet="Argute Loafers +2"}
+		back="Twilight Cape",waist="Korin Obi",legs="Nares Trews",feet="Academic's Loafers"}
 
 	sets.midcast.Curaga = sets.midcast.Cure
 
@@ -97,15 +97,18 @@ function init_gear_sets()
 	sets.midcast.EnhancingMagic = {ammo="Savant's Treatise",
 		head="Savant's Bonnet +2",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Ayao's Gages",
-		waist="Olympus Sash",legs="Portent Pants",feet="Literae Sabots"}
+		waist="Olympus Sash",legs="Portent Pants"}
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
 
 	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Argute Loafers +2"})
 
-	sets.midcast.Protectra = {ring1="Sheltered Ring"}
+	sets.midcast.Protect = {ring1="Sheltered Ring"}
+	sets.midcast.Protectra = sets.midcast.Protect
 
-	sets.midcast.Shellra = {ring1="Sheltered Ring"}
+	sets.midcast.Shell = {ring1="Sheltered Ring"}
+	sets.midcast.Shellra = sets.midcast.Shell
+
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
@@ -122,7 +125,7 @@ function init_gear_sets()
 
 	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	sets.midcast.Kaustra = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
@@ -132,15 +135,17 @@ function init_gear_sets()
 
 	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Goetia Sabots +2"}
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Excelsis Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
 	
 	sets.midcast.Aspir = sets.midcast.Drain
 
-	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Bokwus Boots"}
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
+
+	sets.midcast.Stun.Resistant = set_combine(sets.midcast.Stun, {main="Atinian Staff"})
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
@@ -185,7 +190,7 @@ function init_gear_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main="Owleyes",sub="Genbu's Shield",
+	sets.resting = {main="Chatoyant Staff",sub="Mephitis Grip",
 		head="Nefer Khat",neck="Wiglen Gorget",
 		body="Heka's Kalasiris",hands="Serpentes Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		waist="Austerity Belt",legs="Nares Tres",feet="Serpentes Sabots"}
@@ -210,8 +215,8 @@ function init_gear_sets()
 
 	sets.idle.Field.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Scholar's Loafers"}
+		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Swith Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
 
 	sets.idle.Weak = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
@@ -242,7 +247,7 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {
 		head="Zelus Tiara",
-		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 
