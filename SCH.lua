@@ -282,10 +282,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
-function job_pretarget(spell, action, spellMap, eventArgs)
-end
-
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
@@ -296,18 +292,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Run after the general precast() is done.
-function job_post_precast(spell, action, spellMap, eventArgs)
-	if eventArgs.useMidcastGear and spell.english ~= 'Impact' then
-		apply_grimoire_bonuses(spell, action, spellMap)
-	end
-end
-
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
-		-- Default base equipment layer of fast recast.
 		equip(sets.midcast.FastRecast)
 	end
 end
