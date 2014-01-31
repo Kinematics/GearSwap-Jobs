@@ -36,6 +36,8 @@ function init_gear_sets()
 	state.Defense.PhysicalMode = 'PDT'
 	
 	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
+
+	reset_active_strategems()
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -309,7 +311,11 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
+	end
 end
 
 
@@ -344,6 +350,8 @@ function job_buff_change(buff, gain)
 	if buff == "Sublimation: Activated" then
 		state.Buff.Sublimation = gain
 		handle_equipping_gear(player.status)
+	elseif state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
 	end
 end
 
@@ -371,6 +379,8 @@ function job_update(cmdParams, eventArgs)
 			windower.send_command('input /ja "Light Arts" <me>')
 		end
 	end
+	
+	reset_active_strategems()
 end
 
 
@@ -397,30 +407,45 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Reset the state vars tracking strategems.
+function reset_active_strategems()
+	state.Buff['Ebullience'] = buffactive['Ebullience'] or false
+	state.Buff['Rapture'] = buffactive['Rapture'] or false
+	state.Buff['Perpetuance'] = buffactive['Perpetuance'] or false
+	state.Buff['Immanence'] = buffactive['Immanence'] or false
+	state.Buff['Penury'] = buffactive['Penury'] or false
+	state.Buff['Parsimony'] = buffactive['Parsimony'] or false
+	state.Buff['Celerity'] = buffactive['Celerity'] or false
+	state.Buff['Alacrity'] = buffactive['Alacrity'] or false
+
+	state.Buff['Klimaform'] = buffactive['Klimaform'] or false
+end
+
+
+-- Equip sets appropriate to the active buffs, relative to the spell being cast.
 function apply_grimoire_bonuses(spell, action, spellMap)
-	if buffactive.perpetuance and spell.skill == 'EnhancingMagic' then
+	if state.Buff.Perpetuance and spell.skill == 'EnhancingMagic' then
 		equip(sets.buff['Perpetuance'])
 	end
-	if buffactive.rapture and spellMap == 'Cure' or spellMap == 'Curaga' then
+	if state.Buff.Rapture and spellMap == 'Cure' or spellMap == 'Curaga' then
 		equip(sets.buff['Rapture'])
 	end
 	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' then
-		if buffactive.ebullience then
+		if state.Buff.Ebullience then
 			equip(sets.buff['Ebullience'])
 		end
-		if buffactive.immanence then
+		if state.Buff.Immanence then
 			equip(sets.buff['Immanence'])
+		end
+		if state.Buff.Klimaform and spell.element == world.weather_element then
+			equip(sets.buff['Klimaform'])
 		end
 	end
 	
-	if buffactive.penury then equip(sets.buff['Penury']) end
-	if buffactive.parsimony then equip(sets.buff['Parsimony']) end
-	if buffactive.celerity then equip(sets.buff['Celerity']) end
-	if buffactive.alacrity then equip(sets.buff['Alacrity']) end
-	
-	if buffactive.Klimaform and spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' and spell.element == world.weather_element then
-		equip(sets.buff['Klimaform'])
-	end
+	if state.Buff.Penury then equip(sets.buff['Penury']) end
+	if state.Buff.Parsimony then equip(sets.buff['Parsimony']) end
+	if state.Buff.Celerity then equip(sets.buff['Celerity']) end
+	if state.Buff.Alacrity then equip(sets.buff['Alacrity']) end
 end
 
 
@@ -515,6 +540,5 @@ function get_current_strategem_count()
 	
 	return currentCharges
 end
-
 
 
