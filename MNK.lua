@@ -62,7 +62,7 @@ function init_gear_sets()
 
 	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
 
-	sets.precast.JA['Formless Strikes'] = {body="Melee Cylcas +2"}
+	sets.precast.JA['Formless Strikes'] = {body="Melee Cyclas +2"}
 
 	sets.precast.JA['Mantra'] = {feet="Melee Gaiters +2"}
 
