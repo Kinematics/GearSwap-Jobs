@@ -295,6 +295,13 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
+function job_precast(spell, action, spellMap, eventArgs)
+	if spell.type == 'Waltz' then
+		refine_waltz(spell, action, spellMap, eventArgs)
+	end
+end
+
+
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'Step' or spell.type == 'Flourish1' then

@@ -260,6 +260,8 @@ function job_precast(spell, action, spellMap, eventArgs)
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type:lower() == 'weaponskill' and state.Defense.Active then
 		eventArgs.handled = true
+	elseif spell.type == 'Waltz' then
+		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
