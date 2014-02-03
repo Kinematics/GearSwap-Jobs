@@ -61,7 +61,7 @@ function init_gear_sets()
 	sets.precast.JA['Chivalry'] = {
 		head="Yaoyotl Helm",
 		body="Reverence Surcoat",hands="Buremte Gloves",
-		legs"Reverence Breeches",feet="Whirlpool Greaves"}
+		legs="Reverence Breeches",feet="Whirlpool Greaves"}
 	
 
 	-- Waltz set (chr and vit)
