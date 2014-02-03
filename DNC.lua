@@ -4,6 +4,32 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+--[[
+	Custom commands:
+	
+	gs c step
+		Uses the currently configured step on the target, with either <t> or <stnpc> depending on setting.
+
+	gs c step t
+		Uses the currently configured step on the target, but forces use of <t>.
+	
+	
+	Configuration commands:
+	
+	gs c cycle mainstep
+		Cycles through the available steps to use as the primary step when using one of the above commands.
+		
+	gs c cycle altstep
+		Cycles through the available steps to use for alternating with the configured main step.
+		
+	gs c toggle usealtstep
+		Toggles whether or not to use an alternate step.
+		
+	gs c toggle selectsteptarget
+		Toggles whether or not to use <stnpc> (as opposed to <t>) when using a step.
+--]]
+
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
