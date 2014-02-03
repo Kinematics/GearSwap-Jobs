@@ -89,7 +89,7 @@ function init_gear_sets()
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Whirlpool Mask",
-		body="Iuitl Vest",hands="Buremte Gloves",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",
 		back="Iximulew Cape",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 		
 	-- Don't need any special gear for Healing Waltz.
@@ -227,7 +227,7 @@ function init_gear_sets()
 	
 	sets.idle.Weak = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Pillager's Vest +1",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Skadi's Jambeaux +1"}
 	
 	sets.ExtraRegen = {head="Ocelomeh Headpiece +1"}
