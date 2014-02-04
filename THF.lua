@@ -140,7 +140,7 @@ function init_gear_sets()
 	sets.precast.WS['Evisceration'].TA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal"})
 	sets.precast.WS['Evisceration'].SATA = set_combine(sets.precast.WS['Evisceration'].Mod, {neck="Moepapa Medal"})
 
-	sets.precast.WS["Rudra's Storm"] = set_combine(sets.precast.WS, {neck="Moepapa Medal",
+	sets.precast.WS["Rudra's Storm"] = set_combine(sets.precast.WS, {head="Pillager's Bonnet +1",neck="Moepapa Medal",
 		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Rudra's Storm"].Acc = set_combine(sets.precast.WS["Rudra's Storm"], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS["Rudra's Storm"].Mod = set_combine(sets.precast.WS["Rudra's Storm"], {waist=gear.ElementalBelt})
@@ -151,7 +151,7 @@ function init_gear_sets()
 	sets.precast.WS["Rudra's Storm"].SATA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",neck=gear.ElementalGorget,
 		body="Pillager's Vest"})
 
-	sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,
+	sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {head="Pillager's Bonnet +1",neck=gear.ElementalGorget,
 		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Shark Bite'].Acc = set_combine(sets.precast.WS['Shark Bite'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Shark Bite'].Mod = set_combine(sets.precast.WS['Shark Bite'], {waist=gear.ElementalBelt})
@@ -161,7 +161,7 @@ function init_gear_sets()
 	sets.precast.WS['Shark Bite'].SATA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",neck=gear.ElementalGorget,
 		body="Pillager's Vest"})
 
-	sets.precast.WS['Mandalic Stab'] = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,
+	sets.precast.WS['Mandalic Stab'] = set_combine(sets.precast.WS, {head="Pillager's Bonnet +1",neck=gear.ElementalGorget,
 		ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Mandalic Stab'].Acc = set_combine(sets.precast.WS['Mandalic Stab'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Mandalic Stab'].Mod = set_combine(sets.precast.WS['Mandalic Stab'], {waist=gear.ElementalBelt})
@@ -197,12 +197,12 @@ function init_gear_sets()
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.midcast.RangedAttack.TH = {
-		head="Pillager's Bonnet",neck="Peacock Charm",
+		head="Pillager's Bonnet +1",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Assassin's Armlets +2",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 	sets.midcast.RangedAttack.Acc = {
-		head="Pillager's Bonnet",neck="Peacock Charm",
+		head="Pillager's Bonnet +1",neck="Peacock Charm",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines"}
 	
@@ -235,8 +235,8 @@ function init_gear_sets()
 	-- Defense sets
 
 	sets.defense.Evasion = {
-		head="Whirlpool Mask",neck="Torero Torque",
-		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Dark Ring",
+		head="Pillager's Bonnet +1",neck="Torero Torque",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Dark Ring",
 		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
