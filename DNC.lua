@@ -90,6 +90,8 @@ function init_gear_sets()
 	
 	skillchainPending = false
 	
+	state.Buff['Climactic Flourish'] = buffactive['climactic flourish'] or false
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -346,6 +348,9 @@ end
 
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type:lower() == "weaponskill" then
+		if state.Buff['Climactic Flourish'] then
+			equip(sets.buff['Climactic Flourish'])
+		end
 		if skillchainPending then
 			equip(sets.precast.Skillchain)
 		end
@@ -357,6 +362,9 @@ end
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
 		if spell.english == "Wild Flourish" then
 			skillchainPending = true
 			send_command('wait 7;gs c clear skillchainPending')
@@ -386,7 +394,7 @@ function customize_melee_set(meleeSet)
 		if buffactive['saber dance'] then
 			meleeSet = set_combine(meleeSet, sets.buff['Saber Dance'])
 		end
-		if buffactive['climactic flourish'] then
+		if state.Buff['Climactic Flourish'] then
 			meleeSet = set_combine(meleeSet, sets.buff['Climactic Flourish'])
 		end
 	end
@@ -402,6 +410,10 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff,gain)
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
+
 	-- If we gain or lose any haste buffs, adjust which gear set we target.
 	if S{'haste','march','embrava','haste samba'}:contains(buff:lower()) then
 		determine_haste_group()
