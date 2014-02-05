@@ -79,7 +79,7 @@ function init_gear_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Tactical Switch'] = {feet="Cirque Scarpe +2"}
 	
-	sets.precast.JA['Repair'] = {feet="Puppetry Babouches +1"}
+	sets.precast.JA['Repair'] = {feet="Foire Babouches"}
 
 	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Puppetry Dastanas +1"}
 
