@@ -125,7 +125,7 @@ function init_gear_sets()
 	sets.midcast.Utsusemi = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Otronif Harness",hands="Thaumas Gloves",
-		waist="Black Belt",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
+		waist="Hurch'lan Sash",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
 	-- Midcast sets for pet actions
