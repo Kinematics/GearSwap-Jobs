@@ -329,6 +329,18 @@ function get_pet_mode()
 	end
 end
 
+function display_pet_status()
+	if pet.isvalid then
+		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
+		
+		if magicPetModes:contains(state.PetMode) then
+			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
+		end
+		
+		add_to_chat(122,petInfoString)
+	end
+end
+
 function get_pet_haste()
 	local haste = 0
 	
@@ -362,25 +374,4 @@ function adjust_gear_sets_for_pet()
 		end
 	end
 end
-
-function display_pet_status(withStatus)
-	if pet.isvalid then
-		local petInfoString = pet.name..' ['..pet.head..']: '
-		
-		if withStatus then
-			petInfoString = petInfoString..withStatus
-		else
-			petInfoString = petInfoString..tostring(pet.status)
-		end
-		
-		petInfoString = petInfoString..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
-		
-		if magicPetModes:contains(state.PetMode) then
-			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
-		end
-		
-		add_to_chat(122,petInfoString)
-	end
-end
-
 
