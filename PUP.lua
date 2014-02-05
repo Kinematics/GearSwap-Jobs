@@ -245,20 +245,6 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if S{'Activate','Deactivate'}:contains(spell.english) then
-			state.PetMode = get_pet_mode()
-		end
-		
-		if spell.english == 'Deploy' then
-			display_pet_status('Engaged')
-		end
-	end
-end
-
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
@@ -279,10 +265,21 @@ function job_buff_change(buff, gain)
 end
 
 
+-- Called when a player gains or loses a pet.
+-- pet == pet gained or lost
+-- gain == true if the pet was gained, false if it was lost.
+function job_pet_change(pet, gain)
+	state.PetMode = get_pet_mode()
+end
+
+
 -- Called when the pet's status changes.
 function job_pet_status_change(newStatus, oldStatus)
-	state.PetMode = get_pet_mode()
 	adjust_gear_sets_for_pet()
+
+	if newStatus == 'Engaged' then
+		display_pet_status()
+	end
 end
 
 
@@ -346,7 +343,6 @@ function get_pet_haste()
 	
 	return haste
 end
-
 
 function adjust_gear_sets_for_pet()
 	classes.CustomIdleGroups:clear()
