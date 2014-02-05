@@ -159,32 +159,37 @@ function init_gear_sets()
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 	
 	-- Idle sets to wear while pet is engaged
-	sets.idle.Field.PetTank = {
+	sets.idle.Field.Pet = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetMelee = {
+	sets.idle.Field.Pet.Tank = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetRanged = {
+	sets.idle.Field.Pet.Melee = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+
+	sets.idle.Field.Pet.Ranged = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Cirque Guanti +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetHeal = {
+	sets.idle.Field.Pet.Heal = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetNuke = {
+	sets.idle.Field.Pet.Nuke = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"}
 
-	sets.idle.Field.PetMagic = {
+	sets.idle.Field.Pet.Magic = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Cirque Scarpe +2"}
@@ -392,7 +397,7 @@ function adjust_gear_sets_for_pet()
 	if pet.isvalid then
 		if pet.status == 'Engaged' then
 			-- idle
-			classes.CustomIdleGroups:append('Pet'..state.PetMode)
+			classes.CustomIdleGroups:append(state.PetMode)
 			
 			-- melee
 			local petHaste = get_pet_haste()
