@@ -232,7 +232,9 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function job_precast(spell, action, spellMap, eventArgs)
-
+	if spell.type == 'Waltz' then
+		refine_waltz(spell, action, spellMap, eventArgs)
+	end
 end
 
 function job_pet_midcast(spell, action, spellMap, eventArgs)
