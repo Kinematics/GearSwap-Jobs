@@ -340,7 +340,9 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	--auto_presto(spell)
-	if spell.type == 'Waltz' then
+	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
+
+	if spell.type == 'Waltz' and not eventArgs.cancel then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
