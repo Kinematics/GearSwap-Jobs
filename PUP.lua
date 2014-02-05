@@ -231,12 +231,14 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Called when player is about to perform an action
 function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
+-- Called when pet is about to perform an action
 function job_pet_midcast(spell, action, spellMap, eventArgs)
 	if petWeaponskills:contains(spell.english) then
 		classes.CustomClass = "Weaponskill"
@@ -261,21 +263,10 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called before the Include starts constructing melee/idle/resting sets.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_handle_equipping_gear(status, eventArgs)
-
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
@@ -306,10 +297,6 @@ function job_update(cmdParams, eventArgs)
 	adjust_gear_sets_for_pet()
 end
 
--- Handle notifications of general user state change.
-function job_state_change(stateField, newValue)
-
-end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
