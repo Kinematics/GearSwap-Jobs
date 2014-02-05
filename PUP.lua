@@ -54,6 +54,15 @@ function init_gear_sets()
 	
 	state.PetMode = get_pet_mode()
 	
+	defaultManeuvers = {
+		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver'},
+		['Ranged'] = {'Wind Maneuver', 'Fire Maneuver', 'Thunder Maneuver'},
+		['Tank'] = {'Fire Maneuver', 'Earth Maneuver', 'Wind Maneuver'},
+		['Magic'] = {'Ice Maneuver', 'Light Maneuver', 'Dark Maneuver'},
+		['Heal'] = {'Light Maneuver', 'Dark Maneuver', 'Water Maneuver'},
+		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver'}
+	}
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -286,6 +295,25 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1] == 'maneuver' then
+		if pet.isvalid then
+			local man = defaultManeuvers[state.PetMode]
+			if man and tonumber(cmdParams[2]) then
+				man = man[tonumber(cmdParams[2])]
+			end
+
+			if man then
+				send_command('input /pet "'..man..'" <me>')
+			end
+		else
+			add_to_chat(123,'No valid pet.')
+		end
+	end
+end
+
 
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
