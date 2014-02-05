@@ -55,12 +55,12 @@ function init_gear_sets()
 	state.PetMode = get_pet_mode()
 	
 	defaultManeuvers = {
-		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver'},
-		['Ranged'] = {'Wind Maneuver', 'Fire Maneuver', 'Thunder Maneuver'},
-		['Tank'] = {'Fire Maneuver', 'Earth Maneuver', 'Wind Maneuver'},
-		['Magic'] = {'Ice Maneuver', 'Light Maneuver', 'Dark Maneuver'},
-		['Heal'] = {'Light Maneuver', 'Dark Maneuver', 'Water Maneuver'},
-		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver'}
+		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver', 'Light Maneuver'},
+		['Ranged'] = {'Wind Maneuver', 'Fire Maneuver', 'Thunder Maneuver', 'Light Maneuver'},
+		['Tank'] = {'Earth Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Wind Maneuver'},
+		['Magic'] = {'Ice Maneuver', 'Light Maneuver', 'Dark Maneuver', 'Earth Maneuver'},
+		['Heal'] = {'Light Maneuver', 'Dark Maneuver', 'Water Maneuver', 'Earth Maneuver'},
+		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Earth Maneuver'}
 	}
 	
 	--------------------------------------
