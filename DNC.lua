@@ -367,10 +367,10 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 		end
 		if spell.english == "Wild Flourish" then
 			skillchainPending = true
-			send_command('wait 7;gs c clear skillchainPending')
+			send_command('wait 5;gs c clear skillchainPending')
 		elseif spell.type:lower() == "weaponskill" then
 			skillchainPending = not skillchainPending
-			send_command('wait 7;gs c clear skillchainPending')
+			send_command('wait 5;gs c clear skillchainPending')
 		end
 	end
 end
