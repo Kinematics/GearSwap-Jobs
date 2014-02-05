@@ -9,20 +9,20 @@
 
 -- Function to cancel buffs if they'd conflict with using the spell you're attempting.
 function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-	if spell.name == 'Spectral Jig' and buffactive.sneak then
+	if spell.english == 'Spectral Jig' and buffactive.sneak then
 		cast_delay(0.2)
 		send_command('cancel sneak')
-	elseif spell.name == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
+	elseif spell.english == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
 		send_command('cancel sneak')
-	elseif (spell.name == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
+	elseif (spell.english == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
 		cast_delay(0.2)
 		send_command('cancel saber dance')
 	elseif spell.type=='Samba' and buffactive['fan dance'] then
 		cast_delay(0.2)
 		send_command('cancel fan dance')
-	elseif spell.name:startswith('Monomi') then
+	elseif spell.english:startswith('Monomi') then
 		send_command('@wait 1.7;cancel sneak')
-	elseif spell.name == 'Utsusemi: Ichi' then
+	elseif spell.english == 'Utsusemi: Ichi' then
 		send_command('@wait 1.7;cancel copy image*')
 	end
 end
