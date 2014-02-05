@@ -325,7 +325,7 @@ function init_gear_sets()
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
 	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
-	sets.buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
+	sets.buff['Climactic Flourish'] = {head="Charis Tiara +2"}
 
 end
 
