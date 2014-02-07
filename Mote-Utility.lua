@@ -85,8 +85,8 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 	-- If we can estimate missing HP, we can adjust the preferred tier used.
 	if missingHP ~= nil then
 		if player.main_job == 'DNC' then
-			if missingHP < 40 then
-				-- not worth curing
+			if missingHP < 40 and spell.target.name == player.name then
+				-- not worth curing yourself for so little; allow for other targets to wake them up
 				add_to_chat(122,'Full HP!')
 				eventArgs.cancel = true
 				return
@@ -102,7 +102,12 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 				newWaltz = 'Curing Waltz V'
 			end
 		elseif player.sub_job == 'DNC' then
-			if missingHP < 150 then
+			if missingHP < 40 and spell.target.name == player.name then
+				-- not worth curing yourself for so little; allow for other targets to wake them up
+				add_to_chat(122,'Full HP!')
+				eventArgs.cancel = true
+				return
+			elseif missingHP < 150 then
 				newWaltz = 'Curing Waltz'
 			elseif missingHP < 300 then
 				newWaltz = 'Curing Waltz II'
