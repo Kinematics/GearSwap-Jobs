@@ -125,8 +125,8 @@ function init_gear_sets()
 	-- Midcast Sets
 
 	sets.midcast.FastRecast = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Otronif Harness",hands="Thaumas Gloves",
+		head="Haruspex Hat",ear2="Loquacious Earring",
+		body="Otronif Harness",hands="Regimen Mittens",
 		waist="Twilight Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 		
 	-- Specific spells
