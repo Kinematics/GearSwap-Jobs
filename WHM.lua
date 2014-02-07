@@ -10,19 +10,14 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff['Afflatus Solace'] = buffactive['afflatus solace'] or false
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(4, 14)
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -35,9 +30,22 @@ function init_gear_sets()
 	
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
-	
-	state.Buff['Afflatus Solace'] = buffactive['afflatus solace'] or false
 
+
+	-- Default macro set/book
+	set_macro_page(4, 14)
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------

@@ -37,6 +37,49 @@ function get_sets()
 end
 
 
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff['Climactic Flourish'] = buffactive['climactic flourish'] or false
+
+	options.StepModes = {'Box Step', 'Quickstep', 'Feather Step', 'Stutter Step'}
+	state.MainStep = 'Box Step'
+	state.AltStep = 'Quickstep'
+	state.CurrentStep = 'Main'
+	state.UseAltStep = false
+	state.SelectStepTarget = false
+	state.IgnoreTargetting = false
+	
+	skillchainPending = false
+
+	determine_haste_group()
+end
+
+
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
+	-- Options: Override default values
+	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
+	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
+	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
+	options.IdleModes = {'Normal'}
+	options.RestingModes = {'Normal'}
+	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
+	options.MagicalDefenseModes = {'MDT'}
+
+	state.Defense.PhysicalMode = 'Evasion'
+
+	-- Additional local binds
+	send_command('bind ^= gs c cycle mainstep')
+	send_command('bind != gs c cycle altstep')
+	send_command('bind ^- gs c toggle selectsteptarget')
+	send_command('bind !- gs c toggle usealtstep')
+	send_command('bind ^` input /ja "Chocobo Jig" <me>')
+	send_command('bind !` input /ja "Chocobo Jig II" <me>')
+
+	select_default_macro_book()
+end
+
+
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	if binds_on_unload then
@@ -54,44 +97,6 @@ end
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(5, 20)
-
-	-- Additional local binds
-	send_command('bind ^= gs c cycle mainstep')
-	send_command('bind != gs c cycle altstep')
-	send_command('bind ^- gs c toggle selectsteptarget')
-	send_command('bind !- gs c toggle usealtstep')
-	send_command('bind ^` input /ja "Chocobo Jig" <me>')
-	send_command('bind !` input /ja "Chocobo Jig II" <me>')
-	
-	determine_haste_group()
-
-	
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
-	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'Evasion'
-
-
-	options.StepModes = {'Box Step', 'Quickstep', 'Feather Step', 'Stutter Step'}
-	state.MainStep = 'Box Step'
-	state.AltStep = 'Quickstep'
-	state.CurrentStep = 'Main'
-	state.UseAltStep = false
-	state.SelectStepTarget = false
-	state.IgnoreTargetting = false
-	
-	skillchainPending = false
-	
-	state.Buff['Climactic Flourish'] = buffactive['climactic flourish'] or false
-	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -328,7 +333,6 @@ function init_gear_sets()
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
 	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
 	sets.buff['Climactic Flourish'] = {head="Charis Tiara +2"}
-
 end
 
 
@@ -405,7 +409,7 @@ function customize_melee_set(meleeSet)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- General hooks for other game events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -423,6 +427,12 @@ function job_buff_change(buff,gain)
 	elseif buff == 'Saber Dance' or buff == 'Climactic Flourish' then
 		handle_equipping_gear(player.status)
 	end
+end
+
+
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
 end
 
 
@@ -588,4 +598,18 @@ function auto_presto(spell)
 	end
 end
 
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'WAR' then
+		set_macro_page(3, 20)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(1, 20)
+	elseif player.sub_job == 'SAM' then
+		set_macro_page(2, 20)
+	else
+		set_macro_page(5, 20)
+	end
+end
 

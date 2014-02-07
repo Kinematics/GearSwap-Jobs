@@ -11,19 +11,15 @@ function get_sets()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.CombatForm = get_combat_form()
+	update_melee_groups()
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(2, 1)
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc', 'Mod', 'iLvl'}
 	options.DefenseModes = {'Normal', 'PDT', 'HP', 'Counter'}
@@ -35,9 +31,20 @@ function init_gear_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 
-	state.CombatForm = get_combat_form()
-	update_melee_groups()
-	
+	select_default_macro_book()
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -249,8 +256,6 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Anchorite's Gaiters"}
-
-		
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -280,7 +285,7 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- General hooks for other game events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -313,6 +318,12 @@ function job_buff_change(buff, gain)
 	if buff == "Hundred Fists" or buff == "Impetus" or buff == "Footwork" then
 		handle_equipping_gear(player.status)
 	end
+end
+
+
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
 end
 
 
@@ -350,4 +361,18 @@ function update_melee_groups()
 end
 
 
-	
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'DNC' then
+		set_macro_page(8, 1)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(2, 1)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(4, 1)
+	else
+		set_macro_page(3, 1)
+	end
+end
+
+

@@ -10,18 +10,15 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff.Sentinel = buffactive.sentinel or false
+	state.Buff.Cover = buffactive.cover or false
 end
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(2, 2)
 
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal', 'Shield'}
@@ -34,14 +31,25 @@ function init_gear_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 
-	state.Buff.Sentinel = buffactive.sentinel or false
-	state.Buff.Cover = buffactive.cover or false
-	
 	physical_darkring1 = {name="Dark Ring",augments={"Physical Damage Taken -6%", "Magic Damage Taken -3%", "Spell Interruption Rate Down 5%"}}
 	physical_darkring2 = {name="Dark Ring",augments={"Physical Damage Taken -5%", "Magic Damage Taken -3%"}}
 	magic_breath_darkring1 = {name="Dark Ring",augments={"Magic Damage Taken -6%", "Breath Damage Taken -5%"}}
 	magic_breath_darkring2 = {name="Dark Ring",augments={"Magic Damage Taken -5%", "Breath Damage Taken -6%"}}
-	
+
+
+	select_default_macro_book()
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -340,6 +348,10 @@ function job_buff_change(buff, gain)
 
 end
 
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
@@ -369,4 +381,18 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'DNC' then
+		set_macro_page(5, 2)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(4, 2)
+	elseif player.sub_job == 'RDM' then
+		set_macro_page(3, 2)
+	else
+		set_macro_page(2, 2)
+	end
+end
 

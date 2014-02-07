@@ -11,33 +11,34 @@ function get_sets()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-end
-
-
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	if player.sub_job == 'DNC' then
-		set_macro_page(2, 9)
-	elseif player.sub_job == 'NIN' then
-		set_macro_page(3, 9)
-	elseif player.sub_job == 'THF' then
-		set_macro_page(4, 9)
-	else
-		set_macro_page(1, 9)
-	end
-	
-
+-- Setup vars that are user-independent.
+function job_setup()
 	-- List of pet weaponskills to check for
 	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
 		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
 		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
 	
+	-- Map automaton heads to combat roles
+	petModes = {
+		['Harlequin Head'] = 'Melee',
+		['Sharpshot Head'] = 'Ranged',
+		['Valoredge Head'] = 'Tank',
+		['Stormwaker Head'] = 'Magic',
+		['Soulsoother Head'] = 'Heal',
+		['Spiritreaver Head'] = 'Nuke'
+		}
+
+	-- Subset of modes that use magic
+	magicPetModes = S{'Nuke','Heal','Magic'}
+	
+	-- Var to track the current pet mode.
+	state.PetMode = 'Melee'
+	update_pet_mode()
+end
+
+
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'DT'}
@@ -48,22 +49,7 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-	
 
-	petModes = {
-		['Harlequin Head'] = 'Melee',
-		['Sharpshot Head'] = 'Ranged',
-		['Valoredge Head'] = 'Tank',
-		['Stormwaker Head'] = 'Magic',
-		['Soulsoother Head'] = 'Heal',
-		['Spiritreaver Head'] = 'Nuke'
-		}
-
-	magicPetModes = S{'Nuke','Heal','Magic'}
-	
-	state.PetMode = nil
-	update_pet_mode()
-	
 	-- Default maneuvers 1, 2, 3 and 4 for each pet mode.
 	defaultManeuvers = {
 		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver', 'Light Maneuver'},
@@ -73,10 +59,20 @@ function init_gear_sets()
 		['Heal'] = {'Light Maneuver', 'Dark Maneuver', 'Water Maneuver', 'Earth Maneuver'},
 		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Earth Maneuver'}
 	}
-	
-	--------------------------------------
-	-- Start defining the sets
-	--------------------------------------
+
+	select_default_macro_book()
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets used by this job file.
+function init_gear_sets()
 	
 	-- Precast Sets
 
@@ -261,6 +257,11 @@ function job_pet_status_change(newStatus, oldStatus)
 	end
 end
 
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
@@ -349,6 +350,20 @@ function display_pet_status()
 		end
 		
 		add_to_chat(122,petInfoString)
+	end
+end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 9)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(3, 9)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(4, 9)
+	else
+		set_macro_page(1, 9)
 	end
 end
 

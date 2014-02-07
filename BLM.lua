@@ -11,19 +11,14 @@ function get_sets()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(1, 15)
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant', 'Proc'}
 	options.OffenseModes = {'None', 'Normal'}
@@ -36,7 +31,22 @@ function init_gear_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
-	
+
+	-- Default macro set/book
+	set_macro_page(1, 15)
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -367,4 +377,5 @@ function get_nuke_class(spell, action, spellMap)
 		return 'HighTierNuke'
 	end
 end
+
 

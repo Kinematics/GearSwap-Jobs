@@ -10,27 +10,23 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
+	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
+	state.Buff['Feint'] = buffactive['feint'] or false
+	
+	-- TH mode handling
+	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
+	state.TreasureMode = 'Tag'
 
-	send_command('unbind ^`')
-	send_command('unbind !-')
+	tag_with_th = false	
+	tp_on_engage = 0
 end
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(2, 5)
-	
-	-- Additional local binds
-	send_command('bind ^` input /ja "Flee" <me>')
-	send_command('bind ^= gs c cycle treasuremode')
-	send_command('bind !- gs c cycle targetmode')
 
-
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
@@ -43,18 +39,28 @@ function init_gear_sets()
 
 	state.RangedMode = 'TH'
 	state.Defense.PhysicalMode = 'Evasion'
-	
-	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
-	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
-	state.Buff['Feint'] = buffactive['feint'] or false
-	
-	-- TH mode handling
-	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
-	state.TreasureMode = 'Tag'
 
-	tag_with_th = false	
-	tp_on_engage = 0
-	
+	-- Additional local binds
+	send_command('bind ^` input /ja "Flee" <me>')
+	send_command('bind ^= gs c cycle treasuremode')
+	send_command('bind !- gs c cycle targetmode')
+
+	select_default_macro_book()
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+
+	send_command('unbind ^`')
+	send_command('unbind !-')
+end
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -437,6 +443,10 @@ function job_buff_change(buff, gain)
 	end
 end
 
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for TH mode handling.
@@ -562,5 +572,19 @@ end
 -- Function to indicate if any buffs have been activated that we don't want to equip gear over.
 function satafeint_active()
 	return state.Buff['Sneak Attack'] or state.Buff['Trick Attack'] or state.Buff['Feint']
+end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 5)
+	elseif player.sub_job == 'WAR' then
+		set_macro_page(3, 5)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(4, 5)
+	else
+		set_macro_page(2, 5)
+	end
 end
 
