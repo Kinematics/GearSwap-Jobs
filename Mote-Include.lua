@@ -810,6 +810,10 @@ function get_current_idle_set()
 	
 	if (pet.isvalid or state.Buff.Pet) and idleSet.Pet then
 		idleSet = idleSet.Pet
+		
+		if pet.status == 'Engaged' and idleSet.Engaged then
+			idleSet = idleSet.Engaged
+		end
 	end
 
 	for _,group in ipairs(classes.CustomIdleGroups) do
