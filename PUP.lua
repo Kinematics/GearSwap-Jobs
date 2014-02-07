@@ -61,7 +61,8 @@ function init_gear_sets()
 
 	magicPetModes = S{'Nuke','Heal','Magic'}
 	
-	state.PetMode = get_pet_mode()
+	state.PetMode = nil
+	update_pet_mode()
 	
 	-- Default maneuvers 1, 2, 3 and 4 for each pet mode.
 	defaultManeuvers = {
@@ -152,18 +153,20 @@ function init_gear_sets()
 
 	sets.idle.Town = set_combine(sets.idle, {main="Oatixur"})
 
+	-- Set for idle while pet is out (eg: pet regen gear)
+	sets.idle.Pet = sets.idle
 
 	-- Idle sets to wear while pet is engaged
-	sets.idle.Pet = {
+	sets.idle.Pet.Engaged = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Foire Babouches"}
 
-	sets.idle.Pet.Ranged = set_combine(sets.idle.Pet, {hands="Cirque Guanti +2",legs="Cirque Pantaloni +2"})
+	sets.idle.Pet.Engaged.Ranged = set_combine(sets.idle.Pet.Engaged, {hands="Cirque Guanti +2",legs="Cirque Pantaloni +2"})
 
-	sets.idle.Pet.Nuke = set_combine(sets.idle.Pet, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
+	sets.idle.Pet.Engaged.Nuke = set_combine(sets.idle.Pet.Engaged, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
 
-	sets.idle.Pet.Magic = set_combine(sets.idle.Pet, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
+	sets.idle.Pet.Engaged.Magic = set_combine(sets.idle.Pet.Engaged, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
 
 
 	-- Defense sets
@@ -244,7 +247,6 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if buff == 'Wind Maneuver' then
-		adjust_gear_sets_for_pet()
 		handle_equipping_gear(player.status)
 	end
 end
@@ -254,14 +256,12 @@ end
 -- pet == pet gained or lost
 -- gain == true if the pet was gained, false if it was lost.
 function job_pet_change(pet, gain)
-	state.PetMode = get_pet_mode()
+	update_pet_mode()
 end
 
 
 -- Called when the pet's status changes.
 function job_pet_status_change(newStatus, oldStatus)
-	adjust_gear_sets_for_pet()
-
 	if newStatus == 'Engaged' then
 		display_pet_status()
 	end
@@ -294,8 +294,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	state.PetMode = get_pet_mode()
-	adjust_gear_sets_for_pet()
+	update_pet_mode()
 end
 
 
@@ -327,12 +326,29 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Get the pet mode value based on the equipped head of the automaton.
+-- Returns nil if pet is not valid.
 function get_pet_mode()
 	if pet.isvalid then
 		return petModes[pet.head]
 	end
 end
 
+-- Update state.PetMode, as well as functions that use it for set determination.
+function update_pet_mode()
+	state.PetMode = get_pet_mode()
+	update_custom_groups()
+end
+
+-- Update custom groups based on the current pet.
+function update_custom_groups()
+	classes.CustomIdleGroups:clear()
+	if pet.isvalid then
+		classes.CustomIdleGroups:append(state.PetMode)
+	end
+end
+
+-- Display current pet status.
 function display_pet_status()
 	if pet.isvalid then
 		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
@@ -345,37 +361,4 @@ function display_pet_status()
 	end
 end
 
-function get_pet_haste()
-	local haste = 0
-	
-	if pet.isvalid then
-		if pet.attachments['Turbo Charger'] then
-			haste = 5
-			if buffactive['wind maneuver'] then
-				haste = 10 + 5 * buffactive['wind maneuver']
-			end
-		end
-	end
-	
-	return haste
-end
-
-function adjust_gear_sets_for_pet()
-	classes.CustomIdleGroups:clear()
-	classes.CustomMeleeGroups:clear()
-
-	-- If the pet is engaged, adjust potential idle and melee groups.
-	if pet.isvalid then
-		if pet.status == 'Engaged' then
-			-- idle
-			classes.CustomIdleGroups:append(state.PetMode)
-			
-			-- melee
-			local petHaste = get_pet_haste()
-			if petHaste > 0 then
-				--classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
-			end
-		end
-	end
-end
 
