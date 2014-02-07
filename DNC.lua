@@ -4,6 +4,32 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+--[[
+	Custom commands:
+	
+	gs c step
+		Uses the currently configured step on the target, with either <t> or <stnpc> depending on setting.
+
+	gs c step t
+		Uses the currently configured step on the target, but forces use of <t>.
+	
+	
+	Configuration commands:
+	
+	gs c cycle mainstep
+		Cycles through the available steps to use as the primary step when using one of the above commands.
+		
+	gs c cycle altstep
+		Cycles through the available steps to use for alternating with the configured main step.
+		
+	gs c toggle usealtstep
+		Toggles whether or not to use an alternate step.
+		
+	gs c toggle selectsteptarget
+		Toggles whether or not to use <stnpc> (as opposed to <t>) when using a step.
+--]]
+
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
@@ -63,6 +89,8 @@ function init_gear_sets()
 	state.IgnoreTargetting = false
 	
 	skillchainPending = false
+	
+	state.Buff['Climactic Flourish'] = buffactive['climactic flourish'] or false
 	
 	--------------------------------------
 	-- Start defining the sets
@@ -200,9 +228,9 @@ function init_gear_sets()
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
-		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		head="Wayfarer Circlet",neck="Twilight Torque",
+		body="Wayfarer Robe",hands="Wayfarer Cuffs",ring1="Dark Ring",ring2="Shadow Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
 
@@ -299,7 +327,7 @@ function init_gear_sets()
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
 	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
-	sets.buff['Climactic Flourish'] = {legs="Charis Tiara +2"}
+	sets.buff['Climactic Flourish'] = {head="Charis Tiara +2"}
 
 end
 
@@ -312,7 +340,9 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	--auto_presto(spell)
-	if spell.type == 'Waltz' then
+	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
+
+	if spell.type == 'Waltz' and not eventArgs.cancel then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
@@ -320,6 +350,9 @@ end
 
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type:lower() == "weaponskill" then
+		if state.Buff['Climactic Flourish'] then
+			equip(sets.buff['Climactic Flourish'])
+		end
 		if skillchainPending then
 			equip(sets.precast.Skillchain)
 		end
@@ -331,12 +364,15 @@ end
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
 		if spell.english == "Wild Flourish" then
 			skillchainPending = true
-			send_command('wait 7;gs c clear skillchainPending')
+			send_command('wait 5;gs c clear skillchainPending')
 		elseif spell.type:lower() == "weaponskill" then
 			skillchainPending = not skillchainPending
-			send_command('wait 7;gs c clear skillchainPending')
+			send_command('wait 5;gs c clear skillchainPending')
 		end
 	end
 end
@@ -360,7 +396,7 @@ function customize_melee_set(meleeSet)
 		if buffactive['saber dance'] then
 			meleeSet = set_combine(meleeSet, sets.buff['Saber Dance'])
 		end
-		if buffactive['climactic flourish'] then
+		if state.Buff['Climactic Flourish'] then
 			meleeSet = set_combine(meleeSet, sets.buff['Climactic Flourish'])
 		end
 	end
@@ -376,6 +412,10 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff,gain)
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
+
 	-- If we gain or lose any haste buffs, adjust which gear set we target.
 	if S{'haste','march','embrava','haste samba'}:contains(buff:lower()) then
 		determine_haste_group()

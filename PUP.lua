@@ -22,7 +22,16 @@ end
 -- Define sets and vars used by this job file.
 function init_gear_sets()
 	-- Default macro set/book
-	set_macro_page(3, 9)
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 9)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(3, 9)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(4, 9)
+	else
+		set_macro_page(1, 9)
+	end
+	
 
 	-- List of pet weaponskills to check for
 	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
@@ -54,6 +63,16 @@ function init_gear_sets()
 	
 	state.PetMode = get_pet_mode()
 	
+	-- Default maneuvers 1, 2, 3 and 4 for each pet mode.
+	defaultManeuvers = {
+		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver', 'Light Maneuver'},
+		['Ranged'] = {'Wind Maneuver', 'Fire Maneuver', 'Thunder Maneuver', 'Light Maneuver'},
+		['Tank'] = {'Earth Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Wind Maneuver'},
+		['Magic'] = {'Ice Maneuver', 'Light Maneuver', 'Dark Maneuver', 'Earth Maneuver'},
+		['Heal'] = {'Light Maneuver', 'Dark Maneuver', 'Water Maneuver', 'Earth Maneuver'},
+		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Earth Maneuver'}
+	}
+	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -61,8 +80,7 @@ function init_gear_sets()
 	-- Precast Sets
 
 	-- Fast cast sets for spells
-	sets.precast.FC = {ear2="Loquacious Earring",
-		hands="Thaumas Gloves"}
+	sets.precast.FC = {head="Haruspex Hat",ear2="Loquacious Earring",hands="Thaumas Gloves"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
@@ -70,9 +88,9 @@ function init_gear_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Tactical Switch'] = {feet="Cirque Scarpe +2"}
 	
-	sets.precast.JA['Repair'] = {feet="Puppetry Babouches +1"}
+	sets.precast.JA['Repair'] = {feet="Foire Babouches"}
 
-	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Puppetry Dastanas +1"}
+	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Foire Dastanas"}
 
 
 
@@ -116,7 +134,7 @@ function init_gear_sets()
 	sets.midcast.Utsusemi = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Otronif Harness",hands="Thaumas Gloves",
-		waist="Black Belt",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
+		waist="Hurch'lan Sash",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
 	-- Midcast sets for pet actions
@@ -150,32 +168,37 @@ function init_gear_sets()
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 	
 	-- Idle sets to wear while pet is engaged
-	sets.idle.Field.PetTank = {
+	sets.idle.Field.Pet = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetMelee = {
+	sets.idle.Field.Pet.Tank = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetRanged = {
+	sets.idle.Field.Pet.Melee = {
+		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
+		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+
+	sets.idle.Field.Pet.Ranged = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Cirque Guanti +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetHeal = {
+	sets.idle.Field.Pet.Heal = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Field.PetNuke = {
+	sets.idle.Field.Pet.Nuke = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"}
 
-	sets.idle.Field.PetMagic = {
+	sets.idle.Field.Pet.Magic = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Cirque Scarpe +2"}
@@ -231,27 +254,17 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Called when player is about to perform an action
 function job_precast(spell, action, spellMap, eventArgs)
-
-end
-
-function job_pet_midcast(spell, action, spellMap, eventArgs)
-	if petWeaponskills:contains(spell.english) then
-		classes.CustomClass = "Weaponskill"
+	if spell.type == 'Waltz' then
+		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if S{'Activate','Deactivate'}:contains(spell.english) then
-			state.PetMode = get_pet_mode()
-		end
-		
-		if spell.english == 'Deploy' then
-			display_pet_status('Engaged')
-		end
+-- Called when pet is about to perform an action
+function job_pet_midcast(spell, action, spellMap, eventArgs)
+	if petWeaponskills:contains(spell.english) then
+		classes.CustomClass = "Weaponskill"
 	end
 end
 
@@ -259,21 +272,10 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called before the Include starts constructing melee/idle/resting sets.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_handle_equipping_gear(status, eventArgs)
-
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
@@ -286,16 +288,46 @@ function job_buff_change(buff, gain)
 end
 
 
+-- Called when a player gains or loses a pet.
+-- pet == pet gained or lost
+-- gain == true if the pet was gained, false if it was lost.
+function job_pet_change(pet, gain)
+	state.PetMode = get_pet_mode()
+end
+
+
 -- Called when the pet's status changes.
 function job_pet_status_change(newStatus, oldStatus)
-	state.PetMode = get_pet_mode()
 	adjust_gear_sets_for_pet()
+
+	if newStatus == 'Engaged' then
+		display_pet_status()
+	end
 end
 
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1] == 'maneuver' then
+		if pet.isvalid then
+			local man = defaultManeuvers[state.PetMode]
+			if man and tonumber(cmdParams[2]) then
+				man = man[tonumber(cmdParams[2])]
+			end
+
+			if man then
+				send_command('input /pet "'..man..'" <me>')
+			end
+		else
+			add_to_chat(123,'No valid pet.')
+		end
+	end
+end
+
 
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
@@ -304,10 +336,6 @@ function job_update(cmdParams, eventArgs)
 	adjust_gear_sets_for_pet()
 end
 
--- Handle notifications of general user state change.
-function job_state_change(stateField, newValue)
-
-end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
@@ -343,6 +371,18 @@ function get_pet_mode()
 	end
 end
 
+function display_pet_status()
+	if pet.isvalid then
+		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
+		
+		if magicPetModes:contains(state.PetMode) then
+			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
+		end
+		
+		add_to_chat(122,petInfoString)
+	end
+end
+
 function get_pet_haste()
 	local haste = 0
 	
@@ -358,7 +398,6 @@ function get_pet_haste()
 	return haste
 end
 
-
 function adjust_gear_sets_for_pet()
 	classes.CustomIdleGroups:clear()
 	classes.CustomMeleeGroups:clear()
@@ -367,7 +406,7 @@ function adjust_gear_sets_for_pet()
 	if pet.isvalid then
 		if pet.status == 'Engaged' then
 			-- idle
-			classes.CustomIdleGroups:append('Pet'..state.PetMode)
+			classes.CustomIdleGroups:append(state.PetMode)
 			
 			-- melee
 			local petHaste = get_pet_haste()
@@ -377,25 +416,4 @@ function adjust_gear_sets_for_pet()
 		end
 	end
 end
-
-function display_pet_status(withStatus)
-	if pet.isvalid then
-		local petInfoString = pet.name..' ['..pet.head..']: '
-		
-		if withStatus then
-			petInfoString = petInfoString..withStatus
-		else
-			petInfoString = petInfoString..tostring(pet.status)
-		end
-		
-		petInfoString = petInfoString..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
-		
-		if magicPetModes:contains(state.PetMode) then
-			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
-		end
-		
-		add_to_chat(122,petInfoString)
-	end
-end
-
 

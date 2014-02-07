@@ -7,23 +7,44 @@
 -- Buff-cancelling utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
+local cancel_spells_to_check = S{'Sneak', 'Spectral Jig', 'Trance', 'Monomi: Ichi', 'Utsusemi: Ichi'}
+local cancel_types_to_check = S{'Waltz', 'Samba'}
+
 -- Function to cancel buffs if they'd conflict with using the spell you're attempting.
 function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-	if spell.name == 'Spectral Jig' and buffactive.sneak then
-		cast_delay(0.2)
-		send_command('cancel sneak')
-	elseif spell.name == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
-		send_command('cancel sneak')
-	elseif (spell.name == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
-		cast_delay(0.2)
-		send_command('cancel saber dance')
-	elseif spell.type=='Samba' and buffactive['fan dance'] then
-		cast_delay(0.2)
-		send_command('cancel fan dance')
-	elseif spell.name:startswith('Monomi') then
-		send_command('@wait 1.7;cancel sneak')
-	elseif spell.name == 'Utsusemi: Ichi' then
-		send_command('@wait 1.7;cancel copy image*')
+	if cancel_spells_to_check:contains(spell.english) or cancel_types_to_check:contains(spell.type) then
+		if spell.action_type == 'Ability' then
+			local abil_recasts = windower.ffxi.get_ability_recasts()
+			if abil_recasts[spell.index] > 0 then
+				add_to_chat(123,'Cancel abort: Ability waiting on recast.')
+				eventArgs.cancel = true
+				return
+			end
+		elseif spell.action_type == 'Magic' then
+			local spell_recasts = windower.ffxi.get_spell_recasts()
+			if spell_recasts[spell.index] > 0 then
+				add_to_chat(123,'Cancel abort: Spell waiting on recast.')
+				eventArgs.cancel = true
+				return
+			end
+		end
+		
+		if spell.english == 'Spectral Jig' and buffactive.sneak then
+			cast_delay(0.2)
+			send_command('cancel sneak')
+		elseif spell.english == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
+			send_command('cancel sneak')
+		elseif (spell.english == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
+			cast_delay(0.2)
+			send_command('cancel saber dance')
+		elseif spell.type=='Samba' and buffactive['fan dance'] then
+			cast_delay(0.2)
+			send_command('cancel fan dance')
+		elseif spell.english:startswith('Monomi') then
+			send_command('@wait 1.7;cancel sneak')
+		elseif spell.english == 'Utsusemi: Ichi' then
+			send_command('@wait 1.7;cancel copy image*')
+		end
 	end
 end
 
@@ -48,55 +69,77 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 	end
 
 	local newWaltz = spell.english
+	local waltzID
 	
-	local missingHP = 0
-	local targ
+	local missingHP
 	
 	-- If curing ourself, get our exact missing HP
 	if spell.target.type == "SELF" then
-		targ = alliance[1][1]
 		missingHP = player.max_hp - player.hp
 	-- If curing someone in our alliance, we can estimate their missing HP
 	elseif spell.target.isallymember then
-		targ = find_player_in_alliance(spell.target.name)
-		local est_max_hp = targ.hp / (targ.hpp/100)
-		missingHP = math.floor(est_max_hp - targ.hp)
+		local target = find_player_in_alliance(spell.target.name)
+		local est_max_hp = target.hp / (target.hpp/100)
+		missingHP = math.floor(est_max_hp - target.hp)
 	end
 	
 	-- If we can estimate missing HP, we can adjust the preferred tier used.
-	if targ then
+	if missingHP ~= nil then
 		if player.main_job == 'DNC' then
-			if missingHP < 40 then
-				-- not worth curing
+			if missingHP < 40 and spell.target.name == player.name then
+				-- not worth curing yourself for so little; allow for other targets to wake them up
 				add_to_chat(122,'Full HP!')
 				eventArgs.cancel = true
 				return
 			elseif missingHP < 200 then
 				newWaltz = 'Curing Waltz'
+				waltzID = 190
 			elseif missingHP < 600 then
 				newWaltz = 'Curing Waltz II'
+				waltzID = 191
 			elseif missingHP < 1100 then
 				newWaltz = 'Curing Waltz III'
+				waltzID = 192
 			elseif missingHP < 1500 then
 				newWaltz = 'Curing Waltz IV'
+				waltzID = 193
 			else
 				newWaltz = 'Curing Waltz V'
+				waltzID = 311
 			end
 		elseif player.sub_job == 'DNC' then
-			if missingHP < 150 then
+			if missingHP < 40 and spell.target.name == player.name then
+				-- not worth curing yourself for so little; allow for other targets to wake them up
+				add_to_chat(122,'Full HP!')
+				eventArgs.cancel = true
+				return
+			elseif missingHP < 150 then
 				newWaltz = 'Curing Waltz'
+				waltzID = 190
 			elseif missingHP < 300 then
 				newWaltz = 'Curing Waltz II'
+				waltzID = 191
 			else
 				newWaltz = 'Curing Waltz III'
+				waltzID = 192
 			end
 		else
+			-- Not dnc main or sub; bail out
 			return
 		end
 	end
 
-	local waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
-	local tpCost = waltzTPCost[newWaltz]
+	--local waltzTPCost = {['Curing Waltz'] = 20, ['Curing Waltz II'] = 35, ['Curing Waltz III'] = 50, ['Curing Waltz IV'] = 65, ['Curing Waltz V'] = 80}
+	--local tpCost = waltzTPCost[newWaltz]
+	
+	local tpCost
+	if waltzID ~= nil then
+		local abil = res.abilities[waltzID]
+		tpCost = abil.tp_cost
+	else
+		tpCost = spell.tpcost
+	end
+
 	local downgrade
 	
 	-- Downgrade the spell to what we can afford

@@ -25,7 +25,7 @@ function init_gear_sets()
 	set_macro_page(2, 1)
 	
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Mod'}
+	options.OffenseModes = {'Normal', 'Acc', 'Mod', 'iLvl'}
 	options.DefenseModes = {'Normal', 'PDT', 'HP', 'Counter'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
@@ -62,7 +62,7 @@ function init_gear_sets()
 
 	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
 
-	sets.precast.JA['Formless Strikes'] = {body="Melee Cylcas +2"}
+	sets.precast.JA['Formless Strikes'] = {body="Melee Cyclas +2"}
 
 	sets.precast.JA['Mantra'] = {feet="Melee Gaiters +2"}
 
@@ -100,19 +100,19 @@ function init_gear_sets()
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS["Victory Smite"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
-	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], {waist="Thunder Belt",feet="Otronif Boots"})
+	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], {waist=gear.ElementalBelt,feet="Otronif Boots"})
 
-	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck="Light Gorget"})
-	sets.precast.WS['Shijin Spiral'].Acc = set_combine(sets.precast.WS.Acc, {neck="Light Gorget"})
-	sets.precast.WS['Shijin Spiral'].Mod = set_combine(sets.precast.WS['Shijin Spiral'], {waist="Light Belt",feet="Otronif Boots"})
+	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget})
+	sets.precast.WS['Shijin Spiral'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget})
+	sets.precast.WS['Shijin Spiral'].Mod = set_combine(sets.precast.WS['Shijin Spiral'], {waist=gear.ElementalBelt,feet="Otronif Boots"})
 
-	sets.precast.WS['Asuran Fists']     = set_combine(sets.precast.WS, {neck="Soil Gorget",ring2="Spiral Ring"})
-	sets.precast.WS['Asuran Fists'].Acc = set_combine(sets.precast.WS.Acc, {neck="Soil Gorget",ring2="Spiral Ring"})
-	sets.precast.WS['Asuran Fists'].Mod = set_combine(sets.precast.WS['Asuran Fists'], {waist="Soil Belt",feet="Otronif Boots"})
+	sets.precast.WS['Asuran Fists']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,ring2="Spiral Ring"})
+	sets.precast.WS['Asuran Fists'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget,ring2="Spiral Ring"})
+	sets.precast.WS['Asuran Fists'].Mod = set_combine(sets.precast.WS['Asuran Fists'], {waist=gear.ElementalBelt,feet="Otronif Boots"})
 
 	sets.precast.WS["Ascetic's Fury"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",ring1="Spiral Ring"})
 	sets.precast.WS["Ascetic's Fury"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",ring1="Spiral Ring"})
-	sets.precast.WS["Ascetic's Fury"].Mod = set_combine(sets.precast.WS["Ascetic's Fury"], {waist="Soil Belt",feet="Otronif Boots"})
+	sets.precast.WS["Ascetic's Fury"].Mod = set_combine(sets.precast.WS["Ascetic's Fury"], {waist=gear.ElementalBelt,feet="Otronif Boots"})
 
 	sets.precast.WS['Cataclysm'] = {
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
@@ -194,12 +194,15 @@ function init_gear_sets()
 		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Acc.HF = set_combine(sets.engaged.Acc, {neck="Asperity Necklace",body="Thaumas Coat"})
-	sets.engaged.Acc.Impetus = set_combine(sets.engaged.Acc, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.HF.Impetus = set_combine(sets.engaged.Acc.HF, {body="Tantra Cyclas +2"})
 	sets.engaged.Mod = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Manibozho Boots"}
+	sets.engaged.iLvl = {ammo="Thew Bomblet",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
@@ -214,19 +217,19 @@ function init_gear_sets()
 	sets.engaged.Acc.PDT.HF.Impetus = set_combine(sets.engaged.Acc.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Epona's Ring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
 	sets.engaged.HP.HF = sets.engaged.HP
 	sets.engaged.HP.HF.Impetus = set_combine(sets.engaged.HP, {body="Tantra Cyclas +2"})
-	sets.engaged.Acc.HP = {ammo="Thew Bomblet",
+	sets.engaged.Acc.HP = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots"}
 	sets.engaged.Acc.HP.HF = sets.engaged.Acc.HP
 	sets.engaged.Acc.HP.HF.Impetus = set_combine(sets.engaged.Acc.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Counter = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Anchorite's Hose",feet="Otronif Boots"}
 	sets.engaged.Counter.HF = sets.engaged.Counter
 	sets.engaged.Counter.HF.Impetus = set_combine(sets.engaged.Counter, {body="Tantra Cyclas +2"})
@@ -260,6 +263,8 @@ function job_precast(spell, action, spellMap, eventArgs)
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type:lower() == 'weaponskill' and state.Defense.Active then
 		eventArgs.handled = true
+	elseif spell.type == 'Waltz' then
+		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
