@@ -192,17 +192,17 @@ function init_gear_sets()
 
 	-- Ranged gear -- acc + TH
 	sets.midcast.RangedAttack = {
-		head="Whirlpool Mask",neck="Peacock Charm",
+		head="Whirlpool Mask",neck="Peacock Charm",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.midcast.RangedAttack.TH = {
-		head="Pillager's Bonnet +1",neck="Peacock Charm",
+		head="Pillager's Bonnet +1",neck="Peacock Charm",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Assassin's Armlets +2",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 	sets.midcast.RangedAttack.Acc = {
-		head="Pillager's Bonnet +1",neck="Peacock Charm",
+		head="Pillager's Bonnet +1",neck="Peacock Charm",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines"}
 	
