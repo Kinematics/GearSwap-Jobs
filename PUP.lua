@@ -129,12 +129,6 @@ function init_gear_sets()
 		body="Otronif Harness",hands="Regimen Mittens",
 		waist="Twilight Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 		
-	-- Specific spells
-	sets.midcast.Utsusemi = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Otronif Harness",hands="Thaumas Gloves",
-		waist="Hurch'lan Sash",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
-
 
 	-- Midcast sets for pet actions
 	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
