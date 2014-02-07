@@ -115,6 +115,7 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 				newWaltz = 'Curing Waltz III'
 			end
 		else
+			-- Not dnc main or sub; bail out
 			return
 		end
 	end
