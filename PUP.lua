@@ -133,7 +133,7 @@ function init_gear_sets()
 	-- Midcast sets for pet actions
 	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
 
-	sets.midcast.Pet.Weaponskill = {head="Cirque Cappello +2"}
+	sets.midcast.Pet.Weaponskill = {head="Cirque Cappello +2", hands="Cirque Guanti +2", legs="Cirque Pantaloni +2"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -154,40 +154,16 @@ function init_gear_sets()
 
 
 	-- Idle sets to wear while pet is engaged
-	sets.idle.Field.Pet = {
+	sets.idle.Pet = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Foire Babouches"}
 
-	sets.idle.Field.Pet.Tank = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+	sets.idle.Pet.Ranged = set_combine(sets.idle.Pet, {hands="Cirque Guanti +2",legs="Cirque Pantaloni +2"})
 
-	sets.idle.Field.Pet.Melee = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+	sets.idle.Pet.Nuke = set_combine(sets.idle.Pet, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
 
-	sets.idle.Field.Pet.Ranged = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Cirque Guanti +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Hermes' Sandals"}
-
-	sets.idle.Field.Pet.Heal = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
-
-	sets.idle.Field.Pet.Nuke = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"}
-
-	sets.idle.Field.Pet.Magic = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Cirque Scarpe +2"}
+	sets.idle.Pet.Magic = set_combine(sets.idle.Pet, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
 
 
 	-- Defense sets
