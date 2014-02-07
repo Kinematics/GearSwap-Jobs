@@ -265,7 +265,7 @@ function init_gear_sets()
 		back="Atheling Mantle",waist="Patentia Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Thaumas Coat",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.iLvl = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
