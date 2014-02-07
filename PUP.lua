@@ -233,13 +233,9 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
--------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- General hooks for other game events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -251,14 +247,12 @@ function job_buff_change(buff, gain)
 	end
 end
 
-
 -- Called when a player gains or loses a pet.
 -- pet == pet gained or lost
 -- gain == true if the pet was gained, false if it was lost.
 function job_pet_change(pet, gain)
 	update_pet_mode()
 end
-
 
 -- Called when the pet's status changes.
 function job_pet_status_change(newStatus, oldStatus)
@@ -318,9 +312,6 @@ function display_current_job_state(eventArgs)
 	eventArgs.handled = true
 end
 
--------------------------------------------------------------------------------------------------------------------
--- Hooks for pet mode handling.
--------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
