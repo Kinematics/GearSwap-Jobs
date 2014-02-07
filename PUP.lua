@@ -133,7 +133,7 @@ function init_gear_sets()
 	-- Midcast sets for pet actions
 	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
 
-	sets.midcast.Pet.Weaponskill = {head="Cirque Capello +2"}
+	sets.midcast.Pet.Weaponskill = {head="Cirque Cappello +2"}
 
 	
 	-- Sets to return to when not performing an action.
