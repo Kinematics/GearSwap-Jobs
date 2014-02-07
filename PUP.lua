@@ -81,7 +81,7 @@ function init_gear_sets()
 	
 	sets.precast.JA['Repair'] = {feet="Foire Babouches"}
 
-	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Puppetry Dastanas +1"}
+	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Foire Dastanas"}
 
 
 
