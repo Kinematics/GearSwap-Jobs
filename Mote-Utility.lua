@@ -70,22 +70,20 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 
 	local newWaltz = spell.english
 	
-	local missingHP = 0
-	local targ
+	local missingHP
 	
 	-- If curing ourself, get our exact missing HP
 	if spell.target.type == "SELF" then
-		targ = alliance[1][1]
 		missingHP = player.max_hp - player.hp
 	-- If curing someone in our alliance, we can estimate their missing HP
 	elseif spell.target.isallymember then
-		targ = find_player_in_alliance(spell.target.name)
-		local est_max_hp = targ.hp / (targ.hpp/100)
-		missingHP = math.floor(est_max_hp - targ.hp)
+		local target = find_player_in_alliance(spell.target.name)
+		local est_max_hp = target.hp / (target.hpp/100)
+		missingHP = math.floor(est_max_hp - target.hp)
 	end
 	
 	-- If we can estimate missing HP, we can adjust the preferred tier used.
-	if targ then
+	if missingHP ~= nil then
 		if player.main_job == 'DNC' then
 			if missingHP < 40 then
 				-- not worth curing
