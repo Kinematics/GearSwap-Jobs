@@ -69,6 +69,7 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 	end
 
 	local newWaltz = spell.english
+	local waltzID
 	
 	local missingHP
 	
@@ -92,14 +93,19 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 				return
 			elseif missingHP < 200 then
 				newWaltz = 'Curing Waltz'
+				waltzID = 190
 			elseif missingHP < 600 then
 				newWaltz = 'Curing Waltz II'
+				waltzID = 191
 			elseif missingHP < 1100 then
 				newWaltz = 'Curing Waltz III'
+				waltzID = 192
 			elseif missingHP < 1500 then
 				newWaltz = 'Curing Waltz IV'
+				waltzID = 193
 			else
 				newWaltz = 'Curing Waltz V'
+				waltzID = 311
 			end
 		elseif player.sub_job == 'DNC' then
 			if missingHP < 40 and spell.target.name == player.name then
@@ -109,10 +115,13 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 				return
 			elseif missingHP < 150 then
 				newWaltz = 'Curing Waltz'
+				waltzID = 190
 			elseif missingHP < 300 then
 				newWaltz = 'Curing Waltz II'
+				waltzID = 191
 			else
 				newWaltz = 'Curing Waltz III'
+				waltzID = 192
 			end
 		else
 			-- Not dnc main or sub; bail out
@@ -120,8 +129,17 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 		end
 	end
 
-	local waltzTPCost = {['Curing Waltz'] = 20,['Curing Waltz II'] = 35,['Curing Waltz III'] = 50,['Curing Waltz IV'] = 65,['Curing Waltz V'] = 80}
-	local tpCost = waltzTPCost[newWaltz]
+	--local waltzTPCost = {['Curing Waltz'] = 20, ['Curing Waltz II'] = 35, ['Curing Waltz III'] = 50, ['Curing Waltz IV'] = 65, ['Curing Waltz V'] = 80}
+	--local tpCost = waltzTPCost[newWaltz]
+	
+	local tpCost
+	if waltzID ~= nil then
+		local abil = res.abilities[waltzID]
+		tpCost = abil.tp_cost
+	else
+		tpCost = spell.tpcost
+	end
+
 	local downgrade
 	
 	-- Downgrade the spell to what we can afford
