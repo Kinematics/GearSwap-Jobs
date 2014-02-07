@@ -63,6 +63,7 @@ function init_gear_sets()
 	
 	state.PetMode = get_pet_mode()
 	
+	-- Default maneuvers 1, 2, 3 and 4 for each pet mode.
 	defaultManeuvers = {
 		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver', 'Light Maneuver'},
 		['Ranged'] = {'Wind Maneuver', 'Fire Maneuver', 'Thunder Maneuver', 'Light Maneuver'},
@@ -79,8 +80,7 @@ function init_gear_sets()
 	-- Precast Sets
 
 	-- Fast cast sets for spells
-	sets.precast.FC = {ear2="Loquacious Earring",
-		hands="Thaumas Gloves"}
+	sets.precast.FC = {head="Haruspex Hat",ear2="Loquacious Earring",hands="Thaumas Gloves"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
