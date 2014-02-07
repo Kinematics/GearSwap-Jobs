@@ -22,7 +22,16 @@ end
 -- Define sets and vars used by this job file.
 function init_gear_sets()
 	-- Default macro set/book
-	set_macro_page(3, 9)
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 9)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(3, 9)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(4, 9)
+	else
+		set_macro_page(1, 9)
+	end
+	
 
 	-- List of pet weaponskills to check for
 	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
