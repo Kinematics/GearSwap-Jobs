@@ -161,8 +161,18 @@ function init_include()
 	
 	-- Load a sidecar file for the job (if it exists) that may re-define init_gear_sets and file_unload.
 	load_user_gear(player.main_job)
+
+	-- General var initialization and setup.  
+	if job_setup then
+		job_setup()
+	end
 	
-	-- Load up all the job sets and job-specific initialization of variables and such.
+	-- User-specific var initialization and setup.  
+	if user_setup then
+		user_setup()
+	end
+	
+	-- Load up all the gear sets.
 	init_gear_sets()
 end
 
