@@ -335,7 +335,7 @@ end
 
 -- Determine the custom class to use for the given song.
 function get_song_class(spell)
-	if DaurdSongs[spell.english] then
+	if DaurdSongs:contains(spell.english) then
 		return 'Daurdabla'
 	elseif spell.target.type == 'MONSTER' then
 		return 'SongDebuff'
