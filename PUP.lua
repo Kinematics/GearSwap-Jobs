@@ -143,23 +143,16 @@ function init_gear_sets()
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
-	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
+	-- Idle sets
 
-	sets.idle.Town = {main="Oatixur",range="Eminent Animator",
+	sets.idle = {range="Eminent Animator",
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
-	
-	sets.idle.Field = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Weak = {
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
-	
+	sets.idle.Town = set_combine(sets.idle, {main="Oatixur"})
+
+
 	-- Idle sets to wear while pet is engaged
 	sets.idle.Field.Pet = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
