@@ -405,7 +405,7 @@ function select_movement()
 	-- world.time is given in minutes into each day
 	-- 7:00 AM would be 420 minutes
 	-- 17:00 PM would be 1020 minutes
-	if world.time >= 1020 or world.time <= 420 then
+	if world.time >= (17*60) or world.time <= (7*60) then
 		return sets.NightMovement
 	else
 		return sets.DayMovement
