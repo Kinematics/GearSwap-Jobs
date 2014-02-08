@@ -101,7 +101,7 @@ function init_gear_sets()
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
-		back="Pahtli Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Pahtli Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Curaga = sets.midcast.Cure
 
@@ -146,12 +146,12 @@ function init_gear_sets()
 	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.ElementalMagic.Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	-- Idle set when doing procs.  Fast cast gear, minimal nuke gear.  Won't change out of this for nukes.
 	sets.midcast.ElementalMagic.Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
@@ -163,23 +163,23 @@ function init_gear_sets()
 	sets.midcast.HighTierNuke = {main="Lehbrailg",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.HighTierNuke.Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	-- Custom classes for high-tier nukes in Adoulin areas (need more general magic accuracy).
 	sets.midcast.AdoulinHighTierNuke = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.AdoulinHighTierNuke.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Bokwus Boots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -267,7 +267,11 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-
+	if spellMap == 'Cure' or spellMap == 'Curaga' then
+		gear.default.obi_waist = "Goading Belt"
+	elseif spell.skill == 'ElementalMagic' then
+		gear.default.obi_waist = "Sekhmet Corsette"
+	end
 end
 
 
