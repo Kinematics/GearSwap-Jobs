@@ -270,7 +270,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if spellMap == 'Cure' or spellMap == 'Curaga' then
 		gear.default.obi_waist = "Goading Belt"
 	elseif spell.skill == 'ElementalMagic' then
-		gear.default.obi_waist = "Sekhmet Corsette"
+		gear.default.obi_waist = "Sekhmet Corset"
 	end
 end
 
