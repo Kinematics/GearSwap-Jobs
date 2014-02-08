@@ -108,22 +108,22 @@ function init_gear_sets()
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Cursna = {
 		head="Orison Cap +2",neck="Malison Medallion",
@@ -162,7 +162,7 @@ function init_gear_sets()
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
