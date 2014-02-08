@@ -356,7 +356,9 @@ function set_spell_obi_cape_ring(spell)
 	end
 	
 	local world_elements = S{}
-	world_elements:add(world.weather_element)
+	if world.weather_element ~= 'None' then
+		world_elements:add(world.weather_element)
+	end
 	world_elements:add(world.day_element)
 	
 	local obi = gear.ElementalObi or {name=""}
