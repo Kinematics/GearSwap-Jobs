@@ -8,7 +8,7 @@
 
 elements = {}
 
-elements.list = L{'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
+elements.list = S{'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
 
 elements.weak_to = {['Light']='Dark', ['Dark']='Light', ['Fire']='Ice', ['Ice']='Wind', ['Wind']='Earth', ['Earth']='Lightning',
 		['Lightning']='Water', ['Water']='Fire'}
