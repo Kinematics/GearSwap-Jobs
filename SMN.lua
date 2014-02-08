@@ -4,6 +4,8 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and it's supplementary files) to go with this.
 
+-- Also, you'll need the Shortcuts addon to handle the auto-targetting of the custom pact commands.
+
 --[[
 	Custom commands:
 	
