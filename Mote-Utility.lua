@@ -310,10 +310,12 @@ end
 -- It may optionally provide a list of valid elements, rather than
 -- searching all possible elements.
 -- Returns the item var if it found a match and the item was in inventory.
+--
+-- valid_element: a set S{} of elements that are to be checked
 function select_elemental_item(itemvar, itemtype, elements_to_search, valid_elements)
-	local elements_list = valid_elements or elements.list
+	local potential_elements = valid_elements or elements.list
 	
-	for _,element in ipairs(elements_list) do
+	for element,_ in pairs(potential_elements) do
 		if elements_to_search:contains(element) and player.inventory[gear_map[itemtype][element]] then
 			itemvar.name = gear_map[itemtype][element]
 			return itemvar
