@@ -288,7 +288,7 @@ function init_gear_sets()
 
 
 	sets.buff.Migawari = {body="Iga Ningi"}
-	sets.buff.Doom = {ring2="Saida Ring"}
+	sets.buff.Doomed = {ring2="Saida Ring"}
 	sets.buff.Yonin = {}
 	sets.buff.Innin = {}
 end
@@ -316,8 +316,8 @@ end
 -- Run after the general midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if state.Buff.Doom then
-		equip(sets.buff.Doom)
+	if state.Buff.Doomed then
+		equip(sets.buff.Doomed)
 	end
 end
 
@@ -347,8 +347,8 @@ function customize_idle_set(idleSet)
 	if state.Buff.Migawari then
 		idleSet = set_combine(idleSet, sets.buff.Migawari)
 	end
-	if state.Buff.Doom then
-		idleSet = set_combine(idleSet, sets.buff.Doom)
+	if state.Buff.Doomed then
+		idleSet = set_combine(idleSet, sets.buff.Doomed)
 	end
 	return idleSet
 end
@@ -358,8 +358,8 @@ function customize_melee_set(meleeSet)
 	if state.Buff.Migawari then
 		meleeSet = set_combine(meleeSet, sets.buff.Migawari)
 	end
-	if state.Buff.Doom then
-		meleeSet = set_combine(meleeSet, sets.buff.Doom)
+	if state.Buff.Doomed then
+		meleeSet = set_combine(meleeSet, sets.buff.Doomed)
 	end
 	return meleeSet
 end
