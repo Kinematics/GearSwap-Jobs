@@ -11,6 +11,38 @@ function get_sets()
 end
 
 
+-- Setup vars that are user-independent.
+function job_setup()
+	state.CombatForm = get_combat_form()
+	
+	state.Buff.Sekkanoki = buffactive.sekkanoki or false
+	state.Buff.Sengikori = buffactive.sengikori or false
+	state.Buff['Meikyou Shisui'] = buffactive['Meikyou Shisui'] or false
+end
+
+
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
+	-- Options: Override default values
+	options.OffenseModes = {'Normal', 'Acc'}
+	options.DefenseModes = {'Normal', 'PDT', 'Reraise'}
+	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
+	options.CastingModes = {'Normal'}
+	options.IdleModes = {'Normal'}
+	options.RestingModes = {'Normal'}
+	options.PhysicalDefenseModes = {'PDT', 'Reraise'}
+	options.MagicalDefenseModes = {'MDT'}
+
+	state.Defense.PhysicalMode = 'PDT'
+
+	-- Additional local binds
+	send_command('bind ^` input /ja "Hasso" <me>')
+	send_command('bind !` input /ja "Seigan" <me>')
+
+	select_default_macro_book()
+end
+
+
 -- Called when this job file is unloaded (eg: job change)
 function file_unload()
 	if binds_on_unload then
@@ -24,31 +56,6 @@ end
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(2, 11)
-	
-	-- Additional local binds
-	send_command('bind ^` input /ja "Hasso" <me>')
-	send_command('bind !` input /ja "Seigan" <me>')
-	
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal', 'PDT', 'Reraise'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
-	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Reraise'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
-
-	state.CombatForm = get_combat_form()
-	
-	state.Buff.Sekkanoki = buffactive.sekkanoki or false
-	state.Buff.Sengikori = buffactive.sengikori or false
-	state.Buff['Meikyou Shisui'] = buffactive['Meikyou Shisui'] or false
-	
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -296,6 +303,10 @@ function job_buff_change(buff, gain)
 	end
 end
 
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
@@ -319,6 +330,22 @@ end
 function get_combat_form()
 	if areas.Adoulin:contains(world.area) and buffactive.ionis then
 		return 'Adoulin'
+	end
+end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'WAR' then
+		set_macro_page(1, 11)
+	elseif player.sub_job == 'DNC' then
+		set_macro_page(2, 11)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(3, 11)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(4, 11)
+	else
+		set_macro_page(1, 11)
 	end
 end
 

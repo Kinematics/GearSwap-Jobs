@@ -20,30 +20,18 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	-- Whether to use Luzaf's Ring
+	state.LuzafRing = false
+	state.warned = false
 
-	send_command('unbind ^`')
-	send_command('unbind !`')
+	define_roll_values()
 end
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(1, 19)
 
-	-- Additional local binds
-
-	-- Cor doesn't use hybrid defense mode; using that for ranged mode adjustments.
-	send_command('bind ^f9 gs c cycle RangedMode')
-
-	send_command('bind ^` input /ja "Double-up" <me>')
-	send_command('bind !` input /ja "Bolter\'s Roll" <me>')
-
-
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Ranged', 'Melee', 'Acc'}
 	options.RangedModes = {'Normal', 'Acc'}
@@ -56,16 +44,37 @@ function init_gear_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 
-	-- Whether to use Luzaf's Ring
-	state.LuzafRing = false
-	
 	gear.RAbullet = "Adlivun Bullet"
 	gear.WSbullet = "Adlivun Bullet"
 	gear.MAbullet = "Bronze Bullet"
 	gear.QDbullet = "Adlivun Bullet"
-	state.warned = false
 	options.ammo_warning_limit = 15
-	
+
+	-- Additional local binds
+	-- Cor doesn't use hybrid defense mode; using that for ranged mode adjustments.
+	send_command('bind ^f9 gs c cycle RangedMode')
+
+	send_command('bind ^` input /ja "Double-up" <me>')
+	send_command('bind !` input /ja "Bolter\'s Roll" <me>')
+
+
+	-- Default macro set/book
+	set_macro_page(1, 19)
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+
+	send_command('unbind ^`')
+	send_command('unbind !`')
+end
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -257,11 +266,6 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Dark Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
-	
-
-
-
-	define_roll_values()
 end
 
 -------------------------------------------------------------------------------------------------------------------

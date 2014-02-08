@@ -11,33 +11,34 @@ function get_sets()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-end
-
-
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	if player.sub_job == 'DNC' then
-		set_macro_page(2, 9)
-	elseif player.sub_job == 'NIN' then
-		set_macro_page(3, 9)
-	elseif player.sub_job == 'THF' then
-		set_macro_page(4, 9)
-	else
-		set_macro_page(1, 9)
-	end
-	
-
+-- Setup vars that are user-independent.
+function job_setup()
 	-- List of pet weaponskills to check for
 	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
 		"Chimera Ripper", "String Clipper",  "Cannibal Blade", "Bone Crusher", "String Shredder",
 		"Arcuballista", "Daze", "Armor Piercer", "Armor Shatterer"}
 	
+	-- Map automaton heads to combat roles
+	petModes = {
+		['Harlequin Head'] = 'Melee',
+		['Sharpshot Head'] = 'Ranged',
+		['Valoredge Head'] = 'Tank',
+		['Stormwaker Head'] = 'Magic',
+		['Soulsoother Head'] = 'Heal',
+		['Spiritreaver Head'] = 'Nuke'
+		}
+
+	-- Subset of modes that use magic
+	magicPetModes = S{'Nuke','Heal','Magic'}
+	
+	-- Var to track the current pet mode.
+	state.PetMode = 'Melee'
+	update_pet_mode()
+end
+
+
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'DT'}
@@ -48,21 +49,7 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-	
 
-	petModes = {
-		['Harlequin Head'] = 'Melee',
-		['Sharpshot Head'] = 'Ranged',
-		['Valoredge Head'] = 'Tank',
-		['Stormwaker Head'] = 'Magic',
-		['Soulsoother Head'] = 'Heal',
-		['Spiritreaver Head'] = 'Nuke'
-		}
-
-	magicPetModes = S{'Nuke','Heal','Magic'}
-	
-	state.PetMode = get_pet_mode()
-	
 	-- Default maneuvers 1, 2, 3 and 4 for each pet mode.
 	defaultManeuvers = {
 		['Melee'] = {'Fire Maneuver', 'Thunder Maneuver', 'Wind Maneuver', 'Light Maneuver'},
@@ -72,10 +59,20 @@ function init_gear_sets()
 		['Heal'] = {'Light Maneuver', 'Dark Maneuver', 'Water Maneuver', 'Earth Maneuver'},
 		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Earth Maneuver'}
 	}
-	
-	--------------------------------------
-	-- Start defining the sets
-	--------------------------------------
+
+	select_default_macro_book()
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets used by this job file.
+function init_gear_sets()
 	
 	-- Precast Sets
 
@@ -118,7 +115,6 @@ function init_gear_sets()
 
 	sets.precast.WS['Victory Smite'] = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",
 		waist="Thunder Belt"})
-	sets.precast.WS['Victory Smite'].Mod = set_combine(sets.precast.WS['Victory Smite'], {waist="Soil Belt"})
 
 	sets.precast.WS['Shijin Spiral'] = set_combine(sets.precast.WS, {neck="Light Gorget",waist="Light Belt"})
 
@@ -126,21 +122,15 @@ function init_gear_sets()
 	-- Midcast Sets
 
 	sets.midcast.FastRecast = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Otronif Harness",hands="Thaumas Gloves",
+		head="Haruspex Hat",ear2="Loquacious Earring",
+		body="Otronif Harness",hands="Regimen Mittens",
 		waist="Twilight Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 		
-	-- Specific spells
-	sets.midcast.Utsusemi = {
-		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Otronif Harness",hands="Thaumas Gloves",
-		waist="Hurch'lan Sash",legs="Nahtirah Trousers",legs="Manibozho Brais",feet="Otronif Boots"}
-
 
 	-- Midcast sets for pet actions
 	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
 
-	sets.midcast.Pet.Weaponskill = {head="Cirque Capello +2"}
+	sets.midcast.Pet.Weaponskill = {head="Cirque Cappello +2", hands="Cirque Guanti +2", legs="Cirque Pantaloni +2"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -150,58 +140,29 @@ function init_gear_sets()
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
-	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
+	-- Idle sets
 
-	sets.idle.Town = {main="Oatixur",range="Eminent Animator",
+	sets.idle = {range="Eminent Animator",
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
-	
-	sets.idle.Field = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Weak = {
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
-	
+	sets.idle.Town = set_combine(sets.idle, {main="Oatixur"})
+
+	-- Set for idle while pet is out (eg: pet regen gear)
+	sets.idle.Pet = sets.idle
+
 	-- Idle sets to wear while pet is engaged
-	sets.idle.Field.Pet = {
+	sets.idle.Pet.Engaged = {
 		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Foire Babouches"}
 
-	sets.idle.Field.Pet.Tank = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+	sets.idle.Pet.Engaged.Ranged = set_combine(sets.idle.Pet.Engaged, {hands="Cirque Guanti +2",legs="Cirque Pantaloni +2"})
 
-	sets.idle.Field.Pet.Melee = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
+	sets.idle.Pet.Engaged.Nuke = set_combine(sets.idle.Pet.Engaged, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
 
-	sets.idle.Field.Pet.Ranged = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Cirque Guanti +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Pantin Cape",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Hermes' Sandals"}
-
-	sets.idle.Field.Pet.Heal = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
-
-	sets.idle.Field.Pet.Nuke = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"}
-
-	sets.idle.Field.Pet.Magic = {
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Cirque Earring",
-		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Cirque Scarpe +2"}
+	sets.idle.Pet.Engaged.Magic = set_combine(sets.idle.Pet.Engaged, {legs="Cirque Pantaloni +2",feet="Cirque Scarpe +2"})
 
 
 	-- Defense sets
@@ -268,13 +229,9 @@ function job_pet_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
--------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- General hooks for other game events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -282,27 +239,27 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if buff == 'Wind Maneuver' then
-		adjust_gear_sets_for_pet()
 		handle_equipping_gear(player.status)
 	end
 end
-
 
 -- Called when a player gains or loses a pet.
 -- pet == pet gained or lost
 -- gain == true if the pet was gained, false if it was lost.
 function job_pet_change(pet, gain)
-	state.PetMode = get_pet_mode()
+	update_pet_mode()
 end
-
 
 -- Called when the pet's status changes.
 function job_pet_status_change(newStatus, oldStatus)
-	adjust_gear_sets_for_pet()
-
 	if newStatus == 'Engaged' then
 		display_pet_status()
 	end
+end
+
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
 end
 
 
@@ -332,8 +289,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	state.PetMode = get_pet_mode()
-	adjust_gear_sets_for_pet()
+	update_pet_mode()
 end
 
 
@@ -357,20 +313,34 @@ function display_current_job_state(eventArgs)
 	eventArgs.handled = true
 end
 
--------------------------------------------------------------------------------------------------------------------
--- Hooks for pet mode handling.
--------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Get the pet mode value based on the equipped head of the automaton.
+-- Returns nil if pet is not valid.
 function get_pet_mode()
 	if pet.isvalid then
 		return petModes[pet.head]
 	end
 end
 
+-- Update state.PetMode, as well as functions that use it for set determination.
+function update_pet_mode()
+	state.PetMode = get_pet_mode()
+	update_custom_groups()
+end
+
+-- Update custom groups based on the current pet.
+function update_custom_groups()
+	classes.CustomIdleGroups:clear()
+	if pet.isvalid then
+		classes.CustomIdleGroups:append(state.PetMode)
+	end
+end
+
+-- Display current pet status.
 function display_pet_status()
 	if pet.isvalid then
 		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
@@ -383,37 +353,18 @@ function display_pet_status()
 	end
 end
 
-function get_pet_haste()
-	local haste = 0
-	
-	if pet.isvalid then
-		if pet.attachments['Turbo Charger'] then
-			haste = 5
-			if buffactive['wind maneuver'] then
-				haste = 10 + 5 * buffactive['wind maneuver']
-			end
-		end
-	end
-	
-	return haste
-end
-
-function adjust_gear_sets_for_pet()
-	classes.CustomIdleGroups:clear()
-	classes.CustomMeleeGroups:clear()
-
-	-- If the pet is engaged, adjust potential idle and melee groups.
-	if pet.isvalid then
-		if pet.status == 'Engaged' then
-			-- idle
-			classes.CustomIdleGroups:append(state.PetMode)
-			
-			-- melee
-			local petHaste = get_pet_haste()
-			if petHaste > 0 then
-				--classes.CustomMeleeGroups:append('PetHaste'..tostring(petHaste))
-			end
-		end
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 9)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(3, 9)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(4, 9)
+	else
+		set_macro_page(1, 9)
 	end
 end
+
 

@@ -11,25 +11,17 @@ function get_sets()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
 
-	send_command('unbind ^`')
+	-- For tracking current recast timers via the Timers plugin.
+	timer_reg = {}
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(2, 18)
-	
-	-- Additional local binds
-	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
-
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
 	options.OffenseModes = {'None', 'Normal'}
@@ -42,16 +34,33 @@ function init_gear_sets()
 
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
-	
-	
-	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
-	
-	-- For tracking current recast timers via the Timers plugin.
-	timer_reg = {}
 
 	-- Some vars.  Define at the top so that the sets can make use of them.
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
 
+	brd_daggers = {'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
+
+	
+	-- Additional local binds
+	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
+
+	-- Default macro set/book
+	set_macro_page(2, 18)
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+
+	send_command('unbind ^`')
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -232,9 +241,6 @@ function init_gear_sets()
 		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Brioso Justaucorps",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
-
-
-	brd_daggers = {'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 end
 
 
@@ -335,7 +341,7 @@ end
 
 -- Determine the custom class to use for the given song.
 function get_song_class(spell)
-	if DaurdSongs[spell.english] then
+	if DaurdSongs:contains(spell.english) then
 		return 'Daurdabla'
 	elseif spell.target.type == 'MONSTER' then
 		return 'SongDebuff'

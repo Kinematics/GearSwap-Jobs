@@ -31,19 +31,19 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
+
+	addendumNukes = S{"Stone IV", "Water IV", "Aero IV", "Fire IV", "Blizzard IV", "Thunder IV",
+		"Stone V", "Water V", "Aero V", "Fire V", "Blizzard V", "Thunder V"}
+
+	update_active_strategems()
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(1, 17)
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
 	options.OffenseModes = {'Normal'}
@@ -55,11 +55,23 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-	
-	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
 
-	update_active_strategems()
-	
+
+	-- Default macro set/book
+	set_macro_page(1, 17)
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -289,9 +301,6 @@ function init_gear_sets()
 	sets.buff.PDTSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring"}
 
 	--sets.buff['Sandstorm'] = {feet="Desert Boots"}
-
-	addendumNukes = S{"Stone IV", "Water IV", "Aero IV", "Fire IV", "Blizzard IV", "Thunder IV",
-		"Stone V", "Water V", "Aero V", "Fire V", "Blizzard V", "Thunder V"}
 end
 
 -------------------------------------------------------------------------------------------------------------------

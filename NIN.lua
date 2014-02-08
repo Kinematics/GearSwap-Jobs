@@ -11,21 +11,17 @@ function get_sets()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff.Migawari = buffactive.migawari or false
+	state.Buff.Doomed = buffactive.doomed or false
+
+	determine_haste_group()
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(1, 3)
-	
-	determine_haste_group()
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
@@ -37,10 +33,21 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-	
-	state.Buff.Migawari = buffactive.migawari or false
-	state.Buff.Doom = buffactive.doom or false
-	
+
+	select_default_macro_book()
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -281,7 +288,7 @@ function init_gear_sets()
 
 
 	sets.buff.Migawari = {body="Iga Ningi"}
-	sets.buff.Doom = {ring2="Saida Ring"}
+	sets.buff.Doomed = {ring2="Saida Ring"}
 	sets.buff.Yonin = {}
 	sets.buff.Innin = {}
 end
@@ -309,8 +316,8 @@ end
 -- Run after the general midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if state.Buff.Doom then
-		equip(sets.buff.Doom)
+	if state.Buff.Doomed then
+		equip(sets.buff.Doomed)
 	end
 end
 
@@ -340,8 +347,8 @@ function customize_idle_set(idleSet)
 	if state.Buff.Migawari then
 		idleSet = set_combine(idleSet, sets.buff.Migawari)
 	end
-	if state.Buff.Doom then
-		idleSet = set_combine(idleSet, sets.buff.Doom)
+	if state.Buff.Doomed then
+		idleSet = set_combine(idleSet, sets.buff.Doomed)
 	end
 	return idleSet
 end
@@ -351,8 +358,8 @@ function customize_melee_set(meleeSet)
 	if state.Buff.Migawari then
 		meleeSet = set_combine(meleeSet, sets.buff.Migawari)
 	end
-	if state.Buff.Doom then
-		meleeSet = set_combine(meleeSet, sets.buff.Doom)
+	if state.Buff.Doomed then
+		meleeSet = set_combine(meleeSet, sets.buff.Doomed)
 	end
 	return meleeSet
 end
@@ -375,14 +382,20 @@ function job_buff_change(buff, gain)
 	end
 end
 
--- Called by the default 'update' self-command.
-function job_update(cmdParams, eventArgs)
-	determine_haste_group()
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	select_default_macro_book()
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Called by the default 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	determine_haste_group()
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
@@ -392,7 +405,7 @@ function select_movement()
 	-- world.time is given in minutes into each day
 	-- 7:00 AM would be 420 minutes
 	-- 17:00 PM would be 1020 minutes
-	if world.time >= 1020 or world.time <= 420 then
+	if world.time >= (17*60) or world.time <= (7*60) then
 		return sets.NightMovement
 	else
 		return sets.DayMovement
@@ -443,4 +456,16 @@ function determine_haste_group()
 	end
 end
 
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 3)
+	elseif player.sub_job == 'THF' then
+		set_macro_page(4, 3)
+	else
+		set_macro_page(1, 3)
+	end
+end
 

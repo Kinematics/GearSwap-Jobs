@@ -4,6 +4,8 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and it's supplementary files) to go with this.
 
+-- Also, you'll need the Shortcuts addon to handle the auto-targetting of the custom pact commands.
+
 --[[
 	Custom commands:
 	
@@ -45,35 +47,9 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-end
-
-
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(4, 16)
-	binds_on_load()
-
-	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal'}
-	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
-
+-- Setup vars that are user-independent.
+function job_setup()
 	state.Buff["Avatar's Favor"] = buffactive["Avatar's Favor"] or false
-	
-	-- misc vars
 
 	spirits = S{"LightSpirit", "DarkSpirit", "FireSpirit", "EarthSpirit", "WaterSpirit", "AirSpirit", "IceSpirit", "ThunderSpirit"}
 	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander"}
@@ -94,7 +70,8 @@ function init_gear_sets()
 		['Fenrir']='Ecliptic Growl'}
 	pacts.buffdefense = {['Carbuncle']='Shining Ruby', ['Shiva']='Frost Armor', ['Garuda']='Aerial Armor', ['Titan']='Earthen Ward',
 		['Ramuh']='Lightning Armor', ['Fenrir']='Ecliptic Howl', ['Diabolos']='Noctoshield'}
-	pacts.buffspecial = {['Garuda']='Fleet Wind', ['Titan']='Earthen Armor', ['Diabolos']='Dream Shroud', ['Carbuncle']='Soothing Ruby'}
+	pacts.buffspecial = {['Garuda']='Fleet Wind', ['Titan']='Earthen Armor', ['Diabolos']='Dream Shroud', ['Carbuncle']='Soothing Ruby',
+		['Fenrir']='Heavenward Howl'}
 	pacts.debuff1 = {['Shiva']='Diamond Storm', ['Ramuh']='Shock Squall', ['Leviathan']='Tidal Roar', ['Fenrir']='Lunar Cry',
 		['Diabolos']='Pavor Nocturnus'}
 	pacts.debuff2 = {['Shiva']='Sleepga', ['Leviathan']='Slowga', ['Fenrir']='Lunar Roar', ['Diabolos']='Somnolence'}
@@ -112,7 +89,64 @@ function init_gear_sets()
 	pacts.astralflow = {['Ifrit']='Inferno', ['Shiva']='Diamond Dust', ['Garuda']='Aerial Blast', ['Titan']='Earthen Fury',
 		['Ramuh']='Judgment Bolt', ['Leviathan']='Tidal Wave', ['Carbuncle']='Searing Light', ['Fenrir']='Howling Moon',
 		['Diabolos']='Ruinous Omen'}
+	
+end
 
+
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
+	-- Options: Override default values
+	options.OffenseModes = {'Normal'}
+	options.DefenseModes = {'Normal'}
+	options.WeaponskillModes = {'Normal'}
+	options.CastingModes = {'Normal'}
+	options.IdleModes = {'Normal'}
+	options.RestingModes = {'Normal'}
+	options.PhysicalDefenseModes = {'PDT'}
+	options.MagicalDefenseModes = {'MDT'}
+
+	state.Defense.PhysicalMode = 'PDT'
+
+	-- Durations for wards we want to create custom timers for.
+	durations = {}
+	durations['Earthen Armor'] = 232
+	durations['Shining Ruby'] = 340
+	durations['Dream Shroud'] = 352
+	durations['Noctoshield'] = 352
+	durations['Inferno Howl'] = 232
+	durations['Hastega'] = 352
+	
+	-- Icons to use for the timers (from plugins/icons directory)
+	timer_icons = {}
+	-- 00054 for stoneskin, or 00299 for Titan
+	timer_icons['Earthen Armor'] = 'spells/00299.png'
+	-- 00043 for protect, or 00296 for Carby
+	timer_icons['Shining Ruby'] = 'spells/00043.png'
+	-- 00304 for Diabolos
+	timer_icons['Dream Shroud'] = 'spells/00304.png'
+	-- 00106 for phalanx, or 00304 for Diabolos
+	timer_icons['Noctoshield'] = 'spells/00106.png'
+	-- 00100 for enfire, or 00298 for Ifrit
+	timer_icons['Inferno Howl'] = 'spells/00298.png'
+	-- 00358 for hastega, or 00301 for Garuda
+	timer_icons['Hastega'] = 'spells/00358.png'
+
+
+	-- Default macro set/book
+	set_macro_page(4, 16)
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -254,32 +288,6 @@ function init_gear_sets()
 		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
-
-
-	-- Durations for wards we want to create custom timers for.
-	durations = {}
-	durations['Earthen Armor'] = 232
-	durations['Shining Ruby'] = 340
-	durations['Dream Shroud'] = 352
-	durations['Noctoshield'] = 352
-	durations['Inferno Howl'] = 232
-	durations['Hastega'] = 352
-	
-	-- Icons to use for the timers (from plugins/icons directory)
-	timer_icons = {}
-	-- 00054 for stoneskin, or 00299 for Titan
-	timer_icons['Earthen Armor'] = 'spells/00299.png'
-	-- 00043 for protect, or 00296 for Carby
-	timer_icons['Shining Ruby'] = 'spells/00043.png'
-	-- 00304 for Diabolos
-	timer_icons['Dream Shroud'] = 'spells/00304.png'
-	-- 00106 for phalanx, or 00304 for Diabolos
-	timer_icons['Noctoshield'] = 'spells/00106.png'
-	-- 00100 for enfire, or 00298 for Ifrit
-	timer_icons['Inferno Howl'] = 'spells/00298.png'
-	-- 00358 for hastega, or 00301 for Garuda
-	timer_icons['Hastega'] = 'spells/00358.png'
-	
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -611,7 +619,7 @@ end
 
 function create_pact_timer(spell)
 	-- Create custom timers for ward pacts.
-	if durations[spell.english] then
+	if durations and durations[spell.english] then
 		local timer_cmd = 'timers c "'..spell.english..'" '..tostring(durations[spell.english])..' down'
 		
 		if timer_icons[spell.english] then

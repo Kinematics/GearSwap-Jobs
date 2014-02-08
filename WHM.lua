@@ -10,19 +10,14 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
+-- Setup vars that are user-independent.
+function job_setup()
+	state.Buff['Afflatus Solace'] = buffactive['afflatus solace'] or false
 end
 
 
--- Define sets and vars used by this job file.
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(4, 14)
-	
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -35,9 +30,22 @@ function init_gear_sets()
 	
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
-	
-	state.Buff['Afflatus Solace'] = buffactive['afflatus solace'] or false
 
+
+	-- Default macro set/book
+	set_macro_page(4, 14)
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+
+-- Define sets and vars used by this job file.
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -100,22 +108,22 @@ function init_gear_sets()
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Orison Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
 		head="Theophany Cap +1",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Cursna = {
 		head="Orison Cap +2",neck="Malison Medallion",
@@ -154,7 +162,7 @@ function init_gear_sets()
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
-		back=gear.ElementalCape,waist=gear.ElementalBelt,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
+		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.DarkMagic = {main="Tamaxchi", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
