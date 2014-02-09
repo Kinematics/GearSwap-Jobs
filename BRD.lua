@@ -38,7 +38,7 @@ function user_setup()
 	-- Some vars.  Define at the top so that the sets can make use of them.
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
 
-	brd_daggers = {'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
+	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 
 	
 	-- Additional local binds
