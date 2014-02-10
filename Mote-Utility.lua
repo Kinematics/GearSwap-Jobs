@@ -129,16 +129,16 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 		end
 	end
 
-	--local waltzTPCost = {['Curing Waltz'] = 20, ['Curing Waltz II'] = 35, ['Curing Waltz III'] = 50, ['Curing Waltz IV'] = 65, ['Curing Waltz V'] = 80}
-	--local tpCost = waltzTPCost[newWaltz]
+	local waltzTPCost = {['Curing Waltz'] = 20, ['Curing Waltz II'] = 35, ['Curing Waltz III'] = 50, ['Curing Waltz IV'] = 65, ['Curing Waltz V'] = 80}
+	local tpCost = waltzTPCost[newWaltz]
 	
-	local tpCost
-	if waltzID ~= nil then
-		local abil = res.abilities[waltzID]
-		tpCost = abil.tp_cost
-	else
-		tpCost = spell.tpcost
-	end
+	--local tpCost
+	--if waltzID ~= nil then
+	--	local abil = res.abilities[waltzID]
+	--	tpCost = abil.tp_cost
+	--else
+	--	tpCost = spell.tpcost
+	--end
 
 	local downgrade
 	
