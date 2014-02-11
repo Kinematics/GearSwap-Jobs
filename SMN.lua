@@ -262,6 +262,7 @@ function init_gear_sets()
 	sets.perp.Weather = {neck="Caller's Pendant",hands="Caller's Bracers +2"}
 	sets.perp.Carbuncle = {hands="Carbuncle Mitts"}
 	sets.perp.Diabolos = {waist="Diabolos's Rope"}
+	sets.perp.Alexander = sets.midcast.Pet.BloodPactWard
 	
 	-- Defense sets
 	sets.defense.PDT = {main=gear.Staff.PDT,
@@ -317,10 +318,12 @@ end
 function job_pet_midcast(spell, action, spellMap, eventArgs)
 	if spirits:contains(pet.name) then
 		classes.CustomClass = 'Spirit'
-	elseif magicalRagePacts:contains(spell.english) then
-		classes.CustomClass = 'MagicalBloodPactRage'
-	else
-		classes.CustomClass = 'PhysicalBloodPactRage'
+	elseif spell.type == 'BloodPactRage' then
+		if magicalRagePacts:contains(spell.english) then
+			classes.CustomClass = 'MagicalBloodPactRage'
+		else
+			classes.CustomClass = 'PhysicalBloodPactRage'
+		end
 	end
 end
 
