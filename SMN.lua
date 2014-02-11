@@ -384,7 +384,7 @@ end
 -- Called when the player's pet's status changes.
 -- This is also called after pet_change after a pet is released.  Check for pet validity.
 function job_pet_status_change(newStatus, oldStatus, eventArgs)
-	if pet.isvalid and newStatus == 'Engaged' or oldStatus == 'Engaged' and not midaction() then
+	if pet.isvalid and newStatus == 'Engaged' or oldStatus == 'Engaged' and not midaction() and not pet_midaction() then
 		handle_equipping_gear(player.status, newStatus)
 	end
 end
