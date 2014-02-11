@@ -59,7 +59,7 @@ function init_gear_sets()
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
-		head="Whirlpool Mask",
+		head="Felistris Mask",
 		body="Otronif Harness",hands="Buremte Gloves",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
 		
@@ -91,7 +91,7 @@ function init_gear_sets()
 		waist="Soil Belt"})
 
 	sets.precast.WS['Blade: Hi'] = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",
-		hands="Hachiya Tekko",ring1="Stormsoul Ring",legs="Nahtirah Trousers"})
+		ring1="Stormsoul Ring",legs="Nahtirah Trousers"})
 	sets.precast.WS['Blade: Hi'].Mod = set_combine(sets.precast.WS['Blade: Hi'], {back="Ik Cape",waist="Soil Belt"})
 
 	sets.precast.WS['Blade: Shun'] = set_combine(sets.precast.WS, {neck="Thunder Gorget",waist="Thunder Belt"})
@@ -111,7 +111,7 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",
+		body="Hachiya Chainmail",hands="Koga Tekko +2",
 		waist="Twilight Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
 		
 	-- any ninjutsu cast on self
@@ -123,7 +123,7 @@ function init_gear_sets()
 	sets.midcast.Ninjutsu = {
 		head="Hachiya Hatsuburi",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		--ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Icesoul Ring",
+		body="Otronif Harness",hands="Koga Tekko +2",ring1="Icesoul Ring",
 		back="Toro Cape",waist="Twilight Belt",legs="Nahtirah Troursers",feet="Hachiya Kyahan"}
 
 	--sets.midcast.Ninjutsu.Resistant = set_combine(sets.midcast.Ninjutsu, {ear1="Lifestorm Earring",ear2="Psystorm Earring"})
@@ -142,7 +142,7 @@ function init_gear_sets()
 		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
 
-	sets.idle.Town = {
+	sets.idle.Town = {main="Raimitsukane",sub="Kaitsuburi",ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
@@ -150,18 +150,18 @@ function init_gear_sets()
 	sets.idle.Weak = {
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
+		back="Shadow Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
 	
 	-- Defense sets
 	sets.defense.Evasion = {
-		head="Whirlpool Mask",neck="Torero Torque",
+		head="Felistris Mask",neck="Torero Torque",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Dark Ring",
 		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Torero Torque",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
+		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Whirlpool Mask",neck="Torero Torque",
@@ -193,7 +193,7 @@ function init_gear_sets()
 		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Evasion = {ammo="Qirmiz Tathlum",
-		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		head="Felistris Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Ik Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots"}
 	sets.engaged.Acc.Evasion = {ammo="Qirmiz Tathlum",
@@ -201,7 +201,7 @@ function init_gear_sets()
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots"}
 	sets.engaged.PDT = {ammo="Qirmiz Tathlum",
-		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots"}
 	sets.engaged.Acc.PDT = {ammo="Qirmiz Tathlum",
