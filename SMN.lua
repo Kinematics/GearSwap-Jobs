@@ -262,6 +262,7 @@ function init_gear_sets()
 	sets.perp.Weather = {neck="Caller's Pendant",hands="Caller's Bracers +2"}
 	sets.perp.Carbuncle = {hands="Carbuncle Mitts"}
 	sets.perp.Diabolos = {waist="Diabolos's Rope"}
+	sets.perp.Alexander = sets.midcast.Pet.BloodPactWard
 	
 	-- Defense sets
 	sets.defense.PDT = {main=gear.Staff.PDT,
