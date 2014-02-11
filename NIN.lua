@@ -288,7 +288,7 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots"}
 
 
-	sets.buff.Migawari = {body="Iga Ningi"}
+	sets.buff.Migawari = {body="Iga Ningi +2"}
 	sets.buff.Doomed = {ring2="Saida Ring"}
 	sets.buff.Yonin = {}
 	sets.buff.Innin = {}
