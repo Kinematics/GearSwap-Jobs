@@ -28,7 +28,7 @@ function self_command(commandArgs)
 		-- the list (it will be used to determine which function to call), and
 		-- send the remaining words are parameters for the function.
 		local handleCmd = table.remove(commandArgs, 1)
-		
+
 		if selfCommandMaps[handleCmd] then
 			selfCommandMaps[handleCmd](commandArgs)
 		end
@@ -288,8 +288,8 @@ function handle_set(cmdParams)
 			-- Get the options.XXXModes table, and the current state mode for the mode field.
 			local modeList, currentValue = get_mode_list(modeField)
 			
-			if not modeList or not modeList[setField] then
-				if _global.debug_mode then add_to_chat(123,'Unknown mode value: '..setField..' for '..modeField..' mode.') end
+			if not modeList or not table.contains(modeList, setField) then
+				add_to_chat(123,'Unknown mode value: '..setField..' for '..modeField..' mode.')
 				return false
 			end
 			
