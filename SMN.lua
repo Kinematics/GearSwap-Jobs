@@ -318,10 +318,12 @@ end
 function job_pet_midcast(spell, action, spellMap, eventArgs)
 	if spirits:contains(pet.name) then
 		classes.CustomClass = 'Spirit'
-	elseif magicalRagePacts:contains(spell.english) then
-		classes.CustomClass = 'MagicalBloodPactRage'
-	else
-		classes.CustomClass = 'PhysicalBloodPactRage'
+	elseif spell.type == 'BloodPactRage' then
+		if magicalRagePacts:contains(spell.english) then
+			classes.CustomClass = 'MagicalBloodPactRage'
+		else
+			classes.CustomClass = 'PhysicalBloodPactRage'
+		end
 	end
 end
 
