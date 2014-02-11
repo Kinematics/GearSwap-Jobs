@@ -313,10 +313,6 @@ end
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
 	pick_tp_weapon()
-
-	if player.equipment.main == 'Izhiikoh' and state.OffenseMode == 'None' then
-		send_command('gs c set OffenseMode Normal')
-	end
 end
 
 
