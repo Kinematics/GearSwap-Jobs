@@ -331,6 +331,34 @@ function job_state_change(stateField, newValue)
 	end
 end
 
+-- Function to display the current relevant user state when doing an update.
+-- Return true if display was handled, and you don't want the default info shown.
+function display_current_job_state(eventArgs)
+	local defenseString = ''
+	if state.Defense.Active then
+		local defMode = state.Defense.PhysicalMode
+		if state.Defense.Type == 'Magical' then
+			defMode = state.Defense.MagicalMode
+		end
+
+		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+	end
+	
+	local meleeString = ''
+	if state.OffenseMode == 'Normal' then
+		if state.CombatForm then
+			meleeString = 'Melee: Dual-wield, '
+		else
+			meleeString = 'Melee: Single-wield, '
+		end
+	end
+
+	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
+		'Kiting: '..on_off_names[state.Kiting])
+
+	eventArgs.handled = true
+end
+
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
