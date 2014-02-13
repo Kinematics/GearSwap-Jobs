@@ -223,12 +223,12 @@ function init_gear_sets()
 	-- Defense sets
 
 	sets.defense.Evasion = {
-		head="Whirlpool Mask",neck="Torero Torque",
+		head="Felistris Mask",neck="Torero Torque",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Ik Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Fravashi Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Twilight Torque",
+		head="Felistris Mask",neck="Twilight Torque",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
 
