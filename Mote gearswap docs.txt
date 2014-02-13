@@ -98,15 +98,18 @@ Also, weaponskills (whether named or part of a custom class) will search for a s
 
 When specifying a subset of melee sets, the include will attempt to construct a set based on a chain of values, all of which are optional (if it doesn't find one value, it will continue to the next in the chain).
 
-1) You may add custom 'group' values to the classes.CustomMeleeClasses list (use classes.CustomMeleeClasses.append(~new group) to add to the list and classes.CustomMeleeClasses.clear() to empty it).  These will be stacked on in the order they exist within the list.  For example, if the list contains 'HundredFists', 'Impetus', the include will continue searching from sets.engaged.HundredFists.Impetus.
+1) You may specify a general combat form.  This is intended for long-term effects, such as the area you're in (Adoulin, Abyssea, etc), and can take only a single value.  This is specified with state.CombatForm.
 
-2) You may specify a specific weapon via the TPWeapon variable.  For example, you might have different gear sets defined under sets.engaged.GK and sets.engaged.Polearm.
+2) You may specify a specific weapon via the state.CombatWeapon variable.  For example, you might have different gear sets defined under sets.engaged.GK and sets.engaged.Polearm.
 
-3) You may specify sets based on the OffenseMode value.  For example, you might default to sets.engaged.Dagger, but also have sets.engaged.Dagger.Acc when OffenseMode is set to Acc.
+3) You may specify sets based on the state.OffenseMode value.  For example, you might default to sets.engaged.Dagger, but also have sets.engaged.Dagger.Acc when OffenseMode is set to Acc.  OffenseMode should generally be set via the self-commands (see bottom of this document).
 
-4) You may specify sets based on the DefenseMode value.  For example, you might default to sets.engaged.Dagger, but also have sets.engaged.Dagger.Evasion when DefenseMode is set to Evasion.
+4) You may specify sets based on the state.DefenseMode value.  For example, you might default to sets.engaged.Dagger, but also have sets.engaged.Dagger.Evasion when DefenseMode is set to Evasion.  DefenseMode should generally be set via the self-commands (see bottom of this document).
 
-A fully-defined set might be something like sets.engaged.HundredFists.Impetus.H2H.Acc.PDT.  However many specification values can be considered optional, so that it will fall back to the next previous set.  For example, rather than sets.engaged.H2H.Normal.Normal (no groups, H2H weapon, normal offense and defense), if H2H is your default weapon you could just as easily use just sets.engaged.
+5) You may add custom 'group' values to the classes.CustomMeleeGroups list (use classes.CustomMeleeGroups.append(new_group) to add to the list and classes.CustomMeleeGroups.clear() to empty it).  These will be stacked on in the order they exist within the list.  For example, if the list contains 'HundredFists', 'Impetus', the include will continue searching from sets.engaged.HundredFists.Impetus.
+
+
+A fully-defined set might be something like sets.engaged.Abyssea.H2H.Acc.PDT.HundredFists.Impetus.  However, many specification values can be considered optional, so it will fall back to the next previous set.  For example, rather than sets.engaged.H2H.Normal.Normal (no groups, H2H weapon, normal offense and defense), if H2H is your default weapon you could just as easily use just sets.engaged.
 
 
 
