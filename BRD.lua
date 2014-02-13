@@ -39,7 +39,7 @@ function user_setup()
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
 
 	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
-
+	pick_tp_weapon()
 	
 	-- Additional local binds
 	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
