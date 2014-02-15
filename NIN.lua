@@ -83,7 +83,7 @@ function init_gear_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Otronif Boots"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
@@ -111,7 +111,7 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Hachiya Chainmail",hands="Koga Tekko +2",
+		body="Hachiya Chainmail +1",hands="Koga Tekko +2",
 		waist="Twilight Belt",legs="Nahtirah Trousers",feet="Otronif Boots"}
 		
 	-- any ninjutsu cast on self
@@ -139,17 +139,17 @@ function init_gear_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
 
 	sets.idle.Town = {main="Raimitsukane",sub="Kaitsuburi",ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
 	
 	sets.idle.Weak = {
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Danzo sune-ate"}
 	
 	-- Defense sets
@@ -186,15 +186,15 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {ammo="Qirmiz Tathlum",
 		head="Iga Zukin +2",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Acc = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Evasion = {ammo="Qirmiz Tathlum",
 		head="Felistris Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Ik Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots"}
 	sets.engaged.Acc.Evasion = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
@@ -212,15 +212,15 @@ function init_gear_sets()
 	-- Custom melee group: High Haste (~20% DW)
 	sets.engaged.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Acc.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Evasion.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Hachiya Chainmail",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Ik Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots"}
 	sets.engaged.Acc.Evasion.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
