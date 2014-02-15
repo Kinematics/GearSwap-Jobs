@@ -140,10 +140,10 @@ function init_gear_sets()
 
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Gendewitha Gages",
+		body="Vanir Cotehardie",hands="Dynasty Mitts",
 		back="Swith Cape",waist="Siegel Sash",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
-	sets.midcast.Auspice = {feet="Orison Duckbills +2"}
+	sets.midcast.Auspice = {hands="Dynasty Mitts",feet="Orison Duckbills +2"}
 
 	sets.midcast.BarElement = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Colossus's Torque",
