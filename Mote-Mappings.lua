@@ -118,7 +118,7 @@ areas = {}
 
 -- City areas for town gear and behavior.
 areas.Cities = S{
-	"Ru'lude Gardens",
+	"Ru'Lude Gardens",
 	"Upper Jeuno",
 	"Lower Jeuno",
 	"Port Jeuno",
