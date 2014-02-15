@@ -98,7 +98,7 @@ function init_gear_sets()
 	
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Dynasty Mitts",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	-- Cure sets
