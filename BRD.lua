@@ -165,7 +165,7 @@ function init_gear_sets()
 	-- Other general spells and classes.
 	sets.midcast.Cure = {main="Arka IV",sub='Achaq Grip',
 		head="Gendewitha Caubeen",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
+		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
 	sets.midcast.Stoneskin = {
@@ -212,8 +212,8 @@ function init_gear_sets()
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',--[[ring2="Shadow Ring",
-		back="Engulfer Cape",]]waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',ring2="Shadow Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 

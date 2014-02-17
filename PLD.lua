@@ -60,7 +60,7 @@ function init_gear_sets()
 	sets.precast.JA['Invincible'] = {legs="Valor Breeches +2"}
 	sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings"}
 	--sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
-	sets.precast.JA['Sentinel'] = {feet="Valor Leggings"}
+	sets.precast.JA['Sentinel'] = {feet="Valor Leggings +2"}
 	sets.precast.JA['Rampart'] = {head="Valor Coronet"}
 	--sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
 	--sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
