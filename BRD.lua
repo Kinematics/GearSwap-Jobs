@@ -451,8 +451,8 @@ end
 -- Called from adjust_Timers(), which is only called on aftercast().
 function calculate_duration(spellName, spellMap)
 	local mult = 1
-	if player.equipment.range == 'Daurdabla' then mult = mult + 0.25 end -- change to 0.3 with 95/99 Daur
-	if player.equipment.range == "Gjallarhorn" then mult = mult + 0.3 end -- change to 0.4 with 99 Gjall
+	if player.equipment.range == 'Daurdabla' then mult = mult + 0.3 end -- change to 0.25 with 90 Daur
+	if player.equipment.range == "Gjallarhorn" then mult = mult + 0.4 end -- change to 0.3 with 95 Gjall
 	
 	if player.equipment.main == "Carnwenhan" then mult = mult + 0.1 end -- 0.1 for 75, 0.4 for 95, 0.5 for 99/119
 	if player.equipment.main == "Legato Dagger" then mult = mult + 0.1 end
