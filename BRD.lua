@@ -24,6 +24,14 @@
 	Simple macro to cast a dummy Daurdabla song:
 	/console gs c set daurdabla Dummy
 	/ma "Shining Fantasia" <me>
+	
+	
+	There is also an auto-handling of Daurdabla songs, via the state.AutoDaurdabla flag:
+	
+	If state.DaurdablaMode is None, and if currently tracked songs (via timers) is less
+	than the max we could sing while using the Daurdabla, and if the song is cast on
+	self (rather than Pianissimo on another player), then it will equip the Daurdabla on
+	top of standard duration gear.
 
 --]]
 
@@ -66,6 +74,9 @@ function user_setup()
 	
 	-- How many extra songs we can keep from Daurdabla
 	info.DaurdablaSongs = 2
+	-- Whether to try to automatically use Daurdabla when an appropriate gap in current vs potential
+	-- songs appears, and you haven't specifically changed state.DaurdablaMode.
+	state.AutoDaurdabla = true
 	
 	-- Additional local binds
 	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
@@ -325,6 +336,8 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		if state.DaurdablaMode == 'Daurdabla' then
 			equip(sets.midcast.Daurdabla)
+		elseif state.DaurdablaMode == 'None' and spell.target.type == 'SELF' and state.AutoDaurdabla and daur_song_gap() then
+			equip(sets.midcast.Daurdabla)
 		end
 
 		state.DaurdablaMode = 'None'
@@ -558,6 +571,25 @@ function calculate_duration(spellName, spellMap)
 
 	return totalDuration
 end
+
+
+function daur_song_gap()
+	if player.inventory.daurdabla then
+		-- Figure out how many songs we can maintain.
+		local maxsongs = 2 + info.DaurdablaSongs
+		
+		local activesongs = table.length(timer_reg)
+		
+		-- If we already have at least 2 songs on, but not enough to max out
+		-- on possible Daur songs, flag us as Daur-ready.
+		if activesongs >= 2 and activesongs < maxsongs then
+			return true
+		end
+	end
+	
+	return false
+end
+
 
 
 -- Examine equipment to determine what our current TP weapon is.
