@@ -37,6 +37,7 @@ function user_setup()
 
 	-- Some vars.  Define at the top so that the sets can make use of them.
 	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
+	state.Daurdabla = false
 
 	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 	pick_tp_weapon()
@@ -309,6 +310,13 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
+
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1]:lower() == 'daurdabla' then
+		state.Daurdabla = true
+	end
+end
+
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
