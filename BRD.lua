@@ -73,7 +73,7 @@ function init_gear_sets()
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris",back="Pahtli Cape"})
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"})
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
