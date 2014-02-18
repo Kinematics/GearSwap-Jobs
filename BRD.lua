@@ -318,7 +318,7 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1]:lower() == 'daurdabla' then
+	if cmdParams[1]:lower() == 'daurdabla' and player.inventory.daurdabla then
 		state.Daurdabla = true
 	end
 end
