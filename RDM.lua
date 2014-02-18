@@ -112,7 +112,7 @@ function init_gear_sets()
 	sets.midcast.EnhancingMagic = {
 		head="Atrophy Chapeau +1",neck="Colossus's Torque",
 		body="Duelist's Tabard +2",hands="Atrophy Gloves",ring1="Prolix Ring",
-		back="Estoqueur's Cape",waist="Olympus Sash",legs="Portent Pants",feet="Estoqueur's Houseaux +2"}
+		back="Estoqueur's Cape",waist="Olympus Sash",legs="Atrophy Tights",feet="Estoqueur's Houseaux +2"}
 
 	sets.midcast.Refresh = {legs="Estoqueur's Fuseau +2"}
 

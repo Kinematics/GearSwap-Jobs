@@ -31,6 +31,9 @@ function init_include()
 	-- so load it up front.
 	include('Mote-Mappings')
 
+	-- Var for tracking misc info
+	info = {}
+
 	-- Var for tracking state values
 	state = {}
 

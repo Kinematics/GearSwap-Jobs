@@ -4,6 +4,37 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+--[[
+	Custom commands:
+	
+	Daurdabla has a set of modes: None, Dummy, Daurdabla
+	
+	You can set these via the standard 'set' and 'cycle' self-commands.  EG:
+	gs c cycle daurdabla
+	gs c set daurdabla Dummy
+	
+	The Dummy state will equip the Daurdabla and ensure non-duration gear is equipped.
+	The Daurdabla state will simply equip the Daurdabla on top of standard gear.
+	
+	Use the Dummy version to put up dummy songs that can be overwritten by full-potency songs.
+	
+	Use the Daurdabla version to simply put up additional songs without worrying about dummy songs.
+	
+	
+	Simple macro to cast a dummy Daurdabla song:
+	/console gs c set daurdabla Dummy
+	/ma "Shining Fantasia" <me>
+	
+	
+	There is also an auto-handling of Daurdabla songs, via the state.AutoDaurdabla flag:
+	
+	If state.DaurdablaMode is None, and if currently tracked songs (via timers) is less
+	than the max we could sing while using the Daurdabla, and if the song is cast on
+	self (rather than Pianissimo on another player), then it will equip the Daurdabla on
+	top of standard duration gear.
+
+--]]
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
@@ -14,6 +45,9 @@ end
 -- Setup vars that are user-independent.
 function job_setup()
 	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
+
+	options.DaurdablaModes = {'None','Dummy','Daurdabla'}
+	state.DaurdablaMode = 'None'
 
 	-- For tracking current recast timers via the Timers plugin.
 	timer_reg = {}
@@ -35,11 +69,14 @@ function user_setup()
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
 
-	-- Some vars.  Define at the top so that the sets can make use of them.
-	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
-
 	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 	pick_tp_weapon()
+	
+	-- How many extra songs we can keep from Daurdabla
+	info.DaurdablaSongs = 2
+	-- Whether to try to automatically use Daurdabla when an appropriate gap in current vs potential
+	-- songs appears, and you haven't specifically changed state.DaurdablaMode.
+	state.AutoDaurdabla = true
 	
 	-- Additional local binds
 	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
@@ -72,7 +109,7 @@ function init_gear_sets()
 		hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris",back="Pahtli Cape"})
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"})
 
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -149,8 +186,14 @@ function init_gear_sets()
 		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
-	-- For song defbuffs
-	sets.midcast.SongDebuff = {main="Izhiikoh",range="Gjallarhorn",
+	-- For song defbuffs (duration primary, accuracy secondary)
+	sets.midcast.SongDebuff = {main="Legato Dagger",range="Gjallarhorn",
+		head="Nahtirah Hat",neck="Aoidos' Matinee",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",waist="Goading Belt",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
+
+	-- For song defbuffs (accuracy primary, duration secondary)
+	sets.midcast.ResistantSongDebuff = {main="Izhiikoh",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Aoidos' Rhing. +2",feet="Bokwus Boots"}
@@ -160,12 +203,21 @@ function init_gear_sets()
 		ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range="Daurdabla"})
+	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range="Daurdabla"})
+
+	-- Cast spell with normal gear, except using Daurdabla instead
+	sets.midcast.Daurdabla = {range="Daurdabla"}
+
+	-- Dummy song with Daurdabla; minimize duration to make it easy to overwrite.
+	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range="Daurdabla",
+		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
 	-- Other general spells and classes.
 	sets.midcast.Cure = {main="Arka IV",sub='Achaq Grip',
 		head="Gendewitha Caubeen",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
+		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
 	sets.midcast.Stoneskin = {
@@ -212,8 +264,8 @@ function init_gear_sets()
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Quire Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',--[[ring2="Shadow Ring",
-		back="Engulfer Cape",]]waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',ring2="Shadow Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 
@@ -279,6 +331,20 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
+
+function job_post_midcast(spell, action, spellMap, eventArgs)
+	if spell.type == 'BardSong' then
+		if state.DaurdablaMode == 'Daurdabla' then
+			equip(sets.midcast.Daurdabla)
+		elseif state.DaurdablaMode == 'None' and spell.target.type == 'SELF' and state.AutoDaurdabla and daur_song_gap() then
+			equip(sets.midcast.Daurdabla)
+		end
+
+		state.DaurdablaMode = 'None'
+	end
+end
+
+
 -- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
@@ -303,6 +369,27 @@ end
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
+	end
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Hooks for Daurdabla mode handling.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Request job-specific mode tables.
+-- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+function job_get_mode_list(field)
+	if field == 'Daurdabla' and player.inventory.daurdabla then
+		return options.DaurdablaModes, state.DaurdablaMode
+	end
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_mode(field, val)
+	if field == 'Daurdabla' then
+		state.DaurdablaMode = val
+		return true
 	end
 end
 
@@ -365,10 +452,14 @@ end
 
 -- Determine the custom class to use for the given song.
 function get_song_class(spell)
-	if DaurdSongs:contains(spell.english) then
-		return 'Daurdabla'
-	elseif spell.target.type == 'MONSTER' then
-		return 'SongDebuff'
+	if spell.targets:contains('Enemy') then
+		if state.CastingMode == 'Resistant' then
+			return 'ResistantSongDebuff'
+		else
+			return 'SongDebuff'
+		end
+	elseif state.DaurdablaMode == 'Dummy' then
+		return 'DaurdablaDummy'
 	else
 		return 'SongEffect'
 	end
@@ -404,7 +495,7 @@ function adjust_Timers(spell, action, spellMap)
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
 		if player.equipment.range == 'Daurdabla' then
-			maxsongs = maxsongs+1 -- +2 for 99 Daur
+			maxsongs = maxsongs + info.DaurdablaSongs
 		end
 		if buffactive['Clarion Call'] then
 			maxsongs = maxsongs+1
@@ -443,8 +534,8 @@ end
 -- Called from adjust_Timers(), which is only called on aftercast().
 function calculate_duration(spellName, spellMap)
 	local mult = 1
-	if player.equipment.range == 'Daurdabla' then mult = mult + 0.25 end -- change to 0.3 with 95/99 Daur
-	if player.equipment.range == "Gjallarhorn" then mult = mult + 0.3 end -- change to 0.4 with 99 Gjall
+	if player.equipment.range == 'Daurdabla' then mult = mult + 0.3 end -- change to 0.25 with 90 Daur
+	if player.equipment.range == "Gjallarhorn" then mult = mult + 0.4 end -- change to 0.3 with 95 Gjall
 	
 	if player.equipment.main == "Carnwenhan" then mult = mult + 0.1 end -- 0.1 for 75, 0.4 for 95, 0.5 for 99/119
 	if player.equipment.main == "Legato Dagger" then mult = mult + 0.1 end
@@ -480,6 +571,25 @@ function calculate_duration(spellName, spellMap)
 
 	return totalDuration
 end
+
+
+function daur_song_gap()
+	if player.inventory.daurdabla then
+		-- Figure out how many songs we can maintain.
+		local maxsongs = 2 + info.DaurdablaSongs
+		
+		local activesongs = table.length(timer_reg)
+		
+		-- If we already have at least 2 songs on, but not enough to max out
+		-- on possible Daur songs, flag us as Daur-ready.
+		if activesongs >= 2 and activesongs < maxsongs then
+			return true
+		end
+	end
+	
+	return false
+end
+
 
 
 -- Examine equipment to determine what our current TP weapon is.
