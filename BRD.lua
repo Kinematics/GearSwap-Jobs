@@ -150,8 +150,14 @@ function init_gear_sets()
 		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
-	-- For song defbuffs
-	sets.midcast.SongDebuff = {main="Izhiikoh",range="Gjallarhorn",
+	-- For song defbuffs (duration primary, accuracy secondary)
+	sets.midcast.SongDebuff = {main="Legato Dagger",range="Gjallarhorn",
+		head="Nahtirah Hat",neck="Aoidos' Matinee",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Refraction Cape",waist="Goading Belt",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
+
+	-- For song defbuffs (accuracy primary, duration secondary)
+	sets.midcast.ResistantSongDebuff = {main="Izhiikoh",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Aoidos' Rhing. +2",feet="Bokwus Boots"}
@@ -375,8 +381,12 @@ end
 function get_song_class(spell)
 	if DaurdSongs:contains(spell.english) then
 		return 'Daurdabla'
-	elseif spell.target.type == 'MONSTER' then
-		return 'SongDebuff'
+	elseif spell.targets:contains('Enemy') then
+		if state.CastingMode == 'Resistant' then
+			return 'ResistantSongDebuff'
+		else
+			return 'SongDebuff'
+		end
 	else
 		return 'SongEffect'
 	end
