@@ -4,6 +4,29 @@
 
 -- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
+--[[
+	Custom commands:
+	
+	Daurdabla has a set of modes: None, Dummy, Daurdabla
+	
+	You can set these via the standard 'set' and 'cycle' self-commands.  EG:
+	gs c cycle daurdabla
+	gs c set daurdabla Dummy
+	
+	The Dummy state will equip the Daurdabla and ensure non-duration gear is equipped.
+	The Daurdabla state will simply equip the Daurdabla on top of standard gear.
+	
+	Use the Dummy version to put up dummy songs that can be overwritten by full-potency songs.
+	
+	Use the Daurdabla version to simply put up additional songs without worrying about dummy songs.
+	
+	
+	Simple macro to cast a dummy Daurdabla song:
+	/console gs c set daurdabla Dummy
+	/ma "Shining Fantasia" <me>
+
+--]]
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
@@ -14,6 +37,9 @@ end
 -- Setup vars that are user-independent.
 function job_setup()
 	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
+
+	options.DaurdablaModes = {'None','Dummy','Daurdabla'}
+	state.DaurdablaMode = 'None'
 
 	-- For tracking current recast timers via the Timers plugin.
 	timer_reg = {}
@@ -35,12 +61,11 @@ function user_setup()
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
 
-	-- Some vars.  Define at the top so that the sets can make use of them.
-	DaurdSongs = S{'Water Carol','Water Carol II','Ice Carol','Ice Carol II','Herb Pastoral','Goblin Gavotte'}
-	state.Daurdabla = false
-
 	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 	pick_tp_weapon()
+	
+	-- How many extra songs we can keep from Daurdabla
+	info.DaurdablaSongs = 2
 	
 	-- Additional local binds
 	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
@@ -167,7 +192,16 @@ function init_gear_sets()
 		ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range="Daurdabla"})
+	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range="Daurdabla"})
+
+	-- Cast spell with normal gear, except using Daurdabla instead
+	sets.midcast.Daurdabla = {range="Daurdabla"}
+
+	-- Dummy song with Daurdabla; minimize duration to make it easy to overwrite.
+	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range="Daurdabla",
+		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
+		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
 	-- Other general spells and classes.
 	sets.midcast.Cure = {main="Arka IV",sub='Achaq Grip',
@@ -286,6 +320,18 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
+
+function job_post_midcast(spell, action, spellMap, eventArgs)
+	if spell.type == 'BardSong' then
+		if state.DaurdablaMode == 'Daurdabla' then
+			equip(sets.midcast.Daurdabla)
+		end
+
+		state.DaurdablaMode = 'None'
+	end
+end
+
+
 -- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
@@ -314,15 +360,29 @@ function job_buff_change(buff, gain)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
+-- Hooks for Daurdabla mode handling.
 -------------------------------------------------------------------------------------------------------------------
 
-function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1]:lower() == 'daurdabla' and player.inventory.daurdabla then
-		state.Daurdabla = true
+-- Request job-specific mode tables.
+-- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+function job_get_mode_list(field)
+	if field == 'Daurdabla' and player.inventory.daurdabla then
+		return options.DaurdablaModes, state.DaurdablaMode
 	end
 end
 
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_mode(field, val)
+	if field == 'Daurdabla' then
+		state.DaurdablaMode = val
+		return true
+	end
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements self-commands.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
@@ -379,14 +439,14 @@ end
 
 -- Determine the custom class to use for the given song.
 function get_song_class(spell)
-	if DaurdSongs:contains(spell.english) then
-		return 'Daurdabla'
-	elseif spell.targets:contains('Enemy') then
+	if spell.targets:contains('Enemy') then
 		if state.CastingMode == 'Resistant' then
 			return 'ResistantSongDebuff'
 		else
 			return 'SongDebuff'
 		end
+	elseif state.DaurdablaMode == 'Dummy' then
+		return 'DaurdablaDummy'
 	else
 		return 'SongEffect'
 	end
@@ -422,7 +482,7 @@ function adjust_Timers(spell, action, spellMap)
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
 		if player.equipment.range == 'Daurdabla' then
-			maxsongs = maxsongs+1 -- +2 for 99 Daur
+			maxsongs = maxsongs + info.DaurdablaSongs
 		end
 		if buffactive['Clarion Call'] then
 			maxsongs = maxsongs+1
