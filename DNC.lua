@@ -128,8 +128,12 @@ function init_gear_sets()
 
 	sets.precast.Flourish1 = {}
 	sets.precast.Flourish1['Violent Flourish'] = {ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Etoile Casaque +2",ring2="Sangoma Ring",feet="Iuitl Gaiters"} -- magic accuracy
-	sets.precast.Flourish1['Desperate Flourish'] = {} -- acc gear
+		body="Etoile Casaque +2",hands="Wayfarer Cuffs",ring2="Sangoma Ring",
+		legs="Iuitl Tights",feet="Iuitl Gaiters"} -- magic accuracy
+	sets.precast.Flourish1['Desperate Flourish'] = {ammo="Charis Feather",
+		head="Whirlpool Mask",
+		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Beeline Ring",
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"} -- acc gear
 
 	sets.precast.Flourish2 = {}
 	sets.precast.Flourish2['Reverse Flourish'] = {hands="Charis Bangles +2"}
