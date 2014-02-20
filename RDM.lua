@@ -102,10 +102,10 @@ function init_gear_sets()
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
-		head="Gendewitha Caubeen",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Hagondes Sabots"}
+	sets.midcast.Cure = {sub="Genbu's Shield",
+		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Roundel Earring",ear2="Loquacious Earring",
+		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
+		back="Swith Cape",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 
