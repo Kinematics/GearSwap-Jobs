@@ -195,7 +195,7 @@ function init_gear_sets()
 	sets.midcast.Utsusemi = {
 		head="Felistris Mask",neck="Torero Torque",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Ik Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+		back="Fravashi Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -228,7 +228,7 @@ function init_gear_sets()
 	sets.defense.Evasion = {
 		head="Felistris Mask",neck="Torero Torque",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Fravashi Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters"}
+		back="Fravashi Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Felistris Mask",neck="Twilight Torque",
@@ -238,7 +238,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Wayfarer Circlet",neck="Twilight Torque",
 		body="Wayfarer Robe",hands="Wayfarer Cuffs",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
+		back="Mollusca Mantle",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
 
@@ -265,7 +265,7 @@ function init_gear_sets()
 	sets.engaged.Evasion = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Ik Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
+		back="Fravashi Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters"}
 	sets.engaged.Acc.Evasion = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
