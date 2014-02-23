@@ -130,7 +130,9 @@ function init_gear_sets()
 	sets.midcast.ElementalMagic = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Sekhmet Corset",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
+		
+	gear.default.obi_waist = "Sekhmet Corset"
 
 	sets.midcast.Impact = set_combine(sets.midcast.ElementalMagic, {head=empty,body="Twilight Cloak"})
 
