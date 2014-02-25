@@ -321,7 +321,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 				add_to_chat(104, '*****  LOW AMMO WARNING *****')
 				add_to_chat(104, '*****************************')
 				state.warned = true
-			elseif player.inventory[check_bullet].count > warning_limit and state.warned then
+			elseif player.inventory[check_bullet].count > options.ammo_warning_limit and state.warned then
 				state.warned = false
 			end
 		end

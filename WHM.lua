@@ -125,10 +125,10 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
 		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Gendewitha Galoshes"}
 
-	sets.midcast.Cursna = {
+	sets.midcast.Cursna = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Malison Medallion",
-		hands="Hieros Mittens",ring1="Ephedra Ring",
-		legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
+		body="Orison Bliaud +2",hands="Hieros Mittens",ring1="Ephedra Ring",ring2="Sirona's Ring",
+		waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 
 	sets.midcast.StatusRemoval = {
 		head="Orison Cap +2",legs="Orison Pantaloons +2"}

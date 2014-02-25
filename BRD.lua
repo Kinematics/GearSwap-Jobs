@@ -178,6 +178,8 @@ function init_gear_sets()
 		legs="Aoidos' Rhing. +2",feet="Aoidos' Cothrn. +2"}
 	sets.midcast["Sentinel's Scherzo"] = {feet="Aoidos' Cothrn. +2"}
 	sets.midcast['Magic Finale'] = {neck="Wind Torque",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
+
+	sets.midcast.Mazurka = {range="Daurdabla"}
 	
 
 	-- For song buffs (duration and AF3 set bonus)

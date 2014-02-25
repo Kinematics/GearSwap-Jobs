@@ -102,10 +102,10 @@ function init_gear_sets()
 		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
-		head="Gendewitha Caubeen",ear2="Loquacious Earring",
-		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Hagondes Sabots"}
+	sets.midcast.Cure = {sub="Genbu's Shield",
+		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Roundel Earring",ear2="Loquacious Earring",
+		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
+		back="Swith Cape",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 
@@ -130,7 +130,9 @@ function init_gear_sets()
 	sets.midcast.ElementalMagic = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
+		
+	gear.default.obi_waist = "Sekhmet Corset"
 
 	sets.midcast.Impact = set_combine(sets.midcast.ElementalMagic, {head=empty,body="Twilight Cloak"})
 
@@ -294,6 +296,11 @@ function display_current_job_state(eventArgs)
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
 
+	local meleeString = ''
+	if state.OffenseMode == 'Normal' then
+		--meleeString = 'Melee: Weapons locked, '
+	end
+
 	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
 
@@ -312,13 +319,13 @@ function select_default_macro_book()
 
 	-- Default macro set/book
 	if player.sub_job == 'DNC' then
-		set_macro_page(2, 9)
+		set_macro_page(2, 4)
 	elseif player.sub_job == 'NIN' then
-		set_macro_page(3, 9)
+		set_macro_page(3, 4)
 	elseif player.sub_job == 'THF' then
-		set_macro_page(4, 9)
+		set_macro_page(4, 4)
 	else
-		set_macro_page(1, 9)
+		set_macro_page(1, 4)
 	end
 end
 
