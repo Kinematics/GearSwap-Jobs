@@ -211,34 +211,37 @@ function auto_change_target(spell, action, spellMap)
 	
 	local pcTargetMode = eventArgs.PCTargetMode
 	local selectNPCTargets = eventArgs.SelectNPCTargets
-	
-	local canUseOnPlayer = spell.validtarget and 
-		(spell.validtarget.Self or spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC)
 
+	
+	local validPlayers = S{'Self', 'Player', 'Party', 'Ally', 'NPC'}
+
+	local intersection = spell.targets * validPlayers
+	local canUseOnPlayer = not intersection:empty()
+	
 	local newTarget
 	
 	-- For spells that we can cast on players:
 	if canUseOnPlayer and pcTargetMode ~= 'default' then
 		if pcTargetMode == 'stal' then
 			-- Use <stal> if possible, otherwise fall back to <stpt>.
-			if spell.validtarget.Ally then
+			if spell.targets.Ally then
 				newTarget = '<stal>'
-			elseif spell.validtarget.Party then
+			elseif spell.targets.Party then
 				newTarget = '<stpt>'
 			end
 		elseif pcTargetMode == 'stpt' then
 			-- Even ally-possible spells are limited to the current party.
-			if spell.validtarget.Ally or spell.validtarget.Party then
+			if spell.targets.Ally or spell.targets.Party then
 				newTarget = '<stpt>'
 			end
 		elseif pcTargetMode == 'stpc' then
 			-- If it's anything other than a self-only spell, can change to <stpc>.
-			if spell.validtarget.Player or spell.validtarget.Party or spell.validtarget.Ally or spell.validtarget.NPC then
+			if spell.targets.Player or spell.targets.Party or spell.targets.Ally or spell.targets.NPC then
 				newTarget = '<stpc>'
 			end
 		end
 	-- For spells that can be used on enemies:
-	elseif spell.validtarget and spell.validtarget.Enemy and selectNPCTargets then
+	elseif spell.targets and spell.targets.Enemy and selectNPCTargets then
 		-- Note: this means macros should be written for <t>, and it will change to <stnpc>
 		-- if the flag is set.  It won't change <stnpc> back to <t>.
 		newTarget = '<stnpc>'
