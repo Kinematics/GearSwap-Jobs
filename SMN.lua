@@ -132,8 +132,7 @@ function user_setup()
 	timer_icons['Hastega'] = 'spells/00358.png'
 
 
-	-- Default macro set/book
-	set_macro_page(4, 16)
+	select_default_macro_book()
 end
 
 
@@ -401,6 +400,8 @@ function job_pet_change(petparam, gain)
 		elseif spirits:contains(pet.name) then
 			classes.CustomIdleGroups:append('Spirit')
 		end
+	else
+		select_default_macro_book()
 	end
 end
 
@@ -631,4 +632,10 @@ function create_pact_timer(spell)
 		
 		send_command(timer_cmd)
 	end
+end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	set_macro_page(4, 16)
 end
