@@ -76,7 +76,7 @@ function user_setup()
 	info.DaurdablaSongs = 2
 	-- Whether to try to automatically use Daurdabla when an appropriate gap in current vs potential
 	-- songs appears, and you haven't specifically changed state.DaurdablaMode.
-	state.AutoDaurdabla = true
+	state.AutoDaurdabla = false
 	
 	-- Additional local binds
 	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')

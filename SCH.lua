@@ -310,11 +310,7 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if spellMap == 'Cure' or spellMap == 'Curaga' then
-		if world.weather_element == 'Light' then
-			classes.CustomClass = 'CureWithLightWeather'
-		end
-	end
+	classes.CustomClass = get_spell_class(spell, action, spellMap)
 end
 
 
@@ -565,4 +561,23 @@ function get_current_strategem_count()
 	return currentCharges
 end
 
+function get_spell_class(spell, action, spellMap)
+	local spellclass
+	
+	if spell.action_type == 'Magic' then
+		if spellMap == 'Cure' or spellMap == 'Curaga' then
+			if world.weather_element == 'Light' then
+				classes.CustomClass = 'CureWithLightWeather'
+			end
+		elseif spell.skill == "EnfeeblingMagic" then
+			if spell.type == "WhiteMagic" then
+				spellclass = "MndEnfeebles"
+			else
+				spellclass = "IntEnfeebles"
+			end
+		end
+	end
+	
+	return spellclass
+end
 

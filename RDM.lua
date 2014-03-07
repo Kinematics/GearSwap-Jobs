@@ -111,7 +111,7 @@ function init_gear_sets()
 
 	sets.midcast.EnhancingMagic = {
 		head="Atrophy Chapeau +1",neck="Colossus's Torque",
-		body="Duelist's Tabard +2",hands="Atrophy Gloves",ring1="Prolix Ring",
+		body="Duelist's Tabard +2",hands="Atrophy Gloves +1",ring1="Prolix Ring",
 		back="Estoqueur's Cape",waist="Olympus Sash",legs="Atrophy Tights",feet="Estoqueur's Houseaux +2"}
 
 	sets.midcast.Refresh = {legs="Estoqueur's Fuseau +2"}
@@ -150,7 +150,7 @@ function init_gear_sets()
 
 	-- Sets for special buff conditions on spells.
 
-	sets.midcast.EnhancingDuration = {hands="Atrophy Gloves",back="Estoqueur's Cape",feet="Estoqueur's Houseaux +2"}
+	sets.midcast.EnhancingDuration = {hands="Atrophy Gloves +1",back="Estoqueur's Cape",feet="Estoqueur's Houseaux +2"}
 		
 	sets.buff.ComposureOther = {head="Estoqueur's Chappel +2",
 		body="Estoqueur's Sayon +2",hands="Estoqueur's Gantherots +2",
@@ -171,7 +171,7 @@ function init_gear_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle.Town = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Atrophy Tabard +1",hands="Atrophy Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 	
 	sets.idle.Field = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
@@ -207,7 +207,7 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {
 		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Atrophy Tabard +1",hands="Atrophy Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Atrophy Tabard +1",hands="Atrophy Gloves +1",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Osmium Cuisses",feet="Atrophy Boots"}
 
 end
