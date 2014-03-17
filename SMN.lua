@@ -66,12 +66,12 @@ function job_setup()
 	pacts = {}
 	pacts.cure = {['Carbuncle']='Healing Ruby'}
 	pacts.curaga = {['Carbuncle']='Healing Ruby II', ['Garuda']='Whispering Wind', ['Leviathan']='Spring Water'}
-	pacts.buffoffense = {['Carbuncle']='Glittering Ruby', ['Ifrit']='Inferno Howl', ['Garuda']='Hastega', ['Ramuh']='Rolling Thunder',
+	pacts.buffoffense = {['Carbuncle']='Glittering Ruby', ['Ifrit']='Crimson Howl', ['Garuda']='Hastega', ['Ramuh']='Rolling Thunder',
 		['Fenrir']='Ecliptic Growl'}
 	pacts.buffdefense = {['Carbuncle']='Shining Ruby', ['Shiva']='Frost Armor', ['Garuda']='Aerial Armor', ['Titan']='Earthen Ward',
 		['Ramuh']='Lightning Armor', ['Fenrir']='Ecliptic Howl', ['Diabolos']='Noctoshield'}
-	pacts.buffspecial = {['Garuda']='Fleet Wind', ['Titan']='Earthen Armor', ['Diabolos']='Dream Shroud', ['Carbuncle']='Soothing Ruby',
-		['Fenrir']='Heavenward Howl'}
+	pacts.buffspecial = {['Ifrit']='Inferno Howl', ['Garuda']='Fleet Wind', ['Titan']='Earthen Armor', ['Diabolos']='Dream Shroud',
+		['Carbuncle']='Soothing Ruby', ['Fenrir']='Heavenward Howl'}
 	pacts.debuff1 = {['Shiva']='Diamond Storm', ['Ramuh']='Shock Squall', ['Leviathan']='Tidal Roar', ['Fenrir']='Lunar Cry',
 		['Diabolos']='Pavor Nocturnus'}
 	pacts.debuff2 = {['Shiva']='Sleepga', ['Leviathan']='Slowga', ['Fenrir']='Lunar Roar', ['Diabolos']='Somnolence'}
