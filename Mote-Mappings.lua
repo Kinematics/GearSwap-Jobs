@@ -168,7 +168,9 @@ areas.Adoulin = S{
 	"Dho Gates",
 	"Woh Gates",
 	"Rala Waterways",
-	"Rala Waterways [U]"
+	"Rala Waterways [U]",
+	"Outer Ra'Kaznar",
+	"Outer Ra'Kaznar [U]"
 }
 
 

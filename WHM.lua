@@ -103,7 +103,7 @@ function init_gear_sets()
 	
 	-- Cure sets
 	gear.default.obi_waist = "Goading Belt"
-	gear.default.obi_back = "Swith Cape"
+	gear.default.obi_back = "Mending Cape"
 
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
@@ -128,7 +128,7 @@ function init_gear_sets()
 	sets.midcast.Cursna = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Malison Medallion",
 		body="Orison Bliaud +2",hands="Hieros Mittens",ring1="Ephedra Ring",ring2="Sirona's Ring",
-		waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
+		back="Mending Cape",waist="Goading Belt",legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 
 	sets.midcast.StatusRemoval = {
 		head="Orison Cap +2",legs="Orison Pantaloons +2"}
@@ -136,7 +136,7 @@ function init_gear_sets()
 
 	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
 		body="Manasa Chasuble",hands="Dynasty Mitts",
-		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		back="Mending Cape",waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
 
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
@@ -148,7 +148,7 @@ function init_gear_sets()
 	sets.midcast.BarElement = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Colossus's Torque",
 		body="Orison Bliaud +2",hands="Orison Mitts +2",
-		waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		back="Mending Cape",waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
 
 	sets.midcast.Regen = {
 		body="Cleric's Briault",hands="Orison Mitts +2",
@@ -243,7 +243,7 @@ function init_gear_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.buff['Divine Caress'] = {hands="Orison Mitts +2"}
+	sets.buff['Divine Caress'] = {hands="Orison Mitts +2",back="Mending Cape"}
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -261,7 +261,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 	
 	if spell.skill == 'HealingMagic' then
-		gear.default.obi_back = "Refraction Cape"
+		gear.default.obi_back = "Mending Cape"
 	else
 		gear.default.obi_back = "Toro Cape"
 	end
