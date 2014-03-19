@@ -24,6 +24,7 @@ end
 function job_setup()
 	-- Whether to use Luzaf's Ring
 	state.LuzafRing = false
+	-- Whether a warning has been given for low ammo
 	state.warned = false
 
 	define_roll_values()
