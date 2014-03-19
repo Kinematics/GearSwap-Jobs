@@ -46,7 +46,7 @@ end
 function user_setup()
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
-	options.OffenseModes = {'Normal'}
+	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
 	options.IdleModes = {'Normal', 'PDT', 'Stun'}
@@ -54,6 +54,7 @@ function user_setup()
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 
+	state.OffenseMode = 'None'
 	state.Defense.PhysicalMode = 'PDT'
 
 
