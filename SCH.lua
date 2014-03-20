@@ -81,7 +81,7 @@ function init_gear_sets()
 
 	-- Precast sets to enhance JAs
 
-	sets.precast.JA['Tabula Rasa'] = {legs="Argute Pants +2"}
+	sets.precast.JA['Tabula Rasa'] = {legs="Pedagogy Pants"}
 
 
 	-- Fast cast sets for spells
@@ -135,7 +135,7 @@ function init_gear_sets()
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
 
-	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Argute Loafers +2"})
+	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Pedagogy Loafers"})
 
 	sets.midcast.Protect = {ring1="Sheltered Ring"}
 	sets.midcast.Protectra = sets.midcast.Protect
@@ -170,14 +170,14 @@ function init_gear_sets()
 	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Excelsis Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
+		back="Refraction Cape",waist="Goading Belt",legs="Pedagogy Pants",feet="Academic's Loafers"}
 	
 	sets.midcast.Aspir = sets.midcast.Drain
 
 	sets.midcast.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
+		back="Refraction Cape",waist="Witful Belt",legs="Pedagogy Pants",feet="Academic's Loafers"}
 
 	sets.midcast.Stun.Resistant = set_combine(sets.midcast.Stun, {main="Atinian Staff"})
 
@@ -293,8 +293,8 @@ function init_gear_sets()
 	sets.buff['Immanence'] = {hands="Savant's Bracers +2"}
 	sets.buff['Penury'] = {legs="Savant's Pants +2"}
 	sets.buff['Parsimony'] = {legs="Savant's Pants +2"}
-	sets.buff['Celerity'] = {feet="Argute Loafers +2"}
-	sets.buff['Alacrity'] = {feet="Argute Loafers +2"}
+	sets.buff['Celerity'] = {feet="Pedagogy Loafers"}
+	sets.buff['Alacrity'] = {feet="Pedagogy Loafers"}
 
 	sets.buff['Klimaform'] = {feet="Savant's Loafers +2"}
 

@@ -55,7 +55,7 @@ function init_gear_sets()
 	-- Precast Sets
 
 	-- Precast sets to enhance JAs
-	sets.precast.JA['Mijin Gakure'] = {legs="Koga Hakama +2"}
+	sets.precast.JA['Mijin Gakure'] = {legs="Mochizuki Hakama"}
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",

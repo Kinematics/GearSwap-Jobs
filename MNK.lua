@@ -52,7 +52,7 @@ function init_gear_sets()
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs on use
-	sets.precast.JA['Hundred Fists'] = {legs="Melee Hose +2"}
+	sets.precast.JA['Hundred Fists'] = {legs="Hesychast's Hose"}
 
 	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves +1"}
 
@@ -60,7 +60,7 @@ function init_gear_sets()
 
 	sets.precast.JA['Focus'] = {head="Anchorite's Crown"}
 
-	sets.precast.JA['Counterstance'] = {feet="Melee Gaiters +2"}
+	sets.precast.JA['Counterstance'] = {feet="Hesychast's Gaiters"}
 
 	sets.precast.JA['Chi Blast'] = {
 		head="Melee Crown +2",
@@ -71,11 +71,11 @@ function init_gear_sets()
 
 	sets.precast.JA['Formless Strikes'] = {body="Melee Cyclas +2"}
 
-	sets.precast.JA['Mantra'] = {feet="Melee Gaiters +2"}
+	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
 
 	sets.precast.JA['Chakra'] = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",
-		body="Anchorite's Cyclas",hands="Melee Gloves +2",ring1="Spiral Ring",
+		body="Anchorite's Cyclas",hands="Hesychast's Gloves",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Thurandaut Boots +1"}
 
 	
@@ -171,8 +171,8 @@ function init_gear_sets()
 
 	sets.defense.HP = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Brutal Earring",ear2="Bloodgem Earring",
-		body="Melee Cyclas +2",hands="Melee Gloves +2",ring1="K'ayres Ring",ring2="Meridian Ring",
-		back="Shadow Mantle",waist="Black Belt",legs="Melee Hose +2",feet="Melee Gaiters +2"}
+		body="Melee Cyclas +2",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
+		back="Shadow Mantle",waist="Black Belt",legs="Hesychast's Hose",feet="Hesychast's Gaiters"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Haruspex hat",neck="Twilight Torque",
@@ -198,7 +198,7 @@ function init_gear_sets()
 	sets.engaged.HF.Impetus = set_combine(sets.engaged.HF, {body="Tantra Cyclas +2",feet="Manibozho Boots"})
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Manibozho Jerkin",hands="Hesychast's Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Acc.HF = set_combine(sets.engaged.Acc, {neck="Asperity Necklace",body="Thaumas Coat"})
 	sets.engaged.Acc.HF.Impetus = set_combine(sets.engaged.Acc.HF, {body="Tantra Cyclas +2"})
@@ -224,13 +224,13 @@ function init_gear_sets()
 	sets.engaged.Acc.PDT.HF.Impetus = set_combine(sets.engaged.Acc.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
+		body="Otronif Harness",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots +1"}
 	sets.engaged.HP.HF = sets.engaged.HP
 	sets.engaged.HP.HF.Impetus = set_combine(sets.engaged.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.HP = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
+		body="Otronif Harness",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots +1"}
 	sets.engaged.Acc.HP.HF = sets.engaged.Acc.HP
 	sets.engaged.Acc.HP.HF.Impetus = set_combine(sets.engaged.Acc.HP, {body="Tantra Cyclas +2"})
@@ -242,7 +242,7 @@ function init_gear_sets()
 	sets.engaged.Counter.HF.Impetus = set_combine(sets.engaged.Counter, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.Counter = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Otronif Harness",hands="Hesychast's Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Anchorite's Hose",feet="Otronif Boots +1"}
 	sets.engaged.Acc.Counter.HF = sets.engaged.Acc.Counter
 	sets.engaged.Acc.Counter.HF.Impetus = set_combine(sets.engaged.Acc.Counter, {body="Tantra Cyclas +2"})
@@ -251,11 +251,11 @@ function init_gear_sets()
 	sets.engaged.Footwork = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Anchorite's Gaiters"}
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Hesychast's Hose",feet="Anchorite's Gaiters"}
 	sets.engaged.Footwork.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Anchorite's Gaiters"}
+		back="Letalis Mantle",waist="Anguinus Belt",legs="Hesychast's Hose",feet="Anchorite's Gaiters"}
 end
 
 -------------------------------------------------------------------------------------------------------------------

@@ -105,14 +105,14 @@ function init_gear_sets()
 	
 	-- Precast sets to enhance JAs
 
-	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
+	sets.precast.JA['No Foot Rise'] = {body="Horos Casaque"}
 
-	sets.precast.JA['Trance'] = {head="Etoile Tiara +2"}
+	sets.precast.JA['Trance'] = {head="Horos Tiara"}
 	
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
-		head="Etoile Tiara +2",ear1="Roundel Earring",
+		head="Horos Tiara",ear1="Roundel Earring",
 		body="Maxixi Casaque",hands="Buremte Gloves",
 		back="Shadow Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
 		
@@ -121,14 +121,14 @@ function init_gear_sets()
 	
 	sets.precast.Samba = {head="Maxixi Tiara"}
 
-	sets.precast.Jig = {legs="Etoile Tights +2", feet="Maxixi Toeshoes"}
+	sets.precast.Jig = {legs="Horos Tights", feet="Maxixi Toeshoes"}
 
 	sets.precast.Step = {}
 	sets.precast.Step['Feather Step'] = {feet="Charis Shoes +2"}
 
 	sets.precast.Flourish1 = {}
 	sets.precast.Flourish1['Violent Flourish'] = {ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Etoile Casaque +2",hands="Wayfarer Cuffs",ring2="Sangoma Ring",
+		body="Horos Casaque",hands="Wayfarer Cuffs",ring2="Sangoma Ring",
 		legs="Iuitl Tights",feet="Iuitl Gaiters +1"} -- magic accuracy
 	sets.precast.Flourish1['Desperate Flourish'] = {ammo="Charis Feather",
 		head="Whirlpool Mask",
@@ -334,7 +334,7 @@ function init_gear_sets()
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
+	sets.buff['Saber Dance'] = {legs="Horos Tights"}
 	sets.buff['Climactic Flourish'] = {head="Charis Tiara +2"}
 end
 
