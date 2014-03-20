@@ -160,7 +160,7 @@ function init_gear_sets()
 		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	-- Custom classes for high-tier nukes.
-	sets.midcast.HighTierNuke = {main="Lehbrailg",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.HighTierNuke = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
@@ -374,9 +374,6 @@ function get_nuke_class(spell, action, spellMap)
 	if lowTierNukes[spell.english] then
 		-- low tier nukes use the default set
 		return nil
-	-- Areas where more magic accuracy is generally needed, so use Atinian instead of Lehbrailg on high-tier nukes.
-	elseif areas.Adoulin[world.area] then
-		return 'AdoulinHighTierNuke'
 	else
 		return 'HighTierNuke'
 	end
