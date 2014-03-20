@@ -136,7 +136,7 @@ function init_gear_sets()
 
 	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
 		body="Manasa Chasuble",hands="Dynasty Mitts",
-		back="Mending Cape",waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		back="Mending Cape",waist="Olympus Sash",legs="Piety Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
@@ -148,7 +148,7 @@ function init_gear_sets()
 	sets.midcast.BarElement = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Colossus's Torque",
 		body="Orison Bliaud +2",hands="Orison Mitts +2",
-		back="Mending Cape",waist="Olympus Sash",legs="Cleric's Pantaloons +2",feet="Orison Duckbills +2"}
+		back="Mending Cape",waist="Olympus Sash",legs="Piety Pantaloons",feet="Orison Duckbills +2"}
 
 	sets.midcast.Regen = {
 		body="Cleric's Briault",hands="Orison Mitts +2",
@@ -156,7 +156,7 @@ function init_gear_sets()
 
 	sets.midcast.Protectra = {ring1="Sheltered Ring"}
 
-	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Cleric's Pantaloons +2"}
+	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Piety Pantaloons"}
 
 
 	sets.midcast.DivineMagic = {main="Tamaxchi",sub="Genbu's Shield",

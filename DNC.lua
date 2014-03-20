@@ -105,30 +105,30 @@ function init_gear_sets()
 	
 	-- Precast sets to enhance JAs
 
-	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
+	sets.precast.JA['No Foot Rise'] = {body="Horos Casaque"}
 
-	sets.precast.JA['Trance'] = {head="Etoile Tiara +2"}
+	sets.precast.JA['Trance'] = {head="Horos Tiara"}
 	
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
-		head="Etoile Tiara +2",ear1="Roundel Earring",
+		head="Horos Tiara",ear1="Roundel Earring",
 		body="Maxixi Casaque",hands="Buremte Gloves",
-		back="Shadow Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
+		back="Shadow Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toe Shoes"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 	
 	sets.precast.Samba = {head="Maxixi Tiara"}
 
-	sets.precast.Jig = {legs="Etoile Tights +2", feet="Maxixi Toeshoes"}
+	sets.precast.Jig = {legs="Horos Tights", feet="Maxixi Toe Shoes"}
 
 	sets.precast.Step = {}
 	sets.precast.Step['Feather Step'] = {feet="Charis Shoes +2"}
 
 	sets.precast.Flourish1 = {}
 	sets.precast.Flourish1['Violent Flourish'] = {ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Etoile Casaque +2",hands="Wayfarer Cuffs",ring2="Sangoma Ring",
+		body="Horos Casaque",hands="Wayfarer Cuffs",ring2="Sangoma Ring",
 		legs="Iuitl Tights",feet="Iuitl Gaiters +1"} -- magic accuracy
 	sets.precast.Flourish1['Desperate Flourish'] = {ammo="Charis Feather",
 		head="Whirlpool Mask",
@@ -164,14 +164,14 @@ function init_gear_sets()
 	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {neck="Houyi's Gorget",hands="Iuitl Wristbands",
 		ring1="Stormsoul Ring",waist="Caudata Belt",legs="Nahtirah Trousers"})
 	sets.precast.WS['Exenterator'].Acc = set_combine(sets.precast.WS['Exenterator'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {waist=gear.ElementalBelt})
+	sets.precast.WS['Exenterator'].Mod = set_combine(sets.precast.WS['Exenterator'], {body="Iuitl Vest",waist=gear.ElementalBelt})
 
 	sets.precast.WS['Pyrrhic Kleos'] = set_combine(sets.precast.WS, {hands="Iuitl Wristbands"})
 	sets.precast.WS['Pyrrhic Kleos'].Acc = set_combine(sets.precast.WS.Acc, {hands="Iuitl Wristbands"})
 
-	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Charis Feather",neck="Rancor Collar",waist="Caudata Belt"})
+	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Charis Feather",head="Uk'uxkaj Cap",neck="Rancor Collar",waist="Caudata Belt"})
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist=gear.ElementalBelt})
+	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {body="Maxixi Casaque",waist=gear.ElementalBelt})
 
 	sets.precast.WS["Rudra's Storm"] = set_combine(sets.precast.WS, {ammo="Charis Feather",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Rudra's Storm"].Acc = set_combine(sets.precast.WS["Rudra's Storm"], {ammo="Honed Tathlum", back="Letalis Mantle"})
@@ -238,7 +238,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Wayfarer Circlet",neck="Twilight Torque",
 		body="Wayfarer Robe",hands="Wayfarer Cuffs",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Mollusca Mantle",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
+		back="Engulfer Cape",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
 
@@ -253,15 +253,15 @@ function init_gear_sets()
 	sets.engaged = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
+		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.iLvl = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
+		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.Evasion = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Torero Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -272,11 +272,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.PDT = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	-- Custom melee group: High Haste
@@ -298,11 +298,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.PDT.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.PDT.HighHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 	-- Custom melee group: Max Haste
@@ -324,17 +324,17 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.PDT.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Windbuffet Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.PDT.MaxHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 
 
 	-- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
-	sets.buff['Saber Dance'] = {legs="Etoile Tights +2"}
+	sets.buff['Saber Dance'] = {legs="Horos Tights"}
 	sets.buff['Climactic Flourish'] = {head="Charis Tiara +2"}
 end
 

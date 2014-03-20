@@ -46,7 +46,7 @@ end
 function user_setup()
 	-- Options: Override default values
 	options.CastingModes = {'Normal', 'Resistant'}
-	options.OffenseModes = {'Normal'}
+	options.OffenseModes = {'None', 'Normal'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
 	options.IdleModes = {'Normal', 'PDT', 'Stun'}
@@ -54,6 +54,7 @@ function user_setup()
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 
+	state.OffenseMode = 'None'
 	state.Defense.PhysicalMode = 'PDT'
 
 
@@ -80,12 +81,12 @@ function init_gear_sets()
 
 	-- Precast sets to enhance JAs
 
-	sets.precast.JA['Tabula Rasa'] = {legs="Argute Pants +2"}
+	sets.precast.JA['Tabula Rasa'] = {legs="Pedagogy Pants"}
 
 
 	-- Fast cast sets for spells
 	
-	sets.precast.FC = {ammo="Incantor Stone",
+	sets.precast.FC = {ammo="Impatiens",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
@@ -134,7 +135,7 @@ function init_gear_sets()
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
 
-	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Argute Loafers +2"})
+	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Pedagogy Loafers"})
 
 	sets.midcast.Protect = {ring1="Sheltered Ring"}
 	sets.midcast.Protectra = sets.midcast.Protect
@@ -156,7 +157,7 @@ function init_gear_sets()
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast.IntEnfeebles
 
-	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Impatiens",
+	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
@@ -166,17 +167,17 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Impatiens",
+	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Excelsis Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
+		back="Refraction Cape",waist="Goading Belt",legs="Pedagogy Pants",feet="Academic's Loafers"}
 	
 	sets.midcast.Aspir = sets.midcast.Drain
 
-	sets.midcast.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Impatiens",
-		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+	sets.midcast.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Incantor Stone",
+		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
+		back="Refraction Cape",waist="Witful Belt",legs="Pedagogy Pants",feet="Academic's Loafers"}
 
 	sets.midcast.Stun.Resistant = set_combine(sets.midcast.Stun, {main="Atinian Staff"})
 
@@ -292,8 +293,8 @@ function init_gear_sets()
 	sets.buff['Immanence'] = {hands="Savant's Bracers +2"}
 	sets.buff['Penury'] = {legs="Savant's Pants +2"}
 	sets.buff['Parsimony'] = {legs="Savant's Pants +2"}
-	sets.buff['Celerity'] = {feet="Argute Loafers +2"}
-	sets.buff['Alacrity'] = {feet="Argute Loafers +2"}
+	sets.buff['Celerity'] = {feet="Pedagogy Loafers"}
+	sets.buff['Alacrity'] = {feet="Pedagogy Loafers"}
 
 	sets.buff['Klimaform'] = {feet="Savant's Loafers +2"}
 

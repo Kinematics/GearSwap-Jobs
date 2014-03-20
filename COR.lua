@@ -24,6 +24,7 @@ end
 function job_setup()
 	-- Whether to use Luzaf's Ring
 	state.LuzafRing = false
+	-- Whether a warning has been given for low ammo
 	state.warned = false
 
 	define_roll_values()
@@ -89,7 +90,7 @@ function init_gear_sets()
 	sets.precast.JA['Random Deal'] = {body="Commodore Frac"}
 
 	
-	sets.precast.CorsairRoll = {head="Commodore's Tricorne +2",hands="Navarch's Gants +2"}
+	sets.precast.CorsairRoll = {head="Lanun Tricorne",hands="Navarch's Gants +2"}
 	
 	sets.precast.CorsairRoll["Caster's Roll"] = set_combine(sets.precast.CorsairRoll, {legs="Navarch's Culottes +2"})
 	sets.precast.CorsairRoll["Courser's Roll"] = set_combine(sets.precast.CorsairRoll, {feet="Navarch's Bottes +2"})
@@ -192,7 +193,7 @@ function init_gear_sets()
 
 	-- Ranged gear
 	sets.midcast.RangedAttack = {ammo=gear.RAbullet,
-		head="Whirlpool Mask",neck="Ocachi Gorget",ear1="Clearview Earring",ear2="Volley Earring",
+		head="Lanun Tricorne",neck="Ocachi Gorget",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Laksamana's Frac",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
 		back="Terebellum Mantle",waist="Commodore Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
