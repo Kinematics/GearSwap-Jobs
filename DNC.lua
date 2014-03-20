@@ -114,14 +114,14 @@ function init_gear_sets()
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Horos Tiara",ear1="Roundel Earring",
 		body="Maxixi Casaque",hands="Buremte Gloves",
-		back="Shadow Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toeshoes"}
+		back="Shadow Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Maxixi Toe Shoes"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 	
 	sets.precast.Samba = {head="Maxixi Tiara"}
 
-	sets.precast.Jig = {legs="Horos Tights", feet="Maxixi Toeshoes"}
+	sets.precast.Jig = {legs="Horos Tights", feet="Maxixi Toe Shoes"}
 
 	sets.precast.Step = {}
 	sets.precast.Step['Feather Step'] = {feet="Charis Shoes +2"}
@@ -169,7 +169,7 @@ function init_gear_sets()
 	sets.precast.WS['Pyrrhic Kleos'] = set_combine(sets.precast.WS, {hands="Iuitl Wristbands"})
 	sets.precast.WS['Pyrrhic Kleos'].Acc = set_combine(sets.precast.WS.Acc, {hands="Iuitl Wristbands"})
 
-	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Charis Feather",neck="Rancor Collar",waist="Caudata Belt"})
+	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Charis Feather",head="Uk'uxkaj Cap",neck="Rancor Collar",waist="Caudata Belt"})
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist=gear.ElementalBelt})
 
@@ -238,7 +238,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Wayfarer Circlet",neck="Twilight Torque",
 		body="Wayfarer Robe",hands="Wayfarer Cuffs",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Mollusca Mantle",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
+		back="Engulfer Cape",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
 
@@ -272,11 +272,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.PDT = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	-- Custom melee group: High Haste
@@ -298,11 +298,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.PDT.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.PDT.HighHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 	-- Custom melee group: Max Haste
@@ -324,11 +324,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.PDT.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Shadow Mantle",waist="Windbuffet Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.PDT.MaxHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 

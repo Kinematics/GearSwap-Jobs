@@ -205,15 +205,15 @@ function init_gear_sets()
 	sets.engaged.Mod = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Thaumas Coat",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Manibozho Boots"}
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Manibozho Boots"}
 	sets.engaged.iLvl = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots +1"}
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots +1"}
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.PDT.HF = sets.engaged.PDT
 	sets.engaged.PDT.HF.Impetus = set_combine(sets.engaged.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
@@ -225,13 +225,13 @@ function init_gear_sets()
 	sets.engaged.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots +1"}
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.HP.HF = sets.engaged.HP
 	sets.engaged.HP.HF.Impetus = set_combine(sets.engaged.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.HP = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Leggings",feet="Otronif Boots +1"}
+		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.Acc.HP.HF = sets.engaged.Acc.HP
 	sets.engaged.Acc.HP.HF.Impetus = set_combine(sets.engaged.Acc.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Counter = {ammo="Thew Bomblet",
