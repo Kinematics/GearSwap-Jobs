@@ -207,7 +207,7 @@ function init_gear_sets()
 
 	-- Idle mode scopes:
 	-- Idle mode when weak.
-	sets.idle.Weak = {main="Tamaxchi",sub="Genbu's Shield",ammo="Witchstone",
+	sets.idle.Weak = {main="Bolelabunga",sub="Genbu's Shield",ammo="Witchstone",
 		head="Hagondes Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
