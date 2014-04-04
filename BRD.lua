@@ -222,6 +222,8 @@ function init_gear_sets()
 		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
+	sets.midcast.Curaga = sets.midcast.Cure
+		
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",
