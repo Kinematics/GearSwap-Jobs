@@ -237,8 +237,23 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
 
+	-- perp costs:
+	-- spirits: 7
+	-- carby: 11 (5 with mitts)
+	-- fenrir: 13
+	-- others: 15
+	-- avatar's favor: -4/tick
+	
+	-- -perp gear:
+	-- Patriarch Cane: -3
+	-- Glyphic Horn: -4
+	-- Caller's Doublet +2: -4
+	-- Evoker's Ring: -1
+	-- Convoker's Pigaches: -4
+	-- total: -16
+	
 	sets.idle.Avatar = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
-		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
+		head="Glyphic Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
@@ -259,7 +274,11 @@ function init_gear_sets()
 	sets.perp = {}
 	sets.perp.Day = {hands="Caller's Bracers +2"}
 	sets.perp.Weather = {neck="Caller's Pendant",hands="Caller's Bracers +2"}
-	sets.perp.Carbuncle = {hands="Carbuncle Mitts"}
+	-- Carby: Mitts+Conv.feet+Ev.Ring = 0/tick perp.  Everything else should be +refresh
+	sets.perp.Carbuncle = {main="Bolelabunga",sub="Genbu's Shield",
+		head="Convoker's Horn",body="Hagondes Coat",hands="Carbuncle Mitts",legs="Nares Trews",feet="Convoker's Pigaches"}
+	-- Fenrir: doesn't need full -perp set; trade body for +refresh
+	sets.perp.Fenrir = {body="Hagondes Coat"}
 	sets.perp.Diabolos = {waist="Diabolos's Rope"}
 	sets.perp.Alexander = sets.midcast.Pet.BloodPactWard
 	
