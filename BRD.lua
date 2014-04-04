@@ -197,7 +197,7 @@ function init_gear_sets()
 	-- For song defbuffs (accuracy primary, duration secondary)
 	sets.midcast.ResistantSongDebuff = {main="Izhiikoh",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
+		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Aoidos' Rhing. +2",feet="Bokwus Boots"}
 
 	-- Song-specific recast reduction
@@ -213,7 +213,7 @@ function init_gear_sets()
 	-- Dummy song with Daurdabla; minimize duration to make it easy to overwrite.
 	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range="Daurdabla",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Brioso Justaucorps",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
+		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
 	-- Other general spells and classes.
@@ -221,6 +221,8 @@ function init_gear_sets()
 		head="Gendewitha Caubeen",
 		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		
+	sets.midcast.Curaga = sets.midcast.Cure
 		
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",

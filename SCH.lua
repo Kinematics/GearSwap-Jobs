@@ -121,7 +121,7 @@ function init_gear_sets()
 
 	sets.midcast.Curaga = sets.midcast.Cure
 
-	sets.midcast.Regen = {head="Savant's Bonnet +2"}
+	sets.midcast.Regen = {main="Bolelabunga",head="Savant's Bonnet +2"}
 
 	sets.midcast.Cursna = {
 		neck="Malison Medallion",
@@ -232,12 +232,12 @@ function init_gear_sets()
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 
-	sets.idle.Town = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
+	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Savant's Bonnet +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Savant's Gown +2",hands="Savant's Bracers +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Savant's Pants +2",feet="Herald's Gaiters"}
 	
-	sets.idle.Field = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
+	sets.idle.Field = {main="Bolelabunga",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
@@ -252,7 +252,7 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Academic's Loafers"}
 
-	sets.idle.Weak = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
+	sets.idle.Weak = {main="Bolelabunga",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
