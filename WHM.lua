@@ -403,10 +403,10 @@ function get_spell_class(spell, action, spellMap)
 				spellclass = "IntEnfeebles"
 			end
 		else
-			if spellMap == 'Cure' and state.Buff['Afflatus Solace'] then
-				spellclass = "CureSolace"
-			elseif (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' and player.equipment.main ~= 'Tamaxchi' then
+			if (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' then
 				spellclass = "CureMelee"
+			elseif spellMap == 'Cure' and state.Buff['Afflatus Solace'] then
+				spellclass = "CureSolace"
 			end
 		end
 	end
