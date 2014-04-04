@@ -212,7 +212,7 @@ function init_gear_sets()
 		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
 	sets.midcast.Pet.MagicalBloodPactRage = {main="Eminent Pole",ammo="Eminent Sachet",
-		head="Bokwus Circlet",neck="Caller's Pendant",
+		head="Glyphic Horn",neck="Caller's Pendant",
 		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
 	
@@ -242,16 +242,17 @@ function init_gear_sets()
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
-	sets.idle.Spirit = {main="Bolelabunga",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Spirit = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Tiresias' Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Convoker's Pigaches"}
 
-	sets.idle.Town = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
+	-- Favor can trade the -4 perp of Glyphic Horn for +2 refresh of Caller's Horn (plus enhance favor).
 	sets.idle.Avatar.Favor = {head="Caller's Horn +2"}
 	sets.idle.Avatar.Melee = {hands="Regimen Mittens",waist="Kuku Stone",legs="Convoker's Spats"}
 		

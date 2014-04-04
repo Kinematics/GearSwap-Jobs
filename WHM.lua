@@ -162,23 +162,23 @@ function init_gear_sets()
 	sets.midcast.DivineMagic = {main="Bolelabunga",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
-		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
+		back="Refraction Cape",waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 
 	sets.midcast.DarkMagic = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills"}
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills"}
 
 	sets.midcast.IntEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills"}
 
 	
 	-- Sets to return to when not performing an action.

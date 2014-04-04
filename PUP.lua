@@ -136,14 +136,14 @@ function init_gear_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {head="Foire Taj",neck="Wiglen Gorget",
+	sets.resting = {head="Pitre Taj",neck="Wiglen Gorget",
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
 	-- Idle sets
 
 	sets.idle = {range="Eminent Animator",
-		head="Foire Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Pitre Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
