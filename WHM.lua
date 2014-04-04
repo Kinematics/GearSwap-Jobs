@@ -210,8 +210,6 @@ function init_gear_sets()
 		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Meridian Ring",
 		back="Umbra Cape",waist="Witful Belt",legs="Nares Trews",feet="Gendewitha Galoshes"}
 	
-	sets.Owleyes = {main="Owleyes", sub="Genbu's Shield"}
-	
 	-- Defense sets
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",
@@ -301,10 +299,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function customize_idle_set(idleSet)
-	if player.mpp < 90 and state.IdleMode == "Normal" and state.Defense.Active == false then
-		idleSet = set_combine(idleSet, sets.Owleyes)
-	end
-	
 	return idleSet
 end
 
