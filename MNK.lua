@@ -64,12 +64,12 @@ function init_gear_sets()
 
 	sets.precast.JA['Chi Blast'] = {
 		head="Melee Crown +2",
-		body="Otronif Harness",hands="Otronif Gloves",
+		body="Otronif Harness +1",hands="Otronif Gloves",
 		back="Tuilha Cape",legs="Nahtirah Trousers",feet="Thurandaut Boots +1"}
 
 	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
 
-	sets.precast.JA['Formless Strikes'] = {body="Melee Cyclas +2"}
+	sets.precast.JA['Formless Strikes'] = {body="Hesychast's Cyclas"}
 
 	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
 
@@ -83,7 +83,7 @@ function init_gear_sets()
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Whirlpool Mask",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Spiral Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Thurandaut Boots +1"}
 		
 	-- Don't need any special gear for Healing Waltz.
@@ -130,13 +130,13 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Otronif Harness",hands="Thaumas Gloves",
+		body="Otronif Harness +1",hands="Thaumas Gloves",
 		waist="Black Belt",feet="Otronif Boots +1"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {ammo="Impatiens",
 		head="Whirlpool Mask",ear2="Loquacious Earring",
-		body="Otronif Harness",hands="Thaumas Gloves",
+		body="Otronif Harness +1",hands="Thaumas Gloves",
 		waist="Black Belt",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
 
 	
@@ -144,39 +144,39 @@ function init_gear_sets()
 	
 	-- Resting sets
 	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
-		body="Melee Cyclas +2",ring1="Sheltered Ring",ring2="Paguroidea Ring"}
+		body="Hesychast's Cyclas",ring1="Sheltered Ring",ring2="Paguroidea Ring"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle = {main="Oatixur",ammo="Thew Bomblet",
 		head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Melee Cyclas +2",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hesychast's Cyclas",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Nahtirah Trousers",feet="Herald's Gaiters"}
 
 	sets.idle.Town = {main="Oatixur",ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Black Belt",legs="Nahtirah Trousers",feet="Herald's Gaiters"}
 	
 	sets.idle.Weak = {main="Oatixur",ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Brutal Earring",ear2="Bloodgem Earring",
-		body="Melee Cyclas +2",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Meridian Ring",
+		body="Hesychast's Cyclas",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Nahtirah Trousers",feet="Herald's Gaiters"}
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
 		back="Shadow Mantle",waist="Black Belt",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
 
 	sets.defense.HP = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Brutal Earring",ear2="Bloodgem Earring",
-		body="Melee Cyclas +2",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
+		body="Hesychast's Cyclas",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
 		back="Shadow Mantle",waist="Black Belt",legs="Hesychast's Hose",feet="Hesychast's Gaiters"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Haruspex hat",neck="Twilight Torque",
-		body="Otronif Harness",hands="Anchorite's Gloves +1",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Otronif Harness +1",hands="Anchorite's Gloves +1",ring1="Dark Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Black Belt",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
@@ -208,41 +208,41 @@ function init_gear_sets()
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Manibozho Boots"}
 	sets.engaged.iLvl = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.PDT.HF = sets.engaged.PDT
 	sets.engaged.PDT.HF.Impetus = set_combine(sets.engaged.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT.HF = sets.engaged.Acc.PDT
 	sets.engaged.Acc.PDT.HF.Impetus = set_combine(sets.engaged.Acc.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
+		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.HP.HF = sets.engaged.HP
 	sets.engaged.HP.HF.Impetus = set_combine(sets.engaged.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.HP = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
+		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Quiahuiz Trousers",feet="Otronif Boots +1"}
 	sets.engaged.Acc.HP.HF = sets.engaged.Acc.HP
 	sets.engaged.Acc.HP.HF.Impetus = set_combine(sets.engaged.Acc.HP, {body="Tantra Cyclas +2"})
 	sets.engaged.Counter = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="K'ayres Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Anchorite's Hose",feet="Otronif Boots +1"}
 	sets.engaged.Counter.HF = sets.engaged.Counter
 	sets.engaged.Counter.HF.Impetus = set_combine(sets.engaged.Counter, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.Counter = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Hesychast's Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Anchorite's Hose",feet="Otronif Boots +1"}
 	sets.engaged.Acc.Counter.HF = sets.engaged.Acc.Counter
 	sets.engaged.Acc.Counter.HF.Impetus = set_combine(sets.engaged.Acc.Counter, {body="Tantra Cyclas +2"})

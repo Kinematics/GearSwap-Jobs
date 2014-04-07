@@ -69,7 +69,7 @@ function init_gear_sets()
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Yaoyotl Helm",
-		body="Otronif Harness",hands="Buremte Gloves",ring1="Spiral Ring",
+		body="Otronif Harness +1",hands="Buremte Gloves",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots +1"}
 		
 	-- Don't need any special gear for Healing Waltz.
@@ -111,7 +111,7 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Yaoyotl Helm",
-		body="Otronif Harness",hands="Otronif Gloves",
+		body="Otronif Harness +1",hands="Otronif Gloves",
 		legs="Phorcys Dirs",feet="Otronif Boots +1"}
 
 	
@@ -124,12 +124,12 @@ function init_gear_sets()
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 	sets.idle.Town = {main="Tsurumaru", sub="Pole Grip",ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Flume Belt",legs="Phorcys Dirs",feet="Danzo Sune-ate"}
 	
 	sets.idle.Field = {
 		head="Yaoyotl Helm",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Danzo Sune-ate"}
 
 	sets.idle.Weak = {
@@ -140,7 +140,7 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots +1"}
 
 	sets.defense.Reraise = {
@@ -150,7 +150,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Karieyh Brayettes +1",feet="Otronif Boots +1"}
 
 	sets.Kiting = {feet="Danzo Sune-ate"}
@@ -176,11 +176,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
 		back="Iximulew Cape",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
 		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Reraise = {ammo="Thew Bomblet",
 		head="Twilight Helm",neck="Torero Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -203,11 +203,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Adoulin.PDT = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
 		back="Iximulew Cape",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Adoulin.Acc.PDT = {ammo="Honed Tathlum",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="K'ayres Ring",
 		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Adoulin.Reraise = {ammo="Thew Bomblet",
 		head="Twilight Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
