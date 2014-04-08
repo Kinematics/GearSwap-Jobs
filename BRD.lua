@@ -72,7 +72,9 @@ function user_setup()
 	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri'}
 	pick_tp_weapon()
 	
-	-- How many extra songs we can keep from Daurdabla
+	-- Adjust this if using the Terpander (new +song instrument)
+	info.DaurdablaInstrument = 'Daurdabla'
+	-- How many extra songs we can keep from Daurdabla/Terpander
 	info.DaurdablaSongs = 2
 	-- Whether to try to automatically use Daurdabla when an appropriate gap in current vs potential
 	-- songs appears, and you haven't specifically changed state.DaurdablaMode.
@@ -118,7 +120,7 @@ function init_gear_sets()
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
-	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range="Daurdabla"})
+	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range=info.DaurdablaInstrument})
 		
 	
 	-- Precast sets to enhance JAs
@@ -179,7 +181,7 @@ function init_gear_sets()
 	sets.midcast["Sentinel's Scherzo"] = {feet="Aoidos' Cothrn. +2"}
 	sets.midcast['Magic Finale'] = {neck="Wind Torque",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	sets.midcast.Mazurka = {range="Daurdabla"}
+	sets.midcast.Mazurka = {range=info.DaurdablaInstrument}
 	
 
 	-- For song buffs (duration and AF3 set bonus)
@@ -205,13 +207,13 @@ function init_gear_sets()
 		ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range="Daurdabla"})
+	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range=info.DaurdablaInstrument})
 
 	-- Cast spell with normal gear, except using Daurdabla instead
-	sets.midcast.Daurdabla = {range="Daurdabla"}
+	sets.midcast.Daurdabla = {range=info.DaurdablaInstrument}
 
 	-- Dummy song with Daurdabla; minimize duration to make it easy to overwrite.
-	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range="Daurdabla",
+	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range=info.DaurdablaInstrument,
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
@@ -384,10 +386,10 @@ end
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_list(field)
 	if field == 'Daurdabla' then
-		if player.inventory.daurdabla then
+		if player.inventory[info.DaurdablaInstrument] then
 			return options.DaurdablaModes, state.DaurdablaMode
 		else
-			add_to_chat(123,'Daurdabla is not in player inventory.')
+			add_to_chat(123, info.DaurdablaInstrument..' is not in player inventory.')
 		end
 	end
 end
@@ -503,7 +505,7 @@ function adjust_Timers(spell, action, spellMap)
 	else
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
-		if player.equipment.range == 'Daurdabla' then
+		if player.equipment.range == info.DaurdablaInstrument then
 			maxsongs = maxsongs + info.DaurdablaSongs
 		end
 		if buffactive['Clarion Call'] then
