@@ -460,7 +460,8 @@ end
 
 -- Determine the custom class to use for the given song.
 function get_song_class(spell)
-	if spell.targets:contains('Enemy') then
+	-- Can't use spell.targets:contains() because this is being pulled from resources
+	if set.contains(spell.targets, 'Enemy') then
 		if state.CastingMode == 'Resistant' then
 			return 'ResistantSongDebuff'
 		else
