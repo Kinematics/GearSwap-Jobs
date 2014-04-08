@@ -383,8 +383,12 @@ end
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_list(field)
-	if field == 'Daurdabla' and player.inventory.daurdabla then
-		return options.DaurdablaModes, state.DaurdablaMode
+	if field == 'Daurdabla' then
+		if player.inventory.daurdabla then
+			return options.DaurdablaModes, state.DaurdablaMode
+		else
+			add_to_chat(123,'Daurdabla is not in player inventory.')
+		end
 	end
 end
 
