@@ -57,7 +57,7 @@ function init_gear_sets()
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA['Invincible'] = {legs="Valor Breeches +2"}
+	sets.precast.JA['Invincible'] = {legs="Caballarius Breeches"}
 	sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings"}
 	--sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
 	sets.precast.JA['Sentinel'] = {feet="Valor Leggings +2"}

@@ -153,14 +153,14 @@ function init_gear_sets()
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA['Astral Flow'] = {head="Summoner's Horn +2"}
+	sets.precast.JA['Astral Flow'] = {head="Glyphic Horn"}
 	
 	sets.precast.JA['Elemental Siphon'] = {head="Caller's Pigaches +2"} -- back="Conveyance Cape"
 
 	sets.precast.JA['Mana Cede'] = {hands="Caller's Bracers +2"}
 
 	-- Pact delay reduction gear
-	sets.precast.BloodPactWard = {ammo="Eminent Sachet",head="Convoker's Horn",body="Convoker's Doublet",hands="Summoner's Bracers"}
+	sets.precast.BloodPactWard = {ammo="Eminent Sachet",head="Convoker's Horn",body="Convoker's Doublet",hands="Glyphic Bracers"}
 
 	sets.precast.BloodPactRage = sets.precast.BloodPactWard
 
@@ -203,17 +203,17 @@ function init_gear_sets()
 
 	sets.midcast.Pet.BloodPactWard = {main="Soulscourge",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Caller's Pendant",
-		body="Caller's Doublet +2",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
 	
 	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Caller's Pendant",
-		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
 	sets.midcast.Pet.MagicalBloodPactRage = {main="Eminent Pole",ammo="Eminent Sachet",
 		head="Glyphic Horn",neck="Caller's Pendant",
-		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
 	
 	sets.midcast.Pet.Spirit = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})

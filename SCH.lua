@@ -227,7 +227,7 @@ function init_gear_sets()
 	sets.resting = {main="Chatoyant Staff",sub="Mephitis Grip",
 		head="Nefer Khat +1",neck="Wiglen Gorget",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		waist="Austerity Belt",legs="Nares Tres",feet="Serpentes Sabots"}
+		waist="Austerity Belt",legs="Nares Trews",feet="Serpentes Sabots"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
@@ -298,7 +298,7 @@ function init_gear_sets()
 
 	sets.buff['Klimaform'] = {feet="Savant's Loafers +2"}
 
-	sets.buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Argute Gown +2"}
+	sets.buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Pedagogy Gown"}
 	sets.buff.PDTSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring"}
 
 	--sets.buff['Sandstorm'] = {feet="Desert Boots"}

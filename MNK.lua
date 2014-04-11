@@ -123,7 +123,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Cataclysm'] = {
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt"}
 	
 	
@@ -198,8 +198,9 @@ function init_gear_sets()
 	sets.engaged.HF.Impetus = set_combine(sets.engaged.HF, {body="Tantra Cyclas +2",feet="Manibozho Boots"})
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Manibozho Jerkin",hands="Hesychast's Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
+	sets.engaged.Acc.Impetus = sets.engaged.Acc
 	sets.engaged.Acc.HF = set_combine(sets.engaged.Acc, {neck="Asperity Necklace",body="Thaumas Coat"})
 	sets.engaged.Acc.HF.Impetus = set_combine(sets.engaged.Acc.HF, {body="Tantra Cyclas +2"})
 	sets.engaged.Mod = {ammo="Thew Bomblet",
@@ -218,10 +219,9 @@ function init_gear_sets()
 	sets.engaged.PDT.HF.Impetus = set_combine(sets.engaged.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT.HF = sets.engaged.Acc.PDT
-	sets.engaged.Acc.PDT.HF.Impetus = set_combine(sets.engaged.Acc.PDT, {body="Tantra Cyclas +2"})
 	sets.engaged.HP = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
@@ -242,7 +242,7 @@ function init_gear_sets()
 	sets.engaged.Counter.HF.Impetus = set_combine(sets.engaged.Counter, {body="Tantra Cyclas +2"})
 	sets.engaged.Acc.Counter = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Hesychast's Gloves",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Anchorite's Hose",feet="Otronif Boots +1"}
 	sets.engaged.Acc.Counter.HF = sets.engaged.Acc.Counter
 	sets.engaged.Acc.Counter.HF.Impetus = set_combine(sets.engaged.Acc.Counter, {body="Tantra Cyclas +2"})
