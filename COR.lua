@@ -87,7 +87,7 @@ function init_gear_sets()
 	sets.precast.JA['Triple Shot'] = {body="Navarch's Frac +2"}
 	sets.precast.JA['Snake Eye'] = {legs="Commodore Culottes +2"}
 	sets.precast.JA['Wild Card'] = {feet="Commodore Bottes +2"}
-	sets.precast.JA['Random Deal'] = {body="Commodore Frac"}
+	sets.precast.JA['Random Deal'] = {body="Lanun Frac"}
 
 	
 	sets.precast.CorsairRoll = {head="Lanun Tricorne",hands="Navarch's Gants +2"}
@@ -175,17 +175,17 @@ function init_gear_sets()
 
 	sets.midcast.CorsairShot = {ammo=gear.QDbullet,
 		head="Blood Mask",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Laksamana's Frac",hands="Schutzen Mittens",ring1="Hajduk Ring",ring2="Demon's Ring",
+		body="Lanun Frac",hands="Schutzen Mittens",ring1="Hajduk Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Aquiline Belt",legs="Iuitl Tights",feet="Commodore Bottes +2"}
 
 	sets.midcast.CorsairShot.Acc = {ammo=gear.QDbullet,
 		head="Laksamana's Hat",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Laksamana's Frac",hands="Schutzen Mittens",ring1="Stormsoul Ring",ring2="Sangoma Ring",
+		body="Lanun Frac",hands="Schutzen Mittens",ring1="Stormsoul Ring",ring2="Sangoma Ring",
 		back="Navarch's Mantle",waist="Aquiline Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 	sets.midcast.CorsairShot['Light Shot'] = {ammo=gear.QDbullet,
 		head="Laksamana's Hat",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Laksamana's Frac",hands="Schutzen Mittens",ring1="Stormsoul Ring",ring2="Sangoma Ring",
+		body="Lanun Frac",hands="Schutzen Mittens",ring1="Stormsoul Ring",ring2="Sangoma Ring",
 		back="Navarch's Mantle",waist="Aquiline Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 	sets.midcast.CorsairShot['Dark Shot'] = sets.midcast.CorsairShot['Light Shot']
