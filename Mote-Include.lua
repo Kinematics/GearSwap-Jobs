@@ -650,10 +650,11 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 			-- Base table for all weaponskills
 			equipSet = sets.precast.WS
 
-			if equipSet[spell.english] then
-				equipSet = equipSet[spell.english]
-			elseif classes.CustomClass and equipSet[classes.CustomClass] then
+			-- If the user specifies a custom class, use that. Otherwise, use the weaponskill name.
+			if classes.CustomClass and equipSet[classes.CustomClass] then
 				equipSet = equipSet[classes.CustomClass]
+			elseif equipSet[spell.english] then
+				equipSet = equipSet[spell.english]
 			end
 
 			-- And if a weaponskill mode is specified, tack that on to the end.
