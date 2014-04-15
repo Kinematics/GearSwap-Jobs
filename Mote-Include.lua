@@ -896,10 +896,12 @@ end
 function get_current_resting_set()
 	local restingSet = {}
 
-	if sets.resting[state.RestingMode] then
-		restingSet = sets.resting[state.RestingMode]
-	else
+	if sets.resting then
 		restingSet = sets.resting
+
+		if restingSet[state.RestingMode] then
+			restingSet = restingSet[state.RestingMode]
+		end
 	end
 
 	return restingSet
