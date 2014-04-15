@@ -58,7 +58,7 @@ function init_include()
 
 	state.SelectNPCTargets     = false
 	state.PCTargetMode         = 'default'
-	
+
 	state.CombatWeapon = nil
 	state.CombatForm = nil
 
@@ -127,7 +127,7 @@ function init_include()
 	sets.engaged = {}
 	sets.defense = {}
 	sets.buff = {}
-                            
+
 	gear = {}
 	gear.default = {}
 
@@ -138,16 +138,16 @@ function init_include()
 	gear.ElementalRing = {name=""}
 	gear.FastcastStaff = {name=""}
 	gear.RecastStaff = {name=""}
-	
-	
+
+
 	-- Load externally-defined information (info that we don't want to change every time this file is updated).
 
 	-- Used to define misc utility functions that may be useful for this include or any job files.
 	include('Mote-Utility')
-	
+
 	-- Used for all self-command handling.
 	include('Mote-SelfCommands')
-	
+
 	-- Include general user globals, such as custom binds or gear tables.
 	-- If the user defined their own globals (user-globals.lua), use that; otherwise use Mote-Globals.
 	if not load_user_globals() then
@@ -161,20 +161,20 @@ function init_include()
 
 	-- Global default binds (either from Mote-Globals or user-globals)
 	binds_on_load()
-	
+
 	-- Load a sidecar file for the job (if it exists) that may re-define init_gear_sets and file_unload.
 	load_user_gear(player.main_job)
 
-	-- General var initialization and setup.  
+	-- General var initialization and setup.
 	if job_setup then
 		job_setup()
 	end
-	
-	-- User-specific var initialization and setup.  
+
+	-- User-specific var initialization and setup.
 	if user_setup then
 		user_setup()
 	end
-	
+
 	-- Load up all the gear sets.
 	init_gear_sets()
 end
@@ -567,7 +567,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 	set_weaponskill_gorget_belt(spell)
 	set_fastcast_staff(spell)
 	set_recast_staff(spell)
-	
+
 	if spell.action_type == 'Magic' then
 		-- Precast for magic is fast cast.
 		-- Therefore our base set is sets.precast.FC.
@@ -596,7 +596,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[state.CastingMode]
 		end
 	elseif spell.action_type == 'Ranged Attack' then
-		-- Ranged attacks use sets.precast.Ranged.
+		-- Ranged attacks use sets.precast.RangedAttack (since Ranged is a gear slot).
 		equipSet = sets.precast.RangedAttack
 
 		-- Custom class modification
@@ -609,6 +609,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 			equipSet = equipSet[state.RangedMode]
 		end
 
+		-- Tack on any additionally specified custom groups, if the sets are defined.
 		for _,group in ipairs(classes.CustomRangedGroups) do
 			if equipSet[group] then
 				equipSet = equipSet[group]
@@ -619,7 +620,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- Weaponskill
 		-- JobAbility
 		-- Specialty (Jig, Waltz, Scholar, etc)
-		
+
 		if spell.type == 'JobAbility' then
 			-- Generic job abilities are under sets.precast.JA, and must be named.
 			if sets.precast.JA[spell.english] then
@@ -629,12 +630,12 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 			-- Custom handling for weaponskills
 			local ws_mode = state.WeaponskillMode
 			local custom_wsmode
-	
+
 			-- Allow the job file to specify a preferred weaponskill mode
 			if get_custom_wsmode then
 				custom_wsmode = get_custom_wsmode(spell, action, spellMap)
 			end
-	
+
 			-- If the job file returned a weaponskill mode, use that.
 			if custom_wsmode then
 				ws_mode = custom_wsmode
@@ -645,7 +646,8 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 					ws_mode = state.OffenseMode
 				end
 			end
-			
+
+			-- Base table for all weaponskills
 			equipSet = sets.precast.WS
 
 			if equipSet[spell.english] then
@@ -654,6 +656,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = equipSet[classes.CustomClass]
 			end
 
+			-- And if a weaponskill mode is specified, tack that on to the end.
 			if equipSet[ws_mode] then
 				equipSet = equipSet[ws_mode]
 			end
@@ -661,9 +664,10 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 			-- All other ability types, such as Waltz, Jig, Scholar, etc.
 			-- These may use the generic type, or be refined for the individual action,
 			-- either by name or by spell map.
+			-- Otherwise check for a naked handling of a custom class or spell map.
 			if sets.precast[spell.type] then
 				equipSet = sets.precast[spell.type]
-				
+
 				if equipSet[spell.english] then
 					equipSet = equipSet[spell.english]
 				elseif equipSet[spellMap] then
@@ -737,15 +741,17 @@ function get_default_midcast_set(spell, action, spellMap, eventArgs)
 			end
 		end
 	elseif spell.action_type == 'Ability' then
+		-- Midcast handling of abilities does not break them down into JA/Weaponskill/other.
+		-- Process all actions as if they were in the 'other' category.
 		if sets.midcast[spell.type] then
 			equipSet = sets.midcast[spell.type]
-			
+
 			if equipSet[spell.english] then
 				equipSet = equipSet[spell.english]
 			elseif spellMap and equipSet[spellMap] then
 				equipSet = equipSet[spellMap]
 			end
-	
+
 			if classes.CustomClass and equipSet[classes.CustomClass] then
 				equipSet = equipSet[classes.CustomClass]
 			end
@@ -777,7 +783,7 @@ function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	-- Spell type
 	if sets.midcast.Pet then
 		equipSet = sets.midcast.Pet
-		
+
 		if classes.CustomClass and equipSet[classes.CustomClass] then
 			equipSet = equipSet[classes.CustomClass]
 		elseif equipSet[spell.english] then
@@ -800,11 +806,11 @@ end
 
 -- Returns the appropriate idle set based on current state.
 -- Set construction order (all of which are optional):
--- sets.idle[idleScope][state.IdleMode][Pet][CustomIdleGroups]
+-- sets.idle[idleScope][state.IdleMode][Pet[.Engaged]][CustomIdleGroups]
 function get_current_idle_set()
 	local idleSet = sets.idle
 	local idleScope
-	
+
 	if buffactive.weakness then
 		idleScope = 'Weak'
 	elseif areas.Cities:contains(world.area) then
@@ -820,10 +826,10 @@ function get_current_idle_set()
 	if idleSet[state.IdleMode] then
 		idleSet = idleSet[state.IdleMode]
 	end
-	
+
 	if (pet.isvalid or state.Buff.Pet) and idleSet.Pet then
 		idleSet = idleSet.Pet
-		
+
 		if pet.status == 'Engaged' and idleSet.Engaged then
 			idleSet = idleSet.Engaged
 		end
@@ -851,7 +857,7 @@ end
 --   sets.engaged[state.CombatForm][state.CombatWeapon][state.OffenseMode][state.DefenseMode][classes.CustomMeleeGroups (any number)]
 function get_current_melee_set()
 	local meleeSet = sets.engaged
-	
+
 	if state.CombatForm and meleeSet[state.CombatForm] then
 		meleeSet = meleeSet[state.CombatForm]
 	end
