@@ -82,12 +82,12 @@ function init_gear_sets()
 	
 
 	sets.precast.JA['Sneak Attack'] = {ammo="Qirmiz Tathlum",
-		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		head="Pillager's Bonnet +1",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Raider's Armlets +2",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Twilight Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
 	sets.precast.JA['Trick Attack'] = {ammo="Qirmiz Tathlum",
-		head="Whirlpool Mask",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		head="Pillager's Bonnet +1",neck="Moepapa Medal",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Stormsoul Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
@@ -179,8 +179,8 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
+		body="Manibozho Jerkin",hands="Plunderer's Armlets",ring1="Rajas Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Raider's Poulaines +2"}
 	
 	
 	-- Midcast Sets
@@ -243,7 +243,7 @@ function init_gear_sets()
 	sets.defense.Evasion = {
 		head="Pillager's Bonnet +1",neck="Torero Torque",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Dark Ring",
-		back="Fravashi Mantle",waist="Flume Belt",legs="Pillager's Culottes +1",feet="Iuitl Gaiters +1"}
+		back="Fravashi Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Pillager's Bonnet +1",neck="Twilight Torque",
@@ -587,4 +587,5 @@ function select_default_macro_book()
 		set_macro_page(2, 5)
 	end
 end
+
 
