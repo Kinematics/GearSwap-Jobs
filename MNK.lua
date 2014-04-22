@@ -222,13 +222,13 @@ function init_gear_sets()
 
 
 	-- Hundred Fists/Impetus melee set mods
-	sets.engaged.HF = sets.engaged
+	sets.engaged.HF = set_combine(sets.engaged)
 	sets.engaged.HF.Impetus = set_combine(sets.engaged, {body="Tantra Cyclas +2"})
-	sets.engaged.Acc.HF = sets.engaged.Acc
+	sets.engaged.Acc.HF = set_combine(sets.engaged.Acc)
 	sets.engaged.Acc.HF.Impetus = set_combine(sets.engaged.Acc, {body="Tantra Cyclas +2"})
-	sets.engaged.Counter.HF = sets.engaged.Counter
+	sets.engaged.Counter.HF = set_combine(sets.engaged.Counter)
 	sets.engaged.Counter.HF.Impetus = set_combine(sets.engaged.Counter, {body="Tantra Cyclas +2"})
-	sets.engaged.Acc.Counter.HF = sets.engaged.Acc.Counter
+	sets.engaged.Acc.Counter.HF = set_combine(sets.engaged.Acc.Counter)
 	sets.engaged.Acc.Counter.HF.Impetus = set_combine(sets.engaged.Acc.Counter, {body="Tantra Cyclas +2"})
 
 
