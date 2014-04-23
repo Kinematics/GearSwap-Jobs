@@ -195,7 +195,7 @@ init_include()
 -- This is the only function where it will be valid to use change_target().
 function pretarget(spell,action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = get_spell_map(spell)
 
 	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
@@ -224,7 +224,7 @@ end
 -- Equip any gear that should be on before the spell or ability is used.
 function precast(spell, action)
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = get_spell_map(spell)
 
 	-- Init an eventArgs that allows cancelling.
 	local eventArgs = {handled = false, cancel = false}
@@ -268,7 +268,7 @@ function midcast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = get_spell_map(spell)
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -313,7 +313,7 @@ function aftercast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = get_spell_map(spell)
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -358,7 +358,7 @@ function pet_midcast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = get_spell_map(spell)
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -394,7 +394,7 @@ function pet_aftercast(spell,action)
 	end
 
 	-- Get the spell mapping, since we'll be passing it to various functions and checks.
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = get_spell_map(spell)
 
 	-- Init a new eventArgs
 	local eventArgs = {handled = false}
@@ -557,6 +557,18 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Functions for constructing default sets.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Get a spell mapping for the spell.
+function get_spell_map(spell)
+	local spellMap = classes.SpellMaps[spell.english]
+	
+	if not spellMap and job_get_spell_map then
+		spellMap = job_get_spell_map(spell)
+	end
+	
+	return spellMap
+end
+
 
 -- Get the default precast gear set.
 function get_default_precast_set(spell, action, spellMap, eventArgs)
