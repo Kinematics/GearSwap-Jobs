@@ -108,22 +108,22 @@ function init_gear_sets()
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Cursna = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Malison Medallion",
@@ -154,7 +154,7 @@ function init_gear_sets()
 		body="Piety Briault",hands="Orison Mitts +2",
 		legs="Theophany Pantaloons"}
 
-	sets.midcast.Protectra = {ring1="Sheltered Ring",feet="Piety Duckbills"}
+	sets.midcast.Protectra = {ring1="Sheltered Ring",feet="Piety Duckbills +1"}
 
 	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Piety Pantaloons"}
 
@@ -167,18 +167,18 @@ function init_gear_sets()
 	sets.midcast.DarkMagic = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	sets.midcast.IntEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	
 	-- Sets to return to when not performing an action.
