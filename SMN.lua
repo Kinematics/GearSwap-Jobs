@@ -336,12 +336,6 @@ end
 function job_pet_midcast(spell, action, spellMap, eventArgs)
 	if spirits:contains(pet.name) then
 		classes.CustomClass = 'Spirit'
-	elseif spell.type == 'BloodPactRage' then
-		if magicalRagePacts:contains(spell.english) then
-			classes.CustomClass = 'MagicalBloodPactRage'
-		else
-			classes.CustomClass = 'PhysicalBloodPactRage'
-		end
 	end
 end
 
@@ -464,6 +458,18 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+function job_get_spell_map(spell)
+	if spell.type == 'BloodPactRage' then
+		if magicalRagePacts:contains(spell.english) then
+			return 'MagicalBloodPactRage'
+		else
+			return 'PhysicalBloodPactRage'
+		end
+	end
+end
+
 
 -- Cast the appopriate storm for the currently summoned avatar, if possible.
 function handle_petweather()
