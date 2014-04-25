@@ -215,7 +215,7 @@ function init_gear_sets()
 		head="Glyphic Horn",neck="Caller's Pendant",
 		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
-	
+
 	sets.midcast.Pet.Spirit = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})
 
 	-- Sets to return to when not performing an action.

@@ -60,7 +60,7 @@ function init_gear_sets()
 	sets.precast.JA['Invincible'] = {legs="Caballarius Breeches"}
 	sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings"}
 	--sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
-	sets.precast.JA['Sentinel'] = {feet="Valor Leggings +2"}
+	sets.precast.JA['Sentinel'] = {feet="Caballarius Leggings"}
 	sets.precast.JA['Rampart'] = {head="Valor Coronet"}
 	--sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
 	--sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
@@ -192,7 +192,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Creed Baudrier",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+		back="Engulfer Cape",waist="Creed Baudrier",legs="Cizin Breeches",feet="Caballarius Leggings"}
 
 	sets.defense.MDT.Reraise = set_combine(sets.defense.MDT, sets.Reraise)
 	sets.defense.MDT.HP = set_combine(sets.defense.PDT, {ring1="Vexer Ring",ring2="Meridian Ring",

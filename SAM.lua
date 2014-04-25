@@ -221,7 +221,7 @@ function init_gear_sets()
 
 	sets.buff.Sekkanoki = {hands="Unkai Kote +2"}
 	sets.buff.Sengikori = {feet="Unkai Sune-ate +2"}
-	sets.buff['Meikyou Shisui'] = {feet="Saotome Sune-ate +2"}
+	sets.buff['Meikyou Shisui'] = {feet="Sakonji Sune-ate"}
 end
 
 

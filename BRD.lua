@@ -497,11 +497,11 @@ function adjust_Timers(spell, action, spellMap)
 		-- Can delete timers that have less than 120 seconds remaining, since
 		-- the new version of the song will overwrite the old one.
 		-- Otherwise create a new timer counting down til we can overwrite.
-		if (timer_reg[spell.name] - t) <= 120 then
+		--if (timer_reg[spell.name] - t) <= 120 then
 			send_command('timers delete "'..spell.name..'"')
 			timer_reg[spell.name] = t + dur
 			send_command('timers create "'..spell.name..'" '..dur..' down')
-		end
+		--end
 	else
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
