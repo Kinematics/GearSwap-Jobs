@@ -393,7 +393,7 @@ function get_spell_class(spell, action, spellMap)
 	local spellclass
 	
 	if spell.action_type == 'Magic' then
-		if spell.skill == "EnfeeblingMagic" then
+		if spell.skill == "Enfeebling Magic" then
 			if spell.type == "WhiteMagic" then
 				spellclass = "MndEnfeebles"
 			else

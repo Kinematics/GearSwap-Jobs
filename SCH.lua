@@ -570,7 +570,7 @@ function get_spell_class(spell, action, spellMap)
 			if world.weather_element == 'Light' then
 				classes.CustomClass = 'CureWithLightWeather'
 			end
-		elseif spell.skill == "EnfeeblingMagic" then
+		elseif spell.skill == "Enfeebling Magic" then
 			if spell.type == "WhiteMagic" then
 				spellclass = "MndEnfeebles"
 			else
