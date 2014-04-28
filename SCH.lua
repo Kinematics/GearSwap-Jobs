@@ -91,9 +91,9 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Academic's Loafers"}
 
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.ElementalMagic = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
+	sets.precast.FC['Elemental Magic'] = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
 	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"}) -- back="Pahtli Cape"
 
@@ -128,7 +128,7 @@ function init_gear_sets()
 		hands="Hieros Mittens",ring1="Ephedra Ring",
 		feet="Gendewitha Galoshes"}
 
-	sets.midcast.EnhancingMagic = {ammo="Savant's Treatise",
+	sets.midcast['Enhancing Magic'] = {ammo="Savant's Treatise",
 		head="Savant's Bonnet +2",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Ayao's Gages",
 		waist="Olympus Sash",legs="Portent Pants"}
@@ -157,7 +157,7 @@ function init_gear_sets()
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast.IntEnfeebles
 
-	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
+	sets.midcast['Dark Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
@@ -183,12 +183,12 @@ function init_gear_sets()
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
-	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast['Elemental Magic'] = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.ElementalMagic.Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast['Elemental Magic'].Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
@@ -227,7 +227,7 @@ function init_gear_sets()
 	sets.resting = {main="Chatoyant Staff",sub="Mephitis Grip",
 		head="Nefer Khat +1",neck="Wiglen Gorget",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		waist="Austerity Belt",legs="Nares Tres",feet="Serpentes Sabots"}
+		waist="Austerity Belt",legs="Nares Trews",feet="Serpentes Sabots"}
 	
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
@@ -298,7 +298,7 @@ function init_gear_sets()
 
 	sets.buff['Klimaform'] = {feet="Savant's Loafers +2"}
 
-	sets.buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Argute Gown +2"}
+	sets.buff.FullSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring",body="Pedagogy Gown"}
 	sets.buff.PDTSublimation = {head="Academic's Mortarboard",ear1="Savant's Earring"}
 
 	--sets.buff['Sandstorm'] = {feet="Desert Boots"}
@@ -570,7 +570,7 @@ function get_spell_class(spell, action, spellMap)
 			if world.weather_element == 'Light' then
 				classes.CustomClass = 'CureWithLightWeather'
 			end
-		elseif spell.skill == "EnfeeblingMagic" then
+		elseif spell.skill == "Enfeebling Magic" then
 			if spell.type == "WhiteMagic" then
 				spellclass = "MndEnfeebles"
 			else

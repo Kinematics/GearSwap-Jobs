@@ -153,14 +153,14 @@ function init_gear_sets()
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA['Astral Flow'] = {head="Summoner's Horn +2"}
+	sets.precast.JA['Astral Flow'] = {head="Glyphic Horn"}
 	
-	sets.precast.JA['Elemental Siphon'] = {head="Caller's Pigaches +2"} -- back="Conveyance Cape"
+	sets.precast.JA['Elemental Siphon'] = {feet="Caller's Pigaches +2"} -- back="Conveyance Cape"
 
 	sets.precast.JA['Mana Cede'] = {hands="Caller's Bracers +2"}
 
 	-- Pact delay reduction gear
-	sets.precast.BloodPactWard = {ammo="Eminent Sachet",head="Convoker's Horn",body="Convoker's Doublet",hands="Summoner's Bracers"}
+	sets.precast.BloodPactWard = {ammo="Eminent Sachet",head="Convoker's Horn",body="Convoker's Doublet",hands="Glyphic Bracers"}
 
 	sets.precast.BloodPactRage = sets.precast.BloodPactWard
 
@@ -171,7 +171,7 @@ function init_gear_sets()
 		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
        
 	-- Weaponskill sets
@@ -203,19 +203,19 @@ function init_gear_sets()
 
 	sets.midcast.Pet.BloodPactWard = {main="Soulscourge",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Caller's Pendant",
-		body="Caller's Doublet +2",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
 	
 	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Caller's Pendant",
-		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
 	sets.midcast.Pet.MagicalBloodPactRage = {main="Eminent Pole",ammo="Eminent Sachet",
-		head="Bokwus Circlet",neck="Caller's Pendant",
-		body="Convoker's Doublet",hands="Summoner's Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		head="Glyphic Horn",neck="Caller's Pendant",
+		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
-	
+
 	sets.midcast.Pet.Spirit = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})
 
 	-- Sets to return to when not performing an action.
@@ -237,28 +237,48 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
 
+	-- perp costs:
+	-- spirits: 7
+	-- carby: 11 (5 with mitts)
+	-- fenrir: 13
+	-- others: 15
+	-- avatar's favor: -4/tick
+	
+	-- -perp gear:
+	-- Patriarch Cane: -3
+	-- Glyphic Horn: -4
+	-- Caller's Doublet +2: -4
+	-- Evoker's Ring: -1
+	-- Convoker's Pigaches: -4
+	-- total: -16
+	
 	sets.idle.Avatar = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
-		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
+		head="Glyphic Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
-	sets.idle.Spirit = {main="Bolelabunga",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Spirit = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Tiresias' Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Convoker's Pigaches"}
 
-	sets.idle.Town = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Eminent Sachet",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
+	-- Favor can trade the -4 perp of Glyphic Horn for +2 refresh of Caller's Horn (plus enhance favor).
 	sets.idle.Avatar.Favor = {head="Caller's Horn +2"}
 	sets.idle.Avatar.Melee = {hands="Regimen Mittens",waist="Kuku Stone",legs="Convoker's Spats"}
 		
 	sets.perp = {}
 	sets.perp.Day = {hands="Caller's Bracers +2"}
 	sets.perp.Weather = {neck="Caller's Pendant",hands="Caller's Bracers +2"}
-	sets.perp.Carbuncle = {hands="Carbuncle Mitts"}
+	-- Carby: Mitts+Conv.feet+Ev.Ring = 0/tick perp.  Everything else should be +refresh
+	sets.perp.Carbuncle = {main="Bolelabunga",sub="Genbu's Shield",
+		head="Convoker's Horn",body="Hagondes Coat",hands="Carbuncle Mitts",legs="Nares Trews",feet="Convoker's Pigaches"}
+	-- Fenrir: doesn't need full -perp set; trade body for +refresh
+	sets.perp.Fenrir = {body="Hagondes Coat"}
 	sets.perp.Diabolos = {waist="Diabolos's Rope"}
 	sets.perp.Alexander = sets.midcast.Pet.BloodPactWard
 	
@@ -316,12 +336,6 @@ end
 function job_pet_midcast(spell, action, spellMap, eventArgs)
 	if spirits:contains(pet.name) then
 		classes.CustomClass = 'Spirit'
-	elseif spell.type == 'BloodPactRage' then
-		if magicalRagePacts:contains(spell.english) then
-			classes.CustomClass = 'MagicalBloodPactRage'
-		else
-			classes.CustomClass = 'PhysicalBloodPactRage'
-		end
 	end
 end
 
@@ -444,6 +458,18 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+function job_get_spell_map(spell)
+	if spell.type == 'BloodPactRage' then
+		if magicalRagePacts:contains(spell.english) then
+			return 'MagicalBloodPactRage'
+		else
+			return 'PhysicalBloodPactRage'
+		end
+	end
+end
+
 
 -- Cast the appopriate storm for the currently summoned avatar, if possible.
 function handle_petweather()

@@ -69,9 +69,9 @@ function init_gear_sets()
 		body="Vanir Cotehardie",ring1="Prolix Ring",
 		back="Swith Cape",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.ElementalMagic = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
+	sets.precast.FC['Elemental Magic'] = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
 	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris", back="Pahtli Cape"})
 
@@ -105,21 +105,21 @@ function init_gear_sets()
 
 	sets.midcast.Curaga = sets.midcast.Cure
 
-	sets.midcast.EnhancingMagic = {
+	sets.midcast['Enhancing Magic'] = {
 		neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Ayao's Gages",
 		legs="Portent Pants"}
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
 
-	sets.midcast.EnfeeblingMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast['Enfeebling Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast.EnfeeblingMagic
 
-	sets.midcast.DarkMagic = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast['Dark Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
@@ -143,18 +143,18 @@ function init_gear_sets()
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
-	sets.midcast.ElementalMagic = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast['Elemental Magic'] = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.ElementalMagic.Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast['Elemental Magic'].Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	-- Idle set when doing procs.  Fast cast gear, minimal nuke gear.  Won't change out of this for nukes.
-	sets.midcast.ElementalMagic.Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
+	sets.midcast['Elemental Magic'].Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Manasa Chasuble",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}

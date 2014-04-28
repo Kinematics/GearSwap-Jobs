@@ -58,9 +58,11 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.HealingMagic = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC.EnhancingMagic, {head="Umuthi Hat"})
+
+	sets.precast.FC['Healing Magic'] = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
 
 	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
 
@@ -108,22 +110,22 @@ function init_gear_sets()
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Orison Bliaud +2",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
 		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills"}
+		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Cursna = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Malison Medallion",
@@ -133,8 +135,9 @@ function init_gear_sets()
 	sets.midcast.StatusRemoval = {
 		head="Orison Cap +2",legs="Orison Pantaloons +2"}
 
-
-	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
+	-- 110 total Enhancing Magic Skill; caps even without Light Arts
+	sets.midcast['Enhancing Magic'] = {main="Beneficus",sub="Genbu's Shield",
+		head="Umuthi Hat",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Dynasty Mitts",
 		back="Mending Cape",waist="Olympus Sash",legs="Piety Pantaloons",feet="Orison Duckbills +2"}
 
@@ -154,31 +157,31 @@ function init_gear_sets()
 		body="Piety Briault",hands="Orison Mitts +2",
 		legs="Theophany Pantaloons"}
 
-	sets.midcast.Protectra = {ring1="Sheltered Ring",feet="Piety Duckbills"}
+	sets.midcast.Protectra = {ring1="Sheltered Ring",feet="Piety Duckbills +1"}
 
 	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Piety Pantaloons"}
 
 
-	sets.midcast.DivineMagic = {main="Bolelabunga",sub="Genbu's Shield",
+	sets.midcast['Divine Magic'] = {main="Bolelabunga",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
-		back=gear.ElementalCape,waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Orison Duckbills +2"}
+		back="Refraction Cape",waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 
-	sets.midcast.DarkMagic = {main="Bolelabunga", sub="Genbu's Shield",
+	sets.midcast['Dark Magic'] = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	-- Custom spell classes
 	sets.midcast.MndEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	sets.midcast.IntEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -390,7 +393,7 @@ function get_spell_class(spell, action, spellMap)
 	local spellclass
 	
 	if spell.action_type == 'Magic' then
-		if spell.skill == "EnfeeblingMagic" then
+		if spell.skill == "Enfeebling Magic" then
 			if spell.type == "WhiteMagic" then
 				spellclass = "MndEnfeebles"
 			else

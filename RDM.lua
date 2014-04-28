@@ -54,7 +54,7 @@ function init_gear_sets()
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA['Chainspell'] = {body="Duelist's Tabard +2"}
+	sets.precast.JA['Chainspell'] = {body="Vitivation Tabard"}
 	
 
 	-- Waltz set (chr and vit)
@@ -72,7 +72,7 @@ function init_gear_sets()
 	-- No other FC sets necessary.
 	sets.precast.FC = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",ear2="Loquacious Earring",
-		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vitivation Tabard",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Impact = set_combine(sets.precast.FC, {head=empty,body="Twilight Cloak"})
@@ -99,7 +99,7 @@ function init_gear_sets()
 	
 	sets.midcast.FastRecast = {
 		head="Atrophy Chapeau +1",ear2="Loquacious Earring",
-		body="Duelist's Tabard +2",hands="Gendewitha Gages",ring1="Prolix Ring",
+		body="Vitivation Tabard",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {sub="Genbu's Shield",
@@ -109,25 +109,25 @@ function init_gear_sets()
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 
-	sets.midcast.EnhancingMagic = {
+	sets.midcast['Enhancing Magic'] = {
 		head="Atrophy Chapeau +1",neck="Colossus's Torque",
-		body="Duelist's Tabard +2",hands="Atrophy Gloves +1",ring1="Prolix Ring",
+		body="Vitivation Tabard",hands="Atrophy Gloves +1",ring1="Prolix Ring",
 		back="Estoqueur's Cape",waist="Olympus Sash",legs="Atrophy Tights",feet="Estoqueur's Houseaux +2"}
 
 	sets.midcast.Refresh = {legs="Estoqueur's Fuseau +2"}
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 	
-	sets.midcast.EnfeeblingMagic = {ammo="Impatiens",
+	sets.midcast['Enfeebling Magic'] = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Cascade Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast['Dia III'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
+	sets.midcast['Dia III'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Vitivation Chapeau"})
 
-	sets.midcast['Slow II'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Duelist's Chapeau +2"})
+	sets.midcast['Slow II'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Vitivation Chapeau"})
 	
-	sets.midcast.ElementalMagic = {
+	sets.midcast['Elemental Magic'] = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
@@ -136,7 +136,7 @@ function init_gear_sets()
 
 	sets.midcast.Impact = set_combine(sets.midcast.ElementalMagic, {head=empty,body="Twilight Cloak"})
 
-	sets.midcast.DarkMagic = {
+	sets.midcast['Dark Magic'] = {
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
@@ -163,7 +163,7 @@ function init_gear_sets()
 	
 	-- Resting sets
 	sets.resting = {main="Chatoyant Staff",
-		head="Duelist's Chapeau +2",neck="Wiglen Gorget",
+		head="Vitivation Chapeau",neck="Wiglen Gorget",
 		body="Atrophy Tabard +1",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 	
@@ -175,12 +175,12 @@ function init_gear_sets()
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 	
 	sets.idle.Field = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
-		head="Duelist's Chapeau +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		head="Vitivation Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 
 	sets.idle.Weak = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
-		head="Duelist's Chapeau +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		head="Vitivation Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard +1",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 	
