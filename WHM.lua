@@ -60,6 +60,8 @@ function init_gear_sets()
 		
 	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC.EnhancingMagic, {head="Umuthi Hat"})
+
 	sets.precast.FC.HealingMagic = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
 
 	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
@@ -133,8 +135,9 @@ function init_gear_sets()
 	sets.midcast.StatusRemoval = {
 		head="Orison Cap +2",legs="Orison Pantaloons +2"}
 
-
+	-- 110 total Enhancing Magic Skill; caps even without Light Arts
 	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
+		head="Umuthi Hat",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Dynasty Mitts",
 		back="Mending Cape",waist="Olympus Sash",legs="Piety Pantaloons",feet="Orison Duckbills +2"}
 
