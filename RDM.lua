@@ -109,7 +109,7 @@ function init_gear_sets()
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 
-	sets.midcast.EnhancingMagic = {
+	sets.midcast['Enhancing Magic'] = {
 		head="Atrophy Chapeau +1",neck="Colossus's Torque",
 		body="Vitivation Tabard",hands="Atrophy Gloves +1",ring1="Prolix Ring",
 		back="Estoqueur's Cape",waist="Olympus Sash",legs="Atrophy Tights",feet="Estoqueur's Houseaux +2"}
@@ -118,7 +118,7 @@ function init_gear_sets()
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 	
-	sets.midcast.EnfeeblingMagic = {ammo="Impatiens",
+	sets.midcast['Enfeebling Magic'] = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Cascade Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
@@ -127,7 +127,7 @@ function init_gear_sets()
 
 	sets.midcast['Slow II'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Vitivation Chapeau"})
 	
-	sets.midcast.ElementalMagic = {
+	sets.midcast['Elemental Magic'] = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
@@ -136,7 +136,7 @@ function init_gear_sets()
 
 	sets.midcast.Impact = set_combine(sets.midcast.ElementalMagic, {head=empty,body="Twilight Cloak"})
 
-	sets.midcast.DarkMagic = {
+	sets.midcast['Dark Magic'] = {
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}

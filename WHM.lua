@@ -58,11 +58,11 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC.EnhancingMagic, {head="Umuthi Hat"})
 
-	sets.precast.FC.HealingMagic = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
+	sets.precast.FC['Healing Magic'] = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
 
 	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
 
@@ -136,7 +136,7 @@ function init_gear_sets()
 		head="Orison Cap +2",legs="Orison Pantaloons +2"}
 
 	-- 110 total Enhancing Magic Skill; caps even without Light Arts
-	sets.midcast.EnhancingMagic = {main="Beneficus",sub="Genbu's Shield",
+	sets.midcast['Enhancing Magic'] = {main="Beneficus",sub="Genbu's Shield",
 		head="Umuthi Hat",neck="Colossus's Torque",
 		body="Manasa Chasuble",hands="Dynasty Mitts",
 		back="Mending Cape",waist="Olympus Sash",legs="Piety Pantaloons",feet="Orison Duckbills +2"}
@@ -162,12 +162,12 @@ function init_gear_sets()
 	sets.midcast.Shellra = {ring1="Sheltered Ring",legs="Piety Pantaloons"}
 
 
-	sets.midcast.DivineMagic = {main="Bolelabunga",sub="Genbu's Shield",
+	sets.midcast['Divine Magic'] = {main="Bolelabunga",sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Colossus's Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring2="Sangoma Ring",
 		back="Refraction Cape",waist=gear.ElementalObi,legs="Theophany Pantaloons",feet="Gendewitha Galoshes"}
 
-	sets.midcast.DarkMagic = {main="Bolelabunga", sub="Genbu's Shield",
+	sets.midcast['Dark Magic'] = {main="Bolelabunga", sub="Genbu's Shield",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}

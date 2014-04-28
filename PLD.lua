@@ -88,7 +88,7 @@ function init_gear_sets()
 		ring1="Prolix Ring",
 		legs="Enif Cosciales"}
 
-	sets.precast.FC.EnhancingMagic = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
@@ -138,7 +138,7 @@ function init_gear_sets()
 		body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
 		back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches",feet="Reverence Leggings"}
 
-	sets.midcast.EnhancingMagic = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches"}
+	sets.midcast['Enhancing Magic'] = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches"}
 	
 	sets.midcast.Protect = {ring1="Sheltered Ring"}
 	sets.midcast.Shell = {ring1="Sheltered Ring"}
