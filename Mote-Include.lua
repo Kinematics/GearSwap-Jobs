@@ -560,10 +560,14 @@ end
 
 -- Get a spell mapping for the spell.
 function get_spell_map(spell)
-	local spellMap = classes.SpellMaps[spell.english]
+	local spellMap = nil
 	
-	if not spellMap and job_get_spell_map then
+	if job_get_spell_map then
 		spellMap = job_get_spell_map(spell)
+	end
+	
+	if not spellMap then
+		spellMap = classes.SpellMaps[spell.english]
 	end
 	
 	return spellMap
