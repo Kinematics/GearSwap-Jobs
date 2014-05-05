@@ -110,14 +110,14 @@ function init_gear_sets()
 		body="Manasa Chasuble",hands="Ayao's Gages",
 		legs="Portent Pants"}
 	
-	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
+	sets.midcast.Stoneskin = set_combine(sets.midcast['Enhancing Magic'], {waist="Siegel Sash"})
 
 	sets.midcast['Enfeebling Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 		
-	sets.midcast.ElementalEnfeeble = sets.midcast.EnfeeblingMagic
+	sets.midcast.ElementalEnfeeble = sets.midcast['Enfeebling Magic']
 
 	sets.midcast['Dark Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
@@ -269,7 +269,7 @@ end
 function job_precast(spell, action, spellMap, eventArgs)
 	if spellMap == 'Cure' or spellMap == 'Curaga' then
 		gear.default.obi_waist = "Goading Belt"
-	elseif spell.skill == 'ElementalMagic' then
+	elseif spell.skill == 'Elemental Magic' then
 		gear.default.obi_waist = "Sekhmet Corset"
 	end
 end
@@ -281,7 +281,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer is fast recast.
 		equip(sets.midcast.FastRecast)
 
-		if spell.skill == 'ElementalMagic' then
+		if spell.skill == 'Elemental Magic' then
 			if state.CastingMode == 'Proc' then
 				add_to_chat(15,'Proc mode, no damage gear for midcast.')
 				eventArgs.handled = true

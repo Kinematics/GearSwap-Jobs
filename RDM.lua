@@ -123,9 +123,9 @@ function init_gear_sets()
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Cascade Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast['Dia III'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Vitivation Chapeau"})
+	sets.midcast['Dia III'] = set_combine(sets.midcast['Enfeebling Magic'], {head="Vitivation Chapeau"})
 
-	sets.midcast['Slow II'] = set_combine(sets.midcast.EnfeeblingMagic, {head="Vitivation Chapeau"})
+	sets.midcast['Slow II'] = set_combine(sets.midcast['Enfeebling Magic'], {head="Vitivation Chapeau"})
 	
 	sets.midcast['Elemental Magic'] = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
@@ -134,16 +134,16 @@ function init_gear_sets()
 		
 	gear.default.obi_waist = "Sekhmet Corset"
 
-	sets.midcast.Impact = set_combine(sets.midcast.ElementalMagic, {head=empty,body="Twilight Cloak"})
+	sets.midcast.Impact = set_combine(sets.midcast['Elemental Magic'], {head=empty,body="Twilight Cloak"})
 
 	sets.midcast['Dark Magic'] = {
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	--sets.midcast.Stun = set_combine(sets.midcast.DarkMagic, {})
+	--sets.midcast.Stun = set_combine(sets.midcast['Dark Magic'], {})
 
-	--sets.midcast.Drain = set_combine(sets.midcast.DarkMagic, {ring2="Excelsis Ring"})
+	--sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring2="Excelsis Ring"})
 
 	--sets.midcast.Aspir = sets.midcast.Drain
 
@@ -227,9 +227,9 @@ end
 -- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if spell.skill == 'EnfeeblingMagic' and state.Buff.Saboteur then
+	if spell.skill == 'Enfeebling Magic' and state.Buff.Saboteur then
 		equip(sets.buff.Saboteur)
-	elseif spell.skill == 'EnhancingMagic' then
+	elseif spell.skill == 'Enhancing Magic' then
 		if buffactive.composure and spell.target.type == 'PLAYER' then
 			equip(sets.buff.ComposureOther)
 		elseif spell.target.type == 'SELF' then

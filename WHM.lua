@@ -60,13 +60,13 @@ function init_gear_sets()
 		
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC.EnhancingMagic, {head="Umuthi Hat"})
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC['Enhancing Magic'], {head="Umuthi Hat"})
 
 	sets.precast.FC['Healing Magic'] = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
 
-	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
+	sets.precast.FC.StatusRemoval = sets.precast.FC['Healing Magic']
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens"})
+	sets.precast.FC.Cure = set_combine(sets.precast.FC['Healing Magic'], {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 	
@@ -108,24 +108,24 @@ function init_gear_sets()
 	gear.default.obi_back = "Mending Cape"
 
 	sets.midcast.CureSolace = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Orison Earring",
 		body="Orison Bliaud +2",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
+		back="Tuilha Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Orison Earring",
 		body="Vanir Cotehardie",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
+		back="Tuilha Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Curaga = {main="Tamaxchi",sub="Genbu's Shield",ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Orison Earring",
 		body="Vanir Cotehardie",hands="Theophany Mitts",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
+		back="Tuilha Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.CureMelee = {ammo="Incantor Stone",
-		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		head="Gendewitha Caubeen",neck="Orison Locket",ear1="Lifestorm Earring",ear2="Orison Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Orison Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
+		back="Tuilha Cape",waist=gear.ElementalObi,legs="Orison Pantaloons +2",feet="Piety Duckbills +1"}
 
 	sets.midcast.Cursna = {main="Beneficus",sub="Genbu's Shield",
 		head="Orison Cap +2",neck="Malison Medallion",
@@ -259,7 +259,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.handled = true
 	end
 	
-	if spell.skill == 'HealingMagic' then
+	if spell.skill == 'Healing Magic' then
 		gear.default.obi_back = "Mending Cape"
 	else
 		gear.default.obi_back = "Toro Cape"
