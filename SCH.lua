@@ -99,7 +99,7 @@ function init_gear_sets()
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
-	sets.precast.FC.Impact = set_combine(sets.precast.FC.ElementalMagic, {head=empty,body="Twilight Cloak"})
+	sets.precast.FC.Impact = set_combine(sets.precast.FC['Elemental Magic'], {head=empty,body="Twilight Cloak"})
 
        
 	-- Midcast Sets
@@ -133,9 +133,9 @@ function init_gear_sets()
 		body="Manasa Chasuble",hands="Ayao's Gages",
 		waist="Olympus Sash",legs="Portent Pants"}
 	
-	sets.midcast.Stoneskin = set_combine(sets.midcast.EnhancingMagic, {waist="Siegel Sash"})
+	sets.midcast.Stoneskin = set_combine(sets.midcast['Enhancing Magic'], {waist="Siegel Sash"})
 
-	sets.midcast.Storm = set_combine(sets.midcast.EnhancingMagic, {feet="Pedagogy Loafers"})
+	sets.midcast.Storm = set_combine(sets.midcast['Enhancing Magic'], {feet="Pedagogy Loafers"})
 
 	sets.midcast.Protect = {ring1="Sheltered Ring"}
 	sets.midcast.Protectra = sets.midcast.Protect
@@ -445,13 +445,13 @@ end
 
 -- Equip sets appropriate to the active buffs, relative to the spell being cast.
 function apply_grimoire_bonuses(spell, action, spellMap)
-	if state.Buff.Perpetuance and spell.skill == 'EnhancingMagic' then
+	if state.Buff.Perpetuance and spell.skill == 'Enhancing Magic' then
 		equip(sets.buff['Perpetuance'])
 	end
 	if state.Buff.Rapture and spellMap == 'Cure' or spellMap == 'Curaga' then
 		equip(sets.buff['Rapture'])
 	end
-	if spell.skill == 'ElementalMagic' and spellMap ~= 'ElementalEnfeeble' then
+	if spell.skill == 'Elemental Magic' and spellMap ~= 'ElementalEnfeeble' then
 		if state.Buff.Ebullience and spell.english ~= 'Impact' then
 			equip(sets.buff['Ebullience'])
 		end

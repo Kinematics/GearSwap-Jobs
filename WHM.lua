@@ -60,13 +60,13 @@ function init_gear_sets()
 		
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC.EnhancingMagic, {head="Umuthi Hat"})
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC['Enhancing Magic'], {head="Umuthi Hat"})
 
 	sets.precast.FC['Healing Magic'] = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
 
-	sets.precast.FC.StatusRemoval = sets.precast.FC.HealingMagic
+	sets.precast.FC.StatusRemoval = sets.precast.FC['Healing Magic']
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC.HealingMagic, {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens"})
+	sets.precast.FC.Cure = set_combine(sets.precast.FC['Healing Magic'], {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 	
@@ -259,7 +259,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.handled = true
 	end
 	
-	if spell.skill == 'HealingMagic' then
+	if spell.skill == 'Healing Magic' then
 		gear.default.obi_back = "Mending Cape"
 	else
 		gear.default.obi_back = "Toro Cape"
