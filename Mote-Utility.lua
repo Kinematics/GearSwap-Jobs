@@ -335,9 +335,9 @@ function set_weaponskill_gorget_belt(spell)
 
 	-- Get the union of all the skillchain elements for the weaponskill
 	local weaponskill_elements = S{}:
-		union(skillchain_elements[spell.wsA]):
-		union(skillchain_elements[spell.wsB]):
-		union(skillchain_elements[spell.wsC])
+		union(skillchain_elements[spell.skillchain_a]):
+		union(skillchain_elements[spell.skillchain_b]):
+		union(skillchain_elements[spell.skillchain_c])
 	
 	-- Hook to the default gear vars, if available.
 	local gorget = gear.ElementalGorget or {name=""}
