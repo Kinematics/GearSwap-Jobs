@@ -29,7 +29,7 @@ storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm", "Rainstorm", "W
 
 skillchain_elements = {}
 skillchain_elements.Light = S{'Light','Fire','Wind','Lightning'}
-skillchain_elements.Dark = S{'Dark','Ice','Earth','Water'}
+skillchain_elements.Darkness = S{'Dark','Ice','Earth','Water'}
 skillchain_elements.Fusion = S{'Light','Fire'}
 skillchain_elements.Fragmentation = S{'Wind','Lightning'}
 skillchain_elements.Distortion = S{'Ice','Water'}
