@@ -189,8 +189,9 @@ end
 
 -- Function to allow for automatic adjustment of the spell target type based on preferences.
 function auto_change_target(spell, action, spellMap)
-	-- Do not modify target for spells where we get <lastst> or <me>.
-	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
+	-- Do not modify target for spells where we get <lastst> or <me> or <t>.
+	-- <me> and <t> are assumed to be fixed, unmodified targets, not subject to selection adjustments.
+	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') or spell.target.raw == ('<t>') then
 		return
 	end
 	
