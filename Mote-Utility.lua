@@ -11,6 +11,7 @@ local cancel_spells_to_check = S{'Sneak', 'Spectral Jig', 'Trance', 'Monomi: Ich
 local cancel_types_to_check = S{'Waltz', 'Samba'}
 
 -- Function to cancel buffs if they'd conflict with using the spell you're attempting.
+-- Requirement: Must have Cancel addon installed and loaded for this to work.
 function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 	if cancel_spells_to_check:contains(spell.english) or cancel_types_to_check:contains(spell.type) then
 		if spell.action_type == 'Ability' then
