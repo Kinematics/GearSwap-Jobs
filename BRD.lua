@@ -113,6 +113,8 @@ function init_gear_sets()
 
 	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"})
 
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC, {head="Umuthi Hat"})
+
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
