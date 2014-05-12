@@ -208,7 +208,7 @@ end
 -- Custom spell mapping.
 -- Return custom spellMap value that can override the default spell mapping.
 -- Don't return anything to allow default spell mapping to be used.
-function job_get_spell_map(spell, defaultSpellMap)
+function job_get_spell_map(spell, default_spell_map)
 
 end
 
