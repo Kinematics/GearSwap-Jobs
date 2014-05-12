@@ -311,7 +311,7 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
+
 end
 
 
@@ -342,6 +342,24 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+function job_get_spell_map(spell, default_spell_map)
+	if spell.action_type == 'Magic' then
+		if default_spell_map == 'Cure' or default_spell_map == 'Curaga' then
+			if world.weather_element == 'Light' then
+				return 'CureWithLightWeather'
+			end
+		elseif spell.skill == "Enfeebling Magic" then
+			if spell.type == "WhiteMagic" then
+				return "MndEnfeebles"
+			else
+				return "IntEnfeebles"
+			end
+		end
+	end
+end
+
 
 function customize_idle_set(idleSet)
 	if state.Buff.Sublimation then
@@ -560,25 +578,5 @@ function get_current_strategem_count()
 	local currentCharges = math.floor(maxStrategems - maxStrategems * stratsRecast / fullRechargeTime)
 	
 	return currentCharges
-end
-
-function get_spell_class(spell, action, spellMap)
-	local spellclass
-	
-	if spell.action_type == 'Magic' then
-		if spellMap == 'Cure' or spellMap == 'Curaga' then
-			if world.weather_element == 'Light' then
-				classes.CustomClass = 'CureWithLightWeather'
-			end
-		elseif spell.skill == "Enfeebling Magic" then
-			if spell.type == "WhiteMagic" then
-				spellclass = "MndEnfeebles"
-			else
-				spellclass = "IntEnfeebles"
-			end
-		end
-	end
-	
-	return spellclass
 end
 

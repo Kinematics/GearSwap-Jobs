@@ -281,13 +281,9 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer is fast recast.
 		equip(sets.midcast.FastRecast)
 
-		if spell.skill == 'Elemental Magic' then
-			if state.CastingMode == 'Proc' then
-				add_to_chat(15,'Proc mode, no damage gear for midcast.')
-				eventArgs.handled = true
-			else
-				classes.CustomClass = get_nuke_class(spell, action, spellMap)
-			end
+		if spell.skill == 'Elemental Magic' and state.CastingMode == 'Proc' then
+			add_to_chat(15,'Proc mode, no damage gear for midcast.')
+			eventArgs.handled = true
 		end
 	end
 end
@@ -303,6 +299,15 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+function job_get_spell_map(spell, default_spell_map)
+	if spell.skill == 'Elemental Magic' and default_spell_map ~= 'ElementalEnfeeble' then
+		if not lowTierNukes:contains(spell.english) then
+			return 'HighTierNuke'
+		end
+	end
+end
 
 
 -------------------------------------------------------------------------------------------------------------------
@@ -368,15 +373,5 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
-
--- Function to get the custom class to use for nukes.
-function get_nuke_class(spell, action, spellMap)
-	if lowTierNukes[spell.english] then
-		-- low tier nukes use the default set
-		return nil
-	else
-		return 'HighTierNuke'
-	end
-end
 
 
