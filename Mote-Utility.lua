@@ -309,29 +309,16 @@ end
 -- Elemental gear utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
--- Pick an item to use based on required elemental properties.
--- Cycles through the list of all elements until it matches one of the
--- provided elements to search, and checks whether an appropriate item
--- of that type exists in inventory.  If so, uses that.
--- It may optionally provide a list of valid elements, rather than
--- searching all possible elements.
--- Returns the item var if it found a match and the item was in inventory.
---
--- valid_element: a set S{} of elements that are to be checked
-function select_elemental_item(itemvar, itemtype, elements_to_search, valid_elements)
-	local potential_elements = valid_elements or elements.list
-	
-	for element,_ in pairs(potential_elements) do
-		if elements_to_search:contains(element) and player.inventory[gear_map[itemtype][element]] then
-			itemvar.name = gear_map[itemtype][element]
-			return itemvar
-		end
-	end
+-- General handler function to set all the elemental gear for an action.
+function set_elemental_gear(spell)
+	set_elemental_gorget_belt(spell)
+	set_elemental_obi_cape_ring(spell)
+	set_elemental_staff(spell)
 end
 
 
--- Function to get an appropriate gorget and belt for the current weaponskill.
-function set_weaponskill_gorget_belt(spell)
+-- Set the name field of the predefined gear vars for gorgets and belts, for the specified weaponskill.
+function set_elemental_gorget_belt(spell)
 	if spell.type ~= 'WeaponSkill' then
 		return
 	end
@@ -342,88 +329,75 @@ function set_weaponskill_gorget_belt(spell)
 		union(skillchain_elements[spell.skillchain_b]):
 		union(skillchain_elements[spell.skillchain_c])
 	
-	-- Hook to the default gear vars, if available.
-	local gorget = gear.ElementalGorget or {name=""}
-	gorget.name = gear.default.weaponskill_neck or ""
-	local belt = gear.ElementalBelt or {name=""}
-	belt.name = gear.default.weaponskill_waist or ""
-	
-	select_elemental_item(gorget, 'Gorget', weaponskill_elements)
-	select_elemental_item(belt, 'Belt', weaponskill_elements)
-	
-	return gorget, belt
+	gear.ElementalGorget.name = get_elemental_item_name("gorget", weaponskill_elements) or gear.default.weaponskill_neck  or ""
+	gear.ElementalBelt.name   = get_elemental_item_name("belt", weaponskill_elements)   or gear.default.weaponskill_waist or ""
 end
 
 
--- Function to get an appropriate obi/cape/ring for the current spell.
-function set_spell_obi_cape_ring(spell)
+-- Function to get an appropriate obi/cape/ring for the current action.
+function set_elemental_obi_cape_ring(spell)
 	if spell.element == 'None' then
 		return
 	end
 	
-	local world_elements = S{}
+	local world_elements = S{world.day_element}
 	if world.weather_element ~= 'None' then
 		world_elements:add(world.weather_element)
 	end
-	world_elements:add(world.day_element)
+
+	local obi_name = get_elemental_item_name("obi", S{spell.element}, world_elements)
+	gear.ElementalObi.name = obi_name or gear.default.obi_waist  or ""
 	
-	local obi = gear.ElementalObi or {name=""}
-	obi.name = gear.default.obi_waist or ""
-	local cape = gear.ElementalCape or {name=""}
-	cape.name = gear.default.obi_back or ""
-	local ring = gear.ElementalRing or {name=""}
-	ring.name = gear.default.obi_ring or ""
-	
-	local got_obi = select_elemental_item(obi, 'Obi', S{spell.element}, world_elements)
-	
-	if got_obi then
+	if obi_name then
 		if player.inventory['Twilight Cape'] then
-			cape.name = "Twilight Cape"
+			gear.ElementalCape.name = "Twilight Cape"
 		end
 		if player.inventory['Zodiac Ring'] and spell.english ~= 'Impact' and
-			not S{'DivineMagic','DarkMagic','HealingMagic'}:contains(spell.skill) then
-			ring.name = "Zodiac Ring"
+			not S{'Divine Magic','Dark Magic','Healing Magic'}:contains(spell.skill) then
+			gear.ElementalRing.name = "Zodiac Ring"
 		end
 	end
-	
-	return obi, cape, ring
 end
 
 
--- Function to get an appropriate gorget and belt for the current weaponskill.
-function set_fastcast_staff(spell)
+-- Function to get the appropriate fast cast and/or recast staves for the current spell.
+function set_elemental_staff(spell)
 	if spell.action_type ~= 'Magic' then
 		return
 	end
 
-	local staff = gear.FastcastStaff or {name=""}
-	
-	if gear_map['FastcastStaff'][spell.element] and player.inventory[gear_map['FastcastStaff'][spell.element]] then
-		staff.name = gear_map['FastcastStaff'][spell.element]
-	else
-		staff.name = gear.default.fastcast_staff or ""
-	end
-
-	return staff
+	gear.FastcastStaff.name = get_elemental_item_name("fastcast_staff", S{spell.element}) or gear.default.fastcast_staff  or ""
+	gear.RecastStaff.name   = get_elemental_item_name("recast_staff", S{spell.element})   or gear.default.recast_staff    or ""
 end
 
 
--- Function to get an appropriate gorget and belt for the current weaponskill.
-function set_recast_staff(spell)
-	if spell.action_type ~= 'Magic' then
-		return
-	end
-
-	local staff = gear.RecastStaff or {name=""}
+-- Gets the name of an elementally-aligned piece of gear within the player's
+-- inventory that matches the conditions set in the parameters.
+--
+-- item_type: Type of item as specified in the elemental_map mappings.
+-- EG: gorget, belt, obi, fastcast_staff, recast_staff
+--
+-- valid_elements: Elements that are valid for the action being taken.
+-- IE: Weaponskill skillchain properties, or spell element.
+--
+-- restricted_to_elements: Secondary elemental restriction that limits
+-- whether the item check can be considered valid.
+-- EG: Day or weather elements that have to match the spell element being queried.
+--
+-- Returns: Nil if no match was found (either due to elemental restrictions,
+-- or the gear isn't in the player inventory), or the name of the piece of
+-- gear that matches the query.
+function get_elemental_item_name(item_type, valid_elements, restricted_to_elements)
+	local potential_elements = restricted_to_elements or elements.list
+	local item_map = elements[item_type:lower()..'_of']
 	
-	if gear_map['RecastStaff'][spell.element] and player.inventory[gear_map['RecastStaff'][spell.element]] then
-		staff.name = gear_map['RecastStaff'][spell.element]
-	else
-		staff.name = gear.default.recast_staff or ""
+	for element in (potential_elements.it or it)(potential_elements) do
+		if valid_elements:contains(element) and player.inventory[item_map[element]] then
+			return item_map[element]
+		end
 	end
-
-	return staff
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Function to easily change to a given macro set or book.  Book value is optional.
