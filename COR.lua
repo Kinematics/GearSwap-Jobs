@@ -280,7 +280,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	-- bullet checks
 	local check_bullet
 	local check_bullet_count = 1
-	if spell.type == 'WeaponSkill' and bow_gun_weaponskills:contains(spell.english) then
+	if spell.type == 'WeaponSkill' and (spell.skill == "Archery" or spell.skill == "Marksmanship") then
 		if spell.element == 'None' then
 			-- physical weaponskills
 			check_bullet = gear.WSbullet
