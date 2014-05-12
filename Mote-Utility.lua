@@ -493,8 +493,9 @@ function invert_table(t)
 	return i
 end
 
+
 -- Gets sub-tables based on baseSet from the string str that may be in dot form
--- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
+-- (eg: baseSet=sets, str='precast.FC', this returns the table sets.precast.FC).
 function get_expanded_set(baseSet, str)
 	local cur = baseSet
 	for i in str:gmatch("[^.]+") do
