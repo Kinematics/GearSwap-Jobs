@@ -474,12 +474,10 @@ end
 -- buff_set is a set of buffs in a library table (any of S{}, T{} or L{}).
 -- This function checks if any of those buffs are present on the player.
 function has_any_buff_of(buff_set)
-	return buff_set:any(has_buff())
-end
-
--- Helper function to return the evaluation function used by has_any_buff_of.
-function has_buff()
-	return function (b) return buffactive[b] end
+	return buff_set:any(
+		-- Returns true if any buff from buff set that is sent to this function returns true:
+		function (b) return buffactive[b] end
+	)
 end
 
 
