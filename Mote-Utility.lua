@@ -300,12 +300,13 @@ function is_trust_party()
 		end
 	end
 	
+	-- If it didn't fail any of the above checks, return true.
 	return true
 end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Gear utility functions.
+-- Elemental gear utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Pick an item to use based on required elemental properties.

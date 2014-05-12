@@ -3,9 +3,10 @@
 -------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------------
--- Elemental mappings for element relationships and certian types of spells.
+-- Elemental mappings for element relationships and certain types of spells and gear.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Basic elements
 elements = {}
 
 elements.list = S{'Light','Dark','Fire','Ice','Wind','Earth','Lightning','Water'}
@@ -27,6 +28,7 @@ elements.spirit_of = {['Light']="Light Spirit", ['Dark']="Dark Spirit", ['Fire']
 storms = S{"Aurorastorm", "Voidstorm", "Firestorm", "Sandstorm", "Rainstorm", "Windstorm", "Hailstorm", "Thunderstorm"}
 
 
+-- Elements for skillchain names
 skillchain_elements = {}
 skillchain_elements.Light = S{'Light','Fire','Wind','Lightning'}
 skillchain_elements.Darkness = S{'Dark','Ice','Earth','Water'}
