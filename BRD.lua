@@ -193,13 +193,13 @@ function init_gear_sets()
 		back="Harmony Cape",waist="Corvax Sash",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs (duration primary, accuracy secondary)
-	sets.midcast.SongDebuff = {main="Legato Dagger",range="Gjallarhorn",
+	sets.midcast.SongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Aoidos' Matinee",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Kumbira Cape",waist="Goading Belt",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs (accuracy primary, duration secondary)
-	sets.midcast.ResistantSongDebuff = {main="Izhiikoh",range="Gjallarhorn",
+	sets.midcast.ResistantSongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Kumbira Cape",waist="Goading Belt",legs="Bihu Cannions",feet="Bokwus Boots"}
