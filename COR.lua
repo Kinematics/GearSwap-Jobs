@@ -302,7 +302,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 			if spell.type == 'CorsairShot' and player.equipment.ammo ~= 'empty' then
 				add_to_chat(104, 'No Quick Draw ammo left.  Using what\'s currently equipped ('..player.equipment.ammo..').')
 			else
-				add_to_chat(104, 'No ammo available for that action.')
+				add_to_chat(104, 'No ammo ('..tostring(check_bullet)..') available for that action.')
 				eventArgs.cancel = true
 				return
 			end
