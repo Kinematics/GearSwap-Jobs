@@ -173,12 +173,12 @@ function init_gear_sets()
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	-- Custom spell classes
-	sets.midcast.MndEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
+	sets.midcast.MndEnfeebles = {main="Lehbrailg +2", sub="Mephitis Grip",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
-	sets.midcast.IntEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
+	sets.midcast.IntEnfeebles = {main="Lehbrailg +2", sub="Mephitis Grip",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
