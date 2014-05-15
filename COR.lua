@@ -276,58 +276,10 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-
-	-- bullet checks
-	local check_bullet
-	local check_bullet_count = 1
-	if spell.type == 'WeaponSkill' and bow_gun_weaponskills:contains(spell.english) then
-		if spell.element == 'None' then
-			-- physical weaponskills
-			check_bullet = gear.WSbullet
-		else
-			-- magical weaponskills
-			check_bullet = gear.MAbullet
-		end
-	elseif spell.type == 'CorsairShot' then
-		check_bullet = gear.QDbullet
-	elseif spell.action_type == 'Ranged Attack' then
-		check_bullet = gear.RAbullet
-		if buffactive['Triple Shot'] then
-			check_bullet_count = 3
-		end
+	-- Check that proper ammo is available if we're using ranged attacks or similar.
+	if spell.action_type == 'Ranged Attack' or spell.type == 'WeaponSkill' or spell.type == 'CorsairShot' then
+		do_bullet_checks(spell, spellMap, eventArgs)
 	end
-	
-	if check_bullet then
-		if not player.inventory[check_bullet] then
-			if spell.type == 'CorsairShot' and player.equipment.ammo ~= 'empty' then
-				add_to_chat(104, 'No Quick Draw ammo left.  Using what\'s currently equipped ('..player.equipment.ammo..').')
-			else
-				add_to_chat(104, 'No ammo available for that action.')
-				eventArgs.cancel = true
-				return
-			end
-		end
-		
-		if spell.type ~= 'CorsairShot' then
-			if check_bullet == gear.QDbullet and
-			   player.inventory[check_bullet].count <= check_bullet_count then
-				add_to_chat(104, 'No ammo will be left for Quick Draw.  Cancelling.')
-				eventArgs.cancel = true
-				return
-			end
-			
-			if player.inventory[check_bullet].count <= options.ammo_warning_limit and
-			   player.inventory[check_bullet].count > 1 and not state.warned then
-				add_to_chat(104, '*****************************')
-				add_to_chat(104, '*****  LOW AMMO WARNING *****')
-				add_to_chat(104, '*****************************')
-				state.warned = true
-			elseif player.inventory[check_bullet].count > options.ammo_warning_limit and state.warned then
-				state.warned = false
-			end
-		end
-	end
-	
 
 	-- gear sets
 	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.LuzafRing then
@@ -485,3 +437,65 @@ function display_roll_info(spell)
 end
 
 
+-- Determine whether we have sufficient ammo for the action being attempted.
+function do_bullet_checks(spell, spellMap, eventArgs)
+	local bullet_name
+	local bullet_min_count = 1
+	
+	if spell.type == 'WeaponSkill' then
+		if spell.skill == "Marksmanship" then
+			if spell.element == 'None' then
+				-- physical weaponskills
+				bullet_name = gear.WSbullet
+			else
+				-- magical weaponskills
+				bullet_name = gear.MAbullet
+			end
+		else
+			-- Ignore non-ranged weaponskills
+			return
+		end
+	elseif spell.type == 'CorsairShot' then
+		bullet_name = gear.QDbullet
+	elseif spell.action_type == 'Ranged Attack' then
+		bullet_name = gear.RAbullet
+		if buffactive['Triple Shot'] then
+			bullet_min_count = 3
+		end
+	end
+	
+	local available_bullets = player.inventory[bullet_name] or player.wardrobe[bullet_name]
+	
+	-- If no ammo is available, give appropriate warning and end.
+	if not available_bullets then
+		if spell.type == 'CorsairShot' and player.equipment.ammo ~= 'empty' then
+			add_to_chat(104, 'No Quick Draw ammo left.  Using what\'s currently equipped ('..player.equipment.ammo..').')
+			return
+		elseif spell.type == 'WeaponSkill' and player.equipment.ammo == gear.RAbullet then
+			add_to_chat(104, 'No weaponskill ammo left.  Using what\'s currently equipped (standard ranged bullets: '..player.equipment.ammo..').')
+			return
+		else
+			add_to_chat(104, 'No ammo ('..tostring(bullet_name)..') available for that action.')
+			eventArgs.cancel = true
+			return
+		end
+	end
+	
+	-- Don't allow shooting or weaponskilling with ammo reserved for quick draw.
+	if spell.type ~= 'CorsairShot' and bullet_name == gear.QDbullet and available_bullets.count <= bullet_min_count then
+		add_to_chat(104, 'No ammo will be left for Quick Draw.  Cancelling.')
+		eventArgs.cancel = true
+		return
+	end
+	
+	-- Low ammo warning.
+	if spell.type ~= 'CorsairShot' and not state.warned
+	    and available_bullets.count > 1 and available_bullets.count <= options.ammo_warning_limit then
+		add_to_chat(104, '*****************************')
+		add_to_chat(104, '*****  LOW AMMO WARNING *****')
+		add_to_chat(104, '*****************************')
+		state.warned = true
+	elseif available_bullets.count > options.ammo_warning_limit and state.warned then
+		state.warned = false
+	end
+end

@@ -145,29 +145,29 @@ function init_gear_sets()
 
 
 	-- Custom spell classes
-	sets.midcast.MndEnfeebles = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.MndEnfeebles = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast.IntEnfeebles = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.IntEnfeebles = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Manasa Chasuble",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast.IntEnfeebles
 
-	sets.midcast['Dark Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
+	sets.midcast['Dark Magic'] = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast.Kaustra = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.Kaustra = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Cognition Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Incantor Stone",
+	sets.midcast.Drain = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Excelsis Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Pedagogy Pants",feet="Academic's Loafers"}
@@ -179,43 +179,43 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Witful Belt",legs="Pedagogy Pants",feet="Academic's Loafers"}
 
-	sets.midcast.Stun.Resistant = set_combine(sets.midcast.Stun, {main="Atinian Staff"})
+	sets.midcast.Stun.Resistant = set_combine(sets.midcast.Stun, {main="Lehbrailg +2"})
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
-	sets.midcast['Elemental Magic'] = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast['Elemental Magic'] = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast['Elemental Magic'].Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast['Elemental Magic'].Resistant = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	-- Custom classes for high-tier nukes.
-	sets.midcast.HighTierNuke = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.HighTierNuke = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.HighTierNuke.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
+	sets.midcast.HighTierNuke.Resistant = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 	
 	-- Sets for helixes
-	sets.midcast.Helix = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.Helix = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Helix.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
+	sets.midcast.Helix.Resistant = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
-	sets.midcast.Impact = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
+	sets.midcast.Impact = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Witchstone",
 		head=empty,neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Twilight Cloak",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
@@ -311,7 +311,7 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
+
 end
 
 
@@ -342,6 +342,24 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+function job_get_spell_map(spell, default_spell_map)
+	if spell.action_type == 'Magic' then
+		if default_spell_map == 'Cure' or default_spell_map == 'Curaga' then
+			if world.weather_element == 'Light' then
+				return 'CureWithLightWeather'
+			end
+		elseif spell.skill == "Enfeebling Magic" then
+			if spell.type == "WhiteMagic" then
+				return "MndEnfeebles"
+			else
+				return "IntEnfeebles"
+			end
+		end
+	end
+end
+
 
 function customize_idle_set(idleSet)
 	if state.Buff.Sublimation then
@@ -560,25 +578,5 @@ function get_current_strategem_count()
 	local currentCharges = math.floor(maxStrategems - maxStrategems * stratsRecast / fullRechargeTime)
 	
 	return currentCharges
-end
-
-function get_spell_class(spell, action, spellMap)
-	local spellclass
-	
-	if spell.action_type == 'Magic' then
-		if spellMap == 'Cure' or spellMap == 'Curaga' then
-			if world.weather_element == 'Light' then
-				classes.CustomClass = 'CureWithLightWeather'
-			end
-		elseif spell.skill == "Enfeebling Magic" then
-			if spell.type == "WhiteMagic" then
-				spellclass = "MndEnfeebles"
-			else
-				spellclass = "IntEnfeebles"
-			end
-		end
-	end
-	
-	return spellclass
 end
 

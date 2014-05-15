@@ -112,7 +112,7 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Hachiya Chainmail +1",hands="Koga Tekko +2",
-		waist="Twilight Belt",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
+		legs="Hachiya Hakama",feet="Otronif Boots +1"}
 		
 	-- any ninjutsu cast on self
 	sets.midcast.SelfNinjutsu = set_combine(sets.midcast.FastRecast, {neck="Ej Necklace",ring1="Beeline Ring",back="Ix Cape"})
@@ -124,7 +124,7 @@ function init_gear_sets()
 		head="Hachiya Hatsuburi",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		--ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Otronif Harness +1",hands="Koga Tekko +2",ring1="Icesoul Ring",
-		back="Toro Cape",waist="Twilight Belt",legs="Nahtirah Troursers",feet="Hachiya Kyahan"}
+		back="Toro Cape",legs="Nahtirah Troursers",feet="Hachiya Kyahan"}
 
 	--sets.midcast.Ninjutsu.Resistant = set_combine(sets.midcast.Ninjutsu, {ear1="Lifestorm Earring",ear2="Psystorm Earring"})
 

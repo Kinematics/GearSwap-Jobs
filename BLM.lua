@@ -112,71 +112,60 @@ function init_gear_sets()
 	
 	sets.midcast.Stoneskin = set_combine(sets.midcast['Enhancing Magic'], {waist="Siegel Sash"})
 
-	sets.midcast['Enfeebling Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast['Enfeebling Magic'] = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 		
 	sets.midcast.ElementalEnfeeble = sets.midcast['Enfeebling Magic']
 
-	sets.midcast['Dark Magic'] = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast['Dark Magic'] = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
 
-	sets.midcast.Drain = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.Drain = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Aesir Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Goetia Sabots +2"}
 	
 	sets.midcast.Aspir = sets.midcast.Drain
 
-	sets.midcast.Stun = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.Stun = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Bokwus Boots"}
 
-	sets.midcast.BardSong = {main="Atinian Staff",sub="Mephitis Grip",ammo="Sturm's Report",
+	sets.midcast.BardSong = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Sturm's Report",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 
 	-- Elemental Magic sets are default for handling low-tier nukes.
-	sets.midcast['Elemental Magic'] = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.LowTierNuke = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast['Elemental Magic'].Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.LowTierNuke.Resistant = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
 
 	-- Idle set when doing procs.  Fast cast gear, minimal nuke gear.  Won't change out of this for nukes.
-	sets.midcast['Elemental Magic'].Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
+	sets.midcast.LowTierNuke.Proc = {main="Earth Staff", sub="Wizzan Grip",ammo="Impatiens",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Manasa Chasuble",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	-- Custom classes for high-tier nukes.
-	sets.midcast.HighTierNuke = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
+	sets.midcast.HighTierNuke = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.HighTierNuke.Resistant = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
-
-	-- Custom classes for high-tier nukes in Adoulin areas (need more general magic accuracy).
-	sets.midcast.AdoulinHighTierNuke = {main="Atinian Staff",sub="Wizzan Grip",ammo="Witchstone",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Hecate's Earring",ear2="Friomisi Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
-		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
-
-	sets.midcast.AdoulinHighTierNuke.Resistant = {main="Atinian Staff",sub="Mephitis Grip",ammo="Witchstone",
+	sets.midcast.HighTierNuke.Resistant = {main="Lehbrailg +2",sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Bokwus Boots"}
@@ -194,7 +183,7 @@ function init_gear_sets()
 	-- Idle sets
 	
 	-- Normal refresh idle set
-	sets.idle = {main="Atinian Staff", sub="Wizzan Grip",ammo="Witchstone",
+	sets.idle = {main="Lehbrailg +2", sub="Wizzan Grip",ammo="Witchstone",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
@@ -213,7 +202,7 @@ function init_gear_sets()
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Hagondes Sabots"}
 	
 	-- Town gear.
-	sets.idle.Town = {main="Atinian Staff", sub="Wizzan Grip",ammo="Witchstone",
+	sets.idle.Town = {main="Lehbrailg +2", sub="Wizzan Grip",ammo="Witchstone",
 		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
@@ -281,13 +270,9 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		-- Default base equipment layer is fast recast.
 		equip(sets.midcast.FastRecast)
 
-		if spell.skill == 'Elemental Magic' then
-			if state.CastingMode == 'Proc' then
-				add_to_chat(15,'Proc mode, no damage gear for midcast.')
-				eventArgs.handled = true
-			else
-				classes.CustomClass = get_nuke_class(spell, action, spellMap)
-			end
+		if spell.skill == 'Elemental Magic' and state.CastingMode == 'Proc' then
+			add_to_chat(15,'Proc mode, no damage gear for midcast.')
+			eventArgs.handled = true
 		end
 	end
 end
@@ -303,6 +288,17 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+function job_get_spell_map(spell, default_spell_map)
+	if spell.skill == 'Elemental Magic' and default_spell_map ~= 'ElementalEnfeeble' then
+		if lowTierNukes:contains(spell.english) then
+			return 'LowTierNuke'
+		else
+			return 'HighTierNuke'
+		end
+	end
+end
 
 
 -------------------------------------------------------------------------------------------------------------------
@@ -368,15 +364,5 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
-
--- Function to get the custom class to use for nukes.
-function get_nuke_class(spell, action, spellMap)
-	if lowTierNukes[spell.english] then
-		-- low tier nukes use the default set
-		return nil
-	else
-		return 'HighTierNuke'
-	end
-end
 
 

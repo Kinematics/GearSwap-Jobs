@@ -11,19 +11,20 @@ local cancel_spells_to_check = S{'Sneak', 'Spectral Jig', 'Trance', 'Monomi: Ich
 local cancel_types_to_check = S{'Waltz', 'Samba'}
 
 -- Function to cancel buffs if they'd conflict with using the spell you're attempting.
+-- Requirement: Must have Cancel addon installed and loaded for this to work.
 function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 	if cancel_spells_to_check:contains(spell.english) or cancel_types_to_check:contains(spell.type) then
 		if spell.action_type == 'Ability' then
 			local abil_recasts = windower.ffxi.get_ability_recasts()
 			if abil_recasts[spell.recast_id] > 0 then
-				add_to_chat(123,'Cancel abort: Ability waiting on recast.')
+				add_to_chat(123,'Abort: Ability waiting on recast.')
 				eventArgs.cancel = true
 				return
 			end
 		elseif spell.action_type == 'Magic' then
 			local spell_recasts = windower.ffxi.get_spell_recasts()
 			if spell_recasts[spell.recast_id] > 0 then
-				add_to_chat(123,'Cancel abort: Spell waiting on recast.')
+				add_to_chat(123,'Abort: Spell waiting on recast.')
 				eventArgs.cancel = true
 				return
 			end
@@ -34,37 +35,36 @@ function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 			send_command('cancel sneak')
 		elseif spell.english == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
 			send_command('cancel sneak')
+		elseif spell.english:startswith('Monomi') then
+			send_command('@wait 1.7;cancel sneak')
+		elseif spell.english == 'Utsusemi: Ichi' then
+			send_command('@wait 1.7;cancel copy image*')
 		elseif (spell.english == 'Trance' or spell.type=='Waltz') and buffactive['saber dance'] then
 			cast_delay(0.2)
 			send_command('cancel saber dance')
 		elseif spell.type=='Samba' and buffactive['fan dance'] then
 			cast_delay(0.2)
 			send_command('cancel fan dance')
-		elseif spell.english:startswith('Monomi') then
-			send_command('@wait 1.7;cancel sneak')
-		elseif spell.english == 'Utsusemi: Ichi' then
-			send_command('@wait 1.7;cancel copy image*')
 		end
 	end
 end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Utility functions for changing target types and spells in an automatic manner.
+-- Utility functions for changing spells and target types in an automatic manner.
 -------------------------------------------------------------------------------------------------------------------
 
--- Utility function for automatically adjusting the waltz spell being used to match the HP needs.
+local waltz_tp_cost = {['Curing Waltz'] = 20, ['Curing Waltz II'] = 35, ['Curing Waltz III'] = 50, ['Curing Waltz IV'] = 65, ['Curing Waltz V'] = 80}
+
+-- Utility function for automatically adjusting the waltz spell being used to match HP needs and TP limits.
 -- Handle spell changes before attempting any precast stuff.
--- Returns two values on completion:
--- 1) bool of whether the original spell was cancelled
--- 2) bool of whether the spell was changed to something new
 function refine_waltz(spell, action, spellMap, eventArgs)
 	if spell.type ~= 'Waltz' then
 		return
 	end
 	
 	-- Don't modify anything for Healing Waltz or Divine Waltzes
-	if spell.name == "Healing Waltz" or spell.name == "Divine Waltz" or spell.name == "Divine Waltz II" then
+	if spell.english == "Healing Waltz" or spell.english == "Divine Waltz" or spell.english == "Divine Waltz II" then
 		return
 	end
 
@@ -83,11 +83,12 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 		missingHP = math.floor(est_max_hp - target.hp)
 	end
 	
-	-- If we can estimate missing HP, we can adjust the preferred tier used.
+	-- If we have an estimated missing HP value, we can adjust the preferred tier used.
 	if missingHP ~= nil then
 		if player.main_job == 'DNC' then
 			if missingHP < 40 and spell.target.name == player.name then
-				-- not worth curing yourself for so little; allow for other targets to wake them up
+				-- Not worth curing yourself for so little.
+				-- Don't block when curing others to allow for waking them up.
 				add_to_chat(122,'Full HP!')
 				eventArgs.cancel = true
 				return
@@ -109,7 +110,8 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 			end
 		elseif player.sub_job == 'DNC' then
 			if missingHP < 40 and spell.target.name == player.name then
-				-- not worth curing yourself for so little; allow for other targets to wake them up
+				-- Not worth curing yourself for so little.
+				-- Don't block when curing others to allow for waking them up.
 				add_to_chat(122,'Full HP!')
 				eventArgs.cancel = true
 				return
@@ -129,16 +131,7 @@ function refine_waltz(spell, action, spellMap, eventArgs)
 		end
 	end
 
-	local waltzTPCost = {['Curing Waltz'] = 20, ['Curing Waltz II'] = 35, ['Curing Waltz III'] = 50, ['Curing Waltz IV'] = 65, ['Curing Waltz V'] = 80}
-	local tpCost = waltzTPCost[newWaltz]
-	
-	--local tpCost
-	--if waltzID ~= nil then
-	--	local abil = res.abilities[waltzID]
-	--	tpCost = abil.tp_cost
-	--else
-	--	tpCost = spell.tpcost
-	--end
+	local tpCost = waltz_tp_cost[newWaltz]
 
 	local downgrade
 	
@@ -189,6 +182,11 @@ end
 
 -- Function to allow for automatic adjustment of the spell target type based on preferences.
 function auto_change_target(spell, action, spellMap)
+	-- Don't adjust targetting for explicitly named targets
+	if not spell.target.raw:startswith('<') then
+		return
+	end
+
 	-- Do not modify target for spells where we get <lastst> or <me>.
 	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
@@ -222,22 +220,25 @@ function auto_change_target(spell, action, spellMap)
 	
 	-- For spells that we can cast on players:
 	if canUseOnPlayer and pcTargetMode ~= 'default' then
-		if pcTargetMode == 'stal' then
-			-- Use <stal> if possible, otherwise fall back to <stpt>.
-			if spell.targets.Ally then
-				newTarget = '<stal>'
-			elseif spell.targets.Party then
-				newTarget = '<stpt>'
-			end
-		elseif pcTargetMode == 'stpt' then
-			-- Even ally-possible spells are limited to the current party.
-			if spell.targets.Ally or spell.targets.Party then
-				newTarget = '<stpt>'
-			end
-		elseif pcTargetMode == 'stpc' then
-			-- If it's anything other than a self-only spell, can change to <stpc>.
-			if spell.targets.Player or spell.targets.Party or spell.targets.Ally or spell.targets.NPC then
-				newTarget = '<stpc>'
+		-- Do not adjust targetting for player-targettable spells where the target was <t>
+		if spell.target.raw ~= ('<t>') then
+			if pcTargetMode == 'stal' then
+				-- Use <stal> if possible, otherwise fall back to <stpt>.
+				if spell.targets.Ally then
+					newTarget = '<stal>'
+				elseif spell.targets.Party then
+					newTarget = '<stpt>'
+				end
+			elseif pcTargetMode == 'stpt' then
+				-- Even ally-possible spells are limited to the current party.
+				if spell.targets.Ally or spell.targets.Party then
+					newTarget = '<stpt>'
+				end
+			elseif pcTargetMode == 'stpc' then
+				-- If it's anything other than a self-only spell, can change to <stpc>.
+				if spell.targets.Player or spell.targets.Party or spell.targets.Ally or spell.targets.NPC then
+					newTarget = '<stpc>'
+				end
 			end
 		end
 	-- For spells that can be used on enemies:
@@ -298,37 +299,25 @@ function is_trust_party()
 		end
 	end
 	
+	-- If it didn't fail any of the above checks, return true.
 	return true
 end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Gear utility functions.
+-- Elemental gear utility functions.
 -------------------------------------------------------------------------------------------------------------------
 
--- Pick an item to use based on required elemental properties.
--- Cycles through the list of all elements until it matches one of the
--- provided elements to search, and checks whether an appropriate item
--- of that type exists in inventory.  If so, uses that.
--- It may optionally provide a list of valid elements, rather than
--- searching all possible elements.
--- Returns the item var if it found a match and the item was in inventory.
---
--- valid_element: a set S{} of elements that are to be checked
-function select_elemental_item(itemvar, itemtype, elements_to_search, valid_elements)
-	local potential_elements = valid_elements or elements.list
-	
-	for element,_ in pairs(potential_elements) do
-		if elements_to_search:contains(element) and player.inventory[gear_map[itemtype][element]] then
-			itemvar.name = gear_map[itemtype][element]
-			return itemvar
-		end
-	end
+-- General handler function to set all the elemental gear for an action.
+function set_elemental_gear(spell)
+	set_elemental_gorget_belt(spell)
+	set_elemental_obi_cape_ring(spell)
+	set_elemental_staff(spell)
 end
 
 
--- Function to get an appropriate gorget and belt for the current weaponskill.
-function set_weaponskill_gorget_belt(spell)
+-- Set the name field of the predefined gear vars for gorgets and belts, for the specified weaponskill.
+function set_elemental_gorget_belt(spell)
 	if spell.type ~= 'WeaponSkill' then
 		return
 	end
@@ -339,88 +328,75 @@ function set_weaponskill_gorget_belt(spell)
 		union(skillchain_elements[spell.skillchain_b]):
 		union(skillchain_elements[spell.skillchain_c])
 	
-	-- Hook to the default gear vars, if available.
-	local gorget = gear.ElementalGorget or {name=""}
-	gorget.name = gear.default.weaponskill_neck or ""
-	local belt = gear.ElementalBelt or {name=""}
-	belt.name = gear.default.weaponskill_waist or ""
-	
-	select_elemental_item(gorget, 'Gorget', weaponskill_elements)
-	select_elemental_item(belt, 'Belt', weaponskill_elements)
-	
-	return gorget, belt
+	gear.ElementalGorget.name = get_elemental_item_name("gorget", weaponskill_elements) or gear.default.weaponskill_neck  or ""
+	gear.ElementalBelt.name   = get_elemental_item_name("belt", weaponskill_elements)   or gear.default.weaponskill_waist or ""
 end
 
 
--- Function to get an appropriate obi/cape/ring for the current spell.
-function set_spell_obi_cape_ring(spell)
+-- Function to get an appropriate obi/cape/ring for the current action.
+function set_elemental_obi_cape_ring(spell)
 	if spell.element == 'None' then
 		return
 	end
 	
-	local world_elements = S{}
+	local world_elements = S{world.day_element}
 	if world.weather_element ~= 'None' then
 		world_elements:add(world.weather_element)
 	end
-	world_elements:add(world.day_element)
+
+	local obi_name = get_elemental_item_name("obi", S{spell.element}, world_elements)
+	gear.ElementalObi.name = obi_name or gear.default.obi_waist  or ""
 	
-	local obi = gear.ElementalObi or {name=""}
-	obi.name = gear.default.obi_waist or ""
-	local cape = gear.ElementalCape or {name=""}
-	cape.name = gear.default.obi_back or ""
-	local ring = gear.ElementalRing or {name=""}
-	ring.name = gear.default.obi_ring or ""
-	
-	local got_obi = select_elemental_item(obi, 'Obi', S{spell.element}, world_elements)
-	
-	if got_obi then
-		if player.inventory['Twilight Cape'] then
-			cape.name = "Twilight Cape"
+	if obi_name then
+		if player.inventory['Twilight Cape'] or player.wardrobe['Twilight Cape'] then
+			gear.ElementalCape.name = "Twilight Cape"
 		end
-		if player.inventory['Zodiac Ring'] and spell.english ~= 'Impact' and
-			not S{'DivineMagic','DarkMagic','HealingMagic'}:contains(spell.skill) then
-			ring.name = "Zodiac Ring"
+		if (player.inventory['Zodiac Ring'] or player.wardrobe['Zodiac Ring']) and spell.english ~= 'Impact' and
+			not S{'Divine Magic','Dark Magic','Healing Magic'}:contains(spell.skill) then
+			gear.ElementalRing.name = "Zodiac Ring"
 		end
 	end
-	
-	return obi, cape, ring
 end
 
 
--- Function to get an appropriate gorget and belt for the current weaponskill.
-function set_fastcast_staff(spell)
+-- Function to get the appropriate fast cast and/or recast staves for the current spell.
+function set_elemental_staff(spell)
 	if spell.action_type ~= 'Magic' then
 		return
 	end
 
-	local staff = gear.FastcastStaff or {name=""}
-	
-	if gear_map['FastcastStaff'][spell.element] and player.inventory[gear_map['FastcastStaff'][spell.element]] then
-		staff.name = gear_map['FastcastStaff'][spell.element]
-	else
-		staff.name = gear.default.fastcast_staff or ""
-	end
-
-	return staff
+	gear.FastcastStaff.name = get_elemental_item_name("fastcast_staff", S{spell.element}) or gear.default.fastcast_staff  or ""
+	gear.RecastStaff.name   = get_elemental_item_name("recast_staff", S{spell.element})   or gear.default.recast_staff    or ""
 end
 
 
--- Function to get an appropriate gorget and belt for the current weaponskill.
-function set_recast_staff(spell)
-	if spell.action_type ~= 'Magic' then
-		return
-	end
-
-	local staff = gear.RecastStaff or {name=""}
+-- Gets the name of an elementally-aligned piece of gear within the player's
+-- inventory that matches the conditions set in the parameters.
+--
+-- item_type: Type of item as specified in the elemental_map mappings.
+-- EG: gorget, belt, obi, fastcast_staff, recast_staff
+--
+-- valid_elements: Elements that are valid for the action being taken.
+-- IE: Weaponskill skillchain properties, or spell element.
+--
+-- restricted_to_elements: Secondary elemental restriction that limits
+-- whether the item check can be considered valid.
+-- EG: Day or weather elements that have to match the spell element being queried.
+--
+-- Returns: Nil if no match was found (either due to elemental restrictions,
+-- or the gear isn't in the player inventory), or the name of the piece of
+-- gear that matches the query.
+function get_elemental_item_name(item_type, valid_elements, restricted_to_elements)
+	local potential_elements = restricted_to_elements or elements.list
+	local item_map = elements[item_type:lower()..'_of']
 	
-	if gear_map['RecastStaff'][spell.element] and player.inventory[gear_map['RecastStaff'][spell.element]] then
-		staff.name = gear_map['RecastStaff'][spell.element]
-	else
-		staff.name = gear.default.recast_staff or ""
+	for element in (potential_elements.it or it)(potential_elements) do
+		if valid_elements:contains(element) and (player.inventory[item_map[element]] or player.wardrobe[item_map[element]]) then
+			return item_map[element]
+		end
 	end
-
-	return staff
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Function to easily change to a given macro set or book.  Book value is optional.
@@ -505,12 +481,10 @@ end
 -- buff_set is a set of buffs in a library table (any of S{}, T{} or L{}).
 -- This function checks if any of those buffs are present on the player.
 function has_any_buff_of(buff_set)
-	return buff_set:any(has_buff())
-end
-
--- Helper function to return the evaluation function used by has_any_buff_of.
-function has_buff()
-	return function (b) return buffactive[b] end
+	return buff_set:any(
+		-- Returns true if any buff from buff set that is sent to this function returns true:
+		function (b) return buffactive[b] end
+	)
 end
 
 
@@ -526,8 +500,9 @@ function invert_table(t)
 	return i
 end
 
+
 -- Gets sub-tables based on baseSet from the string str that may be in dot form
--- (eg: baseSet=sets, str='precast.FC', this returns sets.precast.FC).
+-- (eg: baseSet=sets, str='precast.FC', this returns the table sets.precast.FC).
 function get_expanded_set(baseSet, str)
 	local cur = baseSet
 	for i in str:gmatch("[^.]+") do

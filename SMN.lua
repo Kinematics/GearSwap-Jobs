@@ -160,7 +160,7 @@ function init_gear_sets()
 	sets.precast.JA['Mana Cede'] = {hands="Caller's Bracers +2"}
 
 	-- Pact delay reduction gear
-	sets.precast.BloodPactWard = {ammo="Eminent Sachet",head="Convoker's Horn",body="Convoker's Doublet",hands="Glyphic Bracers"}
+	sets.precast.BloodPactWard = {ammo="Seraphicaller",head="Convoker's Horn",body="Convoker's Doublet",hands="Glyphic Bracers"}
 
 	sets.precast.BloodPactRage = sets.precast.BloodPactWard
 
@@ -201,17 +201,17 @@ function init_gear_sets()
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 
-	sets.midcast.Pet.BloodPactWard = {main="Soulscourge",ammo="Eminent Sachet",
+	sets.midcast.Pet.BloodPactWard = {main="Soulscourge",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",
 		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
 	
-	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Eminent Sachet",
+	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",
 		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
-	sets.midcast.Pet.MagicalBloodPactRage = {main="Eminent Pole",ammo="Eminent Sachet",
+	sets.midcast.Pet.MagicalBloodPactRage = {main="Eminent Pole",ammo="Seraphicaller",
 		head="Glyphic Horn",neck="Caller's Pendant",
 		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		back="Tiresias' Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
@@ -221,18 +221,18 @@ function init_gear_sets()
 	-- Sets to return to when not performing an action.
 	
 	-- Resting sets
-	sets.resting = {main=gear.Staff.HMP,ammo="Eminent Sachet",
+	sets.resting = {main=gear.Staff.HMP,ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Pahtli Cape",waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 	
 	-- Idle sets
-	sets.idle = {main="Bolelabunga",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle = {main="Bolelabunga",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Eminent Sachet",
+	sets.idle.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
@@ -252,17 +252,17 @@ function init_gear_sets()
 	-- Convoker's Pigaches: -4
 	-- total: -16
 	
-	sets.idle.Avatar = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Avatar = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Glyphic Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
-	sets.idle.Spirit = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Spirit = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Tiresias' Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Convoker's Pigaches"}
 
-	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Eminent Sachet",
+	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
@@ -303,7 +303,7 @@ function init_gear_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {ammo="Eminent Sachet",
+	sets.engaged = {ammo="Seraphicaller",
 		head="Zelus Tiara",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}

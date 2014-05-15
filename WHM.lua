@@ -173,12 +173,12 @@ function init_gear_sets()
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
 	-- Custom spell classes
-	sets.midcast.MndEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
+	sets.midcast.MndEnfeebles = {main="Lehbrailg +2", sub="Mephitis Grip",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
 
-	sets.midcast.IntEnfeebles = {main="Bolelabunga", sub="Genbu's Shield",
+	sets.midcast.IntEnfeebles = {main="Lehbrailg +2", sub="Mephitis Grip",
 		head="Nahtirah Hat",neck="Weike Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Piety Duckbills +1"}
@@ -252,8 +252,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	classes.CustomClass = get_spell_class(spell, action, spellMap)
-
 	if spell.english == "Paralyna" and buffactive.Paralyzed then
 		-- no gear swaps if we're paralyzed, to avoid blinking while trying to remove it.
 		eventArgs.handled = true
@@ -301,8 +299,21 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
-function customize_idle_set(idleSet)
-	return idleSet
+-- Custom spell mapping.
+function job_get_spell_map(spell, default_spell_map)
+	if spell.action_type == 'Magic' then
+		if (default_spell_map == 'Cure' or default_spell_map == 'Curaga') and player.status == 'Engaged' then
+			return "CureMelee"
+		elseif default_spell_map == 'Cure' and state.Buff['Afflatus Solace'] then
+			return "CureSolace"
+		elseif spell.skill == "Enfeebling Magic" then
+			if spell.type == "WhiteMagic" then
+				return "MndEnfeebles"
+			else
+				return "IntEnfeebles"
+			end
+		end
+	end
 end
 
 
@@ -389,24 +400,3 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_spell_class(spell, action, spellMap)
-	local spellclass
-	
-	if spell.action_type == 'Magic' then
-		if spell.skill == "Enfeebling Magic" then
-			if spell.type == "WhiteMagic" then
-				spellclass = "MndEnfeebles"
-			else
-				spellclass = "IntEnfeebles"
-			end
-		else
-			if (spellMap == 'Cure' or spellMap == "Curaga") and player.status == 'Engaged' then
-				spellclass = "CureMelee"
-			elseif spellMap == 'Cure' and state.Buff['Afflatus Solace'] then
-				spellclass = "CureSolace"
-			end
-		end
-	end
-	
-	return spellclass
-end

@@ -69,14 +69,14 @@ function init_gear_sets()
 	sets.precast.JA['Chivalry'] = {
 		head="Yaoyotl Helm",
 		body="Reverence Surcoat +1",hands="Buremte Gloves",
-		legs="Reverence Breeches",feet="Whirlpool Greaves"}
+		legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
 	
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {
 		head="Yaoyotl Helm",
 		body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",
-		back="Iximulew Cape",waist="Caudata Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Iximulew Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
@@ -115,7 +115,7 @@ function init_gear_sets()
 	sets.precast.WS['Sanguine Blade'] = {
 		head="Yaoyotl Helm",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Reverence Surcoat +1",hands="Cizin Mufflers",
-		back="Toro Cape",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Toro Cape",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 	
 	
 	-- Midcast Sets
@@ -125,9 +125,9 @@ function init_gear_sets()
 		waist="Zoran's Belt",legs="Enif Cosciales",feet="Reverence Leggings"}
 		
 	sets.midcast.Enmity = {ammo="Iron Gobbet",
-		head="Reverence Coronet",neck="Invidia Torque",
+		head="Reverence Coronet +1",neck="Invidia Torque",
 		body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Vexer Ring",
-		back="Fierabras's Mantle",waist="Goading Belt",legs="Reverence Breeches"}
+		back="Fierabras's Mantle",waist="Goading Belt",legs="Reverence Breeches +1"}
 
 	sets.midcast.Flash = set_combine(sets.midcast.Enmity, {legs="Enif Cosciales",feet="Cizin Greaves"})
 	
@@ -136,9 +136,9 @@ function init_gear_sets()
 	sets.midcast.Cure = {ammo="Iron Gobbet",
 		head="Adaman Barbuta",neck="Invidia Torque",ear1="Hospitaler Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
-		back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 
-	sets.midcast['Enhancing Magic'] = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches"}
+	sets.midcast['Enhancing Magic'] = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches +1"}
 	
 	sets.midcast.Protect = {ring1="Sheltered Ring"}
 	sets.midcast.Shell = {ring1="Sheltered Ring"}
@@ -155,17 +155,17 @@ function init_gear_sets()
 
 	-- Idle sets
 	sets.idle = {ammo="Iron Gobbet",
-		head="Reverence Coronet",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
+		head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 
 	sets.idle.Town = {main="Buramenk'ah", sub="Killedar Shield",ammo="Incantor Stone",
-		head="Reverence Coronet",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
+		head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 	
 	sets.idle.Weak = {ammo="Iron Gobbet",
-		head="Reverence Coronet",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
+		head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 	
@@ -173,9 +173,9 @@ function init_gear_sets()
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
-		head="Reverence Coronet",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+		head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Dark Ring",ring2="Dark Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 	-- If using Kheshig Blade, have 50% PDT without the second ring:
 	sets.defense.PDT['Kheshig Blade'] = set_combine(sets.defense.PDT, {ring2="Meridian Ring"})
 
@@ -187,7 +187,7 @@ function init_gear_sets()
 	sets.defense.Reraise = {ammo="Iron Gobbet",
 		head="Twilight Helm",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Twilight Mail",hands="Cizin Mufflers",ring1="Dark Ring",ring2="Dark Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
@@ -200,9 +200,9 @@ function init_gear_sets()
 	sets.defense.MDT.Reraise.HP = set_combine(sets.defense.MDT.HP, sets.Reraise)
 
 	sets.defense.HP = {ammo="Iron Gobbet",
-		head="Reverence Coronet",neck="Lavalier +1",ear1="Creed Earring",ear2="Bloodgem Earring",
+		head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Bloodgem Earring",
 		body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="K'ayres Ring",ring2="Meridian Ring",
-		back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 
@@ -222,10 +222,10 @@ function init_gear_sets()
 	sets.engaged.Shield = {
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Boxer's Mantle",waist="Flume Belt",legs="Reverence Breeches",feet="Reverence Leggings"}
+		back="Boxer's Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 
 
-	sets.buff.Cover = {head="Reverence Coronet", body="Valor Surcoat +2"}
+	sets.buff.Cover = {head="Reverence Coronet +1", body="Valor Surcoat +2"}
 end
 
 

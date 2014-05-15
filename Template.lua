@@ -8,31 +8,17 @@
 function get_sets()
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
-	init_include()
-	
-	-- UserGlobals may define additional sets to be added to the local ones.
-	if define_global_sets then
-		define_global_sets()
-	end
-
-	-- Optional: load a sidecar version of the init and unload functions.
-	load_user_gear(player.main_job)
-	
-	init_gear_sets()
-
-	-- Global default binds
-	binds_on_load()
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	binds_on_unload()
+
+-- Setup vars that are user-independent.
+function job_setup()
+
 end
 
-function init_gear_sets()
-	-- Default macro set/book
-	set_macro_page(2, 2)
 
+-- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal'}
 	options.DefenseModes = {'Normal'}
@@ -44,7 +30,19 @@ function init_gear_sets()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-	
+
+	select_default_macro_book()
+end
+
+
+-- Called when this job file is unloaded (eg: job change)
+function file_unload()
+	if binds_on_unload then
+		binds_on_unload()
+	end
+end
+
+function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
@@ -207,6 +205,13 @@ function job_handle_equipping_gear(status, eventArgs)
 
 end
 
+-- Custom spell mapping.
+-- Return custom spellMap value that can override the default spell mapping.
+-- Don't return anything to allow default spell mapping to be used.
+function job_get_spell_map(spell, default_spell_map)
+
+end
+
 -- Return a customized weaponskill mode to use for weaponskill sets.
 -- Don't return anything if you're not overriding the default value.
 function get_custom_wsmode(spell, action, spellMap)
@@ -295,4 +300,18 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	if player.sub_job == 'WAR' then
+		set_macro_page(3, 20)
+	elseif player.sub_job == 'NIN' then
+		set_macro_page(1, 20)
+	elseif player.sub_job == 'SAM' then
+		set_macro_page(2, 20)
+	else
+		set_macro_page(5, 20)
+	end
+end
 

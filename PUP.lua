@@ -124,7 +124,7 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Haruspex Hat",ear2="Loquacious Earring",
 		body="Otronif Harness +1",hands="Regimen Mittens",
-		waist="Twilight Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
+		legs="Manibozho Brais",feet="Otronif Boots +1"}
 		
 
 	-- Midcast sets for pet actions

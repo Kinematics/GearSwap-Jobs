@@ -560,17 +560,18 @@ end
 
 -- Get a spell mapping for the spell.
 function get_spell_map(spell)
-	local spellMap = nil
+	local defaultSpellMap = classes.SpellMaps[spell.english]
+	local jobSpellMap
 	
 	if job_get_spell_map then
-		spellMap = job_get_spell_map(spell)
+		jobSpellMap = job_get_spell_map(spell, defaultSpellMap)
 	end
 	
-	if not spellMap then
-		spellMap = classes.SpellMaps[spell.english]
+	if jobSpellMap then
+		return jobSpellMap
+	else
+		return defaultSpellMap
 	end
-	
-	return spellMap
 end
 
 
@@ -579,10 +580,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
 	-- Update defintions for element-specific gear that can be used.
-	set_spell_obi_cape_ring(spell)
-	set_weaponskill_gorget_belt(spell)
-	set_fastcast_staff(spell)
-	set_recast_staff(spell)
+	set_elemental_gear(spell)
 
 	if spell.action_type == 'Magic' then
 		-- Precast for magic is fast cast.

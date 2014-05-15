@@ -113,6 +113,8 @@ function init_gear_sets()
 
 	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"})
 
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC, {head="Umuthi Hat"})
+
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
@@ -133,7 +135,7 @@ function init_gear_sets()
 	sets.precast.Waltz = {range="Gjallarhorn",
 		head="Nahtirah Hat",
 		body="Gendewitha Bliaut",hands="Buremte Gloves",
-		back="Refraction Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Kumbira Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
        
 	-- Weaponskill sets
@@ -191,16 +193,16 @@ function init_gear_sets()
 		back="Harmony Cape",waist="Corvax Sash",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs (duration primary, accuracy secondary)
-	sets.midcast.SongDebuff = {main="Legato Dagger",range="Gjallarhorn",
+	sets.midcast.SongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Aoidos' Matinee",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Goading Belt",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
+		back="Kumbira Cape",waist="Goading Belt",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs (accuracy primary, duration secondary)
-	sets.midcast.ResistantSongDebuff = {main="Izhiikoh",range="Gjallarhorn",
+	sets.midcast.ResistantSongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Goading Belt",legs="Bihu Cannions",feet="Bokwus Boots"}
+		back="Kumbira Cape",waist="Goading Belt",legs="Bihu Cannions",feet="Bokwus Boots"}
 
 	-- Song-specific recast reduction
 	sets.midcast.SongRecast = {ear2="Loquacious Earring",
@@ -386,7 +388,7 @@ end
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_list(field)
 	if field == 'Daurdabla' then
-		if player.inventory[info.DaurdablaInstrument] then
+		if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
 			return options.DaurdablaModes, state.DaurdablaMode
 		else
 			add_to_chat(123, info.DaurdablaInstrument..' is not in player inventory.')
@@ -585,7 +587,7 @@ end
 
 
 function daur_song_gap()
-	if player.inventory.daurdabla then
+	if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2 + info.DaurdablaSongs
 		
