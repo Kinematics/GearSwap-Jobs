@@ -104,7 +104,7 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
+	options.OffenseModes = {'Normal', 'Learning'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal'}
@@ -134,20 +134,29 @@ function init_gear_sets()
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
+	sets.precast.JA['Azure Lore'] = {}
+	sets.precast.JA['Chain Affinity'] = {}
+	sets.precast.JA['Burst Affinity'] = {}
+	sets.precast.JA['Diffusion'] = {}
+	sets.precast.JA['Efflux'] = {}
+	sets.precast.JA['Unbridled Learning'] = {}
+	sets.precast.JA['Unbridled Wisdom'] = {}
 	
 
 	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {}
+	sets.precast.Waltz = {ammo="Sonia's Plectrum"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 
 	-- Fast cast sets for spells
 	
-	sets.precast.FC = {ear2="Loquacious Earring"}
-
-	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
+	sets.precast.FC = {ammo="Impatiens",
+		head="Haruspex Hat",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Thaumas Gloves",ring1="Prolix Ring",
+		back="Swith Cape",waist="Witful Belt",legs="Enif Cosciales",feet="Chelona Boots +1"}
+		
+	sets.precast.FC['Blue Magic'] = set_combine(sets.precast.FC, {body="Mavi Mintan +2"})
 
        
 	-- Weaponskill sets
@@ -155,19 +164,35 @@ function init_gear_sets()
 	sets.precast.WS = {}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {})
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {})
 
-	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
+	sets.precast.WS['Sanguine Blade'] = {ammo="Charis Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	
 	
 	-- Midcast Sets
-	sets.midcast.FastRecast = {}
+	sets.midcast.FastRecast = {
+		head="Haruspex Hat",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Iuitl Wristbands",ring1="Prolix Ring",
+		back="Swith Cape",waist="Goading Belt",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {}
+	
+	sets.midcast['Blue Magic'] = {}
+	sets.midcast['Blue Magic'].Physical = {}
+	sets.midcast['Blue Magic'].PhysicalStr = {}
+	sets.midcast['Blue Magic'].PhysicalDex = {}
+	sets.midcast['Blue Magic'].PhysicalVit = {ammo="Iron Gobbet"}
+	sets.midcast['Blue Magic'].PhysicalAgi = {}
+	sets.midcast['Blue Magic'].Magical = {}
+	sets.midcast['Blue Magic'].MagicalAccuracy = {}
+	sets.midcast['Blue Magic'].Breath = {}
+	sets.midcast['Blue Magic'].Stun = {}
+	sets.midcast['Blue Magic'].Healing = {hands="Buremte Gloves"}
+	sets.midcast['Blue Magic'].Buff = {}
 
 	
 	-- Sets to return to when not performing an action.
@@ -178,24 +203,22 @@ function init_gear_sets()
 	
 
 	-- Idle sets
-	sets.idle = {}
+	sets.idle = {ammo="Impatiens",
+		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmaq +2"}
 
-	sets.idle.Town = {main="Izhiikoh", sub="Atoyac",ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
-	
-	sets.idle.Weak = {ammo="Charis Feather",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Iximulew Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Skadi's Jambeaux +1"}
+	sets.idle.Town = {main="Buramenk'ah", sub="Genbu's Shield",ammo="Impatiens",
+		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmaq +2"}
 	
 	-- Defense sets
 	sets.defense.PDT = {}
 
 	sets.defense.MDT = {}
 
-	sets.Kiting = {feet="Skadi's Jambeaux +1"}
+	sets.Kiting = {legs="Crimson Cuisses"}
 
 	-- Engaged sets
 
@@ -205,8 +228,14 @@ function init_gear_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {}
-	sets.engaged.Acc = {}
+	sets.engaged = {
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	sets.engaged.Learning = {
+		head="Uk'uxkaj Cap",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
 end
 
@@ -234,7 +263,10 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
-
+	if spell.action_type == 'Magic' then
+		-- Default base equipment layer of fast recast.
+		equip(sets.midcast.FastRecast)
+	end
 end
 
 -- Run after the default midcast() is done.
@@ -362,13 +394,9 @@ end
 function select_default_macro_book()
 	-- Default macro set/book
 	if player.sub_job == 'WAR' then
-		set_macro_page(3, 20)
-	elseif player.sub_job == 'NIN' then
-		set_macro_page(1, 20)
-	elseif player.sub_job == 'SAM' then
-		set_macro_page(2, 20)
+		set_macro_page(1, 7)
 	else
-		set_macro_page(5, 20)
+		set_macro_page(1, 7)
 	end
 end
 
