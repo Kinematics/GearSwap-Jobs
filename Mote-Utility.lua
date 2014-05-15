@@ -182,9 +182,13 @@ end
 
 -- Function to allow for automatic adjustment of the spell target type based on preferences.
 function auto_change_target(spell, action, spellMap)
-	-- Do not modify target for spells where we get <lastst> or <me> or <t>.
-	-- <me> and <t> are assumed to be fixed, unmodified targets, not subject to selection adjustments.
-	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') or spell.target.raw == ('<t>') then
+	-- Don't adjust targetting for explicitly named targets
+	if not spell.target.raw:startswith('<') then
+		return
+	end
+
+	-- Do not modify target for spells where we get <lastst> or <me>.
+	if spell.target.raw == ('<lastst>') or spell.target.raw == ('<me>') then
 		return
 	end
 	
@@ -216,22 +220,25 @@ function auto_change_target(spell, action, spellMap)
 	
 	-- For spells that we can cast on players:
 	if canUseOnPlayer and pcTargetMode ~= 'default' then
-		if pcTargetMode == 'stal' then
-			-- Use <stal> if possible, otherwise fall back to <stpt>.
-			if spell.targets.Ally then
-				newTarget = '<stal>'
-			elseif spell.targets.Party then
-				newTarget = '<stpt>'
-			end
-		elseif pcTargetMode == 'stpt' then
-			-- Even ally-possible spells are limited to the current party.
-			if spell.targets.Ally or spell.targets.Party then
-				newTarget = '<stpt>'
-			end
-		elseif pcTargetMode == 'stpc' then
-			-- If it's anything other than a self-only spell, can change to <stpc>.
-			if spell.targets.Player or spell.targets.Party or spell.targets.Ally or spell.targets.NPC then
-				newTarget = '<stpc>'
+		-- Do not adjust targetting for player-targettable spells where the target was <t>
+		if spell.target.raw ~= ('<t>') then
+			if pcTargetMode == 'stal' then
+				-- Use <stal> if possible, otherwise fall back to <stpt>.
+				if spell.targets.Ally then
+					newTarget = '<stal>'
+				elseif spell.targets.Party then
+					newTarget = '<stpt>'
+				end
+			elseif pcTargetMode == 'stpt' then
+				-- Even ally-possible spells are limited to the current party.
+				if spell.targets.Ally or spell.targets.Party then
+					newTarget = '<stpt>'
+				end
+			elseif pcTargetMode == 'stpc' then
+				-- If it's anything other than a self-only spell, can change to <stpc>.
+				if spell.targets.Player or spell.targets.Party or spell.targets.Ally or spell.targets.NPC then
+					newTarget = '<stpc>'
+				end
 			end
 		end
 	-- For spells that can be used on enemies:
