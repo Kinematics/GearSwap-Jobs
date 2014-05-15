@@ -388,7 +388,7 @@ end
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
 function job_get_mode_list(field)
 	if field == 'Daurdabla' then
-		if player.inventory[info.DaurdablaInstrument] then
+		if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
 			return options.DaurdablaModes, state.DaurdablaMode
 		else
 			add_to_chat(123, info.DaurdablaInstrument..' is not in player inventory.')
@@ -587,7 +587,7 @@ end
 
 
 function daur_song_gap()
-	if player.inventory.daurdabla then
+	if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2 + info.DaurdablaSongs
 		
