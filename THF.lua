@@ -65,7 +65,7 @@ function init_gear_sets()
 	-- Start defining the sets
 	--------------------------------------
 	
-	sets.TreasureHunter = {hands="Plunderer's Armlets", feet="Raider's Poulaines +2"}
+	sets.TreasureHunter = {hands="Plunderer's Armlets +1", waist="Chaac Belt", feet="Raider's Poulaines +2"}
 	
 	-- Precast Sets
 	
@@ -77,7 +77,7 @@ function init_gear_sets()
 	sets.precast.JA['Conspirator'] = {} -- {body="Raider's Vest +2"}
 	sets.precast.JA['Steal'] = {head="Plunderer's Bonnet",hands="Pillager's Armlets +1",legs="Pillager's Culottes +1",feet="Pillager's Poulaines +1"}
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
-	sets.precast.JA['Perfect Dodge'] = {hands="Plunderer's Armlets"}
+	sets.precast.JA['Perfect Dodge'] = {hands="Plunderer's Armlets +1"}
 	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
 	
 
@@ -177,8 +177,8 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Pillager's Vest +1",hands="Plunderer's Armlets",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Raider's Poulaines +2"}
+		body="Pillager's Vest +1",hands="Plunderer's Armlets +1",ring1="Rajas Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist="Chaac Belt",legs="Iuitl Tights",feet="Raider's Poulaines +2"}
 	
 	
 	-- Midcast Sets
@@ -202,8 +202,8 @@ function init_gear_sets()
 
 	sets.midcast.RangedAttack.TH = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
-		body="Iuitl Vest",hands="Plunderer's Armlets",ring1="Beeline Ring",ring2="Hajduk Ring",
-		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
+		body="Iuitl Vest",hands="Plunderer's Armlets +1",ring1="Beeline Ring",ring2="Hajduk Ring",
+		back="Libeccio Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
 	sets.midcast.RangedAttack.Acc = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
