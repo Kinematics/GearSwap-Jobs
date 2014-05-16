@@ -111,7 +111,7 @@ function user_setup()
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
+	options.IdleModes = {'Normal', 'Learning'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
@@ -241,6 +241,11 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
 
+	sets.idle.Learning = {ammo="Impatiens",
+		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Magus Bazubands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
+
 	sets.idle.Town = {main="Buramenk'ah", sub="Genbu's Shield",ammo="Impatiens",
 		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
@@ -267,7 +272,7 @@ function init_gear_sets()
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 	sets.engaged.Learning = {
 		head="Uk'uxkaj Cap",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Magus Bazubands",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
 end
