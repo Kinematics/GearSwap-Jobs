@@ -15,7 +15,7 @@ end
 function job_setup()
 
 	-- Table of spell mappings for blue magic spells.
-	blue_magic_maps = S{
+	blue_magic_maps = T{
 		-- Physical spells with no stat mods
 		['Asuran Claws']='Physical',['Bludgeon']='Physical',['Body Slam']='Physical',['Feather Storm']='Physical',
 		['Mandibular Bite']='Physical',['Queasyshroom']='Physical',['Power Attack']='Physical',['Ram Charge']='Physical',
@@ -25,8 +25,8 @@ function job_setup()
 		-- Physical spells with Str stat mod
 		['Battle Dance']='PhysicalStr',['Bloodrake']='PhysicalStr',['Death Scissors']='PhysicalStr',
 		['Dimensional Death']='PhysicalStr',['Empty Thrash']='PhysicalStr',['Heavy Strike']='PhysicalStr',
-		['Quadrastrike']='PhysicalStr',['Uppercut']='PhysicalStr',['Tourbillion']='PhysicalStr',['Vertical Cleave']='PhysicalStr',
-		['Whirl of Rage']='WhirlOfRage',
+		['Quadrastrike']='PhysicalStr',['Uppercut']='PhysicalStr',['Tourbillion']='PhysicalStr',
+		['Vertical Cleave']='PhysicalStr',['Whirl of Rage']='WhirlOfRage',
 		
 		-- Physical spells with Dex stat mod
 		['Amorphic Spikes']='PhysicalDex',['Barbed Crescent']='PhysicalDex',['Claw Cyclone']='PhysicalDex',
@@ -35,18 +35,19 @@ function job_setup()
 		['Seedspray']='PhysicalDex',['Vanity Dive']='PhysicalDex',
 		
 		-- Physical spells with Vit stat mod
-		['Cannonball']='PhysicalVit',['Delta Thrust']='PhysicalVit',['Glutinous Dart']='PhysicalVit',['Grand Slam']='PhysicalVit',
-		['Quad. Continuum']='PhysicalVit',['Sprout Smack']='PhysicalVit',
+		['Cannonball']='PhysicalVit',['Delta Thrust']='PhysicalVit',['Glutinous Dart']='PhysicalVit',
+		['Grand Slam']='PhysicalVit',['Quad. Continuum']='PhysicalVit',['Sprout Smack']='PhysicalVit',
 		
 		-- Physical spells with Agi stat mod
-		['Benthic Typhoon']='PhysicalAgi',['Helldive']='PhysicalAgi',['Hydro Shot']='PhysicalAgi',['Jet Stream']='PhysicalAgi',
-		['Pinecone Bomb']='PhysicalAgi',['Wild Oats']='PhysicalAgi',
-		
-		-- Magical spells
-		['Acrid Stream']='Magical',['Charged Whisker']='Magical',['Dark Orb']='Magical',['Droning Whirlwind']='Magical',
-		['Embalming Earth']='Magical',['Evryone. Grudge']='Magical',['Firespit']='Magical',['Foul Waters']='Magical',
-		['Gates of Hades']='Magical',['Leafstorm']='Magical',['Magic Hammer']='Magical',['Regurgitation']='Magical',
-		['Rending Deluge']='Magical',['Tem. Upheaval']='Magical',['Thermal Pulse']='Magical',['Water Bomb']='Magical',
+		['Benthic Typhoon']='PhysicalAgi',['Helldive']='PhysicalAgi',['Hydro Shot']='PhysicalAgi',
+		['Jet Stream']='PhysicalAgi',['Pinecone Bomb']='PhysicalAgi',['Wild Oats']='PhysicalAgi',
+
+		-- Magical spells (generally Int mod)
+		['Acrid Stream']='Magical',['Charged Whisker']='Magical',['Cursed Sphere']='Magical',['Dark Orb']='Magical',
+		['Droning Whirlwind']='Magical',['Embalming Earth']='Magical',['Evryone. Grudge']='Magical',['Firespit']='Magical',
+		['Foul Waters']='Magical',['Gates of Hades']='Magical',['Leafstorm']='Magical',['Magic Hammer']='Magical',
+		['Regurgitation']='Magical',['Rending Deluge']='Magical',['Tem. Upheaval']='Magical',['Thermal Pulse']='Magical',
+		['Water Bomb']='Magical',
 		
 		-- Magical spells (generally debuffs) that need to focus on magic accuracy
 		['1000 Needles']='MagicAccuracy',['Absolute Terror']='MagicAccuracy',['Actinic Burst']='MagicAccuracy',
@@ -78,9 +79,11 @@ function job_setup()
 		['White Wind']='Healing',['Wild Carrot']='Healing',
 
 		-- Other general buffs
-		['Barrier Tusk']='Buff',['Carcharian Verve']='Buff',['Diamondhide']='Buff',['Metallic Body']='Buff',
-		['Magic Barrier']='Buff',['Occultation']='Buff',['Orcish Counterstance']='Buff',
+		['Barrier Tusk']='Buff',['Carcharian Verve']='Buff',['Cocoon']='Buff',['Diamondhide']='Buff',
+		['Metallic Body']='Buff',['Magic Barrier']='Buff',['Occultation']='Buff',['Orcish Counterstance']='Buff',
 		["Nature's Meditation"]='Buff',['Plasma Charge']='Buff',['Pyric Bulwark']='Buff',['Reactor Cool']='Buff',
+		['Zephyr Mantle']='Buff'
+		
 
 		-- To fix:
 		-- Whirl of Rage is under Str mod and Stun spells
@@ -161,7 +164,10 @@ function init_gear_sets()
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
-	sets.precast.WS = {}
+	sets.precast.WS = {
+		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist=gear.ElementalBelt,legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {})
@@ -175,22 +181,48 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Haruspex Hat",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Iuitl Wristbands",ring1="Prolix Ring",
+		body="Vanir Cotehardie",hands="Mavi Bazubands +2",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {}
 	
 	sets.midcast['Blue Magic'] = {}
-	sets.midcast['Blue Magic'].Physical = {}
-	sets.midcast['Blue Magic'].PhysicalStr = {}
-	sets.midcast['Blue Magic'].PhysicalDex = {}
-	sets.midcast['Blue Magic'].PhysicalVit = {ammo="Iron Gobbet"}
-	sets.midcast['Blue Magic'].PhysicalAgi = {}
-	sets.midcast['Blue Magic'].Magical = {}
-	sets.midcast['Blue Magic'].MagicalAccuracy = {}
-	sets.midcast['Blue Magic'].Breath = {}
-	sets.midcast['Blue Magic'].Stun = {}
+	
+	sets.midcast['Blue Magic'].Physical = {
+		head="Whirlpool Mask",neck="Asperity Necklace",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",
+		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].PhysicalStr = {
+		head="Whirlpool Mask",neck="Asperity Necklace",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",
+		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].PhysicalDex = {
+		head="Whirlpool Mask",neck="Asperity Necklace",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",
+		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].PhysicalVit = {ammo="Iron Gobbet",
+		head="Whirlpool Mask",neck="Asperity Necklace",
+		body="Qaaxo Harness",hands="Buremte Gloves",
+		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].PhysicalAgi = {
+		head="Whirlpool Mask",neck="Asperity Necklace",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Stormsoul Ring",
+		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].Magical = {
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+	sets.midcast['Blue Magic'].MagicalAccuracy = {
+		ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Mavi Mintan +2",ring2="Sangoma Ring",
+		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].Breath = {
+		head="Mirage Keffiyeh",neck="Lavalier +1",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Mavi Mintan +2",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
+		back="Fravashi Mantle",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].Stun = {
+		back="Mirage Mantle"}
 	sets.midcast['Blue Magic'].Healing = {hands="Buremte Gloves"}
 	sets.midcast['Blue Magic'].Buff = {}
 
@@ -199,19 +231,20 @@ function init_gear_sets()
 	
 	-- Resting sets
 	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
-		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
+		ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		feet="Chelona Boots +1"}
 	
 
 	-- Idle sets
 	sets.idle = {ammo="Impatiens",
-		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmaq +2"}
+		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
 
 	sets.idle.Town = {main="Buramenk'ah", sub="Genbu's Shield",ammo="Impatiens",
-		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmaq +2"}
+		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmak +2"}
 	
 	-- Defense sets
 	sets.defense.PDT = {}
