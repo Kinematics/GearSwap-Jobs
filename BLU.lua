@@ -14,79 +14,85 @@ end
 -- Setup vars that are user-independent.
 function job_setup()
 
-	-- Table of spell mappings for blue magic spells.
-	blue_magic_maps = T{
-		-- Physical spells with no stat mods
-		['Asuran Claws']='Physical',['Bludgeon']='Physical',['Body Slam']='Physical',['Feather Storm']='Physical',
-		['Mandibular Bite']='Physical',['Queasyshroom']='Physical',['Power Attack']='Physical',['Ram Charge']='Physical',
-		['Screwdriver']='Physical',['Sickle Slash']='Physical',['Smite of Rage']='Physical',['Spinal Cleave']='Physical',
-		['Spiral Spin']='Physical',['Terror Touch']='Physical',
-		
-		-- Physical spells with Str stat mod
-		['Battle Dance']='PhysicalStr',['Bloodrake']='PhysicalStr',['Death Scissors']='PhysicalStr',
-		['Dimensional Death']='PhysicalStr',['Empty Thrash']='PhysicalStr',['Heavy Strike']='PhysicalStr',
-		['Quadrastrike']='PhysicalStr',['Uppercut']='PhysicalStr',['Tourbillion']='PhysicalStr',
-		['Vertical Cleave']='PhysicalStr',['Whirl of Rage']='WhirlOfRage',
-		
-		-- Physical spells with Dex stat mod
-		['Amorphic Spikes']='PhysicalDex',['Barbed Crescent']='PhysicalDex',['Claw Cyclone']='PhysicalDex',
-		['Disseverment']='PhysicalDex',['Foot Kick']='PhysicalDex',['Frenetic Rip']='PhysicalDex',
-		['Goblin Rush']='PhysicalDex',['Hysteric Barrage']='PhysicalDex',['Paralyzing Triad']='PhysicalDex',
-		['Seedspray']='PhysicalDex',['Vanity Dive']='PhysicalDex',
-		
-		-- Physical spells with Vit stat mod
-		['Cannonball']='PhysicalVit',['Delta Thrust']='PhysicalVit',['Glutinous Dart']='PhysicalVit',
-		['Grand Slam']='PhysicalVit',['Quad. Continuum']='PhysicalVit',['Sprout Smack']='PhysicalVit',
-		
-		-- Physical spells with Agi stat mod
-		['Benthic Typhoon']='PhysicalAgi',['Helldive']='PhysicalAgi',['Hydro Shot']='PhysicalAgi',
-		['Jet Stream']='PhysicalAgi',['Pinecone Bomb']='PhysicalAgi',['Wild Oats']='PhysicalAgi',
+	blue_magic_maps = {}
+	
+	-- Physical spells with no stat mods
+	blue_magic_maps.Physical = S{
+		'Asuran Claws','Bludgeon','Body Slam','Feather Storm','Mandibular Bite',
+		'Queasyshroom','Power Attack','Ram Charge','Screwdriver','Sickle Slash',
+		'Smite of Rage','Spinal Cleave','Spiral Spin','Terror Touch'
+	}
 
-		-- Magical spells (generally Int mod)
-		['Acrid Stream']='Magical',['Charged Whisker']='Magical',['Cursed Sphere']='Magical',['Dark Orb']='Magical',
-		['Droning Whirlwind']='Magical',['Embalming Earth']='Magical',['Evryone. Grudge']='Magical',['Firespit']='Magical',
-		['Foul Waters']='Magical',['Gates of Hades']='Magical',['Leafstorm']='Magical',['Magic Hammer']='Magical',
-		['Regurgitation']='Magical',['Rending Deluge']='Magical',['Tem. Upheaval']='Magical',['Thermal Pulse']='Magical',
-		['Water Bomb']='Magical',
+	-- Physical spells with Str stat mod
+	blue_magic_maps.PhysicalStr = S{
+		'Battle Dance','Bloodrake','Death Scissors','Dimensional Death',
+		'Empty Thrash','Heavy Strike','Quadrastrike','Uppercut','Tourbillion',
+		'Vertical Cleave'
+	}
 		
-		-- Magical spells (generally debuffs) that need to focus on magic accuracy
-		['1000 Needles']='MagicAccuracy',['Absolute Terror']='MagicAccuracy',['Actinic Burst']='MagicAccuracy',
-		['Auroral Drape']='MagicAccuracy',['Awful Eye']='MagicAccuracy',['Blank Gaze']='MagicAccuracy',
-		['Blistering Roar']='MagicAccuracy',['Blood Drain']='MagicAccuracy',['Blood Saber']='MagicAccuracy',
-		['Chaotic Eye']='MagicAccuracy',['Cimicine Discharge']='MagicAccuracy',['Cold Wave']='MagicAccuracy',
-		['Digest']='MagicAccuracy',['Corrosive Ooze']='MagicAccuracy',['Demoralizing Roar']='MagicAccuracy',
-		['Dream Flower']='MagicAccuracy',['Enervation']='MagicAccuracy',['Feather Tickle']='MagicAccuracy',
-		['Filamented Hold']='MagicAccuracy',['Frightful Roar']='MagicAccuracy',['Geist Wall']='MagicAccuracy',
-		['Hecatomb Wave']='MagicAccuracy',['Infrasonics']='MagicAccuracy',['Jettatura']='MagicAccuracy',
-		['Light of Penance']='MagicAccuracy',['Lowing']='MagicAccuracy',['Mind Blast']='MagicAccuracy',
-		['Mortal Ray']='MagicAccuracy',['MP Drainkiss']='MagicAccuracy',['Osmosis']='MagicAccuracy',
-		['Reaving Wind']='MagicAccuracy',['Sandspin']='MagicAccuracy',['Sandspray']='MagicAccuracy',
-		['Sheep Song']='MagicAccuracy',['Soporific']='MagicAccuracy',['Sound Blast']='MagicAccuracy',
-		['Stinking Gas']='MagicAccuracy',['Sub-zero Smash']='MagicAccuracy',['Triumphant Roar']='MagicAccuracy',
-		['Venom Shell']='MagicAccuracy',['Voracious Trunk']='MagicAccuracy',['Yawn']='MagicAccuracy',
+	-- Physical spells with Dex stat mod
+	blue_magic_maps.PhysicalDex = S{
+		'Amorphic Spikes','Barbed Crescent','Claw Cyclone','Disseverment',
+		'Foot Kick','Frenetic Rip','Goblin Rush','Hysteric Barrage',
+		'Paralyzing Triad','Seedspray','Vanity Dive'
+	}
 		
-		-- Breath-based spells
-		['Bad Breath']='Breath',['Flying Hip Press']='Breath',['Final Sting']='Breath',['Frost Breath']='Breath',
-		['Heat Breath']='Breath',['Magnetite Cloud']='Breath',['Poison Breath']='Breath',['Radiant Breath']='Breath',
-		['Self Destruct']='Breath',['Thunder Breath']='Breath',['Wind Breath']='Breath',
+	-- Physical spells with Vit stat mod
+	blue_magic_maps.PhysicalVit = S{
+		'Cannonball','Delta Thrust','Glutinous Dart','Grand Slam',
+		'Quad. Continuum','Sprout Smack'
+	}
+		
+	-- Physical spells with Agi stat mod
+	blue_magic_maps.PhysicalVit = S{
+		'Benthic Typhoon','Helldive','Hydro Shot','Jet Stream','Pinecone Bomb',
+		'Wild Oats'
+	}
 
-		-- Stun spells
-		['Blitzstrahl']='Stun',['Frypan']='Stun',['Head Butt']='Stun',['Sudden Lunge']='Stun',['Tail slap']='Stun',
-		['Temporal Shift']='Stun',['Thunderbolt']='Stun',['Whirl of Rage']='WhirlOfRage',
+	-- Magical spells (generally Int mod)
+	blue_magic_maps.Magical = S{
+		'Acrid Stream','Charged Whisker','Cursed Sphere','Dark Orb','Droning Whirlwind',
+		'Embalming Earth','Evryone. Grudge','Firespit','Foul Waters','Gates of Hades',
+		'Leafstorm','Magic Hammer','Regurgitation','Rending Deluge','Tem. Upheaval',
+		'Thermal Pulse','Water Bomb'
+	}
 		
-		-- Healing spells
-		['Healing Breeze']='Healing',['Magic Fruit']='Healing',['Plenilune Embrace']='Healing',['Pollen']='Healing',
-		['White Wind']='Healing',['Wild Carrot']='Healing',
-
-		-- Other general buffs
-		['Barrier Tusk']='Buff',['Carcharian Verve']='Buff',['Cocoon']='Buff',['Diamondhide']='Buff',
-		['Metallic Body']='Buff',['Magic Barrier']='Buff',['Occultation']='Buff',['Orcish Counterstance']='Buff',
-		["Nature's Meditation"]='Buff',['Plasma Charge']='Buff',['Pyric Bulwark']='Buff',['Reactor Cool']='Buff',
-		['Zephyr Mantle']='Buff'
+	-- Magical spells (generally debuffs) that need to focus on magic accuracy
+	blue_magic_maps.MagicAccuracy = S{
+		'1000 Needles','Absolute Terror','Actinic Burst','Auroral Drape','Awful Eye',
+		'Blank Gaze','Blistering Roar','Blood Drain','Blood Saber','Chaotic Eye',
+		'Cimicine Discharge','Cold Wave','Digest','Corrosive Ooze','Demoralizing Roar',
+		'Dream Flower','Enervation','Feather Tickle','Filamented Hold','Frightful Roar',
+		'Geist Wall','Hecatomb Wave','Infrasonics','Jettatura','Light of Penance',
+		'Lowing','Mind Blast','Mortal Ray','MP Drainkiss','Osmosis','Reaving Wind',
+		'Sandspin','Sandspray','Sheep Song','Soporific','Sound Blast','Stinking Gas',
+		'Sub-zero Smash','Triumphant Roar','Venom Shell','Voracious Trunk','Yawn'
+	}
 		
+	-- Breath-based spells
+	blue_magic_maps.Breath = S{
+		'Bad Breath','Flying Hip Press','Final Sting','Frost Breath','Heat Breath',
+		'Magnetite Cloud','Poison Breath','Radiant Breath','Self Destruct',
+		'Thunder Breath','Wind Breath'
+	}
 
-		-- To fix:
-		-- Whirl of Rage is under Str mod and Stun spells
+	-- Stun spells
+	blue_magic_maps.Stun = S{
+		'Blitzstrahl','Frypan','Head Butt','Sudden Lunge','Tail slap','Temporal Shift',
+		'Thunderbolt','Whirl of Rage'
+	}
+		
+	-- Healing spells
+	blue_magic_maps.Healing = S{
+		'Healing Breeze','Magic Fruit','Plenilune Embrace','Pollen','White Wind',
+		'Wild Carrot'
+	}
+
+	-- Other general buffs
+	blue_magic_maps.Buff = S{
+		'Barrier Tusk','Carcharian Verve','Cocoon','Diamondhide','Metallic Body',
+		'Magic Barrier','Occultation','Orcish Counterstance',"Nature's Meditation",
+		'Plasma Charge','Pyric Bulwark','Reactor Cool','Zephyr Mantle'
 	}
 
 
@@ -97,7 +103,7 @@ function job_setup()
                         'Zephyr Mantle'}
  
 
-        unbridled_blu_spells = S{
+        unbridled_spells = S{
                         'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
                         'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
                         'Tourbillion'}
@@ -340,7 +346,11 @@ end
 -- Don't return anything to allow default spell mapping to be used.
 function job_get_spell_map(spell, default_spell_map)
 	if spell.skill == 'Blue Magic' then
-		return blue_magic_maps[spell.english]
+		for category,spell_list in pairs(blue_magic_maps) do
+			if spell_list:contains(spell.english) then
+				return category
+			end
+		end
 	end
 end
 
