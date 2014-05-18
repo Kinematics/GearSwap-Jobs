@@ -16,64 +16,107 @@ function job_setup()
 
 	blue_magic_maps = {}
 	
-	-- Physical spells with no stat mods
+	-- Mappings for gear sets to use for various blue magic spells.
+	-- While Str isn't listed for each, it's generally assumed as being at least
+	-- moderately signficant, even for spells with other mods.
+	
+	-- Physical spells with no particular (or known) stat mods
 	blue_magic_maps.Physical = S{
-		'Asuran Claws','Bludgeon','Body Slam','Feather Storm','Mandibular Bite',
-		'Queasyshroom','Power Attack','Ram Charge','Screwdriver','Sickle Slash',
-		'Smite of Rage','Spinal Cleave','Spiral Spin','Terror Touch'
+		'Bilgestorm'
+	}
+
+	-- Spells with heavy accuracy penalties, that need to prioritize accuracy first.
+	blue_magic_maps.PhysicalAcc = S{
+		'Heavy Strike',
 	}
 
 	-- Physical spells with Str stat mod
 	blue_magic_maps.PhysicalStr = S{
 		'Battle Dance','Bloodrake','Death Scissors','Dimensional Death',
-		'Empty Thrash','Heavy Strike','Quadrastrike','Uppercut','Tourbillion',
-		'Vertical Cleave'
+		'Empty Thrash','Quadrastrike','Spinal Cleave',
+		'Uppercut','Vertical Cleave'
 	}
 		
 	-- Physical spells with Dex stat mod
 	blue_magic_maps.PhysicalDex = S{
-		'Amorphic Spikes','Barbed Crescent','Claw Cyclone','Disseverment',
-		'Foot Kick','Frenetic Rip','Goblin Rush','Hysteric Barrage',
-		'Paralyzing Triad','Seedspray','Vanity Dive'
+		'Amorphic Spikes','Asuran Claws','Barbed Crescent','Claw Cyclone','Disseverment',
+		'Foot Kick','Frenetic Rip','Goblin Rush','Hysteric Barrage','Paralyzing Triad',
+		'Seedspray','Sickle Slash','Smite of Rage','Terror Touch','Vanity Dive'
 	}
 		
 	-- Physical spells with Vit stat mod
 	blue_magic_maps.PhysicalVit = S{
-		'Cannonball','Delta Thrust','Glutinous Dart','Grand Slam',
-		'Quad. Continuum','Sprout Smack'
+		'Body Slam','Cannonball','Delta Thrust','Glutinous Dart','Grand Slam',
+		'Power Attack','Quad. Continuum','Sprout Smack','Sub-zero Smash'
 	}
 		
 	-- Physical spells with Agi stat mod
-	blue_magic_maps.PhysicalVit = S{
-		'Benthic Typhoon','Helldive','Hydro Shot','Jet Stream','Pinecone Bomb',
-		'Wild Oats'
+	blue_magic_maps.PhysicalAgi = S{
+		'Benthic Typhoon','Feather Storm','Helldive','Hydro Shot','Jet Stream',
+		'Pinecone Bomb','Spiral Spin','Wild Oats'
 	}
 
-	-- Magical spells (generally Int mod)
-	blue_magic_maps.Magical = S{
-		'Acrid Stream','Charged Whisker','Cursed Sphere','Dark Orb','Droning Whirlwind',
-		'Embalming Earth','Evryone. Grudge','Firespit','Foul Waters','Gates of Hades',
-		'Leafstorm','Magic Hammer','Regurgitation','Rending Deluge','Tem. Upheaval',
-		'Thermal Pulse','Water Bomb'
+	-- Physical spells with Int stat mod
+	blue_magic_maps.PhysicalInt = S{
+		'Mandibular Bite','Queasyshroom'
 	}
-		
-	-- Magical spells (generally debuffs) that need to focus on magic accuracy
+
+	-- Physical spells with Mnd stat mod
+	blue_magic_maps.PhysicalMnd = S{
+		'Ram Charge','Screwdriver','Tourbillion'
+	}
+
+	-- Physical spells with Chr stat mod
+	blue_magic_maps.PhysicalChr = S{
+		'Bludgeon'
+	}
+
+	-- Magical spells with the typical Int mod
+	blue_magic_maps.Magical = S{
+		'Blastbomb','Blazing Bound','Bomb Toss','Cursed Sphere','Dark Orb','Death Ray',
+		'Droning Whirlwind','Embalming Earth','Firespit','Foul Waters','Ice Break',
+		'Leafstorm','Maelstrom','Regurgitation','Rending Deluge','Retinal Glare',
+		'Tem. Upheaval','Water Bomb'
+	}
+
+	-- Magical spells with a primary Mnd mod
+	blue_magic_maps.MagicalMnd = S{
+		'Acrid Stream','Evryone. Grudge','Magic Hammer','Mind Blast'
+	}
+
+	-- Magical spells with a primary Chr mod
+	blue_magic_maps.MagicalChr = S{
+		'Eyes On Me','Mysterious Light'
+	}
+
+	-- Magical spells with a Vit stat mod (on top of Int)
+	blue_magic_maps.MagicalVit = S{
+		'Thermal Pulse'
+	}
+
+	-- Magical spells with a Dex stat mod (on top of Int)
+	blue_magic_maps.MagicalDex = S{
+		'Charged Whisker','Gates of Hades'
+	}
+			
+	-- Magical spells (generally debuffs) that we want to focus on magic accuracy over damage.
+	-- Add Int for damage where available, though.
 	blue_magic_maps.MagicAccuracy = S{
 		'1000 Needles','Absolute Terror','Actinic Burst','Auroral Drape','Awful Eye',
 		'Blank Gaze','Blistering Roar','Blood Drain','Blood Saber','Chaotic Eye',
-		'Cimicine Discharge','Cold Wave','Digest','Corrosive Ooze','Demoralizing Roar',
+		'Cimicine Discharge','Cold Wave','Corrosive Ooze','Demoralizing Roar','Digest',
 		'Dream Flower','Enervation','Feather Tickle','Filamented Hold','Frightful Roar',
 		'Geist Wall','Hecatomb Wave','Infrasonics','Jettatura','Light of Penance',
 		'Lowing','Mind Blast','Mortal Ray','MP Drainkiss','Osmosis','Reaving Wind',
 		'Sandspin','Sandspray','Sheep Song','Soporific','Sound Blast','Stinking Gas',
-		'Sub-zero Smash','Triumphant Roar','Venom Shell','Voracious Trunk','Yawn'
+		'Sub-zero Smash','Venom Shell','Voracious Trunk','Yawn'
 	}
 		
 	-- Breath-based spells
 	blue_magic_maps.Breath = S{
-		'Bad Breath','Flying Hip Press','Final Sting','Frost Breath','Heat Breath',
-		'Magnetite Cloud','Poison Breath','Radiant Breath','Self Destruct',
-		'Thunder Breath','Wind Breath'
+		'Bad Breath','Final Sting','Flying Hip Press','Frost Breath','Heat Breath',
+		'Hecatomb Wave','Magnetite Cloud','Poison Breath','Radiant Breath','Self-Destruct',
+		'Thunder Breath','Vapor Spray','Wind Breath'
 	}
 
 	-- Stun spells
@@ -87,13 +130,21 @@ function job_setup()
 		'Healing Breeze','Magic Fruit','Plenilune Embrace','Pollen','White Wind',
 		'Wild Carrot'
 	}
+	
+	-- Buffs that depend on blue magic skill
+	blue_magic_maps.SkillBasedBuff = S{
+		'Diamondhide','Metallic Body',
+	}
 
 	-- Other general buffs
 	blue_magic_maps.Buff = S{
-		'Barrier Tusk','Carcharian Verve','Cocoon','Diamondhide','Metallic Body',
-		'Magic Barrier','Occultation','Orcish Counterstance',"Nature's Meditation",
-		'Plasma Charge','Pyric Bulwark','Reactor Cool','Zephyr Mantle'
+		'Amplification','Animating Wail','Barrier Tusk','Battery Charge',
+		'Carcharian Verve','Cocoon','Exuviation','Fantod','Feather Barrier','Harden Shell',
+		'Magic Barrier','Memento Mori','Nat. Meditation','Occultation','Orcish Counterstance',
+		'Plasma Charge','Pyric Bulwark','Reactor Cool','Refueling','Regeneration',
+		'Saline Coat','Triumphant Roar','Warm-Up','Winds of Promyvion','Zephyr Mantle'
 	}
+	
 
 
 	-- Spells that can be enhanced with Diffusion gear
@@ -116,13 +167,17 @@ function user_setup()
 	options.OffenseModes = {'Normal', 'Learning'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
-	options.CastingModes = {'Normal'}
+	options.CastingModes = {'Normal', 'Resistant'}
 	options.IdleModes = {'Normal', 'Learning'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+
+	-- Additional local binds
+	send_command('bind ^` input /ja "Chain Affinity" <me>')
+	send_command('bind !` input /ja "Burst Affinity" <me>')
 
 	select_default_macro_book()
 end
@@ -147,13 +202,16 @@ function init_gear_sets()
 	sets.precast.JA['Chain Affinity'] = {}
 	sets.precast.JA['Burst Affinity'] = {}
 	sets.precast.JA['Diffusion'] = {}
-	sets.precast.JA['Efflux'] = {}
+	sets.precast.JA['Efflux'] = {legs="Mavi Tayt +2"}
 	sets.precast.JA['Unbridled Learning'] = {}
 	sets.precast.JA['Unbridled Wisdom'] = {}
 	
 
 	-- Waltz set (chr and vit)
-	sets.precast.Waltz = {ammo="Sonia's Plectrum"}
+	sets.precast.Waltz = {ammo="Sonia's Plectrum",
+		head="Uk'uxkaj Cap",
+		body="Vanir Cotehardie",hands="Buremte Gloves",ring1="Spiral Ring",
+		back="Iximulew Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Iuitl Gaiters +1"}
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
@@ -172,16 +230,18 @@ function init_gear_sets()
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
 		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist=gear.ElementalBelt,legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	
+	sets.precast.WS.acc = set_combine(sets.precast.WS, {hands="Buremte Gloves"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {})
 
-	sets.precast.WS['Sanguine Blade'] = {ammo="Charis Feather",
-		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
+	sets.precast.WS['Sanguine Blade'] = {
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Demon's Ring",ring2="Strendu Ring",
+		back="Toro Cape",legs="Hagondes Pants",feet="Iuitl Gaiters +1"}
 	
 	
 	-- Midcast Sets
@@ -190,66 +250,142 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Mavi Bazubands +2",ring1="Prolix Ring",
 		back="Swith Cape",waist="Goading Belt",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 		
-	-- Specific spells
-	sets.midcast.Utsusemi = {}
-	
 	sets.midcast['Blue Magic'] = {}
 	
-	sets.midcast['Blue Magic'].Physical = {
-		head="Whirlpool Mask",neck="Asperity Necklace",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",
-		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-	sets.midcast['Blue Magic'].PhysicalStr = {
-		head="Whirlpool Mask",neck="Asperity Necklace",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",
-		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-	sets.midcast['Blue Magic'].PhysicalDex = {
-		head="Whirlpool Mask",neck="Asperity Necklace",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",
-		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+	-- Physical Spells --
+	
+	sets.midcast['Blue Magic'].Physical = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Letalis Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+
+	sets.midcast['Blue Magic'].PhysicalAcc = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Patricius Ring",
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
+	sets.midcast['Blue Magic'].PhysicalStr = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Iuitl Vest",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Letalis Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+
+	sets.midcast['Blue Magic'].PhysicalDex = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Iuitl Vest",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Letalis Mantle",waist="Chaac Belt",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
 	sets.midcast['Blue Magic'].PhysicalVit = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Asperity Necklace",
-		body="Qaaxo Harness",hands="Buremte Gloves",
-		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-	sets.midcast['Blue Magic'].PhysicalAgi = {
-		head="Whirlpool Mask",neck="Asperity Necklace",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Stormsoul Ring",
-		waist="Caudata Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-	sets.midcast['Blue Magic'].Magical = {
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+
+	sets.midcast['Blue Magic'].PhysicalAgi = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
+		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
+
+	sets.midcast['Blue Magic'].PhysicalInt = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Icesoul Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Hagondes Sabots"}
+
+	sets.midcast['Blue Magic'].PhysicalMnd = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Aquasoul Ring",
+		back="Pahtli Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+
+	sets.midcast['Blue Magic'].PhysicalChr = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+
+	-- Magical Spells --
+	
+	sets.midcast['Blue Magic'].Magical = {ammo="Mavi Tathlum",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
-	sets.midcast['Blue Magic'].MagicalAccuracy = {
-		ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Mavi Mintan +2",ring2="Sangoma Ring",
+
+	sets.midcast['Blue Magic'].Magical.Resistant = set_combine(sets.midcast['Blue Magic'].Magical,
+		{body="Vanir Cotehardie",ring1="Sangoma Ring",
+		legs="Iuitl Tights",feet="Mavi Basmak +2"})
+	
+	sets.midcast['Blue Magic'].MagicalMnd = {ammo="Mavi Tathlum",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+
+	sets.midcast['Blue Magic'].MagicalChr = {ammo="Mavi Tathlum",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+
+	sets.midcast['Blue Magic'].MagicalVit = {ammo="Mavi Tathlum",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+
+	sets.midcast['Blue Magic'].MagicalDex = {ammo="Mavi Tathlum",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+
+	sets.midcast['Blue Magic'].MagicalAccuracy = {ammo="Mavi Tathlum",
+		head="Mirage Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Vanir Cotehardie",ring2="Sangoma Ring",
 		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
-	sets.midcast['Blue Magic'].Breath = {
-		head="Mirage Keffiyeh",neck="Lavalier +1",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Mavi Mintan +2",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Beeline Ring",
-		back="Fravashi Mantle",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
-	sets.midcast['Blue Magic'].Stun = {
+
+	-- Breath Spells --
+	
+	sets.midcast['Blue Magic'].Breath = {ammo="Mavi Tathlum",
+		head="Mirage Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="K'ayres Ring",ring2="Beeline Ring",
+		back="Refraction Cape",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
+
+	-- Other Types --
+	
+	sets.midcast['Blue Magic'].Stun = {ammo="Mavi Tathlum",
 		back="Mirage Mantle"}
-	sets.midcast['Blue Magic'].Healing = {hands="Buremte Gloves"}
+		
+	sets.midcast['Blue Magic'].Healing = {
+		head="Uk'uxkaj Cap",ear1="Lifestorm Earring",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Buremte Gloves",ring1="Aquasoul Ring",ring2="Sirona's Ring",
+		back="Pahtli Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
+
+	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
+		body="Magus Jubbah",
+		legs="Mavi Tayt +2"}
+
 	sets.midcast['Blue Magic'].Buff = {}
 
 	
+	
 	-- Sets to return to when not performing an action.
+
+	-- Gear for learning spells: +skill and AF hands.
+	sets.Learning = {ammo="Mavi Tathlum",
+		body="Magus Jubbah",hands="Assimilator's Bazubands +1",
+		legs="Mavi Tayt +2"}
+
+
 	
 	-- Resting sets
-	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
-		ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		feet="Chelona Boots +1"}
+	sets.resting = {
+		head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		waist="Austerity Belt",feet="Chelona Boots +1"}
 	
-
 	-- Idle sets
 	sets.idle = {ammo="Impatiens",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Serpentes Sabots"}
 
-	sets.idle.Learning = {ammo="Impatiens",
+	sets.idle.Learning = set_combine(sets.idle, sets.Learning)
+
+	sets.idle.PDT = {ammo="Impatiens",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Magus Bazubands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
 
 	sets.idle.Town = {main="Buramenk'ah", sub="Genbu's Shield",ammo="Impatiens",
@@ -272,14 +408,18 @@ function init_gear_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 	
 	-- Normal melee group
-	sets.engaged = {
+	sets.engaged = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-	sets.engaged.Learning = {
-		head="Uk'uxkaj Cap",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Qaaxo Harness",hands="Magus Bazubands",ring1="Rajas Ring",ring2="Epona's Ring",
+
+	sets.engaged.DW = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+
+	sets.engaged.Learning = set_combine(sets.engaged, sets.Learning, {waist="Hurch'lan Sash"})
+	sets.engaged.DW.Learning = set_combine(sets.engaged.DW, sets.Learning, {waist="Hurch'lan Sash"})
 
 end
 
@@ -308,7 +448,7 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
-		-- Default base equipment layer of fast recast.
+		-- Default base equipment layer for spells.
 		equip(sets.midcast.FastRecast)
 	end
 end
@@ -316,7 +456,10 @@ end
 -- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-
+	-- If in learning mode, keep on gear intended to help with that.
+	if state.OffenseMode == 'Learning' then
+		equip(sets.Learning)
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -399,7 +542,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-
+	state.CombatForm = get_combat_form()
 end
 
 -- Job-specific toggles.
@@ -438,6 +581,13 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+function get_combat_form()
+	if not (player.equipment.sub == "Genbu's Shield" or player.equipment.sub == 'empty') then
+		return 'DW'
+	end
+end
+
+
 -- Select default macro book on initial load or subjob change.
 function select_default_macro_book()
 	-- Default macro set/book
@@ -447,4 +597,6 @@ function select_default_macro_book()
 		set_macro_page(1, 7)
 	end
 end
+
+
 
