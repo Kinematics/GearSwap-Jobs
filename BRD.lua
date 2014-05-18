@@ -202,7 +202,7 @@ function init_gear_sets()
 	sets.midcast.ResistantSongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Kumbira Cape",waist="Goading Belt",legs="Brioso Cannions +1",feet="Bokwus Boots"}
+		back="Kumbira Cape",waist="Demonry Sash",legs="Brioso Cannions +1",feet="Bokwus Boots"}
 
 	-- Song-specific recast reduction
 	sets.midcast.SongRecast = {ear2="Loquacious Earring",
