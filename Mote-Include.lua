@@ -617,7 +617,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 		equipSet = equipSet[spell.english]
 	elseif spellMap and equipSet[spellMap] then
 		equipSet = equipSet[spellMap]
-	elseif equipSet[spell.skill] then
+	elseif spell.skill and equipSet[spell.skill] then
 		equipSet = equipSet[spell.skill]
 
 		-- Skills may define sub-categories that use the same standard checks.
@@ -729,7 +729,7 @@ function get_default_midcast_set(spell, action, spellMap, eventArgs)
 		equipSet = equipSet[spell.english]
 	elseif spellMap and equipSet[spellMap] then
 		equipSet = equipSet[spellMap]
-	elseif equipSet[spell.skill] then
+	elseif spell.skill and equipSet[spell.skill] then
 		-- Certain spells get excluded from selecting the skill gear set.
 		if not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then	
 			equipSet = equipSet[spell.skill]
