@@ -468,10 +468,10 @@ end
 
 -- Attempt to locate a specified name within the current alliance.
 function find_player_in_alliance(name)
-	for i,v in ipairs(alliance) do
-		for k,p in ipairs(v) do
-			if p.name == name then
-				return p
+	for party_index,ally_party in ipairs(alliance) do
+		for player_index,_player in ipairs(ally_party) do
+			if _player.name == name then
+				return _player
 			end
 		end
 	end
