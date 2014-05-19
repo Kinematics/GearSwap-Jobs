@@ -589,7 +589,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
 		equipSet = sets.precast.FC
 	elseif spell.action_type == 'Ranged Attack' then
-		equipSet = sets.precast.RA -- RangedAttack
+		equipSet = sets.precast.RA or sets.precast.RangedAttack
 	elseif spell.action_type == 'Ability' then
 		if spell.type == 'WeaponSkill' then
 			equipSet = sets.precast.WS
@@ -708,7 +708,7 @@ function get_default_midcast_set(spell, action, spellMap, eventArgs)
 	-- Only ranged attacks and items get specific sub-categories here.
 	
 	if spell.action_type == 'Ranged Attack' then
-		equipSet = sets.midcast.RA -- RangedAttack
+		equipSet = sets.precast.RA or sets.precast.RangedAttack
 	elseif spell.action_type == 'Item' then
 		equipSet = sets.midcast.Item
 	else
