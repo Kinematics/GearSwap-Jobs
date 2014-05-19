@@ -613,14 +613,14 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 		-- Ranged attacks use sets.precast.RangedAttack (since Ranged is a gear slot).
 		equipSet = sets.precast.RangedAttack
 
-		-- Custom class modification
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
-		end
-
 		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
 		if equipSet[state.RangedMode] then
 			equipSet = equipSet[state.RangedMode]
+		end
+
+		-- Custom class modification
+		if classes.CustomClass and equipSet[classes.CustomClass] then
+			equipSet = equipSet[classes.CustomClass]
 		end
 
 		-- Tack on any additionally specified custom groups, if the sets are defined.
