@@ -793,7 +793,7 @@ function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	-- Class mapping
 	-- Skill is not checked, since that's meaningless for pet actions
 	-- Spell type
-	if sets.midcast.Pet then
+	if sets.midcast and sets.midcast.Pet then
 		equipSet = sets.midcast.Pet
 
 		if classes.CustomClass and equipSet[classes.CustomClass] then
