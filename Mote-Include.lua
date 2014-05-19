@@ -669,6 +669,10 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = equipSet[classes.CustomClass]
 			elseif equipSet[spell.english] then
 				equipSet = equipSet[spell.english]
+			elseif spellMap and equipSet[spellMap] then
+				equipSet = equipSet[spellMap]
+			elseif spell.skill and equipSet[spell.skill] then
+				equipSet = equipSet[spell.skill]
 			end
 
 			-- And if a weaponskill mode is specified, tack that on to the end.
