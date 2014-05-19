@@ -314,7 +314,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
 		if spell.target.type == 'PLAYER' and not spell.target.charmed and not state.Buff['Pianissimo'] then
-			send_command('@input /ja "Pianissimo" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
+			send_command('@input /ja "Pianissimo" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
 			eventArgs.cancel = true
 			return
 		end
