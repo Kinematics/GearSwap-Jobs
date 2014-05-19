@@ -109,7 +109,7 @@ function init_gear_sets()
 
 
 	-- Ranged snapshot gear
-	sets.precast.RangedAttack = {head="Aurore Beret",hands="Iuitl Wristbands",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
+	sets.precast.RA = {head="Aurore Beret",hands="Iuitl Wristbands",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
 
        
 	-- Weaponskill sets
@@ -195,17 +195,17 @@ function init_gear_sets()
 		back="Fravashi Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	-- Ranged gear -- acc + TH
-	sets.midcast.RangedAttack = {
+	sets.midcast.RA = {
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
-	sets.midcast.RangedAttack.TH = {
+	sets.midcast.RA.TH = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Plunderer's Armlets +1",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
 
-	sets.midcast.RangedAttack.Acc = {
+	sets.midcast.RA.Acc = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines +1"}
