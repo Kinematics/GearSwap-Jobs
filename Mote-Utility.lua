@@ -506,7 +506,9 @@ end
 function get_expanded_set(baseSet, str)
 	local cur = baseSet
 	for i in str:gmatch("[^.]+") do
-		cur = cur[i]
+		if cur then
+			cur = cur[i]
+		end
 	end
 	
 	return cur
