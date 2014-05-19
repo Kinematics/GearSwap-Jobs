@@ -13,6 +13,14 @@ end
 
 -- Setup vars that are user-independent.
 function job_setup()
+        state.Buff['Burst Affinity'] = buffactive['Burst Affinity'] or false
+        state.Buff['Chain Affinity'] = buffactive['Chain Affinity'] or false
+        state.Buff.Convergence = buffactive.Convergence or false
+        state.Buff.Diffusion = buffactive.Diffusion or false
+        state.Buff.Efflux = buffactive.Efflux or false
+        
+        state.Buff['Unbridled Learning'] = buffactive['Unbridled Learning'] or false
+
 
 	blue_magic_maps = {}
 	
@@ -136,6 +144,11 @@ function job_setup()
 		'Diamondhide','Metallic Body',
 	}
 
+        -- Buff spells where Blue Magic Skill matters (need verification)
+        --['Metallic Body']='BuffSkill',['Diamondhide']='BuffSkill',['Reactor Cool']='BuffSkill',['Plasma Charge']='BuffSkill',
+        --['Magic Barrier']='BuffSkill',['Barrier Tusk']='BuffSkill',['Orcish Counterstance']='BuffSkill',['Pyric Bulwark']='BuffSkill',
+        --['Nature\'s Meditation']='BuffSkill',['Carcharian Verve']='BuffSkill',
+
 	-- Other general buffs
 	blue_magic_maps.Buff = S{
 		'Amplification','Animating Wail','Barrier Tusk','Battery Charge',
@@ -194,18 +207,19 @@ function init_gear_sets()
 	--------------------------------------
 	-- Start defining the sets
 	--------------------------------------
+
+	sets.buff['Burst Affinity'] = {feet="Mavi Basmak +2"}
+	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"}
+	sets.buff.Convergence = {} --{head="Mirage Keffiyeh +2"}
+	sets.buff.Diffusion = {} --{feet="Mirage Charuqs +2"}
+	sets.buff.Efflux = {legs="Mavi Tayt +2"}
+
 	
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Azure Lore'] = {}
-	sets.precast.JA['Chain Affinity'] = {}
-	sets.precast.JA['Burst Affinity'] = {}
-	sets.precast.JA['Diffusion'] = {}
-	sets.precast.JA['Efflux'] = {legs="Mavi Tayt +2"}
-	sets.precast.JA['Unbridled Learning'] = {}
-	sets.precast.JA['Unbridled Wisdom'] = {}
-	
+
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
@@ -330,7 +344,7 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast['Blue Magic'].MagicalAccuracy = {ammo="Mavi Tathlum",
+	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
 		head="Mirage Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",ring2="Sangoma Ring",
 		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
@@ -427,23 +441,14 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
-function job_pretarget(spell, action, spellMap, eventArgs)
-
-end
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-
+	if unbridled_spells:contains(spell.english) and not state.Buff['Unbridled Learning'] then
+		eventArgs.cancel = true
+		windower.send_command('@input /ja "Unbridled Learning" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
+	end
 end
-
--- Run after the default precast() is done.
--- eventArgs is the same one used in job_precast, in case information needs to be persisted.
-function job_post_precast(spell, action, spellMap, eventArgs)
-
-end
-
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
@@ -456,7 +461,16 @@ end
 -- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	-- If in learning mode, keep on gear intended to help with that.
+	-- Add enhancement gear for Chain Affinity, etc.
+	if spell.skill == 'Blue Magic' then
+		for buff,active in pairs(state.Buff) do
+			if active and sets.buff[buff] then
+				equip(sets.buff[buff])
+			end
+		end
+	end
+
+	-- If in learning mode, keep on gear intended to help with that, regardless of action.
 	if state.OffenseMode == 'Learning' then
 		equip(sets.Learning)
 	end
@@ -464,25 +478,16 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
-end
-
--- Run after the default aftercast() is done.
--- eventArgs is the same one used in job_aftercast, in case information needs to be persisted.
-function job_post_aftercast(spell, action, spellMap, eventArgs)
-
+	if not spell.interrupted then
+		if state.Buff[spell.english] ~= nil then
+			state.Buff[spell.english] = true
+		end
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called before the Include starts constructing melee/idle/resting sets.
--- Can customize state or custom melee class values at this point.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_handle_equipping_gear(status, eventArgs)
-
-end
 
 -- Custom spell mapping.
 -- Return custom spellMap value that can override the default spell mapping.
@@ -497,36 +502,17 @@ function job_get_spell_map(spell, default_spell_map)
 	end
 end
 
--- Return a customized weaponskill mode to use for weaponskill sets.
--- Don't return anything if you're not overriding the default value.
-function get_custom_wsmode(spell, action, spellMap)
-
-end
-
--- Modify the default idle set after it was constructed.
-function customize_idle_set(idleSet)
-	return idleSet
-end
-
--- Modify the default melee set after it was constructed.
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
-
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-
-end
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
 end
 
 
@@ -534,42 +520,10 @@ end
 -- User code that supplements self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for custom player commands.
-function job_self_command(cmdParams, eventArgs)
-
-end
-
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
 	state.CombatForm = get_combat_form()
-end
-
--- Job-specific toggles.
-function job_toggle(field)
-
-end
-
--- Request job-specific mode lists.
--- Return the list, and the current value for the requested field.
-function job_get_mode_list(field)
-
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_mode(field, val)
-
-end
-
--- Handle auto-targetting based on local setup.
-function job_auto_change_target(spell, action, spellMap, eventArgs)
-
-end
-
--- Handle notifications of user state values being changed.
-function job_state_change(stateField, newValue)
-
 end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
