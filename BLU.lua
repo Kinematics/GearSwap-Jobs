@@ -28,6 +28,8 @@ function job_setup()
 	-- While Str isn't listed for each, it's generally assumed as being at least
 	-- moderately signficant, even for spells with other mods.
 	
+	-- Physical Spells --
+	
 	-- Physical spells with no particular (or known) stat mods
 	blue_magic_maps.Physical = S{
 		'Bilgestorm'
@@ -79,6 +81,13 @@ function job_setup()
 		'Bludgeon'
 	}
 
+	-- Physical spells with HP stat mod
+	blue_magic_maps.PhysicalHP = S{
+		'Final Sting'
+	}
+
+	-- Magical Spells --
+
 	-- Magical spells with the typical Int mod
 	blue_magic_maps.Magical = S{
 		'Blastbomb','Blazing Bound','Bomb Toss','Cursed Sphere','Dark Orb','Death Ray',
@@ -122,7 +131,7 @@ function job_setup()
 		
 	-- Breath-based spells
 	blue_magic_maps.Breath = S{
-		'Bad Breath','Final Sting','Flying Hip Press','Frost Breath','Heat Breath',
+		'Bad Breath','Flying Hip Press','Frost Breath','Heat Breath',
 		'Hecatomb Wave','Magnetite Cloud','Poison Breath','Radiant Breath','Self-Destruct',
 		'Thunder Breath','Vapor Spray','Wind Breath'
 	}
@@ -158,26 +167,20 @@ function job_setup()
 		'Saline Coat','Triumphant Roar','Warm-Up','Winds of Promyvion','Zephyr Mantle'
 	}
 	
-
-
-	-- Spells that can be enhanced with Diffusion gear
-        diffusion_spells = S{
-                        'Amplification','Cocoon','Exuviation','Feather Barrier','Harden Shell','Memento Mori',
-                        'Metallic Body','Plasma Charge','Reactor Cool','Refueling','Saline Coat','Warm-Up',
-                        'Zephyr Mantle'}
- 
-
+	
+	-- Spells that require Unbridled Learning to cast.
         unbridled_spells = S{
-                        'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
-                        'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
-                        'Tourbillion'}
+		'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
+		'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
+		'Tourbillion'
+	}
 end
 
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Learning'}
+	options.OffenseModes = {'Normal', 'Acc', 'Learning'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal', 'Resistant'}
@@ -209,16 +212,17 @@ function init_gear_sets()
 	--------------------------------------
 
 	sets.buff['Burst Affinity'] = {feet="Mavi Basmak +2"}
-	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"}
-	sets.buff.Convergence = {} --{head="Mirage Keffiyeh +2"}
-	sets.buff.Diffusion = {} --{feet="Mirage Charuqs +2"}
+	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"} --, feet="Assimilator's Charuqs"}
+	sets.buff.Convergence = {head="Mirage Keffiyeh +2"}
+	sets.buff.Diffusion = {feet="Mirage Charuqs +2"}
+	sets.buff.Enchainment = {body="Mirage Jubbah +2"}
 	sets.buff.Efflux = {legs="Mavi Tayt +2"}
 
 	
 	-- Precast Sets
 	
 	-- Precast sets to enhance JAs
-	sets.precast.JA['Azure Lore'] = {}
+	sets.precast.JA['Azure Lore'] = {hands="Mirage Bazubands +2"}
 
 
 	-- Waltz set (chr and vit)
@@ -313,6 +317,11 @@ function init_gear_sets()
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
 		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 
+	sets.midcast['Blue Magic'].PhysicalHP = {ammo="Mavi Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
+		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+
 	-- Magical Spells --
 	
 	sets.midcast['Blue Magic'].Magical = {ammo="Mavi Tathlum",
@@ -345,14 +354,14 @@ function init_gear_sets()
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		head="Mirage Keffiyeh +2",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",ring2="Sangoma Ring",
 		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
 
 	-- Breath Spells --
 	
 	sets.midcast['Blue Magic'].Breath = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		head="Mirage Keffiyeh +2",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Refraction Cape",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 
@@ -367,6 +376,7 @@ function init_gear_sets()
 		back="Pahtli Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
+		head="Mirage Keffiyeh +2",
 		body="Magus Jubbah",
 		legs="Mavi Tayt +2"}
 
@@ -378,8 +388,9 @@ function init_gear_sets()
 
 	-- Gear for learning spells: +skill and AF hands.
 	sets.Learning = {ammo="Mavi Tathlum",
+		head="Mirage Keffiyeh +2",	
 		body="Magus Jubbah",hands="Assimilator's Bazubands +1",
-		legs="Mavi Tayt +2"}
+		legs="Mavi Tayt +2",feet="Mirage Charuqs +2"}
 
 
 	
@@ -402,15 +413,21 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
 
-	sets.idle.Town = {main="Buramenk'ah", sub="Genbu's Shield",ammo="Impatiens",
+	sets.idle.Town = {main="Buramenk'ah",ammo="Impatiens",
 		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmak +2"}
 	
 	-- Defense sets
-	sets.defense.PDT = {}
+	sets.defense.PDT = {ammo="Iron Gobbet",
+		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Dark Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
-	sets.defense.MDT = {}
+	sets.defense.MDT = {ammo="Demonry Stone",
+		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bloodgem Earring",
+		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Dark Ring",
+		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 
@@ -426,14 +443,26 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
+		--back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Mirage Charuqs +2"}
 
 	sets.engaged.DW = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
+	sets.engaged.Acc = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
+	sets.engaged.DW.Acc = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
+		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
 	sets.engaged.Learning = set_combine(sets.engaged, sets.Learning, {waist="Hurch'lan Sash"})
 	sets.engaged.DW.Learning = set_combine(sets.engaged.DW, sets.Learning, {waist="Hurch'lan Sash"})
+
 
 end
 
@@ -446,7 +475,7 @@ end
 function job_precast(spell, action, spellMap, eventArgs)
 	if unbridled_spells:contains(spell.english) and not state.Buff['Unbridled Learning'] then
 		eventArgs.cancel = true
-		windower.send_command('@input /ja "Unbridled Learning" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
+		windower.send_command('@input /ja "Unbridled Learning" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
 	end
 end
 
@@ -528,7 +557,36 @@ end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
+	local dwString  = ''
+	if state.CombatForm == 'DW' then
+		dwString = ' (DW)'
+	end
+	
+	local defenseString = ''
+	if state.Defense.Active then
+		local defMode = state.Defense.PhysicalMode
+		if state.Defense.Type == 'Magical' then
+			defMode = state.Defense.MagicalMode
+		end
 
+		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+	end
+	
+	local pcTarget = ''
+	if state.PCTargetMode ~= 'default' then
+		pcTarget = ', Target PC: '..state.PCTargetMode
+	end
+
+	local npcTarget = ''
+	if state.SelectNPCTargets then
+		pcTarget = ', Target NPCs'
+	end
+	
+
+	add_to_chat(122,'Melee'..dwString..': '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
+		'Kiting: '..on_off_names[state.Kiting]..pcTarget..npcTarget)
+
+	eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
