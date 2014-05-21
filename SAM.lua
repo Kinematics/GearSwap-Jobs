@@ -17,7 +17,7 @@ function job_setup()
 	
 	state.Buff.Sekkanoki = buffactive.sekkanoki or false
 	state.Buff.Sengikori = buffactive.sengikori or false
-	state.Buff['Meikyou Shisui'] = buffactive['Meikyou Shisui'] or false
+	state.Buff['Meikyo Shisui'] = buffactive['Meikyo Shisui'] or false
 end
 
 
@@ -221,7 +221,7 @@ function init_gear_sets()
 
 	sets.buff.Sekkanoki = {hands="Unkai Kote +2"}
 	sets.buff.Sengikori = {feet="Unkai Sune-ate +2"}
-	sets.buff['Meikyou Shisui'] = {feet="Sakonji Sune-ate"}
+	sets.buff['Meikyo Shisui'] = {feet="Sakonji Sune-ate"}
 end
 
 
@@ -252,8 +252,8 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 		if state.Buff.Sengikori then
 			equip(sets.buff.Sengikori)
 		end
-		if state.Buff['Meikyou Shisui'] then
-			equip(sets.buff['Meikyou Shisui'])
+		if state.Buff['Meikyo Shisui'] then
+			equip(sets.buff['Meikyo Shisui'])
 		end
 	end
 end

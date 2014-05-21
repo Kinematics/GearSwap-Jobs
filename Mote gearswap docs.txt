@@ -4,15 +4,24 @@ Documentation for use of Mote-Include GearSwaps.
 
 To use my include, certain supplemental files are required.
 
-Mote-Include.lua -- The primary include. This file is entirely rules code for handling selecting sets, and handling a predefined set of self-commands.  All user data should have been removed from it, so there should be no reason to modify it at all.  
+Mote-Include.lua -- The primary include.  This file does two things:
 
-Mote-Mappings.lua -- File used for storing spell maps and other general mappings that jobs may want access to.  This should be all data, no functions.
+1) Sets up all preperatory variables, and loads the other includes.
+2) All code for selecting sets to equip.
 
-Mote-Utility.lua -- File for various utility functions that fall outside the general handling of gear selection and equipping.
+This file is almost entirely generic code rules, and should never need to be modified by the user.  It essentially defines the 'rules' that you have to follow (primarily in how you name sets) to make use of this include system.
 
-Mote-SelfCommands.lua -- File for handling our predefined self-commands for adjusting state values (offense mode, casting mode, update, etc).
 
-Mote-Globals.lua -- Any additional values or functions that the user wants access to globally.  The user can override this version with a user-globals.lua file.
+Mote-SelfCommands.lua -- This file handles certain self-commands that allow you to send commands to GearSwap that will change variable values and user state (eg: offense mode, casting mode, kiting, etc).  The user should never need to modify this file, nor should they ever need to reference any functions in it from user files.
+
+
+Mote-Utility.lua -- This file includes functions that the user may want to call on from user files.  These are general utility functions that may be of use to multiple job files, as well as some utility functions that Mote-Include and Mote-SelfCommands may refer to.  None of these functions should do anything directly related to equipping gear, though.
+
+
+Mote-Mappings.lua -- This file is used for storing information tables, such as lists of elements, or spell mappings, that jobs may want access to.  There are no functions in this file, only data.
+
+
+Mote-Globals.lua -- Any additional values or functions that the user wants access to globally, but that the user may want to customize.  If the user creates a file called user-globals.lua, that file will be used instead (that way updates to this file won't overwrite changes that the user made).
 
 
 The separation into individual files is both for code sanity (all the self-command code is difficult to wade through while you're trying to examine the main gear changing code), and so that updates won't overwrite user customizations.  It should always be safe to simply drop in new versions of the various Mote-* files.
@@ -20,32 +29,32 @@ The separation into individual files is both for code sanity (all the self-comma
 
 All of these files should be in the same directory as your regular job lua files.
 
+
+
  --- Optional Files ---
  
-To facilitate keeping local user gear sets intact while still being able to update the main file, the scripts will look for sidecar files that implement the actual gear sets, and use them instead of the sets in the main file if they're found.
+To facilitate keeping local user gear sets intact while still being able to update the main file, the scripts will look for 'sidecar' files, and use functions found in those files rather than the equivalent functions found in the main file.
 
 Example:
 Main file - whm.lua
 User file - whm_gear.lua  (or playername_whm_gear.lua)
 
-Functions:
-init_gear_sets
+Of particular interest for most users are the following functions:
+user_setup
 file_unload
+init_gear_sets
 
-Within whm_gear.lua, create a function called init_gear_sets().  When first created you can copy everything from the main file's init_gear_sets() function, and then fill in your own actual gear.  file_unload() is called when the file is unloaded, if you need any custom unload logic.
-
-These sidecar files will not be part of the repository, and thus will not be updated or modified when you keep your files updated to the latest public version.
+Note: *Any* function in the main file can be replaced with a version in the sidecar file.  However the vast majority of the time, the only changes you really want to make are in the above functions, to allow you to define your own personal variables and gear sets.
 
 
-Example code:
+user_setup() should be used to define user-specific variables, such as lists of combat modes, or how many bonus songs you can sing as a brd, etc.  Copy the default function, and adjust to taste.
 
-function init_gear_sets()
-    -- Put all set definitions here, as well as any other customization that is user-specific.
-end
+file_unload() should be used if you created any custom keybinds that you put in user_setup(), to allow you to undefine them when the lua file is unloaded (ie: you changed to another job).
 
-function file_unload()
-    -- Called on unload, if needed
-end
+init_gear_sets() is solely used to define the gear sets you intend to use for this job.  Sets should be defined to follow the set selection rules.
+
+
+These sidecar files will not be part of the repository, and thus will not be updated or modified if/when you update your files to the latest public version (often to handle bug fixes and such).
 
 
 
@@ -53,7 +62,43 @@ end
 
  ------   SETS   ------
 
-Sets are constructed hierarchically.  The 'sets' set is the root node.  Other broad categories of sets descend from the root node, and are named in lowercase.  Each of those groups has other descendants. Major breaking-off points, where you start specifying sets by spell name or option, are capitalized, as are final-tier options.  Explicitly known set groups:
+These are the rules used to selecting gear sets when you perform an action.  This describes the process that the code in Mote-Include.lua follows in order to select each set.
+
+
+Gear sets are constructed hierarchically, all descending from the root table, 'sets' (that GearSwap itself defines).
+
+Directly under the 'sets' table are several tables that describe broad categories of need.  Each 'event' will look within one of these broad categories.  These are named in lowercase.
+
+sets
+    .precast
+    .midcast
+    .idle
+    .engaged
+    .resting
+    .defense
+
+The purpose of each category should be self-evident, aside from perhaps .defense.  The .defense category includes gear sets that are intended to override (almost) all other gear sets.  They are the 'emergency defense' gear that takes priority over anything else.
+
+Some of these have additional sub-categories defined for specific types of actions or needs.  These sub-categories are capitalized.
+
+1) sets itself has a Kiting sub-category.  Kiting is the only set that explicitly overrides any .defense set in use.
+
+sets
+    .Kiting
+
+2) .precast has several sub-categories.  FC is for Fast Cast gear, applied for any magic spells cast.  WS is for weaponskills.  JA is for any standard job abilities that aren't otherwised categorized.  Any job ability with its own 'type' (ie: spell.type == 'Waltz', 'Jig', 'CorsairShot', 'PetCommand', etc) gets treated as its own category.
+
+sets
+    .precast
+        .FC
+        .WS
+        .JA
+        .~type (ie: spell.type, such as .Waltz, .Jig, .CorsairShot, etc)
+
+
+
+
+  The 'sets' set is the root table.  Other broad categories of sets descend from the root node, and are named in lowercase.  Each of those groups has other descendants. Major breaking-off points, where you start specifying sets by spell name or option, are capitalized, as are final-tier options.  Explicitly known set groups:
 
 sets
     .precast

@@ -202,7 +202,7 @@ function init_gear_sets()
 	sets.midcast.ResistantSongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Kumbira Cape",waist="Goading Belt",legs="Bihu Cannions",feet="Bokwus Boots"}
+		back="Kumbira Cape",waist="Demonry Sash",legs="Brioso Cannions +1",feet="Bokwus Boots"}
 
 	-- Song-specific recast reduction
 	sets.midcast.SongRecast = {ear2="Loquacious Earring",
@@ -314,8 +314,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
 		if spell.target.type == 'PLAYER' and not spell.target.charmed and not state.Buff['Pianissimo'] then
-			cancel_spell()
-			send_command('@input /ja "Pianissimo" <me>; wait 1.25; input /ma "'..spell.name..'" '..spell.target.name)
+			send_command('@input /ja "Pianissimo" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
 			eventArgs.cancel = true
 			return
 		end

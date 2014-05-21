@@ -30,14 +30,14 @@ function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
-	options.RangedModes = {'Normal', 'TH', 'Acc'}
+	options.RangedModes = {'Normal', 'Acc'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 
-	state.RangedMode = 'TH'
+	state.RangedMode = 'Normal'
 	state.Defense.PhysicalMode = 'Evasion'
 
 	-- Additional local binds
@@ -65,7 +65,7 @@ function init_gear_sets()
 	-- Start defining the sets
 	--------------------------------------
 	
-	sets.TreasureHunter = {hands="Plunderer's Armlets", feet="Raider's Poulaines +2"}
+	sets.TreasureHunter = {hands="Plunderer's Armlets +1", waist="Chaac Belt", feet="Raider's Poulaines +2"}
 	
 	-- Precast Sets
 	
@@ -77,7 +77,7 @@ function init_gear_sets()
 	sets.precast.JA['Conspirator'] = {} -- {body="Raider's Vest +2"}
 	sets.precast.JA['Steal'] = {head="Plunderer's Bonnet",hands="Pillager's Armlets +1",legs="Pillager's Culottes +1",feet="Pillager's Poulaines +1"}
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
-	sets.precast.JA['Perfect Dodge'] = {hands="Plunderer's Armlets"}
+	sets.precast.JA['Perfect Dodge'] = {hands="Plunderer's Armlets +1"}
 	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
 	
 
@@ -109,7 +109,7 @@ function init_gear_sets()
 
 
 	-- Ranged snapshot gear
-	sets.precast.RangedAttack = {head="Aurore Beret",hands="Iuitl Wristbands",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
+	sets.precast.RA = {head="Aurore Beret",hands="Iuitl Wristbands",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
 
        
 	-- Weaponskill sets
@@ -177,8 +177,8 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Pillager's Vest +1",hands="Plunderer's Armlets",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Raider's Poulaines +2"}
+		body="Pillager's Vest +1",hands="Plunderer's Armlets +1",ring1="Rajas Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist="Chaac Belt",legs="Iuitl Tights",feet="Raider's Poulaines +2"}
 	
 	
 	-- Midcast Sets
@@ -194,21 +194,20 @@ function init_gear_sets()
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Beeline Ring",
 		back="Fravashi Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
-	-- Ranged gear -- acc + TH
-	sets.midcast.RangedAttack = {
+	-- Ranged gear
+	sets.midcast.RA = {
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
-	sets.midcast.RangedAttack.TH = {
-		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
-		body="Iuitl Vest",hands="Plunderer's Armlets",ring1="Beeline Ring",ring2="Hajduk Ring",
-		back="Libeccio Mantle",waist="Aquiline Belt",legs="Nahtirah Trousers",feet="Raider's Poulaines +2"}
-
-	sets.midcast.RangedAttack.Acc = {
+	sets.midcast.RA.Acc = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines +1"}
+		
+	sets.midcast.RA.TH = set_combine(sets.midcast.RA, sets.TreasureHunter)
+
+	sets.midcast.RA.TH.Acc = set_combine(sets.midcast.RA.Acc, sets.TreasureHunter)
 	
 	-- Sets to return to when not performing an action.
 	
@@ -298,6 +297,10 @@ end
 function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
+	elseif spell.action_type == 'Ranged Attack' then
+		if state.TreasureMode ~= 'None' then
+			classes.CustomClass = 'TH'
+		end
 	end
 end
 
@@ -497,37 +500,7 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue)
-	if stateField == 'TreasureMode' then
-		local prevRangedMode = state.RangedMode
-		
-		if newValue == 'Tag' or newValue == 'SATA' then
-			state.RangedMode = 'TH'
-		elseif state.OffenseMode == 'Acc' then
-			state.RangedMode = 'Acc'
-		else
-			state.RangedMode = 'Normal'
-		end
-		
-		if state.RangedMode ~= prevRangedMode then
-			add_to_chat(121,'Ranged mode is now '..state.RangedMode)
-		end
-	elseif stateField == 'OffenseMode' then
-		if state.TreasureMode == 'None' or state.TreasureMode == 'Fulltime' then
-			local prevRangedMode = state.RangedMode
 
-			if newValue == 'Acc' then
-				state.RangedMode = 'Acc'
-			else
-				state.RangedMode = 'Normal'
-			end
-			
-			if state.RangedMode ~= prevRangedMode then
-				add_to_chat(121,'Ranged mode is now '..state.RangedMode)
-			end
-		end
-	elseif stateField == 'Reset' then
-		state.RangedMode = 'TH'
-	end
 end
 
 

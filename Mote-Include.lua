@@ -566,7 +566,7 @@ function get_spell_map(spell)
 	if job_get_spell_map then
 		jobSpellMap = job_get_spell_map(spell, defaultSpellMap)
 	end
-	
+
 	if jobSpellMap then
 		return jobSpellMap
 	else
@@ -577,47 +577,102 @@ end
 
 -- Get the default precast gear set.
 function get_default_precast_set(spell, action, spellMap, eventArgs)
-	local equipSet = {}
+	local equipSet
 
-	-- Update defintions for element-specific gear that can be used.
-	set_elemental_gear(spell)
-
+	-- If there are no precast sets defined, bail out.
+	if not sets.precast then
+		return {}
+	end
+	
+	-- Determine base sub-table from type of action being performed.
+	
 	if spell.action_type == 'Magic' then
-		-- Precast for magic is fast cast.
-		-- Therefore our base set is sets.precast.FC.
 		equipSet = sets.precast.FC
+	elseif spell.action_type == 'Ranged Attack' then
+		equipSet = sets.precast.RA or sets.precast.RangedAttack
+	elseif spell.action_type == 'Ability' then
+		if spell.type == 'WeaponSkill' then
+			equipSet = sets.precast.WS
+		elseif spell.type == 'JobAbility' then
+			equipSet = sets.precast.JA
+		else
+			equipSet = sets.precast[spell.type]
+		end
+	elseif spell.action_type == 'Item' then
+		equipSet = sets.precast.Item
+	end
+	
+	-- If no proper sub-category is defined in the job file, bail out.
+	if not equipSet then
+		return {}
+	end
 
-		-- Set determination ordering:
-		-- Custom class
-		-- Class mapping
-		-- Specific spell name
-		-- Skill
-		-- Spell type
+	
+	-- Default order to check for set refinement is custom class, name, map, skill and type.
+	-- Type should only come into play as a sub-category of FC.
+	
+	if classes.CustomClass and equipSet[classes.CustomClass] then
+		equipSet = equipSet[classes.CustomClass]
+	elseif equipSet[spell.english] then
+		equipSet = equipSet[spell.english]
+	elseif spellMap and equipSet[spellMap] then
+		equipSet = equipSet[spellMap]
+	elseif spell.skill and equipSet[spell.skill] then
+		equipSet = equipSet[spell.skill]
+
+		-- Skills may define sub-categories that use the same standard checks.
 		if classes.CustomClass and equipSet[classes.CustomClass] then
 			equipSet = equipSet[classes.CustomClass]
 		elseif equipSet[spell.english] then
 			equipSet = equipSet[spell.english]
 		elseif spellMap and equipSet[spellMap] then
 			equipSet = equipSet[spellMap]
-		elseif equipSet[spell.skill] then
-			equipSet = equipSet[spell.skill]
-		elseif equipSet[spell.type] then
-			equipSet = equipSet[spell.type]
 		end
+	elseif equipSet[spell.type] then
+		equipSet = equipSet[spell.type]
 
-		-- Check for specialized casting modes for any given set selection.
+		-- Types may define sub-categories that use the same standard checks.
+		if classes.CustomClass and equipSet[classes.CustomClass] then
+			equipSet = equipSet[classes.CustomClass]
+		elseif equipSet[spell.english] then
+			equipSet = equipSet[spell.english]
+		elseif spellMap and equipSet[spellMap] then
+			equipSet = equipSet[spellMap]
+		end
+	end
+	
+	
+	-- After the default checks, do checks for specialized modes (casting mode, weaponskill mode, etc).
+	
+	if spell.action_type == 'Magic' then
 		if equipSet[state.CastingMode] then
 			equipSet = equipSet[state.CastingMode]
 		end
-	elseif spell.action_type == 'Ranged Attack' then
-		-- Ranged attacks use sets.precast.RangedAttack (since Ranged is a gear slot).
-		equipSet = sets.precast.RangedAttack
+	elseif spell.type == 'WeaponSkill' then
+		-- Custom handling for weaponskills
+		local ws_mode = state.WeaponskillMode
+		local custom_wsmode
 
-		-- Custom class modification
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
+		-- Allow the job file to specify a preferred weaponskill mode
+		if get_custom_wsmode then
+			custom_wsmode = get_custom_wsmode(spell, action, spellMap)
 		end
 
+		-- If the job file returned a weaponskill mode, use that.
+		if custom_wsmode then
+			ws_mode = custom_wsmode
+		elseif state.WeaponskillMode == 'Normal' then
+			-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
+			-- corresponding to the current offense mode.  If so, use that.
+			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes):contains(state.OffenseMode) then
+				ws_mode = state.OffenseMode
+			end
+		end
+
+		if equipSet[ws_mode] then
+			equipSet = equipSet[ws_mode]
+		end
+	elseif spell.action_type == 'Ranged Attack' then
 		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
 		if equipSet[state.RangedMode] then
 			equipSet = equipSet[state.RangedMode]
@@ -629,79 +684,12 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 				equipSet = equipSet[group]
 			end
 		end
-	elseif spell.action_type == 'Ability' then
-		-- Abilities are further broken down:
-		-- Weaponskill
-		-- JobAbility
-		-- Specialty (Jig, Waltz, Scholar, etc)
-
-		if spell.type == 'JobAbility' then
-			-- Generic job abilities are under sets.precast.JA, and must be named.
-			if sets.precast.JA[spell.english] then
-				equipSet = sets.precast.JA[spell.english]
-			end
-		elseif spell.type == 'WeaponSkill' then
-			-- Custom handling for weaponskills
-			local ws_mode = state.WeaponskillMode
-			local custom_wsmode
-
-			-- Allow the job file to specify a preferred weaponskill mode
-			if get_custom_wsmode then
-				custom_wsmode = get_custom_wsmode(spell, action, spellMap)
-			end
-
-			-- If the job file returned a weaponskill mode, use that.
-			if custom_wsmode then
-				ws_mode = custom_wsmode
-			elseif state.WeaponskillMode == 'Normal' then
-				-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
-				-- corresponding to the current offense mode.  If so, use that.
-				if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes):contains(state.OffenseMode) then
-					ws_mode = state.OffenseMode
-				end
-			end
-
-			-- Base table for all weaponskills
-			equipSet = sets.precast.WS
-
-			-- If the user specifies a custom class, use that. Otherwise, use the weaponskill name.
-			if classes.CustomClass and equipSet[classes.CustomClass] then
-				equipSet = equipSet[classes.CustomClass]
-			elseif equipSet[spell.english] then
-				equipSet = equipSet[spell.english]
-			end
-
-			-- And if a weaponskill mode is specified, tack that on to the end.
-			if equipSet[ws_mode] then
-				equipSet = equipSet[ws_mode]
-			end
-		else
-			-- All other ability types, such as Waltz, Jig, Scholar, etc.
-			-- These may use the generic type, or be refined for the individual action,
-			-- either by name or by spell map.
-			-- Otherwise check for a naked handling of a custom class or spell map.
-			if sets.precast[spell.type] then
-				equipSet = sets.precast[spell.type]
-
-				if equipSet[spell.english] then
-					equipSet = equipSet[spell.english]
-				elseif equipSet[spellMap] then
-					equipSet = equipSet[spellMap]
-				end
-
-				if classes.CustomClass and equipSet[classes.CustomClass] then
-					equipSet = equipSet[classes.CustomClass]
-				end
-			elseif classes.CustomClass and sets.precast[classes.CustomClass] then
-				equipSet = sets.precast[classes.CustomClass]
-			elseif sets.precast[spellMap] then
-				equipSet = sets.precast[spellMap]
-			end
-		end
-	elseif spell.action_type == 'Item' then
-		-- How to handle item uses?
 	end
 
+	-- Update defintions for element-specific gear that may be used.
+	set_elemental_gear(spell)
+	
+	-- Return whatever we've constructed.
 	return equipSet
 end
 
@@ -709,78 +697,87 @@ end
 -- Get the default midcast gear set.
 -- This builds on sets.midcast.
 function get_default_midcast_set(spell, action, spellMap, eventArgs)
-	local equipSet = {}
+	local equipSet
 
-	if spell.action_type == 'Magic' then
+	-- If there are no midcast sets defined, bail out.
+	if not sets.midcast then
+		return {}
+	end
+	
+	-- Determine base sub-table from type of action being performed.
+	-- Only ranged attacks and items get specific sub-categories here.
+	
+	if spell.action_type == 'Ranged Attack' then
+		equipSet = sets.precast.RA or sets.precast.RangedAttack
+	elseif spell.action_type == 'Item' then
+		equipSet = sets.midcast.Item
+	else
 		equipSet = sets.midcast
+	end
+	
+	-- If no proper sub-category is defined in the job file, bail out.
+	if not equipSet then
+		return {}
+	end
 
-		-- Set determination ordering:
-		-- Custom class
-		-- Class mapping
-		-- Specific spell name
-		-- Skill
-		-- Spell type
+	
+	-- Default order to check for set refinement is custom class, name, map, skill and type.
+	
+	if classes.CustomClass and equipSet[classes.CustomClass] then
+		equipSet = equipSet[classes.CustomClass]
+	elseif equipSet[spell.english] then
+		equipSet = equipSet[spell.english]
+	elseif spellMap and equipSet[spellMap] then
+		equipSet = equipSet[spellMap]
+	elseif spell.skill and equipSet[spell.skill] then
+		-- Certain spells get excluded from selecting the skill gear set.
+		if not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then	
+			equipSet = equipSet[spell.skill]
+	
+			-- Skills may define sub-categories that use the same standard checks.
+			if classes.CustomClass and equipSet[classes.CustomClass] then
+				equipSet = equipSet[classes.CustomClass]
+			elseif equipSet[spell.english] then
+				equipSet = equipSet[spell.english]
+			elseif spellMap and equipSet[spellMap] then
+				equipSet = equipSet[spellMap]
+			end
+		end
+	elseif equipSet[spell.type] then
+		equipSet = equipSet[spell.type]
+
+		-- Types may define sub-categories that use the same standard checks.
 		if classes.CustomClass and equipSet[classes.CustomClass] then
 			equipSet = equipSet[classes.CustomClass]
 		elseif equipSet[spell.english] then
 			equipSet = equipSet[spell.english]
 		elseif spellMap and equipSet[spellMap] then
 			equipSet = equipSet[spellMap]
-		elseif equipSet[spell.skill] and
-			 not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then
-			equipSet = equipSet[spell.skill]
-		elseif equipSet[spell.type] then
-			equipSet = equipSet[spell.type]
 		end
-
-		-- Check for specialized casting modes for any given set selection.
+	end
+	
+	
+	-- After the default checks, do checks for specialized modes (casting mode, etc).
+	
+	if spell.action_type == 'Magic' then
 		if equipSet[state.CastingMode] then
 			equipSet = equipSet[state.CastingMode]
 		end
 	elseif spell.action_type == 'Ranged Attack' then
-		equipSet = sets.midcast.RangedAttack
-
-		-- Custom class modification
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
-		end
-
 		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
 		if equipSet[state.RangedMode] then
 			equipSet = equipSet[state.RangedMode]
 		end
 
+		-- Tack on any additionally specified custom groups, if the sets are defined.
 		for _,group in ipairs(classes.CustomRangedGroups) do
 			if equipSet[group] then
 				equipSet = equipSet[group]
 			end
 		end
-	elseif spell.action_type == 'Ability' then
-		-- Midcast handling of abilities does not break them down into JA/Weaponskill/other.
-		-- Process all actions as if they were in the 'other' category.
-		if sets.midcast[spell.type] then
-			equipSet = sets.midcast[spell.type]
-
-			if equipSet[spell.english] then
-				equipSet = equipSet[spell.english]
-			elseif spellMap and equipSet[spellMap] then
-				equipSet = equipSet[spellMap]
-			end
-
-			if classes.CustomClass and equipSet[classes.CustomClass] then
-				equipSet = equipSet[classes.CustomClass]
-			end
-		elseif classes.CustomClass and sets.midcast[classes.CustomClass] then
-			equipSet = sets.midcast[classes.CustomClass]
-		elseif sets.midcast[spell.english] then
-			equipSet = sets.midcast[spell.english]
-		elseif sets.midcast[spellMap] then
-			equipSet = sets.midcast[spellMap]
-		end
-	elseif spell.action_type == 'Item' then
-		-- no equip handling for item use
 	end
-
+	
+	-- Return whatever we've constructed.
 	return equipSet
 end
 
@@ -796,7 +793,7 @@ function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	-- Class mapping
 	-- Skill is not checked, since that's meaningless for pet actions
 	-- Spell type
-	if sets.midcast.Pet then
+	if sets.midcast and sets.midcast.Pet then
 		equipSet = sets.midcast.Pet
 
 		if classes.CustomClass and equipSet[classes.CustomClass] then
