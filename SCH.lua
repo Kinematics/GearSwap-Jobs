@@ -95,7 +95,7 @@ function init_gear_sets()
 
 	sets.precast.FC['Elemental Magic'] = set_combine(sets.precast.FC, {neck="Stoicheion Medal"})
 
-	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"}) -- back="Pahtli Cape"
+	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris",back="Pahtli Cape"})
 
 	sets.precast.FC.Curaga = sets.precast.FC.Cure
 
