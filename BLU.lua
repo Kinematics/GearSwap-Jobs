@@ -180,7 +180,7 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Learning'}
+	options.OffenseModes = {'Normal', 'Acc', 'Refresh', 'Learning'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal', 'Resistant'}
@@ -368,7 +368,7 @@ function init_gear_sets()
 	-- Other Types --
 	
 	sets.midcast['Blue Magic'].Stun = {ammo="Mavi Tathlum",
-		back="Mirage Mantle"}
+		back="Mirage Mantle",waist="Chaac Belt"}
 		
 	sets.midcast['Blue Magic'].Healing = {
 		head="Uk'uxkaj Cap",ear1="Lifestorm Earring",ear2="Loquacious Earring",
@@ -455,9 +455,19 @@ function init_gear_sets()
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
+	sets.engaged.Refresh = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Hagondes Coat",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
 	sets.engaged.DW.Acc = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
+	sets.engaged.DW.Refresh = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
+		body="Hagondes Coat",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
 	sets.engaged.Learning = set_combine(sets.engaged, sets.Learning, {waist="Hurch'lan Sash"})
@@ -603,8 +613,8 @@ end
 -- Select default macro book on initial load or subjob change.
 function select_default_macro_book()
 	-- Default macro set/book
-	if player.sub_job == 'WAR' then
-		set_macro_page(1, 7)
+	if player.sub_job == 'DNC' then
+		set_macro_page(2, 7)
 	else
 		set_macro_page(1, 7)
 	end

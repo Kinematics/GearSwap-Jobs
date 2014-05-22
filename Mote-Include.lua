@@ -708,7 +708,7 @@ function get_default_midcast_set(spell, action, spellMap, eventArgs)
 	-- Only ranged attacks and items get specific sub-categories here.
 	
 	if spell.action_type == 'Ranged Attack' then
-		equipSet = sets.precast.RA or sets.precast.RangedAttack
+		equipSet = sets.midcast.RA or sets.midcast.RangedAttack
 	elseif spell.action_type == 'Item' then
 		equipSet = sets.midcast.Item
 	else
