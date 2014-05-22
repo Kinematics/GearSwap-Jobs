@@ -59,7 +59,7 @@ end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
 function binds_on_unload()
-	-- Commented out for now.
+	-- Commented out for now, since we don't expect Spellcast to be loaded anymore.
 	--[[
 	send_command('bind f9 input /ma CombatMode Cycle(Offense)')
 	send_command('bind ^f9 input /ma CombatMode Cycle(Defense)')
