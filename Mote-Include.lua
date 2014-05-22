@@ -95,6 +95,7 @@ function init_include()
 	-- Takes precedence over default spell maps.
 	-- Is reset at the end of each spell casting cycle (ie: at the end of aftercast).
 	classes.CustomClass = nil
+	classes.JAMode = nil
 	-- Custom groups used for defining melee and idle sets.  Persists long-term.
 	classes.CustomMeleeGroups = L{}
 	classes.CustomRangedGroups = L{}
@@ -301,7 +302,7 @@ function aftercast(spell,action)
 	-- If show_set is flagged for precast or midcast, don't try to equip aftercast gear.
 	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' or mote_flags.show_set == 'pet_midcast' then
 		if not pet_midaction() then
-			classes.CustomClass = nil
+			reset_transitory_classes()
 		end
 		return
 	end
@@ -344,7 +345,7 @@ function aftercast(spell,action)
 	-- if we're not in the middle of a pet action.  If so, pet_aftercast will handle
 	-- clearing it.
 	if not pet_midaction() then
-		classes.CustomClass = nil
+		reset_transitory_classes()
 	end
 end
 
@@ -389,7 +390,7 @@ end
 function pet_aftercast(spell,action)
 	-- If show_set is flagged for precast or midcast, don't try to equip aftercast gear.
 	if mote_flags.show_set == 'precast' or mote_flags.show_set == 'midcast' or mote_flags.show_set == 'pet_midcast' then
-		classes.CustomClass = nil
+		reset_transitory_classes()
 		return
 	end
 
@@ -419,7 +420,7 @@ function pet_aftercast(spell,action)
 	end
 
 	-- Reset after all possible precast/midcast/aftercast/job-specific usage of the value.
-	classes.CustomClass = nil
+	reset_transitory_classes()
 end
 
 
@@ -671,6 +672,10 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 
 		if equipSet[ws_mode] then
 			equipSet = equipSet[ws_mode]
+		end
+	elseif spell.action_type == 'Ability' then
+		if classes.JAMode and equipSet[classes.JAMode] then
+			equipSet = equipSet[classes.JAMode]
 		end
 	elseif spell.action_type == 'Ranged Attack' then
 		-- Check for specific mode for ranged attacks (eg: Acc, Att, etc)
@@ -971,5 +976,17 @@ function apply_kiting(baseSet)
 
 	return baseSet
 end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Functions for refactoring code.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Clears the values from classes that only exist til the action is complete.
+function reset_transitory_classes()
+	classes.CustomClass = nil
+	classes.JAMode = nil
+end
+
 
 

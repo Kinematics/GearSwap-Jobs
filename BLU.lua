@@ -214,7 +214,7 @@ function init_gear_sets()
 	sets.buff['Burst Affinity'] = {feet="Mavi Basmak +2"}
 	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"} --, feet="Assimilator's Charuqs"}
 	sets.buff.Convergence = {head="Mirage Keffiyeh +2"}
-	sets.buff.Diffusion = {feet="Mirage Charuqs +2"}
+	sets.buff.Diffusion = {feet="Luhlaza Charuqs"}
 	sets.buff.Enchainment = {body="Mirage Jubbah +2"}
 	sets.buff.Efflux = {legs="Mavi Tayt +2"}
 
@@ -254,7 +254,7 @@ function init_gear_sets()
 	sets.precast.WS.acc = set_combine(sets.precast.WS, {hands="Buremte Gloves"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {})
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {feet="Luhlaza Charuqs"})
 
 	sets.precast.WS['Sanguine Blade'] = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
@@ -387,10 +387,10 @@ function init_gear_sets()
 	-- Sets to return to when not performing an action.
 
 	-- Gear for learning spells: +skill and AF hands.
-	sets.Learning = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",	
-		body="Magus Jubbah",hands="Assimilator's Bazubands +1",
-		legs="Mavi Tayt +2",feet="Mirage Charuqs +2"}
+	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1",feet="Luhlaza Charuqs"}
+		--head="Mirage Keffiyeh +2",	
+		--body="Magus Jubbah",hands="Assimilator's Bazubands +1",
+		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 
 	
@@ -443,7 +443,7 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-		--back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Mirage Charuqs +2"}
+		--back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Luhlaza Charuqs"}
 
 	sets.engaged.DW = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
