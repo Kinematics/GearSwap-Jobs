@@ -768,9 +768,18 @@ function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 
 		equipSet = select_base_set(equipSet, spell, spellMap)
 
-		-- Check for specialized casting modes for any given set selection.
-		if equipSet[state.CastingMode] then
-			equipSet = equipSet[state.CastingMode]
+		-- We can only generally be certain about whether the pet's action is
+		-- Magic (ie: it cast a spell of its own volition) or Ability (it performed
+		-- an action at the request of the player).  Allow CastinMode and
+		-- OffenseMode to refine whatever set was selected above.
+		if spell.action_type == 'Magic' then
+			if equipSet[state.CastingMode] then
+				equipSet = equipSet[state.CastingMode]
+			end
+		elseif spell.action_type == 'Ability' then
+			if equipSet[state.OffenseMode] then
+				equipSet = equipSet[state.OffenseMode]
+			end
 		end
 	end
 
