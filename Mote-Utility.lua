@@ -355,6 +355,9 @@ function set_elemental_obi_cape_ring(spell)
 			not S{'Divine Magic','Dark Magic','Healing Magic'}:contains(spell.skill) then
 			gear.ElementalRing.name = "Zodiac Ring"
 		end
+	else
+		gear.ElementalCape.name = gear.default.obi_back
+		gear.ElementalRing.name = gear.default.obi_ring
 	end
 end
 
