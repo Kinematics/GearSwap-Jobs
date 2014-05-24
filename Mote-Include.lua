@@ -577,6 +577,9 @@ end
 
 
 -- Simple utility function to handle a portion of the equipment set determination.
+-- It attempts to select a sub-table of the provided equipment set based on the
+-- standard search order of custom class, spell name, and spell map.
+-- If no such set is found, it returns the original base set (equipSet) provided.
 function get_named_set(equipSet, spell, spellMap)
 	if equipSet then
 		return  (classes.CustomClass and equipSet[classes.CustomClass]) or
@@ -591,7 +594,7 @@ end
 -- selection order: custom class, spell name, spell map, spell skill, and spell type.
 -- Spell skill and spell type may further refine their selections based on
 -- custom class, spell name and spell map.
-function select_base_set(equipSet, spell, spellMap)
+function select_specific_set(equipSet, spell, spellMap)
 	-- Take the determined base equipment set and try to get the simple naming extensions that
 	-- may apply to it (class, spell name, spell map).
 	local namedSet = get_named_set(equipSet, spell, spellMap)
@@ -644,7 +647,7 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 	end
 
 	-- Handle automatic selection of set based on spell class/name/map/skill/type.
-	equipSet = select_base_set(equipSet, spell, spellMap)
+	equipSet = select_specific_set(equipSet, spell, spellMap)
 
 	
 	-- Once we have a named base set, do checks for specialized modes (casting mode, weaponskill mode, etc).
@@ -730,7 +733,7 @@ function get_default_midcast_set(spell, action, spellMap, eventArgs)
 	end
 
 	-- Handle automatic selection of set based on spell class/name/map/skill/type.
-	equipSet = select_base_set(equipSet, spell, spellMap)
+	equipSet = select_specific_set(equipSet, spell, spellMap)
 
 	
 	-- After the default checks, do checks for specialized modes (casting mode, etc).
@@ -766,7 +769,7 @@ function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	if sets.midcast and sets.midcast.Pet then
 		equipSet = sets.midcast.Pet
 
-		equipSet = select_base_set(equipSet, spell, spellMap)
+		equipSet = select_specific_set(equipSet, spell, spellMap)
 
 		-- We can only generally be certain about whether the pet's action is
 		-- Magic (ie: it cast a spell of its own volition) or Ability (it performed
