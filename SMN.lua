@@ -82,7 +82,7 @@ function job_setup()
 		['Ramuh']='Thunder IV', ['Leviathan']='Water IV'}
 	pacts.bp70 = {['Ifrit']='Flaming Crush', ['Shiva']='Rush', ['Garuda']='Predator Claws', ['Titan']='Mountain Buster',
 		['Ramuh']='Chaotic Strike', ['Leviathan']='Spinning Dive', ['Carbuncle']='Meteorite', ['Fenrir']='Eclipse Bite',
-		['Diabolos']='Nether Blast'}
+		['Diabolos']='Nether Blast',['Cait Sith']='Regal Scratch'}
 	pacts.bp75 = {['Ifrit']='Meteor Strike', ['Shiva']='Heavenly Strike', ['Garuda']='Wind Blade', ['Titan']='Geocrush',
 		['Ramuh']='Thunderstorm', ['Leviathan']='Grand Fall', ['Carbuncle']='Holy Mist', ['Fenrir']='Lunar Bay',
 		['Diabolos']='Night Terror', ['Cait Sith']='Level ? Holy'}
@@ -244,42 +244,50 @@ function init_gear_sets()
 	-- others: 15
 	-- avatar's favor: -4/tick
 	
+	-- Max useful -perp gear is 1 less than the perp cost (can't be reduced below 1)
+	-- Aim for -14 perp, and refresh in other slots.
+	
 	-- -perp gear:
-	-- Patriarch Cane: -3
+	-- Gridarvor: -5
 	-- Glyphic Horn: -4
 	-- Caller's Doublet +2: -4
 	-- Evoker's Ring: -1
 	-- Convoker's Pigaches: -4
-	-- total: -16
+	-- total: -18
 	
-	sets.idle.Avatar = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Seraphicaller",
-		head="Glyphic Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
+	-- Can make due without either the head or the body, and use +refresh items in those slots.
+	
+	sets.idle.Avatar = {main="Gridarvor",sub="Achaq Grip",ammo="Seraphicaller",
+		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
 
-	sets.idle.Spirit = {main="Patriarch Cane",sub="Genbu's Shield",ammo="Seraphicaller",
+	sets.idle.Spirit = {main="Gridarvor",sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
-		back="Tiresias' Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Convoker's Pigaches"}
+		back="Samanisi Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Herald's Gaiters"}
 
 	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	-- Favor can trade the -4 perp of Glyphic Horn for +2 refresh of Caller's Horn (plus enhance favor).
+	-- Favor uses Caller's Horn instead of Convoker's Horn for refresh
 	sets.idle.Avatar.Favor = {head="Caller's Horn +2"}
-	sets.idle.Avatar.Melee = {hands="Regimen Mittens",waist="Kuku Stone",legs="Convoker's Spats"}
+	sets.idle.Avatar.Melee = {hands="Regimen Mittens",back="Samanisi Cape",waist="Kuku Stone",legs="Convoker's Spats"}
 		
 	sets.perp = {}
-	sets.perp.Day = {hands="Caller's Bracers +2"}
-	sets.perp.Weather = {neck="Caller's Pendant",hands="Caller's Bracers +2"}
-	-- Carby: Mitts+Conv.feet+Ev.Ring = 0/tick perp.  Everything else should be +refresh
+	-- Caller's Bracer's halve the perp cost after other costs are accounted for.
+	-- Using -10 (Gridavor, ring, Conv.feet), standard avatars would then cost 5, halved to 2.
+	-- We can then use Hagondes Coat and end up with the same net MP cost, but significantly better defense.
+	-- Weather is the same, but we can also use the latent on the pendant to negate the last point lost.
+	sets.perp.Day = {body="Hagondes Coat",hands="Caller's Bracers +2"}
+	sets.perp.Weather = {neck="Caller's Pendant",body="Hagondes Coat",hands="Caller's Bracers +2"}
+	-- Carby: Mitts+Conv.feet = 1/tick perp.  Everything else should be +refresh
 	sets.perp.Carbuncle = {main="Bolelabunga",sub="Genbu's Shield",
 		head="Convoker's Horn",body="Hagondes Coat",hands="Carbuncle Mitts",legs="Nares Trews",feet="Convoker's Pigaches"}
-	-- Fenrir: doesn't need full -perp set; trade body for +refresh
-	sets.perp.Fenrir = {body="Hagondes Coat"}
-	sets.perp.Diabolos = {waist="Diabolos's Rope"}
+	-- Diabolos's Rope doesn't gain us anything at this time
+	--sets.perp.Diabolos = {waist="Diabolos's Rope"}
 	sets.perp.Alexander = sets.midcast.Pet.BloodPactWard
 	
 	-- Defense sets

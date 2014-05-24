@@ -576,15 +576,52 @@ function get_spell_map(spell)
 end
 
 
+-- Simple utility function to handle a portion of the equipment set determination.
+-- It attempts to select a sub-table of the provided equipment set based on the
+-- standard search order of custom class, spell name, and spell map.
+-- If no such set is found, it returns the original base set (equipSet) provided.
+function get_named_set(equipSet, spell, spellMap)
+	if equipSet then
+		return  (classes.CustomClass and equipSet[classes.CustomClass]) or
+			 equipSet[spell.english] or
+			(spellMap and equipSet[spellMap]) or
+			 equipSet
+	end
+end
+
+
+-- Select the equipment set to equip from a given starting table, based on standard
+-- selection order: custom class, spell name, spell map, spell skill, and spell type.
+-- Spell skill and spell type may further refine their selections based on
+-- custom class, spell name and spell map.
+function select_specific_set(equipSet, spell, spellMap)
+	-- Take the determined base equipment set and try to get the simple naming extensions that
+	-- may apply to it (class, spell name, spell map).
+	local namedSet = get_named_set(equipSet, spell, spellMap)
+	
+	-- If no simple naming sub-tables were found, and we simply got back the original equip set,
+	-- check for spell.skill and spell.type, and check the simple naming extensions again.
+	if namedSet == equipSet then
+		namedSet = (spell.skill and equipSet[spell.skill]) or
+			    equipSet[spell.type]
+
+		-- If namedSet is nil at this point, we end up returning to equipSet
+		namedSet = get_named_set(namedSet, spell, spellMap) or equipSet
+	end
+
+	return namedSet
+end
+
+
 -- Get the default precast gear set.
 function get_default_precast_set(spell, action, spellMap, eventArgs)
-	local equipSet
-
 	-- If there are no precast sets defined, bail out.
 	if not sets.precast then
 		return {}
 	end
 	
+	local equipSet = sets.precast
+
 	-- Determine base sub-table from type of action being performed.
 	
 	if spell.action_type == 'Magic' then
@@ -597,7 +634,8 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 		elseif spell.type == 'JobAbility' then
 			equipSet = sets.precast.JA
 		else
-			equipSet = sets.precast[spell.type]
+			-- Allow fallback to .JA table if spell.type isn't found, for all non-weaponskill abilities.
+			equipSet = sets.precast[spell.type] or sets.precast.JA
 		end
 	elseif spell.action_type == 'Item' then
 		equipSet = sets.precast.Item
@@ -608,42 +646,11 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 		return {}
 	end
 
-	
-	-- Default order to check for set refinement is custom class, name, map, skill and type.
-	-- Type should only come into play as a sub-category of FC.
-	
-	if classes.CustomClass and equipSet[classes.CustomClass] then
-		equipSet = equipSet[classes.CustomClass]
-	elseif equipSet[spell.english] then
-		equipSet = equipSet[spell.english]
-	elseif spellMap and equipSet[spellMap] then
-		equipSet = equipSet[spellMap]
-	elseif spell.skill and equipSet[spell.skill] then
-		equipSet = equipSet[spell.skill]
+	-- Handle automatic selection of set based on spell class/name/map/skill/type.
+	equipSet = select_specific_set(equipSet, spell, spellMap)
 
-		-- Skills may define sub-categories that use the same standard checks.
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
-		elseif equipSet[spell.english] then
-			equipSet = equipSet[spell.english]
-		elseif spellMap and equipSet[spellMap] then
-			equipSet = equipSet[spellMap]
-		end
-	elseif equipSet[spell.type] then
-		equipSet = equipSet[spell.type]
-
-		-- Types may define sub-categories that use the same standard checks.
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
-		elseif equipSet[spell.english] then
-			equipSet = equipSet[spell.english]
-		elseif spellMap and equipSet[spellMap] then
-			equipSet = equipSet[spellMap]
-		end
-	end
 	
-	
-	-- After the default checks, do checks for specialized modes (casting mode, weaponskill mode, etc).
+	-- Once we have a named base set, do checks for specialized modes (casting mode, weaponskill mode, etc).
 	
 	if spell.action_type == 'Magic' then
 		if equipSet[state.CastingMode] then
@@ -725,42 +732,9 @@ function get_default_midcast_set(spell, action, spellMap, eventArgs)
 		return {}
 	end
 
-	
-	-- Default order to check for set refinement is custom class, name, map, skill and type.
-	
-	if classes.CustomClass and equipSet[classes.CustomClass] then
-		equipSet = equipSet[classes.CustomClass]
-	elseif equipSet[spell.english] then
-		equipSet = equipSet[spell.english]
-	elseif spellMap and equipSet[spellMap] then
-		equipSet = equipSet[spellMap]
-	elseif spell.skill and equipSet[spell.skill] then
-		-- Certain spells get excluded from selecting the skill gear set.
-		if not (classes.NoSkillSpells:contains(spell.english) or classes.NoSkillSpells:contains(spellMap)) then	
-			equipSet = equipSet[spell.skill]
-	
-			-- Skills may define sub-categories that use the same standard checks.
-			if classes.CustomClass and equipSet[classes.CustomClass] then
-				equipSet = equipSet[classes.CustomClass]
-			elseif equipSet[spell.english] then
-				equipSet = equipSet[spell.english]
-			elseif spellMap and equipSet[spellMap] then
-				equipSet = equipSet[spellMap]
-			end
-		end
-	elseif equipSet[spell.type] then
-		equipSet = equipSet[spell.type]
+	-- Handle automatic selection of set based on spell class/name/map/skill/type.
+	equipSet = select_specific_set(equipSet, spell, spellMap)
 
-		-- Types may define sub-categories that use the same standard checks.
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
-		elseif equipSet[spell.english] then
-			equipSet = equipSet[spell.english]
-		elseif spellMap and equipSet[spellMap] then
-			equipSet = equipSet[spellMap]
-		end
-	end
-	
 	
 	-- After the default checks, do checks for specialized modes (casting mode, etc).
 	
@@ -792,28 +766,23 @@ end
 function get_default_pet_midcast_set(spell, action, spellMap, eventArgs)
 	local equipSet = {}
 
-	-- Set selection ordering:
-	-- Custom class
-	-- Specific spell name
-	-- Class mapping
-	-- Skill is not checked, since that's meaningless for pet actions
-	-- Spell type
 	if sets.midcast and sets.midcast.Pet then
 		equipSet = sets.midcast.Pet
 
-		if classes.CustomClass and equipSet[classes.CustomClass] then
-			equipSet = equipSet[classes.CustomClass]
-		elseif equipSet[spell.english] then
-			equipSet = equipSet[spell.english]
-		elseif spellMap and equipSet[spellMap] then
-			equipSet = equipSet[spellMap]
-		elseif equipSet[spell.type] then
-			equipSet = equipSet[spell.type]
-		end
+		equipSet = select_specific_set(equipSet, spell, spellMap)
 
-		-- Check for specialized casting modes for any given set selection.
-		if equipSet[state.CastingMode] then
-			equipSet = equipSet[state.CastingMode]
+		-- We can only generally be certain about whether the pet's action is
+		-- Magic (ie: it cast a spell of its own volition) or Ability (it performed
+		-- an action at the request of the player).  Allow CastinMode and
+		-- OffenseMode to refine whatever set was selected above.
+		if spell.action_type == 'Magic' then
+			if equipSet[state.CastingMode] then
+				equipSet = equipSet[state.CastingMode]
+			end
+		elseif spell.action_type == 'Ability' then
+			if equipSet[state.OffenseMode] then
+				equipSet = equipSet[state.OffenseMode]
+			end
 		end
 	end
 
