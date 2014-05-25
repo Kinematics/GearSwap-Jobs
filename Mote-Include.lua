@@ -901,19 +901,14 @@ end
 function apply_defense(baseSet)
 	if state.Defense.Active then
 		local defenseSet
-		local defMode
 
 		if state.Defense.Type == 'Physical' then
-			defMode = state.Defense.PhysicalMode
-
 			if sets.defense[state.Defense.PhysicalMode] then
 				defenseSet = sets.defense[state.Defense.PhysicalMode]
 			else
 				defenseSet = sets.defense
 			end
 		else
-			defMode = state.Defense.MagicalMode
-
 			if sets.defense[state.Defense.MagicalMode] then
 				defenseSet = sets.defense[state.Defense.MagicalMode]
 			else
