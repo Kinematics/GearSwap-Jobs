@@ -428,8 +428,16 @@ end
 -- Hooks for non-action events.
 -------------------------------------------------------------------------------------------------------------------
 
--- sub_job_change is not handled by this include.
--- sub_job_change(new_subjob, old_subjob)
+-- Called when the player's subjob changes.
+function sub_job_change(newSubjob, oldSubjob)
+	if user_setup then
+		user_setup()
+	end
+	
+	if job_sub_job_change then
+		job_sub_job_change(newSubjob, oldSubjob)
+	end
+end
 
 
 
@@ -603,7 +611,7 @@ function select_specific_set(equipSet, spell, spellMap)
 	-- check for spell.skill and spell.type, and check the simple naming extensions again.
 	if namedSet == equipSet then
 		namedSet = (spell.skill and equipSet[spell.skill]) or
-			    equipSet[spell.type]
+			   (spell.type and equipSet[spell.type])
 
 		-- If namedSet is nil at this point, we end up returning to equipSet
 		namedSet = get_named_set(namedSet, spell, spellMap) or equipSet
