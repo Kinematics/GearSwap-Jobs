@@ -440,10 +440,6 @@ function job_buff_change(buff, gain)
 	end
 end
 
--- Called when the player's subjob changes.
-function sub_job_change(newSubjob, oldSubjob)
-	select_default_macro_book()
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Hooks for TH mode handling.
@@ -451,7 +447,7 @@ end
 
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_mode_list(field)
+function job_get_option_modes(field)
 	if field == 'Treasure' then
 		return options.TreasureModes, state.TreasureMode
 	end
@@ -459,7 +455,7 @@ end
 
 -- Set job-specific mode values.
 -- Return true if we recognize and set the requested field.
-function job_set_mode(field, val)
+function job_set_option_mode(field, val)
 	if field == 'Treasure' then
 		state.TreasureMode = val
 		return true
@@ -495,12 +491,6 @@ function job_update(cmdParams, eventArgs)
 	if satafeint_active() then
 		eventArgs.handled = true
 	end
-end
-
-
--- Handle notifications of general user state change.
-function job_state_change(stateField, newValue)
-
 end
 
 

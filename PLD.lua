@@ -348,10 +348,6 @@ function job_buff_change(buff, gain)
 
 end
 
--- Called when the player's subjob changes.
-function sub_job_change(newSubjob, oldSubjob)
-	select_default_macro_book()
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
@@ -369,7 +365,7 @@ function job_update(cmdParams, eventArgs)
 end
 
 -- Handle notifications of user state values being changed.
-function job_state_change(stateField, newValue)
+function job_state_change(stateField, newValue, oldValue)
 
 end
 
