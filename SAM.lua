@@ -303,10 +303,6 @@ function job_buff_change(buff, gain)
 	end
 end
 
--- Called when the player's subjob changes.
-function sub_job_change(newSubjob, oldSubjob)
-	select_default_macro_book()
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
