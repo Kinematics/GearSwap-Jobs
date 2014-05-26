@@ -473,6 +473,9 @@ function handle_reset(cmdParams)
 		state.SelectNPCTargets = false
 		state.PCTargetMode = 'default'
 		mote_flags.show_set = nil
+		if job_reset then
+			job_reset(resetState)
+		end
 		add_to_chat(122,'Everything has been reset to defaults.')
 	elseif job_reset then
 		job_reset(resetState)
