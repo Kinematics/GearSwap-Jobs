@@ -119,9 +119,9 @@ function init_include()
 	sets.precast.FC = {}
 	sets.precast.JA = {}
 	sets.precast.WS = {}
-	sets.precast.RangedAttack = {}
+	sets.precast.RA = {}
 	sets.midcast = {}
-	sets.midcast.RangedAttack = {}
+	sets.midcast.RA = {}
 	sets.midcast.Pet = {}
 	sets.idle = {}
 	sets.resting = {}
