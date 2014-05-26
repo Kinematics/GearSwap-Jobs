@@ -35,6 +35,8 @@ function cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 			send_command('cancel sneak')
 		elseif spell.english == 'Sneak' and spell.target.type == 'SELF' and buffactive.sneak then
 			send_command('cancel sneak')
+		elseif spell.english == ('Stoneskin') then
+			send_command('@wait 1.5;cancel stoneskin')
 		elseif spell.english:startswith('Monomi') then
 			send_command('@wait 1.7;cancel sneak')
 		elseif spell.english == 'Utsusemi: Ichi' then
