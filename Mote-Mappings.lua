@@ -193,9 +193,9 @@ areas.Adoulin = S{
 -------------------------------------------------------------------------------------------------------------------
 
 npcs = {}
-npcs.Trust = S{'Ayame','Naji','Nanaa Mihgo','Tenzen','Volker','Zeid',
-	'Ajido-Marujido','Shantotto','Curilla','Excenmille','Trion','Valaineral',
-	'Kupipi','Mihli Aliapoh','Joachim','Lion'}
-
+npcs.Trust = S{'Ajido-Marujido','Aldo','Ayame','Cherukiki','Curilla','Excenmille','Fablinix','Gadalar','Gessho',
+		'Ingrid','IronEater','Joachim','Kupipi','LehkoHabhoka','Lion','Luzaf','Maat','MihliAliapoh',
+		'Mnejing','Moogle','NajaSalaheem','Najelith','Naji','NanaaMihgo','Nashmeira','Ovjang','Prishe',
+		'Sakura','Shantotto','Tenzen','Trion','Ulmia','Valaineral','Volker','Zazarg','Zeid'}
 
 
