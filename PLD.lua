@@ -365,7 +365,7 @@ function job_update(cmdParams, eventArgs)
 end
 
 -- Handle notifications of user state values being changed.
-function job_state_change(stateField, newValue)
+function job_state_change(stateField, newValue, oldValue)
 
 end
 

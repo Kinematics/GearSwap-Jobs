@@ -385,7 +385,7 @@ end
 
 -- Request job-specific mode tables.
 -- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_mode_list(field)
+function job_get_option_modes(field)
 	if field == 'Daurdabla' then
 		if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
 			return options.DaurdablaModes, state.DaurdablaMode
@@ -397,7 +397,7 @@ end
 
 -- Set job-specific mode values.
 -- Return true if we recognize and set the requested field.
-function job_set_mode(field, val)
+function job_set_option_mode(field, val)
 	if field == 'Daurdabla' then
 		state.DaurdablaMode = val
 		return true
@@ -415,7 +415,7 @@ end
 
 
 -- Handle notifications of general user state change.
-function job_state_change(stateField, newValue)
+function job_state_change(stateField, newValue, oldValue)
 	if stateField == 'OffenseMode' then
 		if newValue == 'Normal' then
 			disable('main','sub')

@@ -109,6 +109,8 @@ function init_include()
 
 	-- Display text mapping.
 	on_off_names = {[true] = 'on', [false] = 'off'}
+	on_off_values = T{'on', 'off', 'true', 'false'}
+	true_values = T{'on', 'true'}
 
 
 	-- Subtables within the sets table that we expect to exist, and are annoying to have to

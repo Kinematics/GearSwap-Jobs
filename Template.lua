@@ -272,13 +272,13 @@ end
 
 -- Request job-specific mode lists.
 -- Return the list, and the current value for the requested field.
-function job_get_mode_list(field)
+function job_get_option_modes(field)
 
 end
 
 -- Set job-specific mode values.
 -- Return true if we recognize and set the requested field.
-function job_set_mode(field, val)
+function job_set_option_mode(field, val)
 
 end
 
@@ -288,7 +288,7 @@ function job_auto_change_target(spell, action, spellMap, eventArgs)
 end
 
 -- Handle notifications of user state values being changed.
-function job_state_change(stateField, newValue)
+function job_state_change(stateField, newValue, oldValue)
 
 end
 

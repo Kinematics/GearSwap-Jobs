@@ -481,7 +481,7 @@ end
 
 -- Request job-specific mode tables.
 -- Return the list, and the current value for the requested field.
-function job_get_mode_list(field)
+function job_get_option_modes(field)
 	if field == 'Mainstep' then
 		return options.StepModes, state.MainStep
 	elseif field == 'Altstep' then
@@ -491,7 +491,7 @@ end
 
 -- Set job-specific mode values.
 -- Return true if we recognize and set the requested field.
-function job_set_mode(field, val)
+function job_set_option_mode(field, val)
 	if field == 'Mainstep' then
 		state.MainStep = val
 		return true

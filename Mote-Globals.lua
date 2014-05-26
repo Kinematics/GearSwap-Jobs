@@ -53,8 +53,8 @@ function binds_on_load()
 	send_command('bind ^f12 gs c cycle IdleMode')
 	send_command('bind !f12 gs c reset defense')
 
-	send_command('bind ^- gs c toggle target')
-	send_command('bind ^= gs c cycle targetmode')
+	send_command('bind ^- gs c toggle selectnpctargets')
+	send_command('bind ^= gs c cycle pctargetmode')
 end
 
 -- Function to re-bind Spellcast binds when unloading GearSwap.
