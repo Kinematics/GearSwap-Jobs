@@ -455,7 +455,7 @@ function handle_reset(cmdParams)
 	elseif resetState == 'distance' then
 		state.MaxWeaponskillDistance = 0
 		add_to_chat(122,'Max weaponskill distance limitations have been removed.')
-	elseif resetState == 'pctarget' then
+	elseif resetState == 'target' then
 		state.SelectNPCTargets = false
 		state.PCTargetMode = 'default'
 		add_to_chat(122,'Adjusting target selection has been turned off.')
