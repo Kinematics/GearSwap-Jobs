@@ -449,7 +449,7 @@ end
 
 -- Attempt to include user-globals.  Return true if it exists and was loaded.
 function load_user_globals()
-	local filenames = {'user-globals.lua', player.name..'-globals.lua'}
+	local filenames = {player.name..'-globals.lua', 'user-globals.lua'}
 	return optional_include(filenames)
 end
 
