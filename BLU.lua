@@ -215,7 +215,7 @@ function init_gear_sets()
 	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"} --, feet="Assimilator's Charuqs"}
 	sets.buff.Convergence = {head="Mirage Keffiyeh +2"}
 	sets.buff.Diffusion = {feet="Luhlaza Charuqs"}
-	sets.buff.Enchainment = {body="Mirage Jubbah +2"}
+	sets.buff.Enchainment = {body="Luhlaza Jubbah"}
 	sets.buff.Efflux = {legs="Mavi Tayt +2"}
 
 	
@@ -238,7 +238,7 @@ function init_gear_sets()
 	
 	sets.precast.FC = {ammo="Impatiens",
 		head="Haruspex Hat",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Thaumas Gloves",ring1="Prolix Ring",
+		body="Luhlaza Jubbah",hands="Thaumas Gloves",ring1="Prolix Ring",
 		back="Swith Cape",waist="Witful Belt",legs="Enif Cosciales",feet="Chelona Boots +1"}
 		
 	sets.precast.FC['Blue Magic'] = set_combine(sets.precast.FC, {body="Mavi Mintan +2"})
@@ -254,7 +254,7 @@ function init_gear_sets()
 	sets.precast.WS.acc = set_combine(sets.precast.WS, {hands="Buremte Gloves"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {feet="Luhlaza Charuqs"})
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",feet="Luhlaza Charuqs"})
 
 	sets.precast.WS['Sanguine Blade'] = {
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
@@ -265,8 +265,8 @@ function init_gear_sets()
 	-- Midcast Sets
 	sets.midcast.FastRecast = {
 		head="Haruspex Hat",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Mavi Bazubands +2",ring1="Prolix Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
+		body="Luhlaza Jubbah",hands="Mavi Bazubands +2",ring1="Prolix Ring",
+		back="Swith Cape",waist="Hurch'lan Sash",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 		
 	sets.midcast['Blue Magic'] = {}
 	
@@ -279,7 +279,7 @@ function init_gear_sets()
 
 	sets.midcast['Blue Magic'].PhysicalAcc = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Patricius Ring",
+		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Patricius Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
 	sets.midcast['Blue Magic'].PhysicalStr = {ammo="Mavi Tathlum",
@@ -393,7 +393,8 @@ function init_gear_sets()
 		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 
-	
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
 	-- Resting sets
 	sets.resting = {
 		head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
@@ -415,8 +416,8 @@ function init_gear_sets()
 
 	sets.idle.Town = {main="Buramenk'ah",ammo="Impatiens",
 		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Mavi Mintan +2",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Mavi Basmak +2"}
+		body="Luhlaza Jubbah",hands="Mavi Bazubands +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Luhlaza Charuqs"}
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
@@ -443,35 +444,34 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
-		--back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Luhlaza Charuqs"}
+
+	sets.engaged.Acc = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
+	sets.engaged.Refresh = {ammo="Jukukik Feather",
+		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
 	sets.engaged.DW = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
-	sets.engaged.Acc = {ammo="Jukukik Feather",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
-
-	sets.engaged.Refresh = {ammo="Jukukik Feather",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hagondes Coat",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
-
 	sets.engaged.DW.Acc = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
-		body="Iuitl Vest",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
 	sets.engaged.DW.Refresh = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
-		body="Hagondes Coat",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Letalis Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
-	sets.engaged.Learning = set_combine(sets.engaged, sets.Learning, {waist="Hurch'lan Sash"})
-	sets.engaged.DW.Learning = set_combine(sets.engaged.DW, sets.Learning, {waist="Hurch'lan Sash"})
+	sets.engaged.Learning = set_combine(sets.engaged, sets.Learning)
+	sets.engaged.DW.Learning = set_combine(sets.engaged.DW, sets.Learning)
 
 
 end
@@ -540,6 +540,15 @@ function job_get_spell_map(spell, default_spell_map)
 		end
 	end
 end
+
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+		set_combine(idleSet, sets.latent_refresh)
+	end
+	return idleSet
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
