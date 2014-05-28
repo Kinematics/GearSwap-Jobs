@@ -371,7 +371,7 @@ end
 -- Customization hooks for idle and melee sets construction.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_custom_wsmode(spell, action, spellMap)
+function get_custom_wsmode(spell, spellMap, defaut_wsmode)
 	local wsmode = ''
 	if state.Buff['Sneak Attack'] then
 		wsmode = 'SA'

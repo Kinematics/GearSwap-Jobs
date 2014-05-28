@@ -306,7 +306,7 @@ end
 
 -- Return a customized weaponskill mode to use for weaponskill sets.
 -- Don't return anything if you're not overriding the default value.
-function get_custom_wsmode(spell, action, spellMap)
+function get_custom_wsmode(spell, spellMap, default_wsmode)
 	if buffactive['Transcendancy'] then
 		return 'Brew'
 	end

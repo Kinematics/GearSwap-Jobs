@@ -102,6 +102,10 @@ function init_include()
 	classes.CustomIdleGroups = L{}
 	classes.CustomDefenseGroups = L{}
 
+	-- Class variables for time-based flags
+	classes.Daytime = false
+	classes.DuskToDawn = false
+
 
 	-- Special control flags.
 	mote_flags = {}
@@ -669,22 +673,25 @@ function get_default_precast_set(spell, action, spellMap, eventArgs)
 	elseif spell.type == 'WeaponSkill' then
 		-- Custom handling for weaponskills
 		local ws_mode = state.WeaponskillMode
-		local custom_wsmode
-
-		-- Allow the job file to specify a preferred weaponskill mode
-		if get_custom_wsmode then
-			custom_wsmode = get_custom_wsmode(spell, action, spellMap)
-		end
-
-		-- If the job file returned a weaponskill mode, use that.
-		if custom_wsmode then
-			ws_mode = custom_wsmode
-		elseif state.WeaponskillMode == 'Normal' then
+		
+		if ws_mode == 'Normal' then
 			-- If a particular weaponskill mode isn't specified, see if we have a weaponskill mode
 			-- corresponding to the current offense mode.  If so, use that.
 			if state.OffenseMode ~= 'Normal' and S(options.WeaponskillModes):contains(state.OffenseMode) then
 				ws_mode = state.OffenseMode
 			end
+		end
+
+		local custom_wsmode
+
+		-- Allow the job file to specify a preferred weaponskill mode
+		if get_custom_wsmode then
+			custom_wsmode = get_custom_wsmode(spell, spellMap, ws_mode)
+		end
+
+		-- If the job file returned a weaponskill mode, use that.
+		if custom_wsmode then
+			ws_mode = custom_wsmode
 		end
 
 		if equipSet[ws_mode] then

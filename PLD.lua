@@ -311,12 +311,6 @@ function job_handle_equipping_gear(status, eventArgs)
 
 end
 
--- Return a customized weaponskill mode to use for weaponskill sets.
--- Don't return anything if you're not overriding the default value.
-function get_custom_wsmode(spell, action, spellMap)
-
-end
-
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
 	return idleSet
