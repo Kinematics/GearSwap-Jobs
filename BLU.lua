@@ -370,6 +370,11 @@ function init_gear_sets()
 	sets.midcast['Blue Magic'].Stun = {ammo="Mavi Tathlum",
 		back="Mirage Mantle",waist="Chaac Belt"}
 		
+	sets.midcast['Blue Magic']['White Wind'] = {
+		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Vanir Cotehardie",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
+		back="Fravashi Mantle",waist="Hurch'lan Sash",legs="Enif Cosciales",feet="Hagondes Sabots"}
+
 	sets.midcast['Blue Magic'].Healing = {
 		head="Uk'uxkaj Cap",ear1="Lifestorm Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Buremte Gloves",ring1="Aquasoul Ring",ring2="Sirona's Ring",
@@ -442,7 +447,7 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
 	sets.engaged.Acc = {ammo="Jukukik Feather",
@@ -452,12 +457,12 @@ function init_gear_sets()
 
 	sets.engaged.Refresh = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
 	sets.engaged.DW = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Iuitl Gaiters +1"}
 
 	sets.engaged.DW.Acc = {ammo="Jukukik Feather",
@@ -467,7 +472,7 @@ function init_gear_sets()
 
 	sets.engaged.DW.Refresh = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Heartseeker Earring",ear2="Dudgeon Earring",
-		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
 	sets.engaged.Learning = set_combine(sets.engaged, sets.Learning)
@@ -628,6 +633,5 @@ function select_default_macro_book()
 		set_macro_page(1, 7)
 	end
 end
-
 
 
