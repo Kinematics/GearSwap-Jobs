@@ -96,10 +96,10 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
+	options.OffenseModes = {'Normal', 'Acc'}
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal'}
-	options.CastingModes = {'Normal'}
+	options.CastingModes = {'Normal', 'Resistant'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
@@ -155,7 +155,10 @@ function init_gear_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Astral Flow'] = {head="Glyphic Horn"}
 	
-	sets.precast.JA['Elemental Siphon'] = {feet="Caller's Pigaches +2"} -- back="Conveyance Cape"
+	sets.precast.JA['Elemental Siphon'] = {main="Soulscourge",
+		head="Convoker's Horn",neck="Caller's Pendant",
+		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		legs="Marduk's Shalwar +1",feet="Caller's Pigaches +2"}
 
 	sets.precast.JA['Mana Cede'] = {hands="Caller's Bracers +2"}
 
@@ -201,22 +204,43 @@ function init_gear_sets()
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 
+	-- Avatar pact sets.  All pacts are Ability type.
+	
 	sets.midcast.Pet.BloodPactWard = {main="Soulscourge",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",
 		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
+
+	sets.midcast.Pet.DebuffBloodPactWard = {main="Soulscourge",ammo="Seraphicaller",
+		head="Convoker's Horn",neck="Caller's Pendant",
+		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		waist="Diabolos's Rope",legs="Marduk's Shalwar +1"}
+		
+	sets.midcast.Pet.DebuffBloodPactWard.Acc = sets.midcast.Pet.DebuffBloodPactWard
 	
 	sets.midcast.Pet.PhysicalBloodPactRage = {main="Soulscourge",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",
 		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		waist="Diabolos's Rope",legs="Convoker's Spats",feet="Convoker's Pigaches"}
 
+	sets.midcast.Pet.PhysicalBloodPactRage.Acc = sets.midcast.Pet.PhysicalBloodPactRage
+
 	sets.midcast.Pet.MagicalBloodPactRage = {main="Eminent Pole",ammo="Seraphicaller",
 		head="Glyphic Horn",neck="Caller's Pendant",
 		body="Convoker's Doublet",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
 		back="Samanisi Cape",waist="Diabolos's Rope",legs="Caller's Spats +2",feet="Hagondes Sabots"}
 
-	sets.midcast.Pet.Spirit = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})
+	sets.midcast.Pet.MagicalBloodPactRage.Acc = sets.midcast.Pet.MagicalBloodPactRage
+
+
+	-- Spirits cast magic spells, which can be identified in standard ways.
+	
+	sets.midcast.Pet.WhiteMagic = {legs="Summoner's Spats"}
+	
+	sets.midcast.Pet['Elemental Magic'] = set_combine(sets.midcast.Pet.BloodPactRage, {legs="Summoner's Spats"})
+
+	sets.midcast.Pet['Elemental Magic'].Resistant = {}
+	
 
 	-- Sets to return to when not performing an action.
 	
@@ -342,9 +366,7 @@ end
 -- Runs when a pet initiates an action.
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_pet_midcast(spell, action, spellMap, eventArgs)
-	if spirits:contains(pet.name) then
-		classes.CustomClass = 'Spirit'
-	end
+
 end
 
 
@@ -475,6 +497,8 @@ function job_get_spell_map(spell)
 		else
 			return 'PhysicalBloodPactRage'
 		end
+	elseif spell.type == 'BloodPactWard' and spell.target.type == 'MONSTER' then
+		return 'DebuffBloodPactWard'
 	end
 end
 
