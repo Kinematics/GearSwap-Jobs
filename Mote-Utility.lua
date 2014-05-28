@@ -525,19 +525,27 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- This is a function that can be attached to a registered event for 'time change'.
+-- It will send a call to the update() function if the time period changes.
 function time_change(new_time, old_time)
-	classes.Daytime = false
-	classes.Nighttime = false
-	classes.DuskToDawn = false
-
+	local was_daytime = classes.Daytime
+	local was_dusktime = classes.DuskToDawn
+	
 	if new_time >= 6*60 and new_time < 18*60 then
 		classes.Daytime = true
+		classes.Nighttime = false
 	else
+		classes.Daytime = false
 		classes.Nighttime = true
 	end
 
 	if newtime >= 17*60 or new_time < 7*60 then
 		classes.DuskToDawn = true
+	else
+		classes.DuskToDawn = false
+	end
+	
+	if was_daytime ~= classes.Daytime or was_dusktime ~= classes.DuskToDawn then
+		handle_update({'auto'})
 	end
 end
 
