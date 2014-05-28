@@ -520,3 +520,24 @@ function get_expanded_set(baseSet, str)
 end
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- Utility functions data and event tracking.
+-------------------------------------------------------------------------------------------------------------------
+
+-- This is a function that can be attached to a registered event for 'time change'.
+function time_change(new_time, old_time)
+	classes.Daytime = false
+	classes.Nighttime = false
+	classes.DuskToDawn = false
+
+	if new_time >= 6*60 and new_time < 18*60 then
+		classes.Daytime = true
+	else
+		classes.Nighttime = true
+	end
+
+	if newtime >= 17*60 or new_time < 7*60 then
+		classes.DuskToDawn = true
+	end
+end
+

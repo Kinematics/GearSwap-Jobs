@@ -102,6 +102,11 @@ function init_include()
 	classes.CustomIdleGroups = L{}
 	classes.CustomDefenseGroups = L{}
 
+	-- Class variables for time-based flags
+	classes.Daytime = false
+	classes.Nighttime = false
+	classes.DuskToDawn = false
+
 
 	-- Special control flags.
 	mote_flags = {}
