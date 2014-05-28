@@ -104,7 +104,6 @@ function init_include()
 
 	-- Class variables for time-based flags
 	classes.Daytime = false
-	classes.Nighttime = false
 	classes.DuskToDawn = false
 
 

@@ -532,10 +532,8 @@ function time_change(new_time, old_time)
 	
 	if new_time >= 6*60 and new_time < 18*60 then
 		classes.Daytime = true
-		classes.Nighttime = false
 	else
 		classes.Daytime = false
-		classes.Nighttime = true
 	end
 
 	if newtime >= 17*60 or new_time < 7*60 then
