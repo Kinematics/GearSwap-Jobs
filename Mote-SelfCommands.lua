@@ -509,7 +509,7 @@ function handle_update(cmdParams)
 		job_update(cmdParams, eventArgs)
 	end
 
-	if not eventArgs.handled then
+	if not eventArgs.handled and handle_equipping_gear then
 		handle_equipping_gear(player.status)
 	end
 
