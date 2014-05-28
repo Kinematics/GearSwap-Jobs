@@ -536,7 +536,7 @@ function time_change(new_time, old_time)
 		classes.Daytime = false
 	end
 
-	if newtime >= 17*60 or new_time < 7*60 then
+	if new_time >= 17*60 or new_time < 7*60 then
 		classes.DuskToDawn = true
 	else
 		classes.DuskToDawn = false
