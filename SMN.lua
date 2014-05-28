@@ -155,7 +155,10 @@ function init_gear_sets()
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Astral Flow'] = {head="Glyphic Horn"}
 	
-	sets.precast.JA['Elemental Siphon'] = {feet="Caller's Pigaches +2"} -- back="Conveyance Cape"
+	sets.precast.JA['Elemental Siphon'] = {main="Soulscourge",
+		head="Convoker's Horn",neck="Caller's Pendant",
+		body="Caller's Doublet +2",hands="Glyphic Bracers",ring1="Evoker's Ring",ring2="Fervor Ring",
+		legs="Marduk's Shalwar +1",feet="Caller's Pigaches +2"}
 
 	sets.precast.JA['Mana Cede'] = {hands="Caller's Bracers +2"}
 
