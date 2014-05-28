@@ -545,6 +545,10 @@ function time_change(new_time, old_time)
 	end
 	
 	if was_daytime ~= classes.Daytime or was_dusktime ~= classes.DuskToDawn then
+		if job_time_change then
+			job_time_change(new_time, old_time)
+		else
+
 		handle_update({'auto'})
 	end
 end
