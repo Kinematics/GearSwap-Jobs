@@ -1,1 +1,0 @@
-Please see https://github.com/Kinematics/GearSwap-Jobs/wiki for documentation on the usage of these include files.
