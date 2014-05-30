@@ -81,7 +81,8 @@ function user_setup()
 	state.AutoDaurdabla = false
 	
 	-- Additional local binds
-	send_command('bind ^` input /ma "Chocobo Mazurka" <me>')
+	send_command('bind ^` gs c cycle Daurdabla')
+	send_command('bind !` input /ma "Chocobo Mazurka" <me>')
 
 	-- Default macro set/book
 	set_macro_page(2, 18)
@@ -95,6 +96,7 @@ function file_unload()
 	end
 
 	send_command('unbind ^`')
+	send_command('unbind !`')
 end
 
 
