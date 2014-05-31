@@ -109,9 +109,10 @@ function init_gear_sets()
 	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], {waist=gear.ElementalBelt})
 
-	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,feet="Qaaxo Leggings"})
-	sets.precast.WS['Shijin Spiral'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget})
-	sets.precast.WS['Shijin Spiral'].Mod = set_combine(sets.precast.WS['Shijin Spiral'], {head="Felistris Mask",waist=gear.ElementalBelt,legs="Hesychast's Hose +1"})
+	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,feet="Daihanshi Habaki"})
+	sets.precast.WS['Shijin Spiral'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget,feet="Qaaxo Leggings"})
+	sets.precast.WS['Shijin Spiral'].Mod = set_combine(sets.precast.WS['Shijin Spiral'], {head="Felistris Mask",waist=gear.ElementalBelt,
+		legs="Hesychast's Hose +1"})
 
 	sets.precast.WS['Asuran Fists']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,ring2="Spiral Ring"})
 	sets.precast.WS['Asuran Fists'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget,ring2="Spiral Ring"})
@@ -177,7 +178,7 @@ function init_gear_sets()
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Haruspex hat",neck="Twilight Torque",
 		body="Otronif Harness +1",hands="Anchorite's Gloves +1",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Engulfer Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Otronif Boots +1"}
+		back="Engulfer Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Daihanshi Habaki"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 
@@ -241,6 +242,10 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Hesychast's Gloves +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Anguinus Belt",legs="Hesychast's Hose +1",feet="Anchorite's Gaiters +1"}
+		
+	-- Quick sets for post-precast adjustments, listed here so that the gear can be Validated.
+	sets.impetus_body = {body="Tantra Cyclas +2"}
+	sets.footwork_kick_feet = {feet="Anchorite's Gaiters +1"}
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -250,6 +255,8 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
+	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
+	
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type:lower() == 'weaponskill' and state.Defense.Active then
 		eventArgs.handled = true
@@ -262,9 +269,9 @@ end
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.type:lower() == 'weaponskill' and not state.Defense.Active then
 		if buffactive.impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
-			equip({body="Tantra Cyclas +2"})
+			equip(sets.impetus_body)
 		elseif buffactive.footwork and (spell.english == "Dragon's Kick" or spell.english == "Tornado Kick") then
-			equip({feet="Anchorite's Gaiters +1"})
+			equip(sets.footwork_kick_feet)
 		end
 	end
 end

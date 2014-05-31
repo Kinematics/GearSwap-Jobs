@@ -469,7 +469,7 @@ end
 -- Hooks for step mode handling.
 
 -- Job-specific toggles.
-function job_toggle(field)
+function job_toggle_state(field)
 	if field:lower() == 'selectsteptarget' then
 		state.SelectStepTarget = not state.SelectStepTarget
 		return "Select Step Target", state.SelectStepTarget
