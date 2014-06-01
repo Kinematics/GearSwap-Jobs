@@ -50,7 +50,7 @@ function job_setup()
 	state.DaurdablaMode = 'None'
 
 	-- For tracking current recast timers via the Timers plugin.
-	timer_reg = {}
+	custom_timers = {}
 end
 
 
@@ -364,7 +364,7 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 		if spell.type == 'BardSong' then
 			if spell.target then
 				if spell.target.type and spell.target.type:upper() == 'SELF' then
-					adjust_Timers(spell, action, spellMap)
+					adjust_timers(spell, action, spellMap)
 				end
 			end
 		end
@@ -483,28 +483,35 @@ end
 -- Function to create custom buff-remaining timers with the Timers plugin,
 -- keeping only the actual valid songs rather than spamming the default
 -- buff remaining timers.
-function adjust_Timers(spell, action, spellMap)
-	local t = os.time()
+function adjust_timers(spell, action, spellMap)
+	local current_time = os.time()
+	
+	-- custom_timers contains a table of song names, with the os time when they
+	-- will expire.
 	
 	-- Eliminate songs that have already expired from our local list.
-	local tempreg = {}
-	for i,v in pairs(timer_reg) do
-		if v < t then tempreg[i] = true end
+	local temp_timer_list = {}
+	for song_name,expires in pairs(custom_timers) do
+		if expires < current_time then
+			temp_timer_list[i] = true
+		end
 	end
-	for i,v in pairs(tempreg) do
-		timer_reg[i] = nil
+	for song_name,expires in pairs(temp_timer_list) do
+		custom_timers[i] = nil
 	end
 	
 	local dur = calculate_duration(spell.name, spellMap)
-	if timer_reg[spell.name] then
-		-- Can delete timers that have less than 120 seconds remaining, since
-		-- the new version of the song will overwrite the old one.
-		-- Otherwise create a new timer counting down til we can overwrite.
-		--if (timer_reg[spell.name] - t) <= 120 then
+	if custom_timers[spell.name] then
+		-- Songs always overwrite themselves now, unless the new song has
+		-- less duration than the old one (ie: old one was NT version, new
+		-- one has less duration than what's remaining).
+		
+		-- If new song will outlast the one in our list, replace it.
+		if custom_timers[spell.name] < (current_time + dur) then
 			send_command('timers delete "'..spell.name..'"')
-			timer_reg[spell.name] = t + dur
+			custom_timers[spell.name] = current_time + dur
 			send_command('timers create "'..spell.name..'" '..dur..' down')
-		--end
+		end
 	else
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
@@ -512,32 +519,32 @@ function adjust_Timers(spell, action, spellMap)
 			maxsongs = maxsongs + info.DaurdablaSongs
 		end
 		if buffactive['Clarion Call'] then
-			maxsongs = maxsongs+1
+			maxsongs = maxsongs + 1
 		end
 		-- If we have more songs active than is currently apparent, we can still overwrite
 		-- them while they're active, even if not using appropriate gear bonuses (ie: Daur).
-		if maxsongs < table.length(timer_reg) then
-			maxsongs = table.length(timer_reg)
+		if maxsongs < table.length(custom_timers) then
+			maxsongs = table.length(custom_timers)
 		end
 		
 		-- Create or update new song timers.
-		if table.length(timer_reg) < maxsongs then
-			timer_reg[spell.name] = t+dur
+		if table.length(custom_timers) < maxsongs then
+			custom_timers[spell.name] = t + dur
 			send_command('timers create "'..spell.name..'" '..dur..' down')
 		else
 			local rep,repsong
-			for i,v in pairs(timer_reg) do
-				if t+dur > v then
-					if not rep or rep > v then
-						rep = v
-						repsong = i
+			for song_name,expires in pairs(custom_timers) do
+				if current_time + dur > expires then
+					if not rep or rep > expires then
+						rep = expires
+						repsong = song_name
 					end
 				end
 			end
 			if repsong then
-				timer_reg[repsong] = nil
+				custom_timers[repsong] = nil
 				send_command('timers delete "'..repsong..'"')
-				timer_reg[spell.name] = t+dur
+				custom_timers[spell.name] = current_time + dur
 				send_command('timers create "'..spell.name..'" '..dur..' down')
 			end
 		end
@@ -545,7 +552,7 @@ function adjust_Timers(spell, action, spellMap)
 end
 
 -- Function to calculate the duration of a song based on the equipment used to cast it.
--- Called from adjust_Timers(), which is only called on aftercast().
+-- Called from adjust_timers(), which is only called on aftercast().
 function calculate_duration(spellName, spellMap)
 	local mult = 1
 	if player.equipment.range == 'Daurdabla' then mult = mult + 0.3 end -- change to 0.25 with 90 Daur
@@ -592,7 +599,7 @@ function daur_song_gap()
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2 + info.DaurdablaSongs
 		
-		local activesongs = table.length(timer_reg)
+		local activesongs = table.length(custom_timers)
 		
 		-- If we already have at least 2 songs on, but not enough to max out
 		-- on possible Daur songs, flag us as Daur-ready.
@@ -622,4 +629,13 @@ function pick_tp_weapon()
 	end
 end
 
+-- Function to reset timers.
+function reset_timers()
+    for i,v in pairs(custom_timers) do
+        send_command('timers delete "'..i..'"')
+    end
+    custom_timers = {}
+end
 
+windower.register_event('zone change',reset_timers)
+windower.register_event('logout',reset_timers)
