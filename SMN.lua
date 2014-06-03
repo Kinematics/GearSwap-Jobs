@@ -89,6 +89,35 @@ function job_setup()
 	pacts.astralflow = {['Ifrit']='Inferno', ['Shiva']='Diamond Dust', ['Garuda']='Aerial Blast', ['Titan']='Earthen Fury',
 		['Ramuh']='Judgment Bolt', ['Leviathan']='Tidal Wave', ['Carbuncle']='Searing Light', ['Fenrir']='Howling Moon',
 		['Diabolos']='Ruinous Omen', ['Cait Sith']="Altana's Favor"}
+
+    -- Wards table for creating custom timers	
+	wards = {}
+	-- Base duration for ward pacts.
+	wards.durations = {
+	    ['Crimson Howl'] = 60, ['Earthen Armor'] = 60, ['Inferno Howl'] = 60, ['Heavenward Howl'] = 60,
+	    ['Rolling Thunder'] = 120, ['Fleet Wind'] = 120,
+	    ['Shining Ruby'] = 180, ['Frost Armor'] = 180, ['Lightning Armor'] = 180, ['Ecliptic Growl'] = 180,
+	    ['Glittering Ruby'] = 180, ['Hastega'] = 180, ['Noctoshield'] = 180, ['Ecliptic Howl'] = 180,
+	    ['Dream Shroud'] = 180,
+	    ['Reraise II'] = 3600
+	}
+	-- Icons to use when creating the custom timer.
+	wards.icons = {
+	    ['Earthen Armor']   = 'spells/00299.png', -- 00299 for Titan
+	    ['Shining Ruby']    = 'spells/00043.png', -- 00043 for Protect
+	    ['Dream Shroud']    = 'spells/00304.png', -- 00304 for Diabolos
+	    ['Noctoshield']     = 'spells/00106.png', -- 00106 for Phalanx
+	    ['Inferno Howl']    = 'spells/00298.png', -- 00298 for Ifrit
+	    ['Hastega']         = 'spells/00358.png', -- 00358 for Hastega
+	    ['Rolling Thunder'] = 'spells/00104.png', -- 00358 for Enthunder
+	    ['Frost Armor']     = 'spells/00250.png', -- 00250 for Ice Spikes
+	    ['Lightning Armor'] = 'spells/00251.png', -- 00251 for Shock Spikes
+	    ['Reraise II']      = 'spells/00135.png', -- 00135 for Reraise
+	    ['Fleet Wind']      = 'abilities/00074.png', -- 
+	}
+	-- Flags for code to get around the issue of slow skill updates.
+	wards.flag = false
+	wards.spell = ''
 	
 end
 
@@ -106,31 +135,6 @@ function user_setup()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-
-	-- Durations for wards we want to create custom timers for.
-	durations = {}
-	durations['Earthen Armor'] = 232
-	durations['Shining Ruby'] = 340
-	durations['Dream Shroud'] = 352
-	durations['Noctoshield'] = 352
-	durations['Inferno Howl'] = 232
-	durations['Hastega'] = 352
-	
-	-- Icons to use for the timers (from plugins/icons directory)
-	timer_icons = {}
-	-- 00054 for stoneskin, or 00299 for Titan
-	timer_icons['Earthen Armor'] = 'spells/00299.png'
-	-- 00043 for protect, or 00296 for Carby
-	timer_icons['Shining Ruby'] = 'spells/00043.png'
-	-- 00304 for Diabolos
-	timer_icons['Dream Shroud'] = 'spells/00304.png'
-	-- 00106 for phalanx, or 00304 for Diabolos
-	timer_icons['Noctoshield'] = 'spells/00106.png'
-	-- 00100 for enfire, or 00298 for Ifrit
-	timer_icons['Inferno Howl'] = 'spells/00298.png'
-	-- 00358 for hastega, or 00301 for Garuda
-	timer_icons['Hastega'] = 'spells/00358.png'
-
 
 	select_default_macro_book()
 end
@@ -363,17 +367,12 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 end
 
 
--- Runs when a pet initiates an action.
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_pet_midcast(spell, action, spellMap, eventArgs)
-
-end
-
-
 -- Runs when pet completes an action.
 function job_pet_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		create_pact_timer(spell)
+	if not spell.interrupted and spell.type == 'BloodPactWard' and spellMap ~= 'DebuffBloodPactWard' then
+	    wards.flag = true
+	    wards.spell = spell.english
+	    send_command('wait 4; gs c reset_ward_flag')
 	end
 end
 
@@ -463,6 +462,10 @@ function job_self_command(cmdParams, eventArgs)
 		eventArgs.handled = true
 	elseif cmdParams[1]:lower() == 'pact' then
 		handle_pacts(cmdParams)
+		eventArgs.handled = true
+	elseif cmdParams[1] == 'reset_ward_flag' then
+	    wards.flag = false
+	    wards.spell = ''
 		eventArgs.handled = true
 	end
 end
@@ -678,18 +681,44 @@ function handle_pacts(cmdParams)
 end
 
 
-function create_pact_timer(spell)
+-- Event handler for updates to player skill, since we can't rely on skill being
+-- correct at pet_aftercast for the creation of custom timers.
+windower.raw_register_event('incoming chunk',
+    function (id)
+        if id == 0x62 then
+            if wards.flag then
+        		create_pact_timer(wards.spell)
+        		wards.flag = false
+        		wards.spell = ''
+        	end
+        end
+    end)
+
+-- Function to create custom timers using the Timers addon.  Calculates ward duration
+-- based on player skill and base pact duration (defined in job_setup).
+function create_pact_timer(spell_name)
 	-- Create custom timers for ward pacts.
-	if durations and durations[spell.english] then
-		local timer_cmd = 'timers c "'..spell.english..'" '..tostring(durations[spell.english])..' down'
+    if wards.durations[spell_name] then
+        local ward_duration = wards.durations[spell_name]
+        if ward_duration < 181 then
+            local skill = player.skills.summoning_magic
+            if skill > 300 then
+                skill = skill - 300
+                if skill > 200 then skill = 200 end
+                ward_duration = ward_duration + skill
+            end
+        end
+        
+		local timer_cmd = 'timers c "'..spell_name..'" '..tostring(ward_duration)..' down'
 		
-		if timer_icons[spell.english] then
-			timer_cmd = timer_cmd..' '..timer_icons[spell.english]
+		if wards.icons[spell_name] then
+			timer_cmd = timer_cmd..' '..wards.icons[spell_name]
 		end
-		
+
 		send_command(timer_cmd)
-	end
+    end
 end
+
 
 -- Select default macro book on initial load or subjob change.
 function select_default_macro_book()
