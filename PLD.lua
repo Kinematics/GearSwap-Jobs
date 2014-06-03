@@ -20,9 +20,9 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
     -- Options: Override default values
-    options.OffenseModes = {'Normal'}
+    options.OffenseModes = {'Normal', 'Acc'}
     options.DefenseModes = {'Normal', 'Shield'}
-    options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
+    options.WeaponskillModes = {'Normal', 'Acc'}
     options.CastingModes = {'Normal'}
     options.IdleModes = {'Normal'}
     options.RestingModes = {'Normal'}
@@ -34,10 +34,13 @@ function user_setup()
     state.Defense.PhysicalMode = 'PDT'
     state.HybridDefenseMode = 'None'
 
-    physical_darkring1 = {name="Dark Ring",augments={"Physical Damage Taken -6%", "Magic Damage Taken -3%", "Spell Interruption Rate Down 5%"}}
-    physical_darkring2 = {name="Dark Ring",augments={"Physical Damage Taken -5%", "Magic Damage Taken -3%"}}
-    magic_breath_darkring1 = {name="Dark Ring",augments={"Magic Damage Taken -6%", "Breath Damage Taken -5%"}}
-    magic_breath_darkring2 = {name="Dark Ring",augments={"Magic Damage Taken -5%", "Breath Damage Taken -6%"}}
+    physical_darkring1 = {name="Dark Ring",augments={'Magic dmg. taken -3%','Spell interruption rate down -5%','Phys. dmg. taken -6%'}}
+    physical_darkring2 = {name="Dark Ring",augments={'Magic dmg. taken -3%','Phys. dmg. taken -5%'}}
+    magic_breath_darkring1 = {name="Dark Ring", augments={'Magic dmg. taken -6%','Breath dmg. taken -5%'}}
+    magic_breath_darkring2 = {name="Dark Ring",augments={"Magic dmg. taken -5%", "Breath dmg. taken -6%"}}
+    vexer_ring = {name="Vexer Ring"}
+    
+	send_command('bind !f11 gs c cycle HybridDefenseMode')
 
     select_default_macro_book()
 end
@@ -48,6 +51,8 @@ function file_unload()
     if binds_on_unload then
         binds_on_unload()
     end
+
+	send_command('unbind !f11')
 end
 
 -- Define sets and vars used by this job file.
@@ -92,8 +97,6 @@ function init_gear_sets()
 
     sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
-    sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
-
     sets.precast.FC.Cure = set_combine(sets.precast.FC,
         {body="Twilight Mail",hands="Buremte Gloves",ring2="Dark Ring",
         waist="Flume Belt",feet="Karieyh Sollerets +1"})
@@ -132,7 +135,7 @@ function init_gear_sets()
     
     sets.midcast.Cure = {ammo="Iron Gobbet",
         head="Adaman Barbuta",neck="Invidia Torque",ear1="Hospitaler Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="K'ayres Ring",ring2="Meridian Ring",
+        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="Kunaji Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 
     sets.midcast['Enhancing Magic'] = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches +1"}
@@ -156,7 +159,7 @@ function init_gear_sets()
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 
-    sets.idle.Town = {main="Buramenk'ah", sub="Killedar Shield",ammo="Incantor Stone",
+    sets.idle.Town = {main="Anahera Sword", sub="Killedar Shield",ammo="Incantor Stone",
         head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
@@ -169,10 +172,10 @@ function init_gear_sets()
     sets.idle.Weak.Reraise = set_combine(sets.idle.Weak, sets.Reraise)
     
     
-    -- Defense sets
     --   Physical
     --     PDT
     --     Shield
+    -- Defense sets
     --     HP
     --   Magical
     --     MDT
@@ -183,65 +186,50 @@ function init_gear_sets()
     --   Custom
     --     Kheshig Blade
     
-    sets.defense.PDT = {}
-    sets.defense.Shield = {}
-    sets.defense.HP = {}
-    sets.defense.MDT = {}
-
-    sets.defense.PDT.Repulse = {}
-    sets.defense.Shield.Repulse = {}
-    sets.defense.HP.Repulse = {}
-    sets.defense.MDT.Repulse = {}
-
-    sets.defense.PDT.Reraise = {}
-    sets.defense.Shield.Reraise = {}
-    sets.defense.HP.Reraise = {}
-    sets.defense.MDT.Reraise = {}
-
-    sets.defense.PDT.RepulseReraise = {}
-    sets.defense.Shield.RepulseReraise = {}
-    sets.defense.HP.RepulseReraise = {}
-    sets.defense.MDT.RepulseReraise = {}
-
-    sets.defense.PDT['Kheshig Blade'] = {}
-    sets.defense.PDT.Repulse['Kheshig Blade'] = {}
-    sets.defense.PDT.Reraise['Kheshig Blade'] = {}
-    sets.defense.PDT.RepulseReraise['Kheshig Blade'] = {}
+    sets.Repulse = {back="Repulse Mantle"}
     
-    
-    -- Defense sets
     sets.defense.PDT = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Dark Ring",ring2="Dark Ring",
-        back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
-    -- If using Kheshig Blade, have 50% PDT without the second ring:
-    sets.defense.PDT['Kheshig Blade'] = set_combine(sets.defense.PDT, {ring2="Meridian Ring"})
-
-    sets.defense.PDT.HP = set_combine(sets.defense.PDT, {ring1="K'ayres Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Creed Baudrier"})
-    sets.defense.PDT['Kheshig Blade'].HP = set_combine(sets.defense.PDT, {ring1="K'ayres Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Creed Baudrier"})
-
-    sets.defense.Reraise = {ammo="Iron Gobbet",
-        head="Twilight Helm",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Twilight Mail",hands="Cizin Mufflers",ring1="Dark Ring",ring2="Dark Ring",
-        back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
-
-    sets.defense.MDT = {ammo="Demonry Stone",
-        head="Yaoyotl Helm",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Dark Ring",ring2="Shadow Ring",
-        back="Engulfer Cape",waist="Creed Baudrier",legs="Cizin Breeches",feet="Caballarius Leggings"}
-
-    sets.defense.MDT.Reraise = set_combine(sets.defense.MDT, sets.Reraise)
-    sets.defense.MDT.HP = set_combine(sets.defense.PDT, {ring1="Vexer Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Creed Baudrier"})
-    sets.defense.MDT.Reraise.HP = set_combine(sets.defense.MDT.HP, sets.Reraise)
-
+        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1=physical_darkring1,ring2=physical_darkring2,
+        back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
+    sets.defense.Shield = {main="Anahera Sword",ammo="Iron Gobbet",
+        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1=physical_darkring1,ring2=physical_darkring2,
+        back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
     sets.defense.HP = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="K'ayres Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="K'ayres Ring",ring2="Meridian Ring",
+        back="Weard Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+    -- To cap MDT with Shell IV (52/256), need 76/256 in gear. Current gear set is 77/256.
+    -- Shellra V can provide 75/256. Could drop 9% from this set.  Dark Ring > Vexer Ring
+    -- magic_breath_darkring1 vs vexer_ring
+    sets.defense.MDT = {main="Anahera Sword",ammo="Demonry Stone",
+        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1=vexer_ring,ring2="Shadow Ring",
+        back="Engulfer Cape",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Caballarius Leggings"}
 
+    sets.defense.PDT.Repulse = set_combine(sets.defense.PDT, sets.Repulse)
+    sets.defense.Shield.Repulse = set_combine(sets.defense.Shield, sets.Repulse)
+    sets.defense.HP.Repulse = set_combine(sets.defense.HP, sets.Repulse)
+    sets.defense.MDT.Repulse = set_combine(sets.defense.MDT, sets.Repulse)
+
+    sets.defense.PDT.Reraise = set_combine(sets.defense.PDT, sets.Reraise)
+    sets.defense.Shield.Reraise = set_combine(sets.defense.Shield, sets.Reraise)
+    sets.defense.HP.Reraise = set_combine(sets.defense.HP, sets.Reraise, {neck="Twilight Torque"})
+    sets.defense.MDT.Reraise = set_combine(sets.defense.MDT, sets.Reraise, {ring1=magic_breath_darkring1})
+
+    sets.defense.PDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
+    sets.defense.Shield.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
+    sets.defense.HP.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse, {neck="Twilight Torque"})
+    sets.defense.MDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse, {ring1=magic_breath_darkring1})
+
+    -- If using Kheshig Blade, have 50% PDT without the second ring:
+    sets.defense.PDT['Kheshig Blade'] = set_combine(sets.defense.PDT, {ring2="Meridian Ring"})
+    sets.defense.PDT.Repulse['Kheshig Blade'] = set_combine(sets.defense.PDT.Repulse)
+    sets.defense.PDT.Reraise['Kheshig Blade'] = set_combine(sets.defense.PDT.Reraise)
+    sets.defense.PDT.RepulseReraise['Kheshig Blade'] = set_combine(sets.defense.PDT.RepulseReraise)
+    
+    
     sets.Kiting = {legs="Crimson Cuisses"}
 
     -- Engaged sets
