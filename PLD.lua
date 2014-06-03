@@ -71,11 +71,12 @@ function init_gear_sets()
     sets.precast.JA['Rampart'] = {head="Valor Coronet"}
     --sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
     --sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
+    sets.precast.JA['Cover'] = {head="Reverence Coronet +1"}
 
     -- add mnd for Chivalry
     sets.precast.JA['Chivalry'] = {
         head="Yaoyotl Helm",
-        body="Reverence Surcoat +1",hands="Buremte Gloves",
+        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="Aquasoul Ring",
         legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
     
 
@@ -159,7 +160,7 @@ function init_gear_sets()
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 
-    sets.idle.Town = {main="Anahera Sword", sub="Killedar Shield",ammo="Incantor Stone",
+    sets.idle.Town = {main="Anahera Sword",ammo="Incantor Stone",
         head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
@@ -245,10 +246,25 @@ function init_gear_sets()
         body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
+    sets.engaged.Acc = {
+        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+        body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
     sets.engaged.Shield = {
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Boxer's Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+
+    sets.engaged.DW = {
+        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
+    sets.engaged.DW.Acc = {
+        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+        body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
 
     sets.buff.Cover = {head="Reverence Coronet +1", body="Valor Surcoat +2"}
@@ -348,6 +364,15 @@ end
 function update_defense_mode()
     if player.equipment.main == 'Kheshig Blade' and not classes.CustomDefenseGroups:contains('Kheshig Blade') then
         classes.CustomDefenseGroups:append('Kheshig Blade')
+    end
+    
+    if player.sub_job == 'NIN' or player.sub_job == 'DNC' then
+        if player.equipment.sub and not player.equipment.sub:endswith('Shield') and
+           player.equipment.sub ~= 'Aegis' and player.equipment.sub ~= 'Ochain' then
+            state.CombatForm = 'DW'
+        else
+            state.CombatForm = nil
+        end
     end
 end
 
