@@ -103,22 +103,17 @@ function init_gear_sets()
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
-		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Yaoyotl Helm",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Cizin Breeches",feet="Cizin Greaves"}
+		back="Atheling Mantle",waist=gear.ElementalBelt,legs="Cizin Breeches",feet="Cizin Greaves"}
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {neck="Soil Gorget",
-		ring1="Aquasoul Ring",ring2="Aquasoul Ring",waist="Soil Belt"})
-
-	sets.precast.WS['Vorpal Blade'] = set_combine(sets.precast.WS, {neck="Soil Gorget",waist="Soil Belt"})
-
-	sets.precast.WS['Chant du Cygne'] = set_combine(sets.precast.WS, {neck="Snow Gorget",waist="Snow Belt"})
+	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",ring2="Aquasoul Ring"})
 
 	sets.precast.WS['Sanguine Blade'] = {
 		head="Yaoyotl Helm",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Reverence Surcoat +1",hands="Cizin Mufflers",
-		back="Toro Cape",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+		body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Toro Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 	
 	
 	-- Midcast Sets
