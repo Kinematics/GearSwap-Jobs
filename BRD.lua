@@ -529,7 +529,7 @@ function adjust_timers(spell, action, spellMap)
 		
 		-- Create or update new song timers.
 		if table.length(custom_timers) < maxsongs then
-			custom_timers[spell.name] = t + dur
+			custom_timers[spell.name] = current_time + dur
 			send_command('timers create "'..spell.name..'" '..dur..' down')
 		else
 			local rep,repsong

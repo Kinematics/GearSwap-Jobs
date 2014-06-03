@@ -192,7 +192,7 @@ function init_gear_sets()
 	sets.precast.WS['Myrkr'] = {
 		head="Nahtirah Hat",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Convoker's Doublet",hands="Caller's Bracers +2",ring1="Evoker's Ring",ring2="Sangoma Ring",
-		back="Pahtli Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Chelona Boots +1"}
+		back="Pahtli Cape",waist="Fucho-no-Obi",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	
 	-- Midcast Sets
@@ -207,6 +207,17 @@ function init_gear_sets()
 		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
+
+	sets.midcast['Elemental Magic'] = {main="Lehbrailg +2",sub="Wizzan Grip",
+		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		back="Toro Cape",waist=gear.ElementalBelt,legs="Hagondes Pants",feet="Hagondes Sabots"}
+
+	sets.midcast['Dark Magic'] = {main="Lehbrailg +2",sub="Wizzan Grip",
+		head="Nahtirah Hat",neck="Aesir Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Excelsis Ring",ring2="Sangoma Ring",
+		waist="Fuchi-no-Obi",legs="Bokwus Slops",feet="Bokwus Boots"}
+
 
 	-- Avatar pact sets.  All pacts are Ability type.
 	
@@ -258,12 +269,12 @@ function init_gear_sets()
 	sets.idle = {main="Bolelabunga",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
+		back="Umbra Cape",waist="Fucho-no-Obi",legs="Nares Trews",feet="Herald's Gaiters"}
 
 	sets.idle.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Sangoma Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Herald's Gaiters"}
+		back="Umbra Cape",waist="Fucho-no-Obi",legs="Hagondes Pants",feet="Herald's Gaiters"}
 
 	-- perp costs:
 	-- spirits: 7
@@ -288,17 +299,17 @@ function init_gear_sets()
 	sets.idle.Avatar = {main="Gridarvor",sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Convoker's Pigaches"}
+		back="Umbra Cape",waist="Fucho-no-Obi",legs="Nares Trews",feet="Convoker's Pigaches"}
 
 	sets.idle.Spirit = {main="Gridarvor",sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
-		back="Samanisi Cape",waist="Hierarch Belt",legs="Summoner's Spats",feet="Herald's Gaiters"}
+		back="Samanisi Cape",waist="Fucho-no-Obi",legs="Summoner's Spats",feet="Herald's Gaiters"}
 
 	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Sangoma Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
+		back="Umbra Cape",waist="Fucho-no-Obi",legs="Nares Trews",feet="Herald's Gaiters"}
 
 	-- Favor uses Caller's Horn instead of Convoker's Horn for refresh
 	sets.idle.Avatar.Favor = {head="Caller's Horn +2"}
@@ -322,14 +333,16 @@ function init_gear_sets()
 	sets.defense.PDT = {main=gear.Staff.PDT,
 		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Umbra Cape",waist="Fucho-no-Obi",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.defense.MDT = {
 		head="Hagondes Hat",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
-		back="Umbra Cape",waist="Hierarch Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
+		back="Umbra Cape",waist="Fucho-no-Obi",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
+	
+	sets.refresh_waist = {waist="Fucho-no-obi"}
 
 	-- Engaged sets
 
@@ -399,6 +412,10 @@ function customize_idle_set(idleSet)
 		if pet.status == 'Engaged' then
 			idleSet = set_combine(idleSet, sets.idle.Avatar.Melee)
 		end
+	end
+	
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.refresh_waist)
 	end
 	
 	return idleSet

@@ -85,8 +85,8 @@ function init_gear_sets()
 	-- Precast sets to enhance JAs
 	
 	sets.precast.JA['Triple Shot'] = {body="Navarch's Frac +2"}
-	sets.precast.JA['Snake Eye'] = {legs="Commodore Culottes +2"}
-	sets.precast.JA['Wild Card'] = {feet="Commodore Bottes +2"}
+	sets.precast.JA['Snake Eye'] = {legs="Lanun Culottes"}
+	sets.precast.JA['Wild Card'] = {feet="Lanun Bottes"}
 	sets.precast.JA['Random Deal'] = {body="Lanun Frac"}
 
 	
@@ -121,7 +121,7 @@ function init_gear_sets()
 
 	sets.precast.RA = {ammo=gear.RAbullet,
 		head="Navarch's Tricorne +2",
-		body="Laksamana's Frac",hands="Iuitl Wristbands",
+		body="Laksamana's Frac",hands="Lanun Gants",
 		back="Navarch's Mantle",waist="Impulse Belt",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
 
        
@@ -176,7 +176,7 @@ function init_gear_sets()
 	sets.midcast.CorsairShot = {ammo=gear.QDbullet,
 		head="Blood Mask",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Lanun Frac",hands="Schutzen Mittens",ring1="Hajduk Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Aquiline Belt",legs="Iuitl Tights",feet="Commodore Bottes +2"}
+		back="Toro Cape",waist="Aquiline Belt",legs="Iuitl Tights",feet="Lanun Bottes"}
 
 	sets.midcast.CorsairShot.Acc = {ammo=gear.QDbullet,
 		head="Laksamana's Hat",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
@@ -491,9 +491,9 @@ function do_bullet_checks(spell, spellMap, eventArgs)
 	-- Low ammo warning.
 	if spell.type ~= 'CorsairShot' and not state.warned
 	    and available_bullets.count > 1 and available_bullets.count <= options.ammo_warning_limit then
-		add_to_chat(104, '*****************************')
+		add_to_chat(104, '*******************************')
 		add_to_chat(104, '*****  LOW AMMO WARNING *****')
-		add_to_chat(104, '*****************************')
+		add_to_chat(104, '*******************************')
 		state.warned = true
 	elseif available_bullets.count > options.ammo_warning_limit and state.warned then
 		state.warned = false
