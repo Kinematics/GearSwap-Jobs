@@ -26,10 +26,13 @@ function user_setup()
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Reraise', 'HP'}
-	options.MagicalDefenseModes = {'MDT', 'Reraise'}
+	options.PhysicalDefenseModes = {'PDT', 'Shield', 'HP'}
+	options.MagicalDefenseModes = {'MDT'}
+
+    options.HybridDefenseModes = {'None', 'Repulse', 'Reraise', 'RepulseReraise'}
 
 	state.Defense.PhysicalMode = 'PDT'
+    state.HybridDefenseMode = 'None'
 
 	physical_darkring1 = {name="Dark Ring",augments={"Physical Damage Taken -6%", "Magic Damage Taken -3%", "Spell Interruption Rate Down 5%"}}
 	physical_darkring2 = {name="Dark Ring",augments={"Physical Damage Taken -5%", "Magic Damage Taken -3%"}}
@@ -170,6 +173,47 @@ function init_gear_sets()
 		back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 	
 	sets.idle.Weak.Reraise = set_combine(sets.idle.Weak, sets.Reraise)
+	
+	
+	-- Defense sets
+	--   Physical
+	--     PDT
+	--     Shield
+	--     HP
+	--   Magical
+	--     MDT
+	--   Hybrid (on top of either physical or magical)
+	--     Repulse
+	--     Reraise
+	--     RepulseReraise
+	--   Custom
+	--     Kheshig Blade
+	
+	sets.defense.PDT = {}
+	sets.defense.Shield = {}
+	sets.defense.HP = {}
+	sets.defense.MDT = {}
+
+	sets.defense.PDT.Repulse = {}
+	sets.defense.Shield.Repulse = {}
+	sets.defense.HP.Repulse = {}
+	sets.defense.MDT.Repulse = {}
+
+	sets.defense.PDT.Reraise = {}
+	sets.defense.Shield.Reraise = {}
+	sets.defense.HP.Reraise = {}
+	sets.defense.MDT.Reraise = {}
+
+	sets.defense.PDT.RepulseReraise = {}
+	sets.defense.Shield.RepulseReraise = {}
+	sets.defense.HP.RepulseReraise = {}
+	sets.defense.MDT.RepulseReraise = {}
+
+	sets.defense.PDT['Kheshig Blade'] = {}
+	sets.defense.PDT.Repulse['Kheshig Blade'] = {}
+	sets.defense.PDT.Reraise['Kheshig Blade'] = {}
+	sets.defense.PDT.RepulseReraise['Kheshig Blade'] = {}
+	
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
@@ -326,8 +370,11 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-
+function job_state_change(field, new_value, old_value)
+    if field == 'HybridDefenseMode' then
+        classes.CustomDefenseGroups:clear()
+        classes.CustomDefenseGroups:append(new_value)
+    end
 end
 
 -- Called when the player's pet's status changes.
@@ -340,6 +387,13 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 
+end
+
+
+-- Called by the 'update' self-command, for common needs.
+-- Set eventArgs.handled to true if we don't want automatic equipping of gear.
+function job_update(cmdParams, eventArgs)
+	update_defense_mode()
 end
 
 
@@ -371,6 +425,13 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+function update_defense_mode()
+    if player.equipment.main == 'Kheshig Blade' and not classes.CustomDefenseGroups:contains('Kheshig Blade') then
+        classes.CustomDefenseGroups:append('Kheshig Blade')
+    end
+end
+
 
 -- Select default macro book on initial load or subjob change.
 function select_default_macro_book()
