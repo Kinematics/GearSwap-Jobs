@@ -216,7 +216,7 @@ function init_gear_sets()
 
 	sets.buff['Burst Affinity'] = {feet="Mavi Basmak +2"}
 	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"} --, feet="Assimilator's Charuqs"}
-	sets.buff.Convergence = {head="Mirage Keffiyeh +2"}
+	sets.buff.Convergence = {head="Luhlaza Keffiyeh"}
 	sets.buff.Diffusion = {feet="Luhlaza Charuqs"}
 	sets.buff.Enchainment = {body="Luhlaza Jubbah"}
 	sets.buff.Efflux = {legs="Mavi Tayt +2"}
@@ -357,14 +357,14 @@ function init_gear_sets()
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",ring2="Sangoma Ring",
 		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
 
 	-- Breath Spells --
 	
 	sets.midcast['Blue Magic'].Breath = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Refraction Cape",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 
@@ -384,8 +384,8 @@ function init_gear_sets()
 		back="Pahtli Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",
-		body="Magus Jubbah",
+		head="Luhlaza Keffiyeh",
+		body="Magus Jubbah +1",
 		legs="Mavi Tayt +2"}
 
 	sets.midcast['Blue Magic'].Buff = {}
@@ -396,8 +396,8 @@ function init_gear_sets()
 
 	-- Gear for learning spells: +skill and AF hands.
 	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1",feet="Luhlaza Charuqs"}
-		--head="Mirage Keffiyeh +2",	
-		--body="Magus Jubbah",hands="Assimilator's Bazubands +1",
+		--head="Luhlaza Keffiyeh",	
+		--body="Magus Jubbah +1",hands="Assimilator's Bazubands +1",
 		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 
