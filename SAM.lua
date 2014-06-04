@@ -62,9 +62,9 @@ function init_gear_sets()
 	
 	-- Precast Sets
 	-- Precast sets to enhance JAs
-	sets.precast.JA.Meditate = {head="Myochin Kabuto",hands="Saotome Kote +2"}
+	sets.precast.JA.Meditate = {head="Myochin Kabuto",hands="Sakonji Kote"}
 	sets.precast.JA['Warding Circle'] = {head="Myochin Kabuto"}
-	sets.precast.JA['Blade Bash'] = {hands="Saotome Kote +2"}
+	sets.precast.JA['Blade Bash'] = {hands="Sakonji Kote"}
 
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
