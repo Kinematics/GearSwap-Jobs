@@ -104,7 +104,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
+		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	
 	
@@ -123,7 +123,7 @@ function init_gear_sets()
 	sets.midcast.Ninjutsu = {
 		head="Hachiya Hatsuburi",neck="Stoicheion Medal",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		--ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Otronif Harness +1",hands="Mochizuki Tekko",ring1="Icesoul Ring",
+		body="Otronif Harness +1",hands="Mochizuki Tekko",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",legs="Nahtirah Troursers",feet="Hachiya Kyahan"}
 
 	--sets.midcast.Ninjutsu.Resistant = set_combine(sets.midcast.Ninjutsu, {ear1="Lifestorm Earring",ear2="Psystorm Earring"})

@@ -261,7 +261,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Sanguine Blade'] = {
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Demon's Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Acumen Ring",ring2="Strendu Ring",
 		back="Toro Cape",legs="Hagondes Pants",feet="Iuitl Gaiters +1"}
 	
 	
@@ -329,7 +329,7 @@ function init_gear_sets()
 	
 	sets.midcast['Blue Magic'].Magical = {ammo="Mavi Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].Magical.Resistant = set_combine(sets.midcast['Blue Magic'].Magical,
@@ -338,22 +338,22 @@ function init_gear_sets()
 	
 	sets.midcast['Blue Magic'].MagicalMnd = {ammo="Mavi Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalChr = {ammo="Mavi Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalVit = {ammo="Mavi Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalDex = {ammo="Mavi Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",

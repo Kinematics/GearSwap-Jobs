@@ -178,7 +178,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
+		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	
 	sets.precast.Skillchain = {hands="Charis Bangles +2"}

@@ -90,8 +90,8 @@ function init_gear_sets()
 		ring1="Aquasoul Ring",ring2="Aquasoul Ring",waist="Soil Belt"})
 
 	sets.precast.WS['Sanguine Blade'] = {ammo="Witchstone",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Acumen Ring",
 		back="Toro Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	
@@ -128,8 +128,8 @@ function init_gear_sets()
 	sets.midcast['Slow II'] = set_combine(sets.midcast['Enfeebling Magic'], {head="Vitivation Chapeau"})
 	
 	sets.midcast['Elemental Magic'] = {
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 		
 	gear.default.obi_waist = "Sekhmet Corset"
@@ -143,9 +143,9 @@ function init_gear_sets()
 
 	--sets.midcast.Stun = set_combine(sets.midcast['Dark Magic'], {})
 
-	--sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring2="Excelsis Ring"})
+	sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring1="Excelsis Ring", waist="Fucho-no-Obi"})
 
-	--sets.midcast.Aspir = sets.midcast.Drain
+	sets.midcast.Aspir = sets.midcast.Drain
 
 
 	-- Sets for special buff conditions on spells.
@@ -196,6 +196,8 @@ function init_gear_sets()
 		back="Engulfer Cape",waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}
+
+	sets.latent_refresh = {waist="Fucho-no-obi"}
 
 	-- Engaged sets
 
@@ -251,6 +253,14 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.

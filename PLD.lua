@@ -114,7 +114,7 @@ function init_gear_sets()
     sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",ring2="Aquasoul Ring"})
 
     sets.precast.WS['Sanguine Blade'] = {
-        head="Yaoyotl Helm",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+        head="Yaoyotl Helm",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
         body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Toro Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
     
@@ -233,6 +233,8 @@ function init_gear_sets()
     
     sets.Kiting = {legs="Crimson Cuisses"}
 
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
     -- Engaged sets
 
     -- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
@@ -312,7 +314,11 @@ end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
-    return idleSet
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
 end
 
 -- Modify the default melee set after it was constructed.

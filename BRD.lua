@@ -279,6 +279,8 @@ function init_gear_sets()
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
 	-- Engaged sets
 
 	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
@@ -379,6 +381,15 @@ function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
 	end
+end
+
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
 end
 
 -------------------------------------------------------------------------------------------------------------------
