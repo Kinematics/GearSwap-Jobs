@@ -191,6 +191,8 @@ function user_setup()
 
 	state.Defense.PhysicalMode = 'PDT'
 
+    gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
+
 	-- Additional local binds
 	send_command('bind ^` input /ja "Chain Affinity" <me>')
 	send_command('bind !` input /ja "Burst Affinity" <me>')
@@ -306,12 +308,12 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.midcast['Blue Magic'].PhysicalInt = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Psystorm Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Icesoul Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].PhysicalMnd = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Aquasoul Ring",
 		back="Pahtli Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 
@@ -358,7 +360,7 @@ function init_gear_sets()
 
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
 		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Vanir Cotehardie",ring2="Sangoma Ring",
+		body="Vanir Cotehardie",hands=gear.macc_hagondes,ring2="Sangoma Ring",
 		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
 
 	-- Breath Spells --
@@ -395,7 +397,7 @@ function init_gear_sets()
 	-- Sets to return to when not performing an action.
 
 	-- Gear for learning spells: +skill and AF hands.
-	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1",feet="Luhlaza Charuqs"}
+	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1"}
 		--head="Luhlaza Keffiyeh",	
 		--body="Magus Jubbah +1",hands="Assimilator's Bazubands +1",
 		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
@@ -415,8 +417,6 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Serpentes Sabots"}
 
-	sets.idle.Learning = set_combine(sets.idle, sets.Learning)
-
 	sets.idle.PDT = {ammo="Impatiens",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
@@ -426,6 +426,9 @@ function init_gear_sets()
 		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Luhlaza Charuqs"}
+
+	sets.idle.Learning = set_combine(sets.idle, sets.Learning)
+
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
