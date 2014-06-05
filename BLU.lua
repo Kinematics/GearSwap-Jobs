@@ -184,7 +184,7 @@ function user_setup()
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal', 'Resistant'}
-	options.IdleModes = {'Normal', 'Learning'}
+	options.IdleModes = {'Normal', 'PDT', 'Learning'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
@@ -215,7 +215,7 @@ function init_gear_sets()
 	--------------------------------------
 
 	sets.buff['Burst Affinity'] = {feet="Mavi Basmak +2"}
-	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"} --, feet="Assimilator's Charuqs"}
+	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2", feet="Assimilator's Charuqs"}
 	sets.buff.Convergence = {head="Luhlaza Keffiyeh"}
 	sets.buff.Diffusion = {feet="Luhlaza Charuqs"}
 	sets.buff.Enchainment = {body="Luhlaza Jubbah"}
@@ -260,7 +260,7 @@ function init_gear_sets()
 	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",feet="Luhlaza Charuqs"})
 
 	sets.precast.WS['Sanguine Blade'] = {
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Demon's Ring",ring2="Strendu Ring",
 		back="Toro Cape",legs="Hagondes Pants",feet="Iuitl Gaiters +1"}
 	
@@ -328,7 +328,7 @@ function init_gear_sets()
 	-- Magical Spells --
 	
 	sets.midcast['Blue Magic'].Magical = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
@@ -337,22 +337,22 @@ function init_gear_sets()
 		legs="Iuitl Tights",feet="Mavi Basmak +2"})
 	
 	sets.midcast['Blue Magic'].MagicalMnd = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalChr = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalVit = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalDex = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
@@ -424,7 +424,7 @@ function init_gear_sets()
 
 	sets.idle.Town = {main="Buramenk'ah",ammo="Impatiens",
 		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Luhlaza Jubbah",hands="Mavi Bazubands +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Luhlaza Charuqs"}
 	
 	-- Defense sets
