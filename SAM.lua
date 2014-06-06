@@ -15,8 +15,10 @@ end
 function job_setup()
 	state.CombatForm = get_combat_form()
 	
-	state.Buff.Sekkanoki = buffactive.sekkanoki or false
-	state.Buff.Sengikori = buffactive.sengikori or false
+	state.Buff.Hasso = buffactive.Hasso or false
+	state.Buff.Seigan = buffactive.Seigan or false
+	state.Buff.Sekkanoki = buffactive.Sekkanoki or false
+	state.Buff.Sengikori = buffactive.Sengikori or false
 	state.Buff['Meikyo Shisui'] = buffactive['Meikyo Shisui'] or false
 end
 
@@ -231,7 +233,7 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
 function job_pretarget(spell, action, spellMap, eventArgs)
-	if spell.type:lower() == 'weaponskill' then
+	if spell.type == 'WeaponSkill' then
 		-- Change any GK weaponskills to polearm weaponskill if we're using a polearm.
 		if player.equipment.main=='Quint Spear' or player.equipment.main=='Quint Spear' then
 			if spell.english:startswith("Tachi:") then
@@ -239,6 +241,10 @@ function job_pretarget(spell, action, spellMap, eventArgs)
 				eventArgs.cancel = true
 			end
 		end
+	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
 	end
 end
 
@@ -278,10 +284,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.english] ~= nil then
-			state.Buff[spell.english] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 

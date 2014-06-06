@@ -219,6 +219,14 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
+end
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
 		-- Default base equipment layer of fast recast.
@@ -242,10 +250,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.english] ~= nil then
-			state.Buff[spell.english] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 

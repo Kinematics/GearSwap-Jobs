@@ -284,6 +284,10 @@ function job_precast(spell, action, spellMap, eventArgs)
     if spell.type == 'WeaponSkill' and state.Defense.Active then
         eventArgs.handled = true
     end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 -- Run after the default precast() is done.
@@ -305,7 +309,9 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -343,7 +349,9 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
 end
 
 

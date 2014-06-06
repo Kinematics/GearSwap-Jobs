@@ -13,13 +13,13 @@ end
 
 -- Setup vars that are user-independent.
 function job_setup()
-        state.Buff['Burst Affinity'] = buffactive['Burst Affinity'] or false
-        state.Buff['Chain Affinity'] = buffactive['Chain Affinity'] or false
-        state.Buff.Convergence = buffactive.Convergence or false
-        state.Buff.Diffusion = buffactive.Diffusion or false
-        state.Buff.Efflux = buffactive.Efflux or false
-        
-        state.Buff['Unbridled Learning'] = buffactive['Unbridled Learning'] or false
+	state.Buff['Burst Affinity'] = buffactive['Burst Affinity'] or false
+	state.Buff['Chain Affinity'] = buffactive['Chain Affinity'] or false
+	state.Buff.Convergence = buffactive.Convergence or false
+	state.Buff.Diffusion = buffactive.Diffusion or false
+	state.Buff.Efflux = buffactive.Efflux or false
+	
+	state.Buff['Unbridled Learning'] = buffactive['Unbridled Learning'] or false
 
 
 	blue_magic_maps = {}
@@ -153,10 +153,10 @@ function job_setup()
 		'Diamondhide','Metallic Body',
 	}
 
-        -- Buff spells where Blue Magic Skill matters (need verification)
-        --['Metallic Body']='BuffSkill',['Diamondhide']='BuffSkill',['Reactor Cool']='BuffSkill',['Plasma Charge']='BuffSkill',
-        --['Magic Barrier']='BuffSkill',['Barrier Tusk']='BuffSkill',['Orcish Counterstance']='BuffSkill',['Pyric Bulwark']='BuffSkill',
-        --['Nature\'s Meditation']='BuffSkill',['Carcharian Verve']='BuffSkill',
+		-- Buff spells where Blue Magic Skill matters (need verification)
+		--['Metallic Body']='BuffSkill',['Diamondhide']='BuffSkill',['Reactor Cool']='BuffSkill',['Plasma Charge']='BuffSkill',
+		--['Magic Barrier']='BuffSkill',['Barrier Tusk']='BuffSkill',['Orcish Counterstance']='BuffSkill',['Pyric Bulwark']='BuffSkill',
+		--['Nature\'s Meditation']='BuffSkill',['Carcharian Verve']='BuffSkill',
 
 	-- Other general buffs
 	blue_magic_maps.Buff = S{
@@ -169,7 +169,7 @@ function job_setup()
 	
 	
 	-- Spells that require Unbridled Learning to cast.
-        unbridled_spells = S{
+		unbridled_spells = S{
 		'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
 		'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
 		'Tourbillion'
@@ -191,7 +191,7 @@ function user_setup()
 
 	state.Defense.PhysicalMode = 'PDT'
 
-    gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
+	gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
 
 	-- Additional local binds
 	send_command('bind ^` input /ja "Chain Affinity" <me>')
@@ -248,7 +248,7 @@ function init_gear_sets()
 		
 	sets.precast.FC['Blue Magic'] = set_combine(sets.precast.FC, {body="Mavi Mintan +2"})
 
-       
+	   
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
@@ -498,6 +498,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.cancel = true
 		windower.send_command('@input /ja "Unbridled Learning" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
 	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -528,10 +532,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.english] ~= nil then
-			state.Buff[spell.english] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 

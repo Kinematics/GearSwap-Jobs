@@ -352,6 +352,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'Waltz' and not eventArgs.cancel then
 		refine_waltz(spell, action, spellMap, eventArgs)
 	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 
@@ -370,10 +374,10 @@ end
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	end
 	if not spell.interrupted then
-		if state.Buff[spell.english] ~= nil then
-			state.Buff[spell.english] = true
-		end
 		if spell.english == "Wild Flourish" then
 			skillchainPending = true
 			send_command('wait 5;gs c clear skillchainPending')

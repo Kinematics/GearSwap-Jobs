@@ -302,6 +302,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 			classes.CustomClass = 'TH'
 		end
 	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 
@@ -321,19 +325,19 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	end
+
 	-- Update the state of certain buff JAs if the action wasn't interrupted.
 	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		end
-		
 		-- Don't let aftercast revert gear set for SA/TA/Feint
 		if S{'Sneak Attack', 'Trick Attack', 'Feint'}:contains(spell.english) then
 			eventArgs.handled = true
 		end
 		
 		-- If this wasn't an action that would have used up SATA/Feint, make sure to put gear back on.
-		if spell.type:lower() ~= 'weaponskill' and spell.type:lower() ~= 'step' then
+		if spell.type ~= 'WeaponSkill' and spell.type ~= 'Step' then
 			-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
 			if state.Buff['Sneak Attack'] then
 				equip(sets.precast.JA['Sneak Attack'])
