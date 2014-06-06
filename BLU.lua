@@ -13,13 +13,13 @@ end
 
 -- Setup vars that are user-independent.
 function job_setup()
-        state.Buff['Burst Affinity'] = buffactive['Burst Affinity'] or false
-        state.Buff['Chain Affinity'] = buffactive['Chain Affinity'] or false
-        state.Buff.Convergence = buffactive.Convergence or false
-        state.Buff.Diffusion = buffactive.Diffusion or false
-        state.Buff.Efflux = buffactive.Efflux or false
-        
-        state.Buff['Unbridled Learning'] = buffactive['Unbridled Learning'] or false
+	state.Buff['Burst Affinity'] = buffactive['Burst Affinity'] or false
+	state.Buff['Chain Affinity'] = buffactive['Chain Affinity'] or false
+	state.Buff.Convergence = buffactive.Convergence or false
+	state.Buff.Diffusion = buffactive.Diffusion or false
+	state.Buff.Efflux = buffactive.Efflux or false
+	
+	state.Buff['Unbridled Learning'] = buffactive['Unbridled Learning'] or false
 
 
 	blue_magic_maps = {}
@@ -153,10 +153,10 @@ function job_setup()
 		'Diamondhide','Metallic Body',
 	}
 
-        -- Buff spells where Blue Magic Skill matters (need verification)
-        --['Metallic Body']='BuffSkill',['Diamondhide']='BuffSkill',['Reactor Cool']='BuffSkill',['Plasma Charge']='BuffSkill',
-        --['Magic Barrier']='BuffSkill',['Barrier Tusk']='BuffSkill',['Orcish Counterstance']='BuffSkill',['Pyric Bulwark']='BuffSkill',
-        --['Nature\'s Meditation']='BuffSkill',['Carcharian Verve']='BuffSkill',
+		-- Buff spells where Blue Magic Skill matters (need verification)
+		--['Metallic Body']='BuffSkill',['Diamondhide']='BuffSkill',['Reactor Cool']='BuffSkill',['Plasma Charge']='BuffSkill',
+		--['Magic Barrier']='BuffSkill',['Barrier Tusk']='BuffSkill',['Orcish Counterstance']='BuffSkill',['Pyric Bulwark']='BuffSkill',
+		--['Nature\'s Meditation']='BuffSkill',['Carcharian Verve']='BuffSkill',
 
 	-- Other general buffs
 	blue_magic_maps.Buff = S{
@@ -169,7 +169,7 @@ function job_setup()
 	
 	
 	-- Spells that require Unbridled Learning to cast.
-        unbridled_spells = S{
+		unbridled_spells = S{
 		'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
 		'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
 		'Tourbillion'
@@ -184,12 +184,14 @@ function user_setup()
 	options.DefenseModes = {'Normal'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
 	options.CastingModes = {'Normal', 'Resistant'}
-	options.IdleModes = {'Normal', 'Learning'}
+	options.IdleModes = {'Normal', 'PDT', 'Learning'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'PDT'}
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+
+	gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
 
 	-- Additional local binds
 	send_command('bind ^` input /ja "Chain Affinity" <me>')
@@ -215,8 +217,8 @@ function init_gear_sets()
 	--------------------------------------
 
 	sets.buff['Burst Affinity'] = {feet="Mavi Basmak +2"}
-	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2"} --, feet="Assimilator's Charuqs"}
-	sets.buff.Convergence = {head="Mirage Keffiyeh +2"}
+	sets.buff['Chain Affinity'] = {head="Mavi Kavuk +2", feet="Assimilator's Charuqs"}
+	sets.buff.Convergence = {head="Luhlaza Keffiyeh"}
 	sets.buff.Diffusion = {feet="Luhlaza Charuqs"}
 	sets.buff.Enchainment = {body="Luhlaza Jubbah"}
 	sets.buff.Efflux = {legs="Mavi Tayt +2"}
@@ -246,7 +248,7 @@ function init_gear_sets()
 		
 	sets.precast.FC['Blue Magic'] = set_combine(sets.precast.FC, {body="Mavi Mintan +2"})
 
-       
+	   
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {
@@ -260,8 +262,8 @@ function init_gear_sets()
 	sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",feet="Luhlaza Charuqs"})
 
 	sets.precast.WS['Sanguine Blade'] = {
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Demon's Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Acumen Ring",ring2="Strendu Ring",
 		back="Toro Cape",legs="Hagondes Pants",feet="Iuitl Gaiters +1"}
 	
 	
@@ -306,12 +308,12 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.midcast['Blue Magic'].PhysicalInt = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Psystorm Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Icesoul Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].PhysicalMnd = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Aquasoul Ring",
 		back="Pahtli Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 
@@ -328,8 +330,8 @@ function init_gear_sets()
 	-- Magical Spells --
 	
 	sets.midcast['Blue Magic'].Magical = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].Magical.Resistant = set_combine(sets.midcast['Blue Magic'].Magical,
@@ -337,34 +339,34 @@ function init_gear_sets()
 		legs="Iuitl Tights",feet="Mavi Basmak +2"})
 	
 	sets.midcast['Blue Magic'].MagicalMnd = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalChr = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalVit = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicalDex = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
-		body="Vanir Cotehardie",ring2="Sangoma Ring",
+		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		body="Vanir Cotehardie",hands=gear.macc_hagondes,ring2="Sangoma Ring",
 		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
 
 	-- Breath Spells --
 	
 	sets.midcast['Blue Magic'].Breath = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
+		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="K'ayres Ring",ring2="Beeline Ring",
 		back="Refraction Cape",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 
@@ -384,8 +386,8 @@ function init_gear_sets()
 		back="Pahtli Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
-		head="Mirage Keffiyeh +2",
-		body="Magus Jubbah",
+		head="Luhlaza Keffiyeh",
+		body="Magus Jubbah +1",
 		legs="Mavi Tayt +2"}
 
 	sets.midcast['Blue Magic'].Buff = {}
@@ -395,9 +397,9 @@ function init_gear_sets()
 	-- Sets to return to when not performing an action.
 
 	-- Gear for learning spells: +skill and AF hands.
-	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1",feet="Luhlaza Charuqs"}
-		--head="Mirage Keffiyeh +2",	
-		--body="Magus Jubbah",hands="Assimilator's Bazubands +1",
+	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1"}
+		--head="Luhlaza Keffiyeh",	
+		--body="Magus Jubbah +1",hands="Assimilator's Bazubands +1",
 		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 
@@ -415,8 +417,6 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Serpentes Sabots"}
 
-	sets.idle.Learning = set_combine(sets.idle, sets.Learning)
-
 	sets.idle.PDT = {ammo="Impatiens",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
@@ -424,8 +424,11 @@ function init_gear_sets()
 
 	sets.idle.Town = {main="Buramenk'ah",ammo="Impatiens",
 		head="Mavi Kavuk +2",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Luhlaza Jubbah",hands="Mavi Bazubands +2",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Luhlaza Jubbah",hands="Assimilator's Bazubands +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Luhlaza Charuqs"}
+
+	sets.idle.Learning = set_combine(sets.idle, sets.Learning)
+
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
@@ -495,6 +498,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 		eventArgs.cancel = true
 		windower.send_command('@input /ja "Unbridled Learning" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
 	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -525,10 +532,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.english] ~= nil then
-			state.Buff[spell.english] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 

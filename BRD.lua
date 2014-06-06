@@ -279,6 +279,8 @@ function init_gear_sets()
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
 
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
 	-- Engaged sets
 
 	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
@@ -313,6 +315,10 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
+
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
 		if spell.target.type == 'PLAYER' and not spell.target.charmed and not state.Buff['Pianissimo'] then
@@ -356,17 +362,13 @@ end
 
 -- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	end
 
-		if spell.type == 'BardSong' then
-			if spell.target then
-				if spell.target.type and spell.target.type:upper() == 'SELF' then
-					adjust_timers(spell, action, spellMap)
-				end
-			end
+	if spell.type == 'BardSong' and not spell.interrupted then
+		if spell.target and spell.target.type and spell.target.type == 'SELF' then
+			adjust_timers(spell, spellMap)
 		end
 	end
 end
@@ -379,6 +381,15 @@ function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
 	end
+end
+
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -483,7 +494,7 @@ end
 -- Function to create custom buff-remaining timers with the Timers plugin,
 -- keeping only the actual valid songs rather than spamming the default
 -- buff remaining timers.
-function adjust_timers(spell, action, spellMap)
+function adjust_timers(spell, spellMap)
 	local current_time = os.time()
 	
 	-- custom_timers contains a table of song names, with the os time when they

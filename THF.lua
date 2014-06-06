@@ -177,7 +177,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Pillager's Vest +1",hands="Plunderer's Armlets +1",ring1="Rajas Ring",ring2="Demon's Ring",
+		body="Pillager's Vest +1",hands="Plunderer's Armlets +1",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Chaac Belt",legs="Iuitl Tights",feet="Raider's Poulaines +2"}
 	
 	
@@ -302,6 +302,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 			classes.CustomClass = 'TH'
 		end
 	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 
@@ -321,19 +325,19 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	end
+
 	-- Update the state of certain buff JAs if the action wasn't interrupted.
 	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		end
-		
 		-- Don't let aftercast revert gear set for SA/TA/Feint
 		if S{'Sneak Attack', 'Trick Attack', 'Feint'}:contains(spell.english) then
 			eventArgs.handled = true
 		end
 		
 		-- If this wasn't an action that would have used up SATA/Feint, make sure to put gear back on.
-		if spell.type:lower() ~= 'weaponskill' and spell.type:lower() ~= 'step' then
+		if spell.type ~= 'WeaponSkill' and spell.type ~= 'Step' then
 			-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
 			if state.Buff['Sneak Attack'] then
 				equip(sets.precast.JA['Sneak Attack'])
@@ -437,28 +441,6 @@ function job_buff_change(buff, gain)
 		if not satafeint_active() then
 			handle_equipping_gear(player.status)
 		end
-	end
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- Hooks for TH mode handling.
--------------------------------------------------------------------------------------------------------------------
-
--- Request job-specific mode tables.
--- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_option_modes(field)
-	if field == 'Treasure' then
-		return options.TreasureModes, state.TreasureMode
-	end
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_option_mode(field, val)
-	if field == 'Treasure' then
-		state.TreasureMode = val
-		return true
 	end
 end
 

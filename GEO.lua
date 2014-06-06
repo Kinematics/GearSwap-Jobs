@@ -139,6 +139,8 @@ function init_gear_sets()
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
 	-- Engaged sets
 
 	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous

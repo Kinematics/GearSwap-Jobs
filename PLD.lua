@@ -71,11 +71,12 @@ function init_gear_sets()
     sets.precast.JA['Rampart'] = {head="Valor Coronet"}
     --sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
     --sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
+    sets.precast.JA['Cover'] = {head="Reverence Coronet +1"}
 
     -- add mnd for Chivalry
     sets.precast.JA['Chivalry'] = {
         head="Yaoyotl Helm",
-        body="Reverence Surcoat +1",hands="Buremte Gloves",
+        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="Aquasoul Ring",
         legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
     
 
@@ -113,7 +114,7 @@ function init_gear_sets()
     sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",ring2="Aquasoul Ring"})
 
     sets.precast.WS['Sanguine Blade'] = {
-        head="Yaoyotl Helm",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+        head="Yaoyotl Helm",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
         body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Toro Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
     
@@ -159,7 +160,7 @@ function init_gear_sets()
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
 
-    sets.idle.Town = {main="Anahera Sword", sub="Killedar Shield",ammo="Incantor Stone",
+    sets.idle.Town = {main="Anahera Sword",ammo="Incantor Stone",
         head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
         back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
@@ -232,6 +233,8 @@ function init_gear_sets()
     
     sets.Kiting = {legs="Crimson Cuisses"}
 
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
     -- Engaged sets
 
     -- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
@@ -245,10 +248,25 @@ function init_gear_sets()
         body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
+    sets.engaged.Acc = {
+        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+        body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
     sets.engaged.Shield = {
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Boxer's Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+
+    sets.engaged.DW = {
+        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
+    sets.engaged.DW.Acc = {
+        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+        body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
 
     sets.buff.Cover = {head="Reverence Coronet +1", body="Valor Surcoat +2"}
@@ -266,6 +284,10 @@ function job_precast(spell, action, spellMap, eventArgs)
     if spell.type == 'WeaponSkill' and state.Defense.Active then
         eventArgs.handled = true
     end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 -- Run after the default precast() is done.
@@ -287,7 +309,9 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -296,7 +320,11 @@ end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
-    return idleSet
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
 end
 
 -- Modify the default melee set after it was constructed.
@@ -321,7 +349,9 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
 end
 
 
@@ -348,6 +378,15 @@ end
 function update_defense_mode()
     if player.equipment.main == 'Kheshig Blade' and not classes.CustomDefenseGroups:contains('Kheshig Blade') then
         classes.CustomDefenseGroups:append('Kheshig Blade')
+    end
+    
+    if player.sub_job == 'NIN' or player.sub_job == 'DNC' then
+        if player.equipment.sub and not player.equipment.sub:endswith('Shield') and
+           player.equipment.sub ~= 'Aegis' and player.equipment.sub ~= 'Ochain' then
+            state.CombatForm = 'DW'
+        else
+            state.CombatForm = nil
+        end
     end
 end
 

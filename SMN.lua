@@ -210,7 +210,7 @@ function init_gear_sets()
 
 	sets.midcast['Elemental Magic'] = {main="Lehbrailg +2",sub="Wizzan Grip",
 		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Dark Magic'] = {main="Lehbrailg +2",sub="Wizzan Grip",
@@ -342,7 +342,7 @@ function init_gear_sets()
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 	
-	sets.refresh_waist = {waist="Fucho-no-obi"}
+	sets.latent_refresh = {waist="Fucho-no-obi"}
 
 	-- Engaged sets
 
@@ -363,19 +363,24 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
+end
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
 		equip(sets.midcast.FastRecast)
 	end
 end
 
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 
@@ -415,7 +420,7 @@ function customize_idle_set(idleSet)
 	end
 	
 	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.refresh_waist)
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
 	end
 	
 	return idleSet

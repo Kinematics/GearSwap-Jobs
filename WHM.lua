@@ -12,7 +12,8 @@ end
 
 -- Setup vars that are user-independent.
 function job_setup()
-	state.Buff['Afflatus Solace'] = buffactive['afflatus solace'] or false
+	state.Buff['Afflatus Solace'] = buffactive['Afflatus Solace'] or false
+	state.Buff['Afflatus Misery'] = buffactive['Afflatus Misery'] or false
 end
 
 
@@ -262,6 +263,10 @@ function job_precast(spell, action, spellMap, eventArgs)
 	else
 		gear.default.obi_back = "Toro Cape"
 	end
+
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
 end
 
 
@@ -285,12 +290,8 @@ end
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.name] ~= nil then
-			state.Buff[spell.name] = true
-		elseif spell.name == "Afflatus Misery" then
-			state.Buff['Afflatus Solace'] = false
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 

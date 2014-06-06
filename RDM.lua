@@ -90,8 +90,8 @@ function init_gear_sets()
 		ring1="Aquasoul Ring",ring2="Aquasoul Ring",waist="Soil Belt"})
 
 	sets.precast.WS['Sanguine Blade'] = {ammo="Witchstone",
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Strendu Ring",ring2="Acumen Ring",
 		back="Toro Cape",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	
@@ -128,8 +128,8 @@ function init_gear_sets()
 	sets.midcast['Slow II'] = set_combine(sets.midcast['Enfeebling Magic'], {head="Vitivation Chapeau"})
 	
 	sets.midcast['Elemental Magic'] = {
-		head="Hagondes Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Strendu Ring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 		
 	gear.default.obi_waist = "Sekhmet Corset"
@@ -143,9 +143,9 @@ function init_gear_sets()
 
 	--sets.midcast.Stun = set_combine(sets.midcast['Dark Magic'], {})
 
-	--sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring2="Excelsis Ring"})
+	sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring1="Excelsis Ring", waist="Fucho-no-Obi"})
 
-	--sets.midcast.Aspir = sets.midcast.Drain
+	sets.midcast.Aspir = sets.midcast.Drain
 
 
 	-- Sets for special buff conditions on spells.
@@ -197,6 +197,8 @@ function init_gear_sets()
 
 	sets.Kiting = {legs="Crimson Cuisses"}
 
+	sets.latent_refresh = {waist="Fucho-no-obi"}
+
 	-- Engaged sets
 
 	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
@@ -215,6 +217,14 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = true
+	end
+end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
@@ -240,10 +250,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if not spell.interrupted then
-		if state.Buff[spell.english] ~= nil then
-			state.Buff[spell.english] = true
-		end
+	if state.Buff[spell.english] ~= nil then
+		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 end
 
@@ -251,6 +259,14 @@ end
 -- Customization hooks for idle and melee sets, after they've been automatically constructed.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
+end
 
 -------------------------------------------------------------------------------------------------------------------
 -- General hooks for other events.
