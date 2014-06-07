@@ -78,7 +78,6 @@ function init_gear_sets()
 		body="Anchorite's Cyclas",hands="Hesychast's Gloves +1",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Qaaxo Tights",feet="Thurandaut Boots +1"}
 
-	
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Felistris Mask",
@@ -87,6 +86,9 @@ function init_gear_sets()
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
+
+	sets.precast.Step = {waist="Chaac Belt"}
+
 
 	-- Fast cast sets for spells
 	
