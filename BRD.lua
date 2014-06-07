@@ -504,11 +504,11 @@ function adjust_timers(spell, spellMap)
 	local temp_timer_list = {}
 	for song_name,expires in pairs(custom_timers) do
 		if expires < current_time then
-			temp_timer_list[i] = true
+			temp_timer_list[song_name] = true
 		end
 	end
 	for song_name,expires in pairs(temp_timer_list) do
-		custom_timers[i] = nil
+		custom_timers[song_name] = nil
 	end
 	
 	local dur = calculate_duration(spell.name, spellMap)
