@@ -87,7 +87,7 @@ function init_gear_sets()
 	
 	sets.precast.JA['Repair'] = {feet="Foire Babouches"}
 
-	sets.precast.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Foire Dastanas"}
+	sets.precast.JA.Maneuver = {neck="Buffoon's Collar",body="Cirque Farsetto +2",hands="Foire Dastanas"}
 
 
 
@@ -130,7 +130,9 @@ function init_gear_sets()
 	-- Midcast sets for pet actions
 	sets.midcast.Pet.Cure = {legs="Foire Churidars"}
 
-	sets.midcast.Pet.Weaponskill = {head="Cirque Cappello +2", hands="Cirque Guanti +2", legs="Cirque Pantaloni +2"}
+	sets.midcast.Pet['Elemental Magic'] = {feet="Pitre Babouches"}
+
+	sets.midcast.Pet.WeaponSkill = {head="Cirque Cappello +2", hands="Cirque Guanti +2", legs="Cirque Pantaloni +2"}
 
 	
 	-- Sets to return to when not performing an action.
