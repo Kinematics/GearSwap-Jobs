@@ -365,7 +365,7 @@ function init_gear_sets()
 
 	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
 		head="Luhlaza Keffiyeh",
-		body="Magus Jubbah +1",
+		body="Assimilator's Jubbah",
 		legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 	sets.midcast['Blue Magic'].Buff = {}
@@ -377,7 +377,7 @@ function init_gear_sets()
 	-- Gear for learning spells: +skill and AF hands.
 	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1"}
 		--head="Luhlaza Keffiyeh",	
-		--body="Magus Jubbah +1",hands="Assimilator's Bazubands +1",
+		--body="Assimilator's Jubbah",hands="Assimilator's Bazubands +1",
 		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 

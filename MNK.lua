@@ -151,17 +151,17 @@ function init_gear_sets()
 	
 
 	-- Idle sets
-	sets.idle = {main="Oatixur",ammo="Thew Bomblet",
+	sets.idle = {ammo="Thew Bomblet",
 		head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 
-	sets.idle.Town = {main="Oatixur",ammo="Thew Bomblet",
+	sets.idle.Town = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 	
-	sets.idle.Weak = {main="Oatixur",ammo="Thew Bomblet",
+	sets.idle.Weak = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Brutal Earring",ear2="Bloodgem Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
