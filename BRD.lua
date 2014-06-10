@@ -80,6 +80,9 @@ function user_setup()
 	-- songs appears, and you haven't specifically changed state.DaurdablaMode.
 	state.AutoDaurdabla = false
 	
+	-- Set this to false if you don't want to use custom timers.
+	state.UseCustomTimers = true
+	
 	-- Additional local binds
 	send_command('bind ^` gs c cycle Daurdabla')
 	send_command('bind !` input /ma "Chocobo Mazurka" <me>')
@@ -486,6 +489,10 @@ end
 -- keeping only the actual valid songs rather than spamming the default
 -- buff remaining timers.
 function adjust_timers(spell, spellMap)
+	if not state.UseCustomTimers then
+		return
+	end
+	
 	local current_time = os.time()
 	
 	-- custom_timers contains a table of song names, with the os time when they
