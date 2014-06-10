@@ -262,7 +262,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 	
 	-- Don't gearswap for weaponskills when Defense is on.
-	if spell.type:lower() == 'weaponskill' and state.Defense.Active then
+	if spell.type == 'WeaponSkill' and state.Defense.Active then
 		eventArgs.handled = true
 	elseif spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
@@ -271,7 +271,7 @@ end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.type:lower() == 'weaponskill' and not state.Defense.Active then
+	if spell.type == 'WeaponSkill' and not state.Defense.Active then
 		if buffactive.impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
 			equip(sets.impetus_body)
 		elseif buffactive.footwork and (spell.english == "Dragon's Kick" or spell.english == "Tornado Kick") then
