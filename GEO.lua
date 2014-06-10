@@ -55,7 +55,7 @@ function init_gear_sets()
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Cure = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
@@ -82,13 +82,13 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Zelus Tiara",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Prolix Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Swith Cape +1",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 		
 	sets.midcast.Geomancy = {range="Matre Bell"}
 
 	sets.midcast.Cure = {
 		body="Heka's Kalasiris",hands="Bokwus Gloves",
-		back="Swith Cape",legs="Nares Trews",feet="Hagondes Sabots"}
+		back="Swith Cape +1",legs="Nares Trews",feet="Hagondes Sabots"}
 
 	sets.midcast.Protectra = {ring1="Sheltered Ring"}
 

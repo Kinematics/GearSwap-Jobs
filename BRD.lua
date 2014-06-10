@@ -114,7 +114,7 @@ function init_gear_sets()
 	-- Fast cast sets for spells
 	sets.precast.FC = {head="Nahtirah Hat",ear2="Loquac. Earring",
 		hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Cure = set_combine(sets.precast.FC, {body="Heka's Kalasiris"})
 
@@ -125,7 +125,7 @@ function init_gear_sets()
 	sets.precast.FC.BardSong = {main="Felibre's Dague",range="Gjallarhorn",
 		head="Aoidos' Calot +2",neck="Aoidos' Matinee",ear1="Aoidos' Earring",ear2="Loquac. Earring",
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Bihu Slippers"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Gendewitha Spats",feet="Bihu Slippers"}
 
 	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range=info.DaurdablaInstrument})
 		
@@ -164,7 +164,7 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {range="Angel Lyre",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Swith Cape +1",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 		
 	-- Gear to enhance certain classes of songs.  No instruments added here since Gjallarhorn is being used.
 	sets.midcast.Ballad = {legs="Aoidos' Rhing. +2"}
@@ -214,7 +214,7 @@ function init_gear_sets()
 	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range=info.DaurdablaInstrument,
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
+		back="Swith Cape +1",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
 
 	-- Other general spells and classes.
 	sets.midcast.Cure = {main="Arka IV",sub='Achaq Grip',

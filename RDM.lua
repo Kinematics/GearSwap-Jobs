@@ -73,7 +73,7 @@ function init_gear_sets()
 	sets.precast.FC = {ammo="Impatiens",
 		head="Atrophy Chapeau +1",ear2="Loquacious Earring",
 		body="Vitivation Tabard",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC.Impact = set_combine(sets.precast.FC, {head=empty,body="Twilight Cloak"})
        
@@ -100,12 +100,12 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Atrophy Chapeau +1",ear2="Loquacious Earring",
 		body="Vitivation Tabard",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {sub="Genbu's Shield",
 		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Roundel Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
 

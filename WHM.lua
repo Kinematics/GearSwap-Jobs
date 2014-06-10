@@ -57,7 +57,7 @@ function init_gear_sets()
 	sets.precast.FC = {main=gear.FastcastStaff,ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 		
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -102,7 +102,7 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Dynasty Mitts",ring1="Prolix Ring",
-		back="Swith Cape",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Swith Cape +1",waist="Goading Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	-- Cure sets
 	gear.default.obi_waist = "Goading Belt"
@@ -145,7 +145,7 @@ function init_gear_sets()
 	sets.midcast.Stoneskin = {
 		head="Nahtirah Hat",neck="Orison Locket",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Dynasty Mitts",
-		back="Swith Cape",waist="Siegel Sash",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
+		back="Swith Cape +1",waist="Siegel Sash",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	sets.midcast.Auspice = {hands="Dynasty Mitts",feet="Orison Duckbills +2"}
 

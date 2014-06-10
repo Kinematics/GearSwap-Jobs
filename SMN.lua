@@ -176,7 +176,7 @@ function init_gear_sets()
 	sets.precast.FC = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -199,12 +199,12 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Prolix Ring",ring2="Sirona's Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 

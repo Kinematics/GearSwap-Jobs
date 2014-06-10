@@ -75,7 +75,7 @@ function init_gear_sets()
     sets.precast.FC = {ammo="Impatiens",
         head="Nahtirah Hat",ear2="Loquacious Earring",
         body="Vanir Cotehardie",ring1="Prolix Ring",
-        back="Swith Cape",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
+        back="Swith Cape +1",waist="Witful Belt",legs="Orvail Pants +1",feet="Chelona Boots +1"}
 
     sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
@@ -104,7 +104,7 @@ function init_gear_sets()
     sets.midcast.FastRecast = {
         head="Nahtirah Hat",ear2="Loquacious Earring",
         body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",
-        back="Swith Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+        back="Swith Cape +1",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
     sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
         head="Nahtirah Hat",neck="Colossus's Torque",ear2="Loquacious Earring",
@@ -170,7 +170,7 @@ function init_gear_sets()
     sets.midcast['Elemental Magic'].Proc = {main="Earth Staff", sub="Mephitis Grip",ammo="Impatiens",
         head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
         body="Manasa Chasuble",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-        back="Swith Cape",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
+        back="Swith Cape +1",waist="Witful Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 
 
     
