@@ -152,7 +152,7 @@ function init_gear_sets()
 
 	-- Idle sets
 	sets.idle = {ammo="Thew Bomblet",
-		head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 
@@ -162,7 +162,7 @@ function init_gear_sets()
 		back="Atheling Mantle",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 	
 	sets.idle.Weak = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Brutal Earring",ear2="Bloodgem Earring",
+		head="Felistris Mask",neck="Wiglen Gorget",ear1="Brutal Earring",ear2="Bloodgem Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 	
@@ -183,6 +183,8 @@ function init_gear_sets()
 		back="Engulfer Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Daihanshi Habaki"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
+
+	sets.ExtraRegen = {head="Ocelomeh Headpiece +1"}
 
 	-- Engaged sets
 
@@ -312,6 +314,15 @@ function job_buff_change(buff, gain)
 	if buff == "Hundred Fists" or buff == "Impetus" or buff == "Footwork" then
 		handle_equipping_gear(player.status)
 	end
+end
+
+
+function customize_idle_set(idleSet)
+	if player.hpp < 75 then
+		idleSet = set_combine(idleSet, sets.ExtraRegen)
+	end
+	
+	return idleSet
 end
 
 
