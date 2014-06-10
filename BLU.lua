@@ -287,81 +287,59 @@ function init_gear_sets()
 		body="Luhlaza Jubbah",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Patricius Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
 
-	sets.midcast['Blue Magic'].PhysicalStr = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
-		back="Letalis Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+	sets.midcast['Blue Magic'].PhysicalStr = set_combine(sets.midcast['Blue Magic'].Physical,
+		{body="Iuitl Vest",hands="Assimilator's Bazubands +1"})
 
-	sets.midcast['Blue Magic'].PhysicalDex = {ammo="Jukukik Feather",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Iuitl Vest",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
-		back="Letalis Mantle",waist="Chaac Belt",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+	sets.midcast['Blue Magic'].PhysicalDex = set_combine(sets.midcast['Blue Magic'].Physical,
+		{ammo="Jukukik Feather",body="Iuitl Vest",hands="Assimilator's Bazubands +1",
+		 waist="Chaac Belt",legs="Manibozho Brais"})
 
-	sets.midcast['Blue Magic'].PhysicalVit = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
-		back="Iximulew Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+	sets.midcast['Blue Magic'].PhysicalVit = set_combine(sets.midcast['Blue Magic'].Physical,
+		{body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",back="Iximulew Cape"})
 
-	sets.midcast['Blue Magic'].PhysicalAgi = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Vanir Cotehardie",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Stormsoul Ring",
-		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
+	sets.midcast['Blue Magic'].PhysicalAgi = set_combine(sets.midcast['Blue Magic'].Physical,
+		{body="Vanir Cotehardie",hands="Iuitl Wristbands",ring2="Stormsoul Ring",
+		 waist="Chaac Belt",feet="Iuitl Gaiters +1"})
 
-	sets.midcast['Blue Magic'].PhysicalInt = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Psystorm Earring",ear2="Steelflash Earring",
-		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Icesoul Ring",
-		back="Toro Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Hagondes Sabots"}
+	sets.midcast['Blue Magic'].PhysicalInt = set_combine(sets.midcast['Blue Magic'].Physical,
+		{ear1="Psystorm Earring",body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",
+		 ring2="Icesoul Ring",back="Toro Cape",feet="Hagondes Sabots"})
 
-	sets.midcast['Blue Magic'].PhysicalMnd = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Steelflash Earring",
-		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Aquasoul Ring",
-		back="Pahtli Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+	sets.midcast['Blue Magic'].PhysicalMnd = set_combine(sets.midcast['Blue Magic'].Physical,
+		{ear1="Lifestorm Earring",body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",
+		 ring2="Aquasoul Ring",back="Refraction Cape"})
 
-	sets.midcast['Blue Magic'].PhysicalChr = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
-		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+	sets.midcast['Blue Magic'].PhysicalChr = set_combine(sets.midcast['Blue Magic'].Physical,
+		{body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",back="Refraction Cape",
+		 waist="Chaac Belt"})
 
-	sets.midcast['Blue Magic'].PhysicalHP = {ammo="Mavi Tathlum",
-		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
-		body="Vanir Cotehardie",hands="Assimilator's Bazubands +1",ring1="Rajas Ring",ring2="Spiral Ring",
-		back="Letalis Mantle",waist="Chaac Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+	sets.midcast['Blue Magic'].PhysicalHP = set_combine(sets.midcast['Blue Magic'].Physical)
+
 
 	-- Magical Spells --
 	
-	sets.midcast['Blue Magic'].Magical = {ammo="Mavi Tathlum",
+	sets.midcast['Blue Magic'].Magical = {ammo="Dosis Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].Magical.Resistant = set_combine(sets.midcast['Blue Magic'].Magical,
-		{body="Vanir Cotehardie",ring1="Sangoma Ring",
-		legs="Iuitl Tights",feet="Mavi Basmak +2"})
+		{body="Vanir Cotehardie",ring1="Sangoma Ring",legs="Iuitl Tights",feet="Mavi Basmak +2"})
 	
-	sets.midcast['Blue Magic'].MagicalMnd = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
-		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+	sets.midcast['Blue Magic'].MagicalMnd = set_combine(sets.midcast['Blue Magic'].Magical,
+		{ring1="Aquasoul Ring"})
 
-	sets.midcast['Blue Magic'].MagicalChr = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
-		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+	sets.midcast['Blue Magic'].MagicalChr = set_combine(sets.midcast['Blue Magic'].Magical)
 
-	sets.midcast['Blue Magic'].MagicalVit = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
-		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+	sets.midcast['Blue Magic'].MagicalVit = set_combine(sets.midcast['Blue Magic'].Magical,
+		{ring1="Spiral Ring"})
 
-	sets.midcast['Blue Magic'].MagicalDex = {ammo="Mavi Tathlum",
-		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
-		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+	sets.midcast['Blue Magic'].MagicalDex = set_combine(sets.midcast['Blue Magic'].Magical)
 
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
 		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands=gear.macc_hagondes,ring2="Sangoma Ring",
-		back="Mirage Mantle",feet="Iuitl Gaiters +1"}
+		back="Mirage Mantle",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 	-- Breath Spells --
 	
@@ -372,8 +350,8 @@ function init_gear_sets()
 
 	-- Other Types --
 	
-	sets.midcast['Blue Magic'].Stun = {ammo="Mavi Tathlum",
-		back="Mirage Mantle",waist="Chaac Belt"}
+	sets.midcast['Blue Magic'].Stun = set_combine(sets.midcast['Blue Magic'].MagicAccuracy,
+		{waist="Chaac Belt"})
 		
 	sets.midcast['Blue Magic']['White Wind'] = {
 		head="Whirlpool Mask",neck="Lavalier +1",ear1="Bloodgem Earring",ear2="Loquacious Earring",
@@ -387,8 +365,8 @@ function init_gear_sets()
 
 	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
 		head="Luhlaza Keffiyeh",
-		body="Magus Jubbah +1",
-		legs="Mavi Tayt +2"}
+		body="Assimilator's Jubbah",
+		legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 	sets.midcast['Blue Magic'].Buff = {}
 
@@ -399,7 +377,7 @@ function init_gear_sets()
 	-- Gear for learning spells: +skill and AF hands.
 	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1"}
 		--head="Luhlaza Keffiyeh",	
-		--body="Magus Jubbah +1",hands="Assimilator's Bazubands +1",
+		--body="Assimilator's Jubbah",hands="Assimilator's Bazubands +1",
 		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 

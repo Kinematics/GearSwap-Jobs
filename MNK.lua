@@ -78,7 +78,6 @@ function init_gear_sets()
 		body="Anchorite's Cyclas",hands="Hesychast's Gloves +1",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Qaaxo Tights",feet="Thurandaut Boots +1"}
 
-	
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Felistris Mask",
@@ -87,6 +86,9 @@ function init_gear_sets()
 		
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
+
+	sets.precast.Step = {waist="Chaac Belt"}
+
 
 	-- Fast cast sets for spells
 	
@@ -149,18 +151,18 @@ function init_gear_sets()
 	
 
 	-- Idle sets
-	sets.idle = {main="Oatixur",ammo="Thew Bomblet",
-		head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+	sets.idle = {ammo="Thew Bomblet",
+		head="Felistris Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 
-	sets.idle.Town = {main="Oatixur",ammo="Thew Bomblet",
+	sets.idle.Town = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Atheling Mantle",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 	
-	sets.idle.Weak = {main="Oatixur",ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Brutal Earring",ear2="Bloodgem Earring",
+	sets.idle.Weak = {ammo="Thew Bomblet",
+		head="Felistris Mask",neck="Wiglen Gorget",ear1="Brutal Earring",ear2="Bloodgem Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Meridian Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 	
@@ -181,6 +183,8 @@ function init_gear_sets()
 		back="Engulfer Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Daihanshi Habaki"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
+
+	sets.ExtraRegen = {head="Ocelomeh Headpiece +1"}
 
 	-- Engaged sets
 
@@ -258,7 +262,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
 	
 	-- Don't gearswap for weaponskills when Defense is on.
-	if spell.type:lower() == 'weaponskill' and state.Defense.Active then
+	if spell.type == 'WeaponSkill' and state.Defense.Active then
 		eventArgs.handled = true
 	elseif spell.type == 'Waltz' then
 		refine_waltz(spell, action, spellMap, eventArgs)
@@ -267,7 +271,7 @@ end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.type:lower() == 'weaponskill' and not state.Defense.Active then
+	if spell.type == 'WeaponSkill' and not state.Defense.Active then
 		if buffactive.impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
 			equip(sets.impetus_body)
 		elseif buffactive.footwork and (spell.english == "Dragon's Kick" or spell.english == "Tornado Kick") then
@@ -310,6 +314,15 @@ function job_buff_change(buff, gain)
 	if buff == "Hundred Fists" or buff == "Impetus" or buff == "Footwork" then
 		handle_equipping_gear(player.status)
 	end
+end
+
+
+function customize_idle_set(idleSet)
+	if player.hpp < 75 then
+		idleSet = set_combine(idleSet, sets.ExtraRegen)
+	end
+	
+	return idleSet
 end
 
 

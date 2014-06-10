@@ -411,6 +411,10 @@ function customize_idle_set(idleSet)
 		if sets.perp[pet.name] then
 			idleSet = set_combine(idleSet, sets.perp[pet.name])
 		end
+		local perp_staff = elements.perpetuance_staff_of[pet.element]
+		if perp_staff and (player.inventory[perp_staff] or player.wardrobe[perp_staff]) then
+			idleSet = set_combine(idleSet, {main=perp_staff,sub="Achaq Grip"})
+		end
 		if state.Buff["Avatar's Favor"] and avatars:contains(pet.name) then
 			idleSet = set_combine(idleSet, sets.idle.Avatar.Favor)
 		end
