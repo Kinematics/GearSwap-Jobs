@@ -411,12 +411,12 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Dark Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bloodgem Earring",
-		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Dark Ring",
+		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}

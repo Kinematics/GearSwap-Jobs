@@ -273,7 +273,7 @@ function init_gear_sets()
 
 	sets.idle.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Sangoma Ring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Fucho-no-Obi",legs="Hagondes Pants",feet="Herald's Gaiters"}
 
 	-- perp costs:
@@ -332,12 +332,12 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {main=gear.Staff.PDT,
 		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Umbra Cape",waist="Fucho-no-Obi",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.defense.MDT = {
 		head="Hagondes Hat",neck="Twilight Torque",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Umbra Cape",waist="Fucho-no-Obi",legs="Bokwus Slops",feet="Hagondes Sabots"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}

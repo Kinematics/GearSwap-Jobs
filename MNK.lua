@@ -21,7 +21,7 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Mod'}
+	options.OffenseModes = {'Normal', 'SomeAcc', 'Acc', 'Mod'}
 	options.DefenseModes = {'Normal', 'PDT', 'Counter'}
 	options.WeaponskillModes = {'Normal', 'Acc', 'Mod'}
 	options.IdleModes = {'Normal'}
@@ -169,7 +169,7 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Dark Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Black Belt",legs="Qaaxo Tights",feet="Otronif Boots +1"}
 
 	sets.defense.HP = {ammo="Iron Gobbet",
@@ -179,7 +179,7 @@ function init_gear_sets()
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Haruspex hat",neck="Twilight Torque",
-		body="Otronif Harness +1",hands="Anchorite's Gloves +1",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Otronif Harness +1",hands="Anchorite's Gloves +1",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Daihanshi Habaki"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}
@@ -198,6 +198,10 @@ function init_gear_sets()
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Hesychast's Gloves +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs="Hesychast's Hose +1",feet="Anchorite's Gaiters +1"}
+	sets.engaged.SomeAcc = {ammo="Honed Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Qaaxo Harness",hands="Hesychast's Gloves +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Anguinus Belt",legs="Hesychast's Hose +1",feet="Anchorite's Gaiters +1"}
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Hesychast's Gloves +1",ring1="Patricius Ring",ring2="Epona's Ring",
@@ -212,6 +216,10 @@ function init_gear_sets()
 		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Hesychast's Hose +1",feet="Otronif Boots +1"}
+	sets.engaged.SomeAcc.PDT = {ammo="Honed Tathlum",
+		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Qaaxo Harness",hands="Hesychast's Gloves +1",ring1="Patricius Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Anguinus Belt",legs="Hesychast's Hose +1",feet="Anchorite's Gaiters +1"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Patricius Ring",ring2="Epona's Ring",

@@ -239,17 +239,17 @@ function init_gear_sets()
 
 	sets.defense.Evasion = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",
-		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Dark Ring",
+		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Beeline Ring",
 		back="Fravashi Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Pillager's Bonnet +1",neck="Twilight Torque",
-		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Dark Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Iximulew Cape",waist="Flume Belt",legs="Pillager's Culottes +1",feet="Iuitl Gaiters +1"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Pillager's Bonnet +1",neck="Twilight Torque",
-		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Pillager's Culottes +1",feet="Iuitl Gaiters +1"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
@@ -280,11 +280,11 @@ function init_gear_sets()
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Qaaxo Leggings"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Patentia Sash",legs="Iuitl Tights",feet="Qaaxo Leggings"}
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Qaaxo Leggings"}
 
 end

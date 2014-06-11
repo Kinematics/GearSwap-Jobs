@@ -68,9 +68,6 @@ function user_setup()
 
 	state.Defense.PhysicalMode = 'Evasion'
 
-	physical_dark_ring = {name="Dark Ring", augments={'Magic dmg. taken -3%','Spell interruption rate down -5%','Phys. dmg. taken -6%'}}
-	magical_dark_ring = {name="Dark Ring", augments={'Magic dmg. taken -6%','Breath dmg. taken -5%'}}
-
 	-- Additional local binds
 	send_command('bind ^= gs c cycle mainstep')
 	send_command('bind != gs c cycle altstep')
@@ -230,17 +227,17 @@ function init_gear_sets()
 
 	sets.defense.Evasion = {
 		head="Felistris Mask",neck="Ej Necklace",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2=physical_dark_ring,
+		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2=gear.DarkRing.physical,
 		back="Fravashi Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Felistris Mask",neck="Twilight Torque",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2=physical_dark_ring,
+		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Wayfarer Circlet",neck="Twilight Torque",
-		body="Qaaxo Harness",hands="Wayfarer Cuffs",ring1=magical_dark_ring,ring2="Shadow Ring",
+		body="Qaaxo Harness",hands="Wayfarer Cuffs",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Wayfarer Slops",feet="Wayfarer Clogs"}
 
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}

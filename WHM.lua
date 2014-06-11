@@ -201,7 +201,7 @@ function init_gear_sets()
 
 	sets.idle.PDT = {main="Bolelabunga", sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Umbra Cape",waist="Witful Belt",legs="Gendewitha Spats",feet="Herald's Gaiters"}
 
 	sets.idle.Town = {main="Bolelabunga", sub="Genbu's Shield",ammo="Incantor Stone",
@@ -211,19 +211,19 @@ function init_gear_sets()
 	
 	sets.idle.Weak = {main="Bolelabunga",sub="Genbu's Shield",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Meridian Ring",
+		body="Gendewitha Bliaut",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Meridian Ring",
 		back="Umbra Cape",waist="Witful Belt",legs="Nares Trews",feet="Gendewitha Galoshes"}
 	
 	-- Defense sets
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Umbra Cape",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Achaq Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
-		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Tuilha Cape",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Herald's Gaiters"}

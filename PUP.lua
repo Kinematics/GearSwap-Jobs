@@ -171,17 +171,17 @@ function init_gear_sets()
 
 	sets.defense.Evasion = {
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Dark Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Beeline Ring",
 		back="Ik Cape",waist="Hurch'lan Sash",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
 
 	sets.defense.PDT = {
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Dark Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
 
 	sets.defense.MDT = {
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Tuilha Cape",waist="Hurch'lan Sash",legs="Nahtirah Trousers",feet="Otronif Boots +1"}
 
 	sets.Kiting = {feet="Hermes' Sandals"}
@@ -204,11 +204,11 @@ function init_gear_sets()
 		back="Pantin Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	sets.engaged.DT = {
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness +1",hands="Regimen Mittens",ring1="Dark Ring",ring2="Epona's Ring",
+		body="Otronif Harness +1",hands="Regimen Mittens",ring1="Defending Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	sets.engaged.Acc.DT = {
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Otronif Harness +1",hands="Regimen Mittens",ring1="Dark Ring",ring2="Beeline Ring",
+		body="Otronif Harness +1",hands="Regimen Mittens",ring1="Defending Ring",ring2="Beeline Ring",
 		back="Iximulew Cape",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots +1"}
 end
 

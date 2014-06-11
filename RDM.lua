@@ -187,12 +187,12 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {
 		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Dark Ring",
+		body="Hagondes Coat",hands="Gendewitha Gages",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Flume Belt",legs="Hagondes Pants",feet="Gendewitha Galoshes"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Atrophy Chapeau +1",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Dark Ring",ring2="Shadow Ring",
+		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Bokwus Slops",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}

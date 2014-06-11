@@ -255,7 +255,7 @@ function init_gear_sets()
 	
 	sets.idle.Weak = {main=gear.Staff.PDT,sub="Mephitis Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Twilight Torque",ear1="Bloodgem Earring",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Dark Ring",ring2="Sangoma Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Defending Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 	
 	
@@ -263,12 +263,12 @@ function init_gear_sets()
 
 	sets.defense.PDT = {main=gear.Staff.PDT,sub="Mephitis Grip",
 		head="Gendewitha Caubeen",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Gendewitha Galoshes"}
 
 	sets.defense.MDT = {main=gear.Staff.PDT,sub="Mephitis Grip",
 		head="Nahtirah Hat",neck="Twilight Torque",
-		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1='Dark Ring',ring2="Shadow Ring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Bihu Cannions",feet="Gendewitha Galoshes"}
 
 	sets.Kiting = {feet="Aoidos' Cothurnes +2"}
