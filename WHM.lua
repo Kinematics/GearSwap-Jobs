@@ -228,6 +228,8 @@ function init_gear_sets()
 
 	sets.Kiting = {feet="Herald's Gaiters"}
 
+    sets.latent_refresh = {waist="Fucho-no-obi"}
+
 	-- Engaged sets
 
 	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
@@ -315,6 +317,14 @@ function job_get_spell_map(spell, default_spell_map)
 			end
 		end
 	end
+end
+
+
+function customize_idle_set(idleSet)
+    if player.mpp < 51 then
+        idleSet = set_combine(idleSet, sets.latent_refresh)
+    end
+	return idleSet
 end
 
 
