@@ -362,16 +362,16 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 		-- If this wasn't an action that would have used up SATA/Feint, make sure to keep gear on.
 		if spell.type ~= 'WeaponSkill' and spell.type ~= 'Step' then
 			-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
-			check_buff('Sneak Attack')
-			check_buff('Trick Attack')
-			check_buff('Feint')
+			check_buff('Sneak Attack', eventArgs)
+			check_buff('Trick Attack', eventArgs)
+			check_buff('Feint', eventArgs)
 		end
 	end
 end
 
 
 -- Refactor buff checks from aftercast
-function check_buff(buff_name)
+function check_buff(buff_name, eventArgs)
 	if state.Buff[buff_name] then
 		equip(sets.buff[buff_name] or {})
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
