@@ -320,8 +320,6 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function job_precast(spell, action, spellMap, eventArgs)
-	refine_waltz(spell, action, spellMap, eventArgs)
-
 	if state.Buff[spell.english] ~= nil then
 		state.Buff[spell.english] = true
 	end

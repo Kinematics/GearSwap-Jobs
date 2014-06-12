@@ -196,9 +196,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-	refine_waltz(spell, action, spellMap, eventArgs)
-
 	if state.Buff[spell.english] ~= nil then
 		state.Buff[spell.english] = true
 	end

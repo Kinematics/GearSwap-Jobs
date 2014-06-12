@@ -219,9 +219,7 @@ end
 
 -- Called when player is about to perform an action
 function job_precast(spell, action, spellMap, eventArgs)
-	if spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
-	end
+
 end
 
 -- Called when pet is about to perform an action

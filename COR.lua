@@ -286,8 +286,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 		equip(sets.precast.LuzafRing)
 	elseif spell.type == 'CorsairShot' and state.CastingMode == 'Resistant' then
 		classes.CustomClass = 'Acc'
-	elseif spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 

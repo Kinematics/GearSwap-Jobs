@@ -480,12 +480,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if state.Buff[spell.english] ~= nil then
 		state.Buff[spell.english] = true
 	end
-	
-	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-
-	if spell.type == 'Waltz' and not eventArgs.cancel then
-		refine_waltz(spell, action, spellMap, eventArgs)
-	end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.

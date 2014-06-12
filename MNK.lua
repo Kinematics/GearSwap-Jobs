@@ -267,13 +267,9 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-	
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type == 'WeaponSkill' and state.Defense.Active then
 		eventArgs.handled = true
-	elseif spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 
