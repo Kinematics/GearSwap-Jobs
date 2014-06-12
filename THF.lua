@@ -52,7 +52,8 @@ function user_setup()
 	state.RangedMode = 'Normal'
 	state.Defense.PhysicalMode = 'Evasion'
 	
-	tagged_mobs:clear()
+	gear.default.weaponskill_neck = "Asperity Necklace"
+	gear.default.weaponskill_waist = "Caudata Belt"
 
 	-- Additional local binds
 	send_command('bind ^` input /ja "Flee" <me>')
@@ -142,8 +143,6 @@ function init_gear_sets()
 	-- Weaponskill sets
 	
 	-- Default set for any weaponskill that isn't any more specifically defined
-	gear.default.weaponskill_neck = "Asperity Necklace"
-	gear.default.weaponskill_waist = "Caudata Belt"
 	sets.precast.WS = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
