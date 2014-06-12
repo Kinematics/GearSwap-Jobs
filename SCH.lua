@@ -375,7 +375,7 @@ function customize_idle_set(idleSet)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- General hooks for change events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -387,6 +387,21 @@ function job_buff_change(buff, gain)
 		handle_equipping_gear(player.status)
 	elseif state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
+	end
+end
+
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue, oldValue)
+	if stateField == 'OffenseMode' then
+		if newValue == 'Normal' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
+	elseif stateField == 'Reset' then
+		if state.OffenseMode == 'None' then
+			enable('main','sub')
+		end
 	end
 end
 
