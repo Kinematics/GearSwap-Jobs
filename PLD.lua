@@ -99,7 +99,7 @@ function init_gear_sets()
     sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
     sets.precast.FC.Cure = set_combine(sets.precast.FC,
-        {body="Twilight Mail",hands="Buremte Gloves",ring2="Dark Ring",
+        {body="Twilight Mail",hands="Buremte Gloves",ring1="Defending Ring",ring2="Prolix Ring",
         waist="Flume Belt",feet="Karieyh Sollerets +1"})
 
        
@@ -191,11 +191,11 @@ function init_gear_sets()
     
     sets.defense.PDT = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1=physical_darkring1,ring2=physical_darkring2,
+        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Defending Ring",ring2=gear.DarkRing.physical,
         back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
     sets.defense.Shield = {main="Anahera Sword",ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1=physical_darkring1,ring2=physical_darkring2,
+        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Defending Ring",ring2=gear.DarkRing.physical,
         back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
     sets.defense.HP = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Bloodgem Earring",
@@ -222,7 +222,7 @@ function init_gear_sets()
     sets.defense.PDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
     sets.defense.Shield.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
     sets.defense.HP.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse, {neck="Twilight Torque"})
-    sets.defense.MDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse, {ring1=magic_breath_darkring1})
+    sets.defense.MDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
 
     -- If using Kheshig Blade, have 50% PDT without the second ring:
     sets.defense.PDT['Kheshig Blade'] = set_combine(sets.defense.PDT, {ring2="Meridian Ring"})

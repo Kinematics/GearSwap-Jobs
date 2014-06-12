@@ -244,7 +244,7 @@ function init_gear_sets()
 	sets.precast.FC = {ammo="Impatiens",
 		head="Haruspex Hat",ear2="Loquacious Earring",
 		body="Luhlaza Jubbah",hands="Thaumas Gloves",ring1="Prolix Ring",
-		back="Swith Cape",waist="Witful Belt",legs="Enif Cosciales",feet="Chelona Boots +1"}
+		back="Swith Cape +1",waist="Witful Belt",legs="Enif Cosciales",feet="Chelona Boots +1"}
 		
 	sets.precast.FC['Blue Magic'] = set_combine(sets.precast.FC, {body="Mavi Mintan +2"})
 
@@ -271,7 +271,7 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Haruspex Hat",ear2="Loquacious Earring",
 		body="Luhlaza Jubbah",hands="Mavi Bazubands +2",ring1="Prolix Ring",
-		back="Swith Cape",waist="Hurch'lan Sash",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
+		back="Swith Cape +1",waist="Hurch'lan Sash",legs="Enif Cosciales",feet="Iuitl Gaiters +1"}
 		
 	sets.midcast['Blue Magic'] = {}
 	
@@ -411,12 +411,12 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",
-		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Patricius Ring",ring2="Dark Ring",
+		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bloodgem Earring",
-		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Dark Ring",ring2="Dark Ring",
+		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Flume Belt",legs="Nahtirah Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.Kiting = {legs="Crimson Cuisses"}

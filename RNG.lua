@@ -156,7 +156,7 @@ function init_gear_sets()
 	-- Defense sets
 	sets.defense.PDT = {
 		head="Whirlpool Mask",neck="Twilight Torque",
-		body="Orion Jerkin +1",hands="Orion Bracers +1",ring1="Defending Ring",ring2="Dark Ring",
+		body="Orion Jerkin +1",hands="Orion Bracers +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Mollusca Mantle",waist="Flume Belt",legs="Nahtirah Trousers",feet="Orion Socks +1"}
 
 	sets.defense.MDT = {
