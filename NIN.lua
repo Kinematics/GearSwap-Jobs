@@ -70,7 +70,7 @@ function init_gear_sets()
 	sets.precast.Step = {
 		head="Whirlpool Mask",neck="Ej Necklace",
 		body="Otronif Harness +1",hands="Buremte Gloves",ring1="Patricius Ring",
-		back="Letalis Mantle",waist="Chaac Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Chaac Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 
 	-- Fast cast sets for spells
 	
@@ -82,18 +82,19 @@ function init_gear_sets()
        
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
-	sets.precast.WS = {
+	sets.precast.WS = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Mochizuki Tekko",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist=gear.ElementalBelt,legs="Manibozho Brais",feet="Otronif Boots +1"}
+	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Jukukik Feather",hands="Buremte Gloves",
+		back="Yokaze Mantle"})
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS['Blade: Jin'] = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",
-		feet="Daihanshi Habaki"})
+	sets.precast.WS['Blade: Jin'] = set_combine(sets.precast.WS,
+		{neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",feet="Daihanshi Habaki"})
 
-	sets.precast.WS['Blade: Hi'] = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",
-		ring1="Stormsoul Ring",legs="Nahtirah Trousers"})
-	sets.precast.WS['Blade: Hi'].Mod = set_combine(sets.precast.WS['Blade: Hi'], {back="Yokaze Mantle",waist="Soil Belt"})
+	sets.precast.WS['Blade: Hi'] = set_combine(sets.precast.WS,
+		{head="Felistris Mask",hands="Hachiya Tekko",ring1="Stormsoul Ring",legs="Nahtirah Trousers"})
 
 	sets.precast.WS['Blade: Shun'] = set_combine(sets.precast.WS, {feet="Daihanshi Habaki"})
 
@@ -193,11 +194,11 @@ function init_gear_sets()
 	sets.engaged = {ammo="Qirmiz Tathlum",
 		head="Iga Zukin +2",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
+		back="Atheling Mantle",waist="Patentia Sash",legs="Mochizuki Hakama",feet="Otronif Boots +1"}
 	sets.engaged.Acc = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Evasion = {ammo="Qirmiz Tathlum",
 		head="Felistris Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -205,15 +206,15 @@ function init_gear_sets()
 	sets.engaged.Acc.Evasion = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 	sets.engaged.PDT = {ammo="Qirmiz Tathlum",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 
 	-- Custom melee group: High Haste (~20% DW)
 	sets.engaged.HighHaste = {ammo="Qirmiz Tathlum",
@@ -223,7 +224,7 @@ function init_gear_sets()
 	sets.engaged.Acc.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Manibozho Boots"}
 	sets.engaged.Evasion.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Hachiya Chainmail +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -231,15 +232,15 @@ function init_gear_sets()
 	sets.engaged.Acc.Evasion.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 	sets.engaged.PDT.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Patentia Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT.HighHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 
 	-- Custom melee group: Embrava Haste (7% DW)
 	sets.engaged.EmbravaHaste = {ammo="Qirmiz Tathlum",
@@ -249,7 +250,7 @@ function init_gear_sets()
 	sets.engaged.Acc.EmbravaHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Evasion.EmbravaHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -257,15 +258,15 @@ function init_gear_sets()
 	sets.engaged.Acc.Evasion.EmbravaHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 	sets.engaged.PDT.EmbravaHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT.EmbravaHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots +1"}
 
 	-- Custom melee group: Max Haste (0% DW)
 	sets.engaged.MaxHaste = {ammo="Qirmiz Tathlum",
@@ -275,7 +276,7 @@ function init_gear_sets()
 	sets.engaged.Acc.MaxHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Manibozho Boots"}
 	sets.engaged.Evasion.MaxHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -283,15 +284,15 @@ function init_gear_sets()
 	sets.engaged.Acc.Evasion.MaxHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Hachiya Hakama",feet="Otronif Boots +1"}
 	sets.engaged.PDT.MaxHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Iximulew Cape",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Windbuffet Belt",legs="Manibozho Brais",feet="Otronif Boots +1"}
 	sets.engaged.Acc.PDT.MaxHaste = {ammo="Qirmiz Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots +1"}
+		back="Yokaze Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Otronif Boots +1"}
 
 
 	--------------------------------------
