@@ -40,6 +40,7 @@ function user_setup()
 	gear.MovementFeet = {name="Danzo Sune-ate"}
 	gear.DayFeet = "Danzo Sune-ate"
 	gear.NightFeet = "Hachiya Kyahan"
+	windower.register_event('time change', time_change)
 	
 	select_movement_feet()
 	select_default_macro_book()
@@ -407,6 +408,7 @@ end
 
 -- Called by the default 'update' self-command.
 function job_update(cmdParams, eventArgs)
+	select_movement_feet()
 	determine_haste_group()
 end
 
