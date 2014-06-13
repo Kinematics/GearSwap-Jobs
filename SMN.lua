@@ -143,10 +143,8 @@ end
 -- Define sets and vars used by this job file.
 function init_gear_sets()
 	--------------------------------------
-	-- Start defining the sets
-	--------------------------------------
-	
 	-- Precast Sets
+	--------------------------------------
 	
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Astral Flow'] = {head="Glyphic Horn"}
@@ -159,7 +157,8 @@ function init_gear_sets()
 	sets.precast.JA['Mana Cede'] = {hands="Caller's Bracers +2"}
 
 	-- Pact delay reduction gear
-	sets.precast.BloodPactWard = {ammo="Seraphicaller",head="Convoker's Horn",body="Convoker's Doublet",hands="Glyphic Bracers"}
+	sets.precast.BloodPactWard = {ammo="Seraphicaller",head="Convoker's Horn",body="Glyphic Doublet",hands="Glyphic Bracers",
+		back="Samanisi Cape"}
 
 	sets.precast.BloodPactRage = sets.precast.BloodPactWard
 
@@ -187,7 +186,10 @@ function init_gear_sets()
 		back="Pahtli Cape",waist="Fucho-no-Obi",legs="Nares Trews",feet="Chelona Boots +1"}
 
 	
-	-- Midcast Sets
+	--------------------------------------
+	-- Midcast sets
+	--------------------------------------
+
 	sets.midcast.FastRecast = {
 		head="Nahtirah Hat",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Prolix Ring",
@@ -249,7 +251,9 @@ function init_gear_sets()
 	sets.midcast.Pet['Elemental Magic'].Resistant = {}
 	
 
-	-- Sets to return to when not performing an action.
+	--------------------------------------
+	-- Idle/resting/defense/etc sets
+	--------------------------------------
 	
 	-- Resting sets
 	sets.resting = {main=gear.Staff.HMP,ammo="Seraphicaller",
@@ -281,7 +285,7 @@ function init_gear_sets()
 	-- -perp gear:
 	-- Gridarvor: -5
 	-- Glyphic Horn: -4
-	-- Caller's Doublet +2: -4
+	-- Caller's Doublet +2/Glyphic Doublet: -4
 	-- Evoker's Ring: -1
 	-- Convoker's Pigaches: -4
 	-- total: -18
@@ -290,7 +294,7 @@ function init_gear_sets()
 	
 	sets.idle.Avatar = {main="Gridarvor",sub="Achaq Grip",ammo="Seraphicaller",
 		head="Convoker's Horn",neck="Caller's Pendant",ear1="Gifted Earring",ear2="Loquacious Earring",
-		body="Caller's Doublet +2",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
+		body="Glyphic Doublet",hands="Serpentes Cuffs",ring1="Evoker's Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Fucho-no-Obi",legs="Nares Trews",feet="Convoker's Pigaches"}
 
 	sets.idle.Spirit = {main="Gridarvor",sub="Achaq Grip",ammo="Seraphicaller",
@@ -336,12 +340,9 @@ function init_gear_sets()
 	
 	sets.latent_refresh = {waist="Fucho-no-obi"}
 
+	--------------------------------------
 	-- Engaged sets
-
-	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
-	-- sets if more refined versions aren't defined.
-	-- If you create a set with both offense and defense modes, the offense mode should be first.
-	-- EG: sets.engaged.Dagger.Accuracy.Evasion
+	--------------------------------------
 	
 	-- Normal melee group
 	sets.engaged = {ammo="Seraphicaller",
