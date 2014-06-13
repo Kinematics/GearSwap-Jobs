@@ -40,7 +40,6 @@ function user_setup()
 	gear.MovementFeet = {name="Danzo Sune-ate"}
 	gear.DayFeet = "Danzo Sune-ate"
 	gear.NightFeet = "Hachiya Kyahan"
-	windower.register_event('time change', time_change)
 	
 	select_movement_feet()
 	select_default_macro_book()
@@ -399,11 +398,11 @@ function job_buff_change(buff, gain)
 	end
 end
 
--- This is called only when either classes.Daytime or classes.DuskToDawn change.
-function job_time_change(new_time, old_time)
-	select_movement_feet()
+function job_status_change(new_status, old_status)
+	if new_status == 'Idle' then
+		select_movement_feet()
+	end
 end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements self-commands.
@@ -465,7 +464,7 @@ end
 
 
 function select_movement_feet()
-	if classes.DuskToDawn then
+	if world.time >= 17*60 or world.time < 7*60 then
 		gear.MovementFeet.name = gear.NightFeet
 	else
 		gear.MovementFeet.name = gear.DayFeet
