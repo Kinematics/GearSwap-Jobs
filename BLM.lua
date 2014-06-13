@@ -45,14 +45,6 @@ function user_setup()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-    if binds_on_unload then
-        binds_on_unload()
-    end
-end
-
-
 -- Define sets and vars used by this job file.
 function init_gear_sets()
     --------------------------------------
@@ -266,9 +258,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
     if spell.action_type == 'Magic' then
-        -- Default base equipment layer is fast recast.
-        equip(sets.midcast.FastRecast)
-
         if spell.skill == 'Elemental Magic' and state.CastingMode == 'Proc' then
             add_to_chat(15,'Proc mode, no damage gear for midcast.')
             eventArgs.handled = true

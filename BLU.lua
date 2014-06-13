@@ -202,11 +202,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-	
+function job_file_unload()
 	send_command('unbind ^`')
 	send_command('unbind !`')
 end
@@ -482,13 +478,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_midcast(spell, action, spellMap, eventArgs)
-	if spell.action_type == 'Magic' then
-		-- Default base equipment layer for spells.
-		equip(sets.midcast.FastRecast)
-	end
-end
 
 -- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.

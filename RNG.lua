@@ -50,11 +50,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-
+function job_file_unload()
 	send_command('unbind f9')
 	send_command('unbind ^f9')
 end
@@ -221,8 +217,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Ranged Attack' and state.Buff.Barrage then
 		equip(sets.buff.Barrage)
 		eventArgs.handled = true
-	elseif spell.action_type == 'Magic' then
-		equip(sets.midcast.FastRecast)
 	end
 end
 
