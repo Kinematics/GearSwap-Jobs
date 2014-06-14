@@ -45,25 +45,18 @@ function init_gear_sets()
 	
 	-- Precast sets to enhance JAs on use
 	sets.precast.JA['Hundred Fists'] = {legs="Hesychast's Hose +1"}
-
 	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves +1"}
-
 	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters +1"}
-
-	sets.precast.JA['Focus'] = {head="Anchorite's Crown"}
-
+	sets.precast.JA['Focus'] = {head="Anchorite's Crown +1"}
 	sets.precast.JA['Counterstance'] = {feet="Hesychast's Gaiters"}
+	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
+	sets.precast.JA['Formless Strikes'] = {body="Hesychast's Cyclas"}
+	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
 
 	sets.precast.JA['Chi Blast'] = {
 		head="Melee Crown +2",
 		body="Otronif Harness +1",hands="Hesychast's Gloves +1",
 		back="Tuilha Cape",legs="Hesychast's Hose +1",feet="Anchorite's Gaiters +1"}
-
-	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
-
-	sets.precast.JA['Formless Strikes'] = {body="Hesychast's Cyclas"}
-
-	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
 
 	sets.precast.JA['Chakra'] = {ammo="Iron Gobbet",
 		head="Felistris Mask",
