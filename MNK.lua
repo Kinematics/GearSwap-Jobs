@@ -60,7 +60,7 @@ function init_gear_sets()
 
 	sets.precast.JA['Chakra'] = {ammo="Iron Gobbet",
 		head="Felistris Mask",
-		body="Anchorite's Cyclas",hands="Hesychast's Gloves +1",ring1="Spiral Ring",
+		body="Anchorite's Cyclas +1",hands="Hesychast's Gloves +1",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Qaaxo Tights",feet="Thurandaut Boots +1"}
 
 	-- Waltz set (chr and vit)
@@ -73,6 +73,7 @@ function init_gear_sets()
 	sets.precast.Waltz['Healing Waltz'] = {}
 
 	sets.precast.Step = {waist="Chaac Belt"}
+	sets.precast.Flourish1 = {waist="Chaac Belt"}
 
 
 	-- Fast cast sets for spells
