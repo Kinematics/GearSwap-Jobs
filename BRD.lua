@@ -93,11 +93,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-
+function job_file_unload()
 	send_command('unbind ^`')
 	send_command('unbind !`')
 end
@@ -248,6 +244,11 @@ function init_gear_sets()
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Paguroidea Ring",ring2="Sangoma Ring",
 		back="Umbra Cape",waist="Flume Belt",legs="Nares Trews",feet="Aoidos' Cothurnes +2"}
 
+	sets.idle.PDT = {main=gear.Staff.PDT, sub="Mephitis Grip",range="Oneiros Harp",
+		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Defending Ring",ring2="Sangoma Ring",
+		back="Umbra Cape",waist="Flume Belt",legs="Gendewitha Spats",feet="Aoidos' Cothurnes +2"}
+
 	sets.idle.Town = {main=gear.Staff.PDT, sub="Mephitis Grip",range="Oneiros Harp",
 		head="Gendewitha Caubeen",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Gendewitha Gages",ring1="Paguroidea Ring",ring2="Sangoma Ring",
@@ -327,9 +328,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
-		-- Default base equipment layer of fast recast.
-		equip(sets.midcast.FastRecast)
-
 		if spell.type == 'BardSong' then
 			-- layer general gear on first, then let default handler add song-specific gear.
 			local generalClass = get_song_class(spell)
@@ -569,6 +567,7 @@ function calculate_duration(spellName, spellMap)
 	
 	if player.equipment.main == "Carnwenhan" then mult = mult + 0.1 end -- 0.1 for 75, 0.4 for 95, 0.5 for 99/119
 	if player.equipment.main == "Legato Dagger" then mult = mult + 0.1 end
+	if player.equipment.sub == "Legato Dagger" then mult = mult + 0.1 end
 	if player.equipment.neck == "Aoidos' Matinee" then mult = mult + 0.1 end
 	if player.equipment.body == "Aoidos' Hngrln. +2" then mult = mult + 0.1 end
 	if player.equipment.legs == "Mdk. Shalwar +1" then mult = mult + 0.1 end

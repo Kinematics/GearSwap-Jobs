@@ -50,11 +50,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-
+function job_file_unload()
 	send_command('unbind f9')
 	send_command('unbind ^f9')
 end
@@ -196,9 +192,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-	refine_waltz(spell, action, spellMap, eventArgs)
-
 	if state.Buff[spell.english] ~= nil then
 		state.Buff[spell.english] = true
 	end
@@ -224,8 +217,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Ranged Attack' and state.Buff.Barrage then
 		equip(sets.buff.Barrage)
 		eventArgs.handled = true
-	elseif spell.action_type == 'Magic' then
-		equip(sets.midcast.FastRecast)
 	end
 end
 

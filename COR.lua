@@ -65,11 +65,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-
+function job_file_unload()
 	send_command('unbind ^`')
 	send_command('unbind !`')
 end
@@ -286,8 +282,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 		equip(sets.precast.LuzafRing)
 	elseif spell.type == 'CorsairShot' and state.CastingMode == 'Resistant' then
 		classes.CustomClass = 'Acc'
-	elseif spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 

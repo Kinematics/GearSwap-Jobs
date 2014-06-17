@@ -63,13 +63,6 @@ function user_setup()
 	select_default_macro_book()
 end
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-end
-
 
 -- Define sets used by this job file.
 function init_gear_sets()
@@ -144,12 +137,12 @@ function init_gear_sets()
 
 	-- Idle sets
 
-	sets.idle = {range="Eminent Animator",
+	sets.idle = {range="Divinator",
 		head="Pitre Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Town = set_combine(sets.idle, {main="Oatixur"})
+	sets.idle.Town = set_combine(sets.idle, {main="Tinhaspa"})
 
 	-- Set for idle while pet is out (eg: pet regen gear)
 	sets.idle.Pet = sets.idle
@@ -219,9 +212,7 @@ end
 
 -- Called when player is about to perform an action
 function job_precast(spell, action, spellMap, eventArgs)
-	if spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
-	end
+
 end
 
 -- Called when pet is about to perform an action

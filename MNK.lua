@@ -35,14 +35,6 @@ function user_setup()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-end
-
-
 -- Define sets and vars used by this job file.
 function init_gear_sets()
 	--------------------------------------
@@ -53,29 +45,22 @@ function init_gear_sets()
 	
 	-- Precast sets to enhance JAs on use
 	sets.precast.JA['Hundred Fists'] = {legs="Hesychast's Hose +1"}
-
 	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves +1"}
-
 	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters +1"}
-
-	sets.precast.JA['Focus'] = {head="Anchorite's Crown"}
-
+	sets.precast.JA['Focus'] = {head="Anchorite's Crown +1"}
 	sets.precast.JA['Counterstance'] = {feet="Hesychast's Gaiters"}
+	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
+	sets.precast.JA['Formless Strikes'] = {body="Hesychast's Cyclas"}
+	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
 
 	sets.precast.JA['Chi Blast'] = {
 		head="Melee Crown +2",
 		body="Otronif Harness +1",hands="Hesychast's Gloves +1",
 		back="Tuilha Cape",legs="Hesychast's Hose +1",feet="Anchorite's Gaiters +1"}
 
-	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
-
-	sets.precast.JA['Formless Strikes'] = {body="Hesychast's Cyclas"}
-
-	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
-
 	sets.precast.JA['Chakra'] = {ammo="Iron Gobbet",
 		head="Felistris Mask",
-		body="Anchorite's Cyclas",hands="Hesychast's Gloves +1",ring1="Spiral Ring",
+		body="Anchorite's Cyclas +1",hands="Hesychast's Gloves +1",ring1="Spiral Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Qaaxo Tights",feet="Thurandaut Boots +1"}
 
 	-- Waltz set (chr and vit)
@@ -88,6 +73,7 @@ function init_gear_sets()
 	sets.precast.Waltz['Healing Waltz'] = {}
 
 	sets.precast.Step = {waist="Chaac Belt"}
+	sets.precast.Flourish1 = {waist="Chaac Belt"}
 
 
 	-- Fast cast sets for spells
@@ -152,7 +138,7 @@ function init_gear_sets()
 
 	-- Idle sets
 	sets.idle = {ammo="Thew Bomblet",
-		head="Felistris Headpiece +1",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Felistris Mask",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Iximulew Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Herald's Gaiters"}
 
@@ -267,13 +253,9 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-	
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type == 'WeaponSkill' and state.Defense.Active then
 		eventArgs.handled = true
-	elseif spell.type == 'Waltz' then
-		refine_waltz(spell, action, spellMap, eventArgs)
 	end
 end
 

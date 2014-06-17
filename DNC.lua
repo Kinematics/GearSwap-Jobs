@@ -81,11 +81,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function file_unload()
-	if binds_on_unload then
-		binds_on_unload()
-	end
-	
+function job_file_unload()
 	send_command('unbind ^`')
 	send_command('unbind !`')
 	send_command('unbind ^=')
@@ -347,11 +343,6 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	--auto_presto(spell)
-	cancel_conflicting_buffs(spell, action, spellMap, eventArgs)
-
-	if spell.type == 'Waltz' and not eventArgs.cancel then
-		refine_waltz(spell, action, spellMap, eventArgs)
-	end
 
 	if state.Buff[spell.english] ~= nil then
 		state.Buff[spell.english] = true

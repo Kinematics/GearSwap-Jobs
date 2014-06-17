@@ -14,6 +14,7 @@ end
 function job_setup()
     state.Buff.Sentinel = buffactive.sentinel or false
     state.Buff.Cover = buffactive.cover or false
+    state.Buff.Doomed = buffactive.doomed or false
 end
 
 
@@ -21,7 +22,7 @@ end
 function user_setup()
     -- Options: Override default values
     options.OffenseModes = {'Normal', 'Acc'}
-    options.DefenseModes = {'Normal', 'Shield'}
+    options.DefenseModes = {'Normal', 'Shield', 'MP'}
     options.WeaponskillModes = {'Normal', 'Acc'}
     options.CastingModes = {'Normal'}
     options.IdleModes = {'Normal'}
@@ -34,42 +35,25 @@ function user_setup()
     state.Defense.PhysicalMode = 'PDT'
     state.HybridDefenseMode = 'None'
 
-    physical_darkring1 = {name="Dark Ring",augments={'Magic dmg. taken -3%','Spell interruption rate down -5%','Phys. dmg. taken -6%'}}
-    physical_darkring2 = {name="Dark Ring",augments={'Magic dmg. taken -3%','Phys. dmg. taken -5%'}}
-    magic_breath_darkring1 = {name="Dark Ring", augments={'Magic dmg. taken -6%','Breath dmg. taken -5%'}}
-    magic_breath_darkring2 = {name="Dark Ring",augments={"Magic dmg. taken -5%", "Breath dmg. taken -6%"}}
-    vexer_ring = {name="Vexer Ring"}
-    
 	send_command('bind !f11 gs c cycle HybridDefenseMode')
 
     select_default_macro_book()
 end
 
 
--- Called when this job file is unloaded (eg: job change)
-function file_unload()
-    if binds_on_unload then
-        binds_on_unload()
-    end
-
-	send_command('unbind !f11')
-end
-
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-    --------------------------------------
-    -- Start defining the sets
-    --------------------------------------
-    
-    -- Precast Sets
+	--------------------------------------
+	-- Precast sets
+	--------------------------------------
     
     -- Precast sets to enhance JAs
     sets.precast.JA['Invincible'] = {legs="Caballarius Breeches"}
     sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings"}
     --sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
     sets.precast.JA['Sentinel'] = {feet="Caballarius Leggings"}
-    sets.precast.JA['Rampart'] = {head="Valor Coronet"}
-    --sets.precast.JA['Fealty'] = {body="Valor Surcoat +2"}
+    sets.precast.JA['Rampart'] = {head="Valor Coronet +2"}
+    sets.precast.JA['Fealty'] = {body="Caballarius Surcoat"}
     --sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
     sets.precast.JA['Cover'] = {head="Reverence Coronet +1"}
 
@@ -88,6 +72,9 @@ function init_gear_sets()
         
     -- Don't need any special gear for Healing Waltz.
     sets.precast.Waltz['Healing Waltz'] = {}
+    
+    sets.precast.Step = {waist="Chaac Belt"}
+    sets.precast.Flourish1 = {waist="Chaac Belt"}
 
     -- Fast cast sets for spells
     
@@ -119,7 +106,10 @@ function init_gear_sets()
         back="Toro Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
     
     
-    -- Midcast Sets
+	--------------------------------------
+	-- Midcast sets
+	--------------------------------------
+
     sets.midcast.FastRecast = {
         head="Yaoyotl Helm",
         body="Reverence Surcoat +1",hands="Cizin Mufflers",
@@ -144,11 +134,12 @@ function init_gear_sets()
     sets.midcast.Protect = {ring1="Sheltered Ring"}
     sets.midcast.Shell = {ring1="Sheltered Ring"}
     
-    -- Sets to return to when not performing an action.
+	--------------------------------------
+	-- Idle/resting/defense/etc sets
+	--------------------------------------
 
     sets.Reraise = {head="Twilight Helm", body="Twilight Mail"}
     
-    -- Resting sets
     sets.resting = {head="Twilight Helm",neck="Creed Collar",
         body="Twilight Mail",ring1="Sheltered Ring",ring2="Paguroidea Ring",
         waist="Austerity Belt"}
@@ -206,8 +197,8 @@ function init_gear_sets()
     -- magic_breath_darkring1 vs vexer_ring
     sets.defense.MDT = {main="Anahera Sword",ammo="Demonry Stone",
         head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1=vexer_ring,ring2="Shadow Ring",
-        back="Engulfer Cape",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Caballarius Leggings"}
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Vexer Ring",ring2="Shadow Ring",
+        back="Engulfer Cape",waist="Creed Baudrier",legs="Osmium Cuisses",feet="Caballarius Leggings"}
 
     sets.defense.PDT.Repulse = set_combine(sets.defense.PDT, sets.Repulse)
     sets.defense.Shield.Repulse = set_combine(sets.defense.Shield, sets.Repulse)
@@ -217,7 +208,7 @@ function init_gear_sets()
     sets.defense.PDT.Reraise = set_combine(sets.defense.PDT, sets.Reraise)
     sets.defense.Shield.Reraise = set_combine(sets.defense.Shield, sets.Reraise)
     sets.defense.HP.Reraise = set_combine(sets.defense.HP, sets.Reraise, {neck="Twilight Torque"})
-    sets.defense.MDT.Reraise = set_combine(sets.defense.MDT, sets.Reraise, {ring1=magic_breath_darkring1})
+    sets.defense.MDT.Reraise = set_combine(sets.defense.MDT, sets.Reraise, {ring1="Defending Ring"})
 
     sets.defense.PDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
     sets.defense.Shield.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
@@ -235,41 +226,51 @@ function init_gear_sets()
 
 	sets.latent_refresh = {waist="Fucho-no-obi"}
 
-    -- Engaged sets
-
-    -- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
-    -- sets if more refined versions aren't defined.
-    -- If you create a set with both offense and defense modes, the offense mode should be first.
-    -- EG: sets.engaged.Dagger.Accuracy.Evasion
+	--------------------------------------
+	-- Engaged sets
+	--------------------------------------
     
-    -- Normal melee group
-    sets.engaged = {
+    sets.engaged = {ammo="Jukukik Feather",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
         body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
-    sets.engaged.Acc = {
+    sets.engaged.MP = {ammo="Jukukik Feather",
+        head="Yaoyotl Helm",neck="Creed Collar",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Atheling Mantle",waist="Flume Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
+    sets.engaged.Acc = {ammo="Jukukik Feather",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
         body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
-    sets.engaged.Shield = {
+    sets.engaged.Shield = {ammo="Iron Gobbet",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
 
-    sets.engaged.DW = {
+    sets.engaged.DW = {ammo="Jukukik Feather",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
         body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
-    sets.engaged.DW.Acc = {
+    sets.engaged.DW.MP = {ammo="Jukukik Feather",
+        head="Yaoyotl Helm",neck="Creed Collar",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Atheling Mantle",waist="Flume Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
+    sets.engaged.DW.Acc = {ammo="Jukukik Feather",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
         body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
+	--------------------------------------
+	-- Custom buff sets
+	--------------------------------------
 
-    sets.buff.Cover = {head="Reverence Coronet +1", body="Valor Surcoat +2"}
+	sets.buff.Doomed = {ring2="Saida Ring"}
+    sets.buff.Cover = {head="Reverence Coronet +1", body="Caballarius Surcoat"}
 end
 
 
