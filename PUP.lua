@@ -137,12 +137,12 @@ function init_gear_sets()
 
 	-- Idle sets
 
-	sets.idle = {range="Eminent Animator",
+	sets.idle = {range="Divinator",
 		head="Pitre Taj",neck="Wiglen Gorget",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Foire Tobe",hands="Regimen Mittens",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Hurch'lan Sash",legs="Foire Churidars",feet="Hermes' Sandals"}
 
-	sets.idle.Town = set_combine(sets.idle, {main="Oatixur"})
+	sets.idle.Town = set_combine(sets.idle, {main="Tinhaspa"})
 
 	-- Set for idle while pet is out (eg: pet regen gear)
 	sets.idle.Pet = sets.idle
