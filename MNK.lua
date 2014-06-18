@@ -100,7 +100,7 @@ function init_gear_sets()
 	-- legs={name="Quiahuiz Trousers", augments={'Phys. dmg. taken -2%','Magic dmg. taken -2%','STR+8'}}}
 
 	sets.precast.WS['Raging Fists']    = set_combine(sets.precast.WS, {})
-	sets.precast.WS['Howling Fist']    = set_combine(sets.precast.WS, {head="Felistris Mask",legs="Manibozho Brais",feet="Daihanshi Habaki"})
+	sets.precast.WS['Howling Fist']    = set_combine(sets.precast.WS, {legs="Manibozho Brais",feet="Daihanshi Habaki"})
 	sets.precast.WS['Asuran Fists']    = set_combine(sets.precast.WS, {
 		ear1="Bladeborn Earring",ear2="Moonshade Earring",ring2="Spiral Ring",back="Buquwik Cape"})
 	sets.precast.WS["Ascetic's Fury"]  = set_combine(sets.precast.WS, {
@@ -133,7 +133,7 @@ function init_gear_sets()
 
 
 	sets.precast.WS['Cataclysm'] = {
-		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 	

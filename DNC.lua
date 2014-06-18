@@ -173,7 +173,7 @@ function init_gear_sets()
 	sets.precast.WS["Rudra's Storm"].Acc = set_combine(sets.precast.WS["Rudra's Storm"], {ammo="Honed Tathlum", back="Letalis Mantle"})
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
-		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Chaac Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	
