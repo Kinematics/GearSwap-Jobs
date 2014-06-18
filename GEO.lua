@@ -86,7 +86,7 @@ function init_gear_sets()
 		body="Hagondes Coat",hands="Bokwus Gloves",ring1="Prolix Ring",
 		back="Swith Cape +1",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Geomancy = {range="Matre Bell"}
+	sets.midcast.Geomancy = {range="Nepote Bell"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Haoma Ring",ring2="Sirona's Ring",
@@ -111,23 +111,23 @@ function init_gear_sets()
 
 	-- Idle sets
 
-	sets.idle = {main="Bolelabunga",sub="Genbu's Shield",range="Matre Bell",
+	sets.idle = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.PDT = {main="Bolelabunga",sub="Genbu's Shield",range="Matre Bell",
+	sets.idle.PDT = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
 	-- .Pet sets are for when Luopan is present.
-	sets.idle.Pet = {main="Bolelabunga",sub="Genbu's Shield",range="Matre Bell",
+	sets.idle.Pet = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.PDT.Pet = {main="Bolelabunga",sub="Genbu's Shield",range="Matre Bell",
+	sets.idle.PDT.Pet = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nahtirah Hat",neck="Twilight Torque",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
@@ -138,24 +138,24 @@ function init_gear_sets()
 	sets.idle.PDT.Indi = set_combine(sets.idle.PDT, {legs="Bagua Pants"})
 	sets.idle.PDT.Pet.Indi = set_combine(sets.idle.Pet, {legs="Bagua Pants"})
 
-	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",range="Matre Bell",
+	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
-	sets.idle.Weak = {main="Bolelabunga",sub="Genbu's Shield",range="Matre Bell",
+	sets.idle.Weak = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Heka's Kalasiris",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
 	-- Defense sets
 
-	sets.defense.PDT = {range="Matre Bell",
+	sets.defense.PDT = {range="Nepote Bell",
 		head="Hagondes Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.defense.MDT = {range="Matre Bell",
+	sets.defense.MDT = {range="Nepote Bell",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Vanir Cotehardie",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Hagondes Sabots"}
@@ -175,7 +175,7 @@ function init_gear_sets()
 	-- EG: sets.engaged.Dagger.Accuracy.Evasion
 
 	-- Normal melee group
-	sets.engaged = {range="Matre Bell",
+	sets.engaged = {range="Nepote Bell",
 		head="Zelus Tiara",neck="Peacock Charm",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Bokwus Gloves",ring1="Rajas Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
