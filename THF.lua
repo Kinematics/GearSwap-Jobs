@@ -199,7 +199,7 @@ function init_gear_sets()
 		body="Pillager's Vest +1",legs="Pillager's Culottes +1"})
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
-		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Moonshade Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
