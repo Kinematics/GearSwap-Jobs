@@ -174,8 +174,8 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
 		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Moonshade Earring",
-		body="Qaaxo Harness",hands="Buremte Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Chaac Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
+		body="Wayfarer Robe",hands="Wayfarer Cuffs",ring1="Acumen Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist="Chaac Belt",legs="Shneddick Tights +1",feet="Wayfarer Clogs"}
 	
 	sets.precast.Skillchain = {hands="Charis Bangles +2"}
 	

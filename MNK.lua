@@ -134,7 +134,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Cataclysm'] = {
 		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
+		body="Wayfarer Robe",hands="Otronif Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
 		back="Toro Cape",waist="Thunder Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 	
 	

@@ -104,8 +104,8 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {
 		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Moonshade Earring",
-		body="Hachiya Chainmail +1",hands="Buremte Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Manibozho Brais",feet="Daihanshi Habaki"}
+		body="Wayfarer Robe",hands="Wayfarer Cuffs",ring1="Acumen Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist="Thunder Belt",legs="Shneddick Tights +1",feet="Daihanshi Habaki"}
 
 	
 	--------------------------------------

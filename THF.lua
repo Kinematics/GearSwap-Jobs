@@ -160,8 +160,8 @@ function init_gear_sets()
 	sets.precast.WS['Dancing Edge'].TA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum"})
 	sets.precast.WS['Dancing Edge'].SATA = set_combine(sets.precast.WS['Dancing Edge'].Mod, {ammo="Qirmiz Tathlum"})
 
-	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Qirmiz Tathlum",neck="Rancor Collar",
-		ear1="Brutal Earring",ear2="Moonshade Earring"})
+	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Qirmiz Tathlum",
+		head="Uk'uxkaj Cap",neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
 	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist=gear.ElementalBelt})
 	sets.precast.WS['Evisceration'].SA = set_combine(sets.precast.WS['Evisceration'].Mod, {})
@@ -200,8 +200,8 @@ function init_gear_sets()
 
 	sets.precast.WS['Aeolian Edge'] = {ammo="Jukukik Feather",
 		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Moonshade Earring",
-		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Acumen Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist=gear.ElementalBelt,legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
+		body="Wayfarer Robe",hands="Pillager's Armlets +1",ring1="Acumen Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist=gear.ElementalBelt,legs="Shneddick Tights +1",feet="Wayfarer Clogs"}
 
 	sets.precast.WS['Aeolian Edge'].TH = set_combine(sets.precast.WS['Aeolian Edge'], sets.TreasureHunter)
 	
@@ -213,13 +213,13 @@ function init_gear_sets()
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",
-		back="Fravashi Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Canny Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {
 		head="Whirlpool Mask",neck="Ej Necklace",ear2="Loquacious Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Beeline Ring",
-		back="Fravashi Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Canny Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	-- Ranged gear
 	sets.midcast.RA = {
@@ -265,7 +265,7 @@ function init_gear_sets()
 	sets.defense.Evasion = {
 		head="Pillager's Bonnet +1",neck="Ej Necklace",
 		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Beeline Ring",
-		back="Fravashi Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Canny Cape",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Pillager's Bonnet +1",neck="Twilight Torque",
@@ -294,11 +294,11 @@ function init_gear_sets()
 	sets.engaged.Evasion = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Fravashi Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Qaaxo Leggings"}
+		back="Canny Cape",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Qaaxo Leggings"}
 	sets.engaged.Acc.Evasion = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Qaaxo Leggings"}
+		back="Canny Cape",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Qaaxo Leggings"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Epona's Ring",
@@ -306,7 +306,7 @@ function init_gear_sets()
 	sets.engaged.Acc.PDT = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Epona's Ring",
-		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Qaaxo Leggings"}
+		back="Canny Cape",waist="Hurch'lan Sash",legs="Iuitl Tights",feet="Qaaxo Leggings"}
 
 end
 
