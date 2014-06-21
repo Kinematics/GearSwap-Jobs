@@ -86,34 +86,56 @@ function init_gear_sets()
 	-- Weaponskill sets
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {ammo="Thew Bomblet",
-		head="Whirlpool Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Brutal Earring",ear2="Moonshade Earring",
 		body="Qaaxo Harness",hands="Hesychast's Gloves +1",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Caudata Belt",legs="Manibozho Brais",feet="Manibozho Boots"}
-	sets.precast.WS.Acc = set_combine(sets.precast.WS, {ammo="Honed Tathlum",body="Manibozho Jerkin",back="Letalis Mantle",feet="Qaaxo Leggings"})
-	sets.precast.WS.Mod = set_combine(sets.precast.WS, {head="Felistris Mask",legs="Hesychast's Hose +1",feet="Qaaxo Leggings"})
+		back="Atheling Mantle",waist="Caudata Belt",legs="Quiahuiz Trousers",feet="Manibozho Boots"}
+	sets.precast.WSAcc = {ammo="Honed Tathlum",body="Manibozho Jerkin",back="Letalis Mantle",feet="Qaaxo Leggings"}
+	sets.precast.WSMod = {ammo="Tantra Tathlum",head="Felistris Mask",legs="Hesychast's Hose +1",feet="Daihanshi Habaki"}
+	sets.precast.MaxTP = {ear1="Bladeborn Earring",ear2="Steelflash Earring"}
+	sets.precast.WS.Acc = set_combine(sets.precast.WS, sets.precast.WSAcc)
+	sets.precast.WS.Mod = set_combine(sets.precast.WS, sets.precast.WSMod)
 
-	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-	sets.precast.WS["Victory Smite"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",feet="Qaaxo Leggings"})
-	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
-	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], {waist=gear.ElementalBelt})
+	-- Specific weaponskill sets.
+	
+	-- legs={name="Quiahuiz Trousers", augments={'Phys. dmg. taken -2%','Magic dmg. taken -2%','STR+8'}}}
 
-	sets.precast.WS['Shijin Spiral']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,feet="Daihanshi Habaki"})
-	sets.precast.WS['Shijin Spiral'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget,feet="Qaaxo Leggings"})
-	sets.precast.WS['Shijin Spiral'].Mod = set_combine(sets.precast.WS['Shijin Spiral'], {head="Felistris Mask",waist=gear.ElementalBelt,
-		legs="Hesychast's Hose +1"})
+	sets.precast.WS['Raging Fists']    = set_combine(sets.precast.WS, {})
+	sets.precast.WS['Howling Fist']    = set_combine(sets.precast.WS, {legs="Manibozho Brais",feet="Daihanshi Habaki"})
+	sets.precast.WS['Asuran Fists']    = set_combine(sets.precast.WS, {
+		ear1="Bladeborn Earring",ear2="Moonshade Earring",ring2="Spiral Ring",back="Buquwik Cape"})
+	sets.precast.WS["Ascetic's Fury"]  = set_combine(sets.precast.WS, {
+		ammo="Tantra Tathlum",ring1="Spiral Ring",back="Buquwik Cape",feet="Qaaxo Leggings"})
+	sets.precast.WS["Victory Smite"]   = set_combine(sets.precast.WS, {neck="Rancor Collar",back="Buquwik Cape",feet="Qaaxo Leggings"})
+	sets.precast.WS['Shijin Spiral']   = set_combine(sets.precast.WS, {ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		legs="Manibozho Brais",feet="Daihanshi Habaki"})
+	sets.precast.WS['Dragon Kick']     = set_combine(sets.precast.WS, {feet="Daihanshi Habaki"})
+	sets.precast.WS['Tornado Kick']    = set_combine(sets.precast.WS, {ammo="Tantra Tathlum",ring1="Spiral Ring"})
+	sets.precast.WS['Spinning Attack'] = set_combine(sets.precast.WS, {
+		head="Felistris Mask",ear1="Bladeborn Earring",ear2="Steelflash Earring"})
 
-	sets.precast.WS['Asuran Fists']     = set_combine(sets.precast.WS, {neck=gear.ElementalGorget,ring2="Spiral Ring"})
-	sets.precast.WS['Asuran Fists'].Acc = set_combine(sets.precast.WS.Acc, {neck=gear.ElementalGorget,ring2="Spiral Ring"})
-	sets.precast.WS['Asuran Fists'].Mod = set_combine(sets.precast.WS['Asuran Fists'], {waist=gear.ElementalBelt,feet="Manibozho Boots"})
+	sets.precast.WS["Raging Fists"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Howling Fist"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Asuran Fists"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Ascetic's Fury"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Victory Smite"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Shijin Spiral"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Dragon Kick"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
+	sets.precast.WS["Tornado Kick"].Acc = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSAcc)
 
-	sets.precast.WS["Ascetic's Fury"]     = set_combine(sets.precast.WS, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",ring1="Spiral Ring"})
-	sets.precast.WS["Ascetic's Fury"].Acc = set_combine(sets.precast.WS.Acc, {neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring",ring1="Spiral Ring"})
-	sets.precast.WS["Ascetic's Fury"].Mod = set_combine(sets.precast.WS["Ascetic's Fury"], {waist=gear.ElementalBelt})
+	sets.precast.WS["Raging Fists"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Howling Fist"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Asuran Fists"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Ascetic's Fury"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Victory Smite"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Shijin Spiral"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Dragon Kick"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+	sets.precast.WS["Tornado Kick"].Mod = set_combine(sets.precast.WS["Victory Smite"], sets.precast.WSMod)
+
 
 	sets.precast.WS['Cataclysm'] = {
-		head="Thaumas Hat",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",feet="Qaaxo Leggings"}
+		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		body="Wayfarer Robe",hands="Otronif Gloves",ring1="Acumen Ring",ring2="Demon's Ring",
+		back="Toro Cape",waist="Thunder Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 	
 	
 	-- Midcast Sets
@@ -154,17 +176,17 @@ function init_gear_sets()
 	
 	-- Defense sets
 	sets.defense.PDT = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Twilight Torque",
+		head="Uk'uxkaj Cap",neck="Twilight Torque",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Defending Ring",ring2=gear.DarkRing.physical,
 		back="Shadow Mantle",waist="Black Belt",legs="Qaaxo Tights",feet="Otronif Boots +1"}
 
 	sets.defense.HP = {ammo="Iron Gobbet",
-		head="Whirlpool Mask",neck="Lavalier +1",ear1="Brutal Earring",ear2="Bloodgem Earring",
+		head="Uk'uxkaj Cap",neck="Lavalier +1",ear1="Brutal Earring",ear2="Bloodgem Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="K'ayres Ring",ring2="Meridian Ring",
 		back="Shadow Mantle",waist="Black Belt",legs="Hesychast's Hose +1",feet="Hesychast's Gaiters"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
-		head="Haruspex hat",neck="Twilight Torque",
+		head="Uk'uxkaj Cap",neck="Twilight Torque",
 		body="Otronif Harness +1",hands="Anchorite's Gloves +1",ring1="Defending Ring",ring2="Shadow Ring",
 		back="Engulfer Cape",waist="Black Belt",legs="Qaaxo Tights",feet="Daihanshi Habaki"}
 
@@ -199,7 +221,7 @@ function init_gear_sets()
 
 	-- Defensive melee hybrid sets
 	sets.engaged.PDT = {ammo="Thew Bomblet",
-		head="Felistris Mask",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		head="Uk'uxkaj Cap",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Otronif Harness +1",hands="Otronif Gloves",ring1="Patricius Ring",ring2="Epona's Ring",
 		back="Iximulew Cape",waist="Windbuffet Belt",legs="Hesychast's Hose +1",feet="Otronif Boots +1"}
 	sets.engaged.SomeAcc.PDT = {ammo="Honed Tathlum",
@@ -266,6 +288,11 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 			equip(sets.impetus_body)
 		elseif buffactive.footwork and (spell.english == "Dragon's Kick" or spell.english == "Tornado Kick") then
 			equip(sets.footwork_kick_feet)
+		end
+		
+		-- Replace Moonshade Earring if we're at cap TP
+		if player.tp == 300 then
+			equip(sets.precast.MaxTP)
 		end
 	end
 end

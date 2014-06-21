@@ -169,6 +169,7 @@ function init_gear_sets()
 	sets.midcast.March = {hands="Aoidos' Manchettes +2"}
 	sets.midcast.Minuet = {body="Aoidos' Hongreline +2"}
 	sets.midcast.Minne = {}
+	sets.midcast.Paeon = {head="Brioso Roundlet +1"}
 	sets.midcast.Carol = {head="Aoidos' Calot +2",
 		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",
 		legs="Aoidos' Rhing. +2",feet="Aoidos' Cothrn. +2"}
@@ -186,13 +187,13 @@ function init_gear_sets()
 
 	-- For song defbuffs (duration primary, accuracy secondary)
 	sets.midcast.SongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
-		head="Nahtirah Hat",neck="Aoidos' Matinee",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		head="Brioso Roundlet +1",neck="Aoidos' Matinee",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Aoidos' Hongreline +2",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Kumbira Cape",waist="Goading Belt",legs="Marduk's Shalwar +1",feet="Brioso Slippers"}
 
 	-- For song defbuffs (accuracy primary, duration secondary)
 	sets.midcast.ResistantSongDebuff = {main="Lehbrailg +2",sub="Mephitis Grip",range="Gjallarhorn",
-		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
+		head="Brioso Roundlet +1",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Kumbira Cape",waist="Demonry Sash",legs="Brioso Cannions +1",feet="Bokwus Boots"}
 
@@ -317,9 +318,12 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
 		if spell.target.type == 'PLAYER' and not spell.target.charmed and not state.Buff['Pianissimo'] then
-			send_command('@input /ja "Pianissimo" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
-			eventArgs.cancel = true
-			return
+			local spell_recasts = windower.get_spell_recasts()
+			if spell_recasts[spell.recast_id] < 2 then
+				send_command('@input /ja "Pianissimo" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
+				eventArgs.cancel = true
+				return
+			end
 		end
 	end
 end
@@ -369,12 +373,6 @@ end
 -- Hooks for other events that aren't handled by the include file.
 -------------------------------------------------------------------------------------------------------------------
 
-function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-end
-
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
 	if player.mpp < 51 then
@@ -382,6 +380,12 @@ function customize_idle_set(idleSet)
 	end
 	
 	return idleSet
+end
+
+function job_buff_change(buff, gain)
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
