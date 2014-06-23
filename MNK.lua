@@ -48,10 +48,10 @@ function init_gear_sets()
 	sets.precast.JA['Boost'] = {hands="Anchorite's Gloves +1"}
 	sets.precast.JA['Dodge'] = {feet="Anchorite's Gaiters +1"}
 	sets.precast.JA['Focus'] = {head="Anchorite's Crown +1"}
-	sets.precast.JA['Counterstance'] = {feet="Hesychast's Gaiters"}
+	sets.precast.JA['Counterstance'] = {feet="Hesychast's Gaiters +1"}
 	sets.precast.JA['Footwork'] = {feet="Tantra Gaiters +2"}
 	sets.precast.JA['Formless Strikes'] = {body="Hesychast's Cyclas"}
-	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters"}
+	sets.precast.JA['Mantra'] = {feet="Hesychast's Gaiters +1"}
 
 	sets.precast.JA['Chi Blast'] = {
 		head="Melee Crown +2",
@@ -183,7 +183,7 @@ function init_gear_sets()
 	sets.defense.HP = {ammo="Iron Gobbet",
 		head="Uk'uxkaj Cap",neck="Lavalier +1",ear1="Brutal Earring",ear2="Bloodgem Earring",
 		body="Hesychast's Cyclas",hands="Hesychast's Gloves +1",ring1="K'ayres Ring",ring2="Meridian Ring",
-		back="Shadow Mantle",waist="Black Belt",legs="Hesychast's Hose +1",feet="Hesychast's Gaiters"}
+		back="Shadow Mantle",waist="Black Belt",legs="Hesychast's Hose +1",feet="Hesychast's Gaiters +1"}
 
 	sets.defense.MDT = {ammo="Demonry Stone",
 		head="Uk'uxkaj Cap",neck="Twilight Torque",
