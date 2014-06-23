@@ -36,7 +36,7 @@ function job_setup()
 	info.addendumNukes = S{"Stone IV", "Water IV", "Aero IV", "Fire IV", "Blizzard IV", "Thunder IV",
 		"Stone V", "Water V", "Aero V", "Fire V", "Blizzard V", "Thunder V"}
 
-	state.Buff.Sublimation = buffactive['Sublimation: Activated'] or false
+	state.Buff['Sublimation: Activated'] = buffactive['Sublimation: Activated'] or false
 	update_active_strategems()
 end
 
@@ -64,8 +64,14 @@ function user_setup()
 
 	gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
 
+	send_command('bind ^` input /ma Stun <t>')
+
 	-- Default macro set/book
 	set_macro_page(1, 17)
+end
+
+function job_file_unload()
+	send_command('unbind ^`')
 end
 
 
@@ -225,7 +231,7 @@ function init_gear_sets()
 
 	sets.idle.Field.PDT = {main=gear.Staff.PDT,sub="Achaq Grip",ammo="Incantor Stone",
 		head="Nahtirah Hat",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Defending Ring",ring2="Paguroidea Ring",
 		back="Umbra Cape",waist="Hierarch Belt",legs="Nares Trews",feet="Herald's Gaiters"}
 
 	sets.idle.Field.Stun = {main="Apamajas II",sub="Mephitis Grip",ammo="Incantor Stone",
@@ -344,7 +350,7 @@ function job_get_spell_map(spell, default_spell_map)
 end
 
 function customize_idle_set(idleSet)
-	if state.Buff.Sublimation then
+	if state.Buff['Sublimation: Activated'] then
 		if state.IdleMode == 'Normal' then
 			idleSet = set_combine(idleSet, sets.buff.FullSublimation)
 		elseif state.IdleMode == 'PDT' then
@@ -367,11 +373,12 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if buff == "Sublimation: Activated" then
-		state.Buff.Sublimation = gain
-		handle_equipping_gear(player.status)
-	elseif state.Buff[buff] ~= nil then
+	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
+	end
+
+	if buff == "Sublimation: Activated" then
+		handle_equipping_gear(player.status)
 	end
 end
 
@@ -416,6 +423,7 @@ function job_update(cmdParams, eventArgs)
 	end
 
 	update_active_strategems()
+	update_sublimation()
 end
 
 
@@ -461,6 +469,9 @@ function update_active_strategems()
 	state.Buff['Klimaform'] = buffactive['Klimaform'] or false
 end
 
+function update_sublimation()
+	state.Buff['Sublimation: Activated'] = buffactive['Sublimation: Activated'] or false
+end
 
 -- Equip sets appropriate to the active buffs, relative to the spell being cast.
 function apply_grimoire_bonuses(spell, action, spellMap)

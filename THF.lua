@@ -15,7 +15,7 @@ function job_setup()
 	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
 	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
 	state.Buff['Feint'] = buffactive['feint'] or false
-	
+
 	-- TH mode handling
 	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
 	state.TreasureMode = 'Tag'
@@ -24,12 +24,12 @@ function job_setup()
 	tagged_mobs = T{}
 	state.th_gear_is_locked = false
 	state.show_th_message = false
-	
+
 	-- JA IDs for actions that always have TH: Provoke, Animated Flourish
 	info.ja_ids = S{35, 204}
 	-- Unblinkable JA IDs for actions that always have TH: Quick/Box/Stutter Step, Desperate/Violent Flourish
 	info.u_ja_ids = S{201, 202, 203, 205, 207}
-	
+
 	-- Register events to allow us to manage TH application.
 	windower.register_event('target change', on_target_change)
 	windower.raw_register_event('action', on_action)
@@ -40,10 +40,10 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'iLvl'}
+	options.OffenseModes = {'Normal', 'Acc', 'Mod'} -- Mod for trivially weak mobs
 	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
 	options.RangedModes = {'Normal', 'Acc'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
+	options.WeaponskillModes = {'Normal', 'Acc', 'Mod'}
 	options.IdleModes = {'Normal'}
 	options.RestingModes = {'Normal'}
 	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
@@ -51,7 +51,7 @@ function user_setup()
 
 	state.RangedMode = 'Normal'
 	state.Defense.PhysicalMode = 'Evasion'
-	
+
 	gear.default.weaponskill_neck = "Asperity Necklace"
 	gear.default.weaponskill_waist = "Caudata Belt"
 
@@ -83,18 +83,18 @@ function init_gear_sets()
 	sets.buff['Sneak Attack'] = {ammo="Qirmiz Tathlum",
 		head="Pillager's Bonnet +1",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Iuitl Gaiters +1"}
+		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
 
 	sets.buff['Trick Attack'] = {ammo="Qirmiz Tathlum",
 		head="Pillager's Bonnet +1",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Stormsoul Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Iuitl Gaiters +1"}
+		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
 
 
 	--------------------------------------
 	-- Precast sets
 	--------------------------------------
-	
+
 	-- Precast sets to enhance JAs
 	sets.precast.JA['Collaborator'] = {head="Raider's Bonnet +2"}
 	sets.precast.JA['Accomplice'] = {head="Raider's Bonnet +2"}
@@ -105,7 +105,7 @@ function init_gear_sets()
 	sets.precast.JA['Despoil'] = {legs="Raider's Culottes +2",feet="Raider's Poulaines +2"}
 	sets.precast.JA['Perfect Dodge'] = {hands="Plunderer's Armlets +1"}
 	sets.precast.JA['Feint'] = {} -- {legs="Assassin's Culottes +2"}
-	
+
 	sets.precast.JA['Sneak Attack'] = sets.buff['Sneak Attack']
 	sets.precast.JA['Trick Attack'] = sets.buff['Trick Attack']
 
@@ -114,19 +114,19 @@ function init_gear_sets()
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Whirlpool Mask",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",
-		back="Iximulew Cape",legs="Pillager's Culottes +1",feet="Iuitl Gaiters +1"}
-		
+		back="Iximulew Cape",waist="Caudata Belt",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
+
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
-	
+
 	-- TH actions
 	sets.precast.Step = sets.precast.TreasureHunter
 	sets.precast.Flourish1 = sets.precast.TreasureHunter
 	sets.precast.JA.Provoke = sets.precast.TreasureHunter
-	
-	
+
+
 	-- Fast cast sets for spells
-	
+
 	sets.precast.FC = {head="Haruspex Hat",ear2="Loquacious Earring",hands="Thaumas Gloves",ring1="Prolix Ring",legs="Enif Cosciales"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
@@ -135,9 +135,9 @@ function init_gear_sets()
 	-- Ranged snapshot gear
 	sets.precast.RA = {head="Aurore Beret",hands="Iuitl Wristbands",legs="Nahtirah Trousers",feet="Wurrukatte Boots"}
 
-	   
+
 	-- Weaponskill sets
-	
+
 	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {ammo="Thew Bomblet",
 		head="Whirlpool Mask",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -204,17 +204,17 @@ function init_gear_sets()
 		back="Toro Cape",waist=gear.ElementalBelt,legs="Shneddick Tights +1",feet="Wayfarer Clogs"}
 
 	sets.precast.WS['Aeolian Edge'].TH = set_combine(sets.precast.WS['Aeolian Edge'], sets.TreasureHunter)
-	
-	
+
+
 	--------------------------------------
 	-- Midcast sets
 	--------------------------------------
-	
+
 	sets.midcast.FastRecast = {
 		head="Whirlpool Mask",ear2="Loquacious Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",
 		back="Canny Cape",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
-		
+
 	-- Specific spells
 	sets.midcast.Utsusemi = {
 		head="Whirlpool Mask",neck="Ej Necklace",ear2="Loquacious Earring",
@@ -231,16 +231,16 @@ function init_gear_sets()
 		head="Pillager's Bonnet +1",neck="Ej Necklace",ear1="Clearview Earring",ear2="Volley Earring",
 		body="Iuitl Vest",hands="Buremte Gloves",ring1="Beeline Ring",ring2="Hajduk Ring",
 		back="Libeccio Mantle",waist="Aquiline Belt",legs="Thurandaut Tights +1",feet="Pillager's Poulaines +1"}
-		
-	
+
+
 	--------------------------------------
 	-- Idle/resting/defense sets
 	--------------------------------------
-	
+
 	-- Resting sets
 	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
 		ring1="Sheltered Ring",ring2="Paguroidea Ring"}
-	
+
 
 	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
 
@@ -253,12 +253,12 @@ function init_gear_sets()
 		head="Pillager's Bonnet +1",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pill. Armlets +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Skadi's Jambeaux +1"}
-	
+
 	sets.idle.Weak = {ammo="Thew Bomblet",
 		head="Pillager's Bonnet +1",neck="Wiglen Gorget",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Pillager's Culottes +1",feet="Skadi's Jambeaux +1"}
-	
+
 
 	-- Defense sets
 
@@ -281,16 +281,23 @@ function init_gear_sets()
 	--------------------------------------
 	-- Melee sets
 	--------------------------------------
-	
+
 	-- Normal melee group
 	sets.engaged = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Plunderer's Poulaines"}
+		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
+	-- Mod for trivial mobs
+	sets.engaged.Mod = {ammo="Thew Bomblet",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Thaumas Coat",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
+
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+
 	sets.engaged.Evasion = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -299,6 +306,7 @@ function init_gear_sets()
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Beeline Ring",ring2="Epona's Ring",
 		back="Canny Cape",waist="Hurch'lan Sash",legs="Kaabnax Trousers",feet="Qaaxo Leggings"}
+
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Twilight Torque",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Iuitl Vest",hands="Pillager's Armlets +1",ring1="Defending Ring",ring2="Epona's Ring",
@@ -382,14 +390,14 @@ end
 
 function get_custom_wsmode(spell, spellMap, defaut_wsmode)
 	local wsmode
-	
+
 	if state.Buff['Sneak Attack'] then
 		wsmode = 'SA'
 	end
 	if state.Buff['Trick Attack'] then
 		wsmode = (wsmode or '') .. 'TA'
 	end
-	
+
 	if spell.english == 'Aeolian Edge' and state.TreasureMode ~= 'None' then
 		wsmode = 'TH'
 	end
@@ -401,7 +409,7 @@ function customize_idle_set(idleSet)
 	if player.hpp < 80 then
 		idleSet = set_combine(idleSet, sets.ExtraRegen)
 	end
-	
+
 	return idleSet
 end
 
@@ -409,7 +417,7 @@ function customize_melee_set(meleeSet)
 	if state.TreasureMode == 'Fulltime' then
 		meleeSet = set_combine(meleeSet, sets.TreasureHunter)
 	end
-	
+
 	return meleeSet
 end
 
@@ -484,7 +492,7 @@ function job_update(cmdParams, eventArgs)
 	if player.status ~= 'Engaged' or cmdParams[1] == 'tagged' then
 		unlock_TH()
 	end
-	
+
 	if state.show_th_message and cmdParams[1] == 'user' then
 		print_set(tagged_mobs, 'Tagged mobs')
 	end
@@ -494,7 +502,7 @@ end
 function job_handle_equipping_gear(playerStatus, eventArgs)
 	-- Check that ranged slot is locked, if necessary
 	check_range_lock()
-	
+
 	-- Don't allow normal gear equips if SA/TA/Feint is active.
 	if state.Buff['Sneak Attack'] or state.Buff['Trick Attack'] or state.Buff['Feint'] then
 		eventArgs.handled = true
@@ -514,7 +522,7 @@ function display_current_job_state(eventArgs)
 
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..'  '
 	end
-	
+
 	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..'  WS: '..state.WeaponskillMode..'  '..
 		defenseString..'Kiting: '..on_off_names[state.Kiting]..'  TH: '..state.TreasureMode)
 

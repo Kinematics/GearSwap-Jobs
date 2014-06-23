@@ -276,7 +276,7 @@ function init_gear_sets()
 	sets.midcast['Blue Magic'].Physical = {ammo="Mavi Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
 		body="Vanir Cotehardie",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Spiral Ring",
-		back="Letalis Mantle",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
+		back="Cornflower Cape",waist="Caudata Belt",legs="Nahtirah Trousers",feet="Qaaxo Leggings"}
 
 	sets.midcast['Blue Magic'].PhysicalAcc = {ammo="Jukukik Feather",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Heartseeker Earring",ear2="Steelflash Earring",
@@ -317,7 +317,7 @@ function init_gear_sets()
 	sets.midcast['Blue Magic'].Magical = {ammo="Dosis Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Mavi Bazubands +2",ring1="Icesoul Ring",ring2="Acumen Ring",
-		back="Toro Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
+		back="Cornflower Cape",waist="Caudata Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast['Blue Magic'].Magical.Resistant = set_combine(sets.midcast['Blue Magic'].Magical,
 		{body="Vanir Cotehardie",ring1="Sangoma Ring",legs="Iuitl Tights",feet="Mavi Basmak +2"})
@@ -362,7 +362,7 @@ function init_gear_sets()
 	sets.midcast['Blue Magic'].SkillBasedBuff = {ammo="Mavi Tathlum",
 		head="Luhlaza Keffiyeh",
 		body="Assimilator's Jubbah",
-		legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
+		back="Cornflower Cape",legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 	sets.midcast['Blue Magic'].Buff = {}
 
@@ -374,7 +374,7 @@ function init_gear_sets()
 	sets.Learning = {ammo="Mavi Tathlum",hands="Assimilator's Bazubands +1"}
 		--head="Luhlaza Keffiyeh",	
 		--body="Assimilator's Jubbah",hands="Assimilator's Bazubands +1",
-		--legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
+		--back="Cornflower Cape",legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 
 	sets.latent_refresh = {waist="Fucho-no-obi"}
