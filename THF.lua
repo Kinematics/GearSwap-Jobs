@@ -329,14 +329,9 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.type == 'Step' or spell.type == 'Flourish1' then
-		if state.TreasureMode ~= 'None' then
-			equip(sets.TreasureHunter)
-		end
-	elseif spell.english=='Sneak Attack' or spell.english=='Trick Attack' then
+	if spell.english=='Sneak Attack' or spell.english=='Trick Attack' then
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
 			equip(sets.TreasureHunter)
 		end
@@ -359,27 +354,29 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
 	end
 
-	-- Update the state of certain buff JAs if the action wasn't interrupted.
-	if not spell.interrupted then
-		-- If this wasn't an action that would have used up SATA/Feint, make sure to keep gear on.
-		if spell.type ~= 'WeaponSkill' and spell.type ~= 'Step' then
-			-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
-			check_buff('Sneak Attack', eventArgs)
-			check_buff('Trick Attack', eventArgs)
-			check_buff('Feint', eventArgs)
-		end
+	-- Weaponskills wipe SATA/Feint.  Turn those state vars off before default gearing is attempted.
+	if spell.type == 'WeaponSkill' and not spell.interrupted then
+		state.Buff['Sneak Attack'] = false
+		state.Buff['Trick Attack'] = false
+		state.Buff['Feint'] = false
 	end
+end
+
+function job_post_aftercast(spell, action, spellMap, eventArgs)
+	-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
+	check_buff('Sneak Attack')
+	check_buff('Trick Attack')
+	check_buff('Feint')
 end
 
 
 -- Refactor buff checks from aftercast
-function check_buff(buff_name, eventArgs)
+function check_buff(buff_name)
 	if state.Buff[buff_name] then
 		equip(sets.buff[buff_name] or {})
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
 			equip(sets.TreasureHunter)
 		end
-		eventArgs.handled = true
 	end
 end
 

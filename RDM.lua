@@ -20,8 +20,8 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal'}
+	options.OffenseModes = {'None', 'Melee'}
+	options.DefenseModes = {'Normal', 'Defense'}
 	options.WeaponskillModes = {'Normal'}
 	options.CastingModes = {'Normal'}
 	options.IdleModes = {'Normal'}
@@ -30,8 +30,11 @@ function user_setup()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode = 'None'
 
 	MeleeWeapons = S{"Buramenk'ah"}
+
+	gear.default.obi_waist = "Sekhmet Corset"
 	
 	select_default_macro_book()
 end
@@ -94,7 +97,7 @@ function init_gear_sets()
 		body="Vitivation Tabard",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape +1",waist="Witful Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
-	sets.midcast.Cure = {sub="Genbu's Shield",
+	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		head="Gendewitha Caubeen",neck="Colossus's Torque",ear1="Roundel Earring",ear2="Loquacious Earring",
 		body="Gendewitha Bliaut",hands="Bokwus Gloves",ring1="Ephedra Ring",ring2="Sirona's Ring",
 		back="Swith Cape +1",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
@@ -110,25 +113,23 @@ function init_gear_sets()
 
 	sets.midcast.Stoneskin = {waist="Siegel Sash"}
 	
-	sets.midcast['Enfeebling Magic'] = {ammo="Impatiens",
+	sets.midcast['Enfeebling Magic'] = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Kalboron Stone",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Atrophy Tabard +1",hands="Yaoyotl Gloves",ring1="Aquasoul Ring",ring2="Sangoma Ring",
-		back="Refraction Cape",waist="Cascade Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
+		back="Refraction Cape",waist="Demonry Sash",legs="Bokwus Slops",feet="Bokwus Boots"}
 
 	sets.midcast['Dia III'] = set_combine(sets.midcast['Enfeebling Magic'], {head="Vitivation Chapeau"})
 
 	sets.midcast['Slow II'] = set_combine(sets.midcast['Enfeebling Magic'], {head="Vitivation Chapeau"})
 	
-	sets.midcast['Elemental Magic'] = {
+	sets.midcast['Elemental Magic'] = {main="Lehbrailg +2",sub="Zuuxowu Grip",ammo="Dosis Tathlum",
 		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Icesoul Ring",ring2="Acumen Ring",
 		back="Toro Cape",waist=gear.ElementalObi,legs="Hagondes Pants",feet="Hagondes Sabots"}
 		
-	gear.default.obi_waist = "Sekhmet Corset"
-
 	sets.midcast.Impact = set_combine(sets.midcast['Elemental Magic'], {head=empty,body="Twilight Cloak"})
 
-	sets.midcast['Dark Magic'] = {
+	sets.midcast['Dark Magic'] = {main="Lehbrailg +2",sub="Mephitis Grip",ammo="Kalboron Stone",
 		head="Atrophy Chapeau +1",neck="Weike Torque",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands="Gendewitha Gages",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Refraction Cape",waist="Goading Belt",legs="Bokwus Slops",feet="Bokwus Boots"}
@@ -160,18 +161,18 @@ function init_gear_sets()
 		waist="Austerity Belt",legs="Nares Trews",feet="Chelona Boots +1"}
 	
 
-	-- Idle sets (default idle set not needed since the other three are defined, but leaving for testing purposes)
-	sets.idle.Town = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
-		head="Atrophy Chapeau +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Atrophy Tabard +1",hands="Atrophy Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
-		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
-	
-	sets.idle.Field = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
+	-- Idle sets
+	sets.idle = {main="Bolelabunga",sub="Genbu's Shield",ammo="Impatiens",
 		head="Vitivation Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
 
-	sets.idle.Weak = {main="Buramenk'ah",sub="Genbu's Shield",ammo="Impatiens",
+	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",ammo="Impatiens",
+		head="Atrophy Chapeau +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
+		body="Atrophy Tabard +1",hands="Atrophy Gloves +1",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
+	
+	sets.idle.Weak = {main="Bolelabunga",sub="Genbu's Shield",ammo="Impatiens",
 		head="Vitivation Chapeau",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
 		body="Atrophy Tabard +1",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Hagondes Sabots"}
@@ -203,6 +204,11 @@ function init_gear_sets()
 		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Atrophy Tabard +1",hands="Atrophy Gloves +1",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Osmium Cuisses",feet="Atrophy Boots"}
+
+	sets.engaged.Defense = {ammo="Demonry Stone",
+		head="Atrophy Chapeau +1",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+		body="Atrophy Tabard +1",hands="Atrophy Gloves +1",ring1="Rajas Ring",ring2="K'ayres Ring",
+		back="Kayapa Cape",waist="Goading Belt",legs="Osmium Cuisses",feet="Atrophy Boots"}
 
 end
 
@@ -274,12 +280,26 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	if MeleeWeapons:contains(player.equipment.main) then
-		disable('main', 'sub')
-	else
-		enable('main', 'sub')
+
+end
+
+
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue, oldValue)
+	if stateField == 'OffenseMode' then
+		if newValue == 'Melee' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
+	elseif stateField == 'Reset' then
+		if state.OffenseMode == 'None' then
+			enable('main','sub')
+		end
 	end
 end
+
+
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
@@ -294,8 +314,8 @@ function display_current_job_state(eventArgs)
 	end
 
 	local meleeString = ''
-	if state.OffenseMode == 'Normal' then
-		--meleeString = 'Melee: Weapons locked, '
+	if state.OffenseMode == 'Melee' then
+		meleeString = 'Offense: Melee, '
 	end
 
 	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
