@@ -317,7 +317,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
-		if ((spell.target.type == 'PLAYER' and not spell.target.charmed) or (spell.target.type == 'NPC' and spell.target.in_party) and
+		if ((spell.target.type == 'PLAYER' and not spell.target.charmed) or (spell.target.type == 'NPC' and spell.target.in_party)) and
 			not state.Buff['Pianissimo'] then
 			
 			local spell_recasts = windower.ffxi.get_spell_recasts()
