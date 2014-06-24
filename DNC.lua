@@ -191,7 +191,7 @@ function init_gear_sets()
 	sets.midcast.Utsusemi = {
 		head="Felistris Mask",neck="Ej Necklace",ear2="Loquacious Earring",
 		body="Iuitl Vest",hands="Iuitl Wristbands",ring1="Beeline Ring",
-		back="Fravashi Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Toetapper Mantle",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	
 	-- Sets to return to when not performing an action.
@@ -224,7 +224,7 @@ function init_gear_sets()
 	sets.defense.Evasion = {
 		head="Felistris Mask",neck="Ej Necklace",
 		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2=gear.DarkRing.physical,
-		back="Fravashi Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Toetapper Mantle",waist="Flume Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.defense.PDT = {ammo="Iron Gobbet",
 		head="Felistris Mask",neck="Twilight Torque",
@@ -287,7 +287,7 @@ function init_gear_sets()
 	sets.engaged.Evasion.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Fravashi Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Toetapper Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.Evasion.HighHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
@@ -313,7 +313,7 @@ function init_gear_sets()
 	sets.engaged.Evasion.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
-		back="Fravashi Mantle",waist="Windbuffet Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
+		back="Toetapper Mantle",waist="Windbuffet Belt",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 	sets.engaged.Acc.Evasion.MaxHaste = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
 		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Beeline Ring",ring2="Epona's Ring",
