@@ -121,9 +121,9 @@ function init_gear_sets()
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 
-	-- TH actions
-	sets.precast.Step = sets.precast.TreasureHunter
-	sets.precast.Flourish1 = sets.precast.TreasureHunter
+	-- TH actions (steps and flourishes don't add TH by themselves)
+	--sets.precast.Step = sets.precast.TreasureHunter
+	--sets.precast.Flourish1 = sets.precast.TreasureHunter
 	sets.precast.JA.Provoke = sets.precast.TreasureHunter
 
 
@@ -607,8 +607,8 @@ function on_action(action)
 		   (state.TreasureMode == 'Tag' and action.category == 1 and state.th_gear_is_locked) or -- Tagging with a melee hit
 		   (action.category == 2 or action.category == 4) or -- Any ranged or magic action
 		   (action.category == 3 and action.param == 30) or -- Aeolian Edge
-		   (action.category == 6 and info.ja_ids:contains(action.param)) or -- Provoke, Animated Flourish
-		   (action.category == 14 and info.u_ja_ids:contains(action.param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
+		   (action.category == 6 and info.ja_ids:contains(action.param)) --or -- Provoke, Animated Flourish
+		   --(action.category == 14 and info.u_ja_ids:contains(action.param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
 		   then
 			for index,target in pairs(action.targets) do
 				if not tagged_mobs[target.id] and state.show_th_message then
