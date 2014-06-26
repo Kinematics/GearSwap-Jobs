@@ -335,7 +335,7 @@ function init_gear_sets()
 	sets.midcast['Blue Magic'].MagicAccuracy = {ammo="Mavi Tathlum",
 		head="Luhlaza Keffiyeh",neck="Ej Necklace",ear1="Lifestorm Earring",ear2="Psystorm Earring",
 		body="Vanir Cotehardie",hands=gear.macc_hagondes,ring2="Sangoma Ring",
-		back="Mirage Mantle",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
+		back="Cornflower Cape",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 
 	-- Breath Spells --
 	

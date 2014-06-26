@@ -54,6 +54,8 @@ function user_setup()
 
 	gear.default.weaponskill_neck = "Asperity Necklace"
 	gear.default.weaponskill_waist = "Caudata Belt"
+	
+	gear.AugQuiahuiz = {name="Quiahuiz Trousers", augments={'Haste+2','"Snapshot"+2','STR+8'}}
 
 	-- Additional local binds
 	send_command('bind ^` input /ja "Flee" <me>')
@@ -119,9 +121,9 @@ function init_gear_sets()
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 
-	-- TH actions
-	sets.precast.Step = sets.precast.TreasureHunter
-	sets.precast.Flourish1 = sets.precast.TreasureHunter
+	-- TH actions (steps and flourishes don't add TH by themselves)
+	--sets.precast.Step = sets.precast.TreasureHunter
+	--sets.precast.Flourish1 = sets.precast.TreasureHunter
 	sets.precast.JA.Provoke = sets.precast.TreasureHunter
 
 
@@ -163,14 +165,14 @@ function init_gear_sets()
 	sets.precast.WS['Evisceration'] = set_combine(sets.precast.WS, {ammo="Qirmiz Tathlum",
 		head="Uk'uxkaj Cap",neck="Rancor Collar",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Evisceration'].Acc = set_combine(sets.precast.WS['Evisceration'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {waist=gear.ElementalBelt})
+	sets.precast.WS['Evisceration'].Mod = set_combine(sets.precast.WS['Evisceration'], {back="Kayapa Cape",waist=gear.ElementalBelt})
 	sets.precast.WS['Evisceration'].SA = set_combine(sets.precast.WS['Evisceration'].Mod, {})
 	sets.precast.WS['Evisceration'].TA = set_combine(sets.precast.WS['Evisceration'].Mod, {})
 	sets.precast.WS['Evisceration'].SATA = set_combine(sets.precast.WS['Evisceration'].Mod, {})
 
 	sets.precast.WS["Rudra's Storm"] = set_combine(sets.precast.WS, {head="Pillager's Bonnet +1",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS["Rudra's Storm"].Acc = set_combine(sets.precast.WS["Rudra's Storm"], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS["Rudra's Storm"].Mod = set_combine(sets.precast.WS["Rudra's Storm"], {waist=gear.ElementalBelt})
+	sets.precast.WS["Rudra's Storm"].Mod = set_combine(sets.precast.WS["Rudra's Storm"], {back="Kayapa Cape",waist=gear.ElementalBelt})
 	sets.precast.WS["Rudra's Storm"].SA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",
 		body="Pillager's Vest +1",legs="Pillager's Culottes +1"})
 	sets.precast.WS["Rudra's Storm"].TA = set_combine(sets.precast.WS["Rudra's Storm"].Mod, {ammo="Qirmiz Tathlum",
@@ -180,7 +182,7 @@ function init_gear_sets()
 
 	sets.precast.WS["Shark Bite"] = set_combine(sets.precast.WS, {head="Pillager's Bonnet +1",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Shark Bite'].Acc = set_combine(sets.precast.WS['Shark Bite'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Shark Bite'].Mod = set_combine(sets.precast.WS['Shark Bite'], {waist=gear.ElementalBelt})
+	sets.precast.WS['Shark Bite'].Mod = set_combine(sets.precast.WS['Shark Bite'], {back="Kayapa Cape",waist=gear.ElementalBelt})
 	sets.precast.WS['Shark Bite'].SA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",
 		body="Pillager's Vest +1",legs="Pillager's Culottes +1"})
 	sets.precast.WS['Shark Bite'].TA = set_combine(sets.precast.WS['Shark Bite'].Mod, {ammo="Qirmiz Tathlum",
@@ -190,7 +192,7 @@ function init_gear_sets()
 
 	sets.precast.WS['Mandalic Stab'] = set_combine(sets.precast.WS, {head="Pillager's Bonnet +1",ear1="Brutal Earring",ear2="Moonshade Earring"})
 	sets.precast.WS['Mandalic Stab'].Acc = set_combine(sets.precast.WS['Mandalic Stab'], {ammo="Honed Tathlum", back="Letalis Mantle"})
-	sets.precast.WS['Mandalic Stab'].Mod = set_combine(sets.precast.WS['Mandalic Stab'], {waist=gear.ElementalBelt})
+	sets.precast.WS['Mandalic Stab'].Mod = set_combine(sets.precast.WS['Mandalic Stab'], {back="Kayapa Cape",waist=gear.ElementalBelt})
 	sets.precast.WS['Mandalic Stab'].SA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",
 		body="Pillager's Vest +1",legs="Pillager's Culottes +1"})
 	sets.precast.WS['Mandalic Stab'].TA = set_combine(sets.precast.WS['Mandalic Stab'].Mod, {ammo="Qirmiz Tathlum",
@@ -287,16 +289,22 @@ function init_gear_sets()
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Qaaxo Harness",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
-	-- Mod for trivial mobs
-	sets.engaged.Mod = {ammo="Thew Bomblet",
-		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Thaumas Coat",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
-		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
-
 	sets.engaged.Acc = {ammo="Honed Tathlum",
 		head="Whirlpool Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Letalis Mantle",waist="Hurch'lan Sash",legs="Manibozho Brais",feet="Qaaxo Leggings"}
+		
+	-- Mod set for trivial mobs (Skadi+1)
+	sets.engaged.Mod = {ammo="Thew Bomblet",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Skadi's Cuirie +1",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Patentia Sash",legs=gear.AugQuiahuiz,feet="Plunderer's Poulaines +1"}
+
+	-- Mod set for trivial mobs (Thaumas)
+	sets.engaged.Mod2 = {ammo="Thew Bomblet",
+		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+		body="Thaumas Coat",hands="Pillager's Armlets +1",ring1="Rajas Ring",ring2="Epona's Ring",
+		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
 
 	sets.engaged.Evasion = {ammo="Thew Bomblet",
 		head="Felistris Mask",neck="Ej Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
@@ -599,8 +607,8 @@ function on_action(action)
 		   (state.TreasureMode == 'Tag' and action.category == 1 and state.th_gear_is_locked) or -- Tagging with a melee hit
 		   (action.category == 2 or action.category == 4) or -- Any ranged or magic action
 		   (action.category == 3 and action.param == 30) or -- Aeolian Edge
-		   (action.category == 6 and info.ja_ids:contains(action.param)) or -- Provoke, Animated Flourish
-		   (action.category == 14 and info.u_ja_ids:contains(action.param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
+		   (action.category == 6 and info.ja_ids:contains(action.param)) --or -- Provoke, Animated Flourish
+		   --(action.category == 14 and info.u_ja_ids:contains(action.param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
 		   then
 			for index,target in pairs(action.targets) do
 				if not tagged_mobs[target.id] and state.show_th_message then
