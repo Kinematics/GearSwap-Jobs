@@ -23,7 +23,6 @@ function job_setup()
 	-- Tracking vars for TH.
 	tagged_mobs = T{}
 	state.th_gear_is_locked = false
-	state.show_th_message = false
 
 	-- JA IDs for actions that always have TH: Provoke, Animated Flourish
 	info.ja_ids = S{35, 204}
@@ -434,7 +433,7 @@ end
 function job_state_change(stateField, newValue, oldValue)
 	if stateField == 'TreasureMode' then
 		if newValue == 'None' then
-			if state.show_th_message then add_to_chat(123,'TH Mode set to None. Unlocking gear.') end
+			if _settings.debug_mode then add_to_chat(123,'TH Mode set to None. Unlocking gear.') end
 			unlock_TH()
 		elseif oldValue == 'None' then
 			TH_for_first_hit()
@@ -457,10 +456,10 @@ end
 -- On engaging a mob, attempt to add TH gear.  For any other status change, unlock TH gear slots.
 function job_status_change(newStatus, oldStatus, eventArgs)
 	if newStatus == 'Engaged' then
-		if state.show_th_message then add_to_chat(123,'Engaging '..player.target.id..'.') end
+		if _settings.debug_mode then add_to_chat(123,'Engaging '..player.target.id..'.') end
 		TH_for_first_hit()
 	else
-		if state.show_th_message then add_to_chat(123,'Disengaging. Unlocking TH.') end
+		if _settings.debug_mode then add_to_chat(123,'Disengaging. Unlocking TH.') end
 		unlock_TH()
 	end
 end
@@ -473,7 +472,7 @@ function on_target_change(target_index)
 		-- If current player.target.index isn't the same as the target_index parameter,
 		-- that indicates that the sub-target cursor is being used.  Ignore it.
 		if player.target.index == target_index then
-			if state.show_th_message then add_to_chat(123,'Changing target to '..player.target.id..'.') end
+			if _settings.debug_mode then add_to_chat(123,'Changing target to '..player.target.id..'.') end
 			TH_for_first_hit()
 			handle_equipping_gear(player.status)
 		end
@@ -483,7 +482,7 @@ end
 
 -- Clear out the entire tagged mobs table when zoning.
 function on_zone_change(new_zone, old_zone)
-	if state.show_th_message then add_to_chat(123,'Zoning. Clearing tagged mobs table.') end
+	if _settings.debug_mode then add_to_chat(123,'Zoning. Clearing tagged mobs table.') end
 	tagged_mobs:clear()
 end
 
@@ -498,7 +497,7 @@ function job_update(cmdParams, eventArgs)
 		unlock_TH()
 	end
 
-	if state.show_th_message and cmdParams[1] == 'user' then
+	if _settings.debug_mode and cmdParams[1] == 'user' then
 		print_set(tagged_mobs, 'Tagged mobs')
 	end
 end
@@ -586,11 +585,11 @@ end
 -- For any active TH mode, if we haven't already tagged this target, equip TH gear and lock slots until we manage to hit it.
 function TH_for_first_hit()
 	if state.TreasureMode ~= 'None' and not tagged_mobs[player.target.id] then
-		if state.show_th_message then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.') end
+		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.') end
 		equip(sets.TreasureHunter)
 		lock_TH()
 	else
-		if state.show_th_message then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.  Has already been tagged. Unlocking TH.') end
+		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.  Has already been tagged. Unlocking TH.') end
 		unlock_TH()
 	end
 end
@@ -611,7 +610,7 @@ function on_action(action)
 		   --(action.category == 14 and info.u_ja_ids:contains(action.param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
 		   then
 			for index,target in pairs(action.targets) do
-				if not tagged_mobs[target.id] and state.show_th_message then
+				if not tagged_mobs[target.id] and _settings.debug_mode then
 					add_to_chat(123,'Mob '..target.id..' hit. Adding to tagged mobs table.')
 				end
 				tagged_mobs[target.id] = os.time()
@@ -644,7 +643,7 @@ function on_action_message(actor_id, target_id, actor_index, target_index, messa
 		-- 6 == actor defeats target
 		-- 20 == target falls to the ground
 		if message_id == 6 or message_id == 20 then
-			if state.show_th_message then add_to_chat(123,'Mob '..target_id..' died. Removing from tagged mobs table.') end
+			if _settings.debug_mode then add_to_chat(123,'Mob '..target_id..' died. Removing from tagged mobs table.') end
 			tagged_mobs[target_id] = nil
 		end
 	end
@@ -664,7 +663,7 @@ function cleanup_tagged_mobs()
 		local time_since_last_action = current_time - action_time
 		if time_since_last_action > 180 then
 			remove_mobs:add(target_id)
-			if state.show_th_message then add_to_chat(123,'Over 3 minutes since last action on mob '..target_id..'. Removing from tagged mobs list.') end
+			if _settings.debug_mode then add_to_chat(123,'Over 3 minutes since last action on mob '..target_id..'. Removing from tagged mobs list.') end
 		end
 	end
 	-- Clean out mobs flagged for removal.
