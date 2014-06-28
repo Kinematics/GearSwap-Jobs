@@ -32,7 +32,7 @@ function job_setup()
 	-- Register events to allow us to manage TH application.
 	windower.register_event('target change', on_target_change)
 	windower.raw_register_event('action', on_action)
-	windower.raw_register_event('action message', on_action_message)
+	windower.raw_register_event('incoming chunk', on_incoming_chunk)
 end
 
 
@@ -458,8 +458,8 @@ function job_status_change(newStatus, oldStatus, eventArgs)
 	if newStatus == 'Engaged' then
 		if _settings.debug_mode then add_to_chat(123,'Engaging '..player.target.id..'.') end
 		TH_for_first_hit()
-	else
-		if _settings.debug_mode then add_to_chat(123,'Disengaging. Unlocking TH.') end
+	elseif oldStatus == 'Engaged' then
+		if _settings.debug_mode and state.th_gear_is_locked then add_to_chat(123,'Disengaging. Unlocking TH.') end
 		unlock_TH()
 	end
 end
@@ -495,6 +495,8 @@ end
 function job_update(cmdParams, eventArgs)
 	if player.status ~= 'Engaged' or cmdParams[1] == 'tagged' then
 		unlock_TH()
+	elseif player.status == 'Engaged' and cmdParams[1] == 'user' then
+		TH_for_first_hit()
 	end
 
 	if _settings.debug_mode and cmdParams[1] == 'user' then
@@ -584,12 +586,14 @@ end
 
 -- For any active TH mode, if we haven't already tagged this target, equip TH gear and lock slots until we manage to hit it.
 function TH_for_first_hit()
-	if state.TreasureMode ~= 'None' and not tagged_mobs[player.target.id] then
+	if state.TreasureMode == 'None' then
+		unlock_TH()
+	elseif not tagged_mobs[player.target.id] then
 		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.') end
 		equip(sets.TreasureHunter)
 		lock_TH()
-	else
-		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.  Has already been tagged. Unlocking TH.') end
+	elseif state.th_gear_is_locked then
+		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.  Target has already been tagged.') end
 		unlock_TH()
 	end
 end
@@ -636,15 +640,23 @@ function on_action(action)
 end
 
 
--- If we're notified of a mob's death, remove it from the list of tagged mobs.
-function on_action_message(actor_id, target_id, actor_index, target_index, message_id, param_1, param_2, param_3)
-	-- Remove mobs that die from our tagged mobs list.
-	if tagged_mobs[target_id] then
-		-- 6 == actor defeats target
-		-- 20 == target falls to the ground
-		if message_id == 6 or message_id == 20 then
-			if _settings.debug_mode then add_to_chat(123,'Mob '..target_id..' died. Removing from tagged mobs table.') end
-			tagged_mobs[target_id] = nil
+-- Need to use this event handler to listen for deaths in case Battlemod is loaded,
+-- because Battlemod blocks the 'action message' event.
+--
+-- This function removes mobs from our tracking table when they die.
+function on_incoming_chunk(id, data, modified, injected, blocked)
+    if id == 0x29 then
+        local target_id = data:unpack('I',0x09)
+        local message_id = data:unpack('H',0x19)%32768
+
+		-- Remove mobs that die from our tagged mobs list.
+		if tagged_mobs[target_id] then
+			-- 6 == actor defeats target
+			-- 20 == target falls to the ground
+			if message_id == 6 or message_id == 20 then
+				if _settings.debug_mode then add_to_chat(123,'Mob '..target_id..' died. Removing from tagged mobs table.') end
+				tagged_mobs[target_id] = nil
+			end
 		end
 	end
 end
