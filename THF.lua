@@ -114,7 +114,7 @@ function init_gear_sets()
 	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {ammo="Sonia's Plectrum",
 		head="Whirlpool Mask",
-		body="Pillager's Vest +1",hands="Pillager's Armlets +1",
+		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Asklepian Ring",
 		back="Iximulew Cape",waist="Caudata Belt",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
 
 	-- Don't need any special gear for Healing Waltz.
