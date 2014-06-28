@@ -606,7 +606,7 @@ function on_action(action)
 	if action.actor_id == player.id and state.TreasureMode ~= 'None' then
 		-- category == 1=melee, 2=ranged, 3=weaponskill, 4=spell, 6=job ability, 14=unblinkable JA
 		if state.TreasureMode == 'Fulltime' or
-		   (state.TreasureMode == 'SATA' and (state.Buff['Sneak Attack'] or state.Buff['Trick Attack']) and (action.category == 1 or action.category == 3)) or
+		   (state.TreasureMode == 'SATA' and (action.category == 1 or ((state.Buff['Sneak Attack'] or state.Buff['Trick Attack']) and action.category == 3))) or
 		   (state.TreasureMode == 'Tag' and action.category == 1 and state.th_gear_is_locked) or -- Tagging with a melee hit
 		   (action.category == 2 or action.category == 4) or -- Any ranged or magic action
 		   (action.category == 3 and action.param == 30) or -- Aeolian Edge
