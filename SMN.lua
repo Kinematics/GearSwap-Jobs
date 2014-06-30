@@ -135,7 +135,8 @@ function user_setup()
 	options.MagicalDefenseModes = {'MDT'}
 
 	state.Defense.PhysicalMode = 'PDT'
-
+	gear.perp_staff = {name=""}
+	
 	select_default_macro_book()
 end
 
@@ -324,6 +325,8 @@ function init_gear_sets()
 	-- Diabolos's Rope doesn't gain us anything at this time
 	--sets.perp.Diabolos = {waist="Diabolos's Rope"}
 	sets.perp.Alexander = sets.midcast.Pet.BloodPactWard
+
+	sets.perp.staff_and_grip = {main=gear.perp_staff,sub="Achaq Grip"}
 	
 	-- Defense sets
 	sets.defense.PDT = {main=gear.Staff.PDT,
@@ -339,6 +342,7 @@ function init_gear_sets()
 	sets.Kiting = {feet="Herald's Gaiters"}
 	
 	sets.latent_refresh = {waist="Fucho-no-obi"}
+	
 
 	--------------------------------------
 	-- Engaged sets
@@ -397,9 +401,9 @@ function customize_idle_set(idleSet)
 		if sets.perp[pet.name] then
 			idleSet = set_combine(idleSet, sets.perp[pet.name])
 		end
-		local perp_staff = elements.perpetuance_staff_of[pet.element]
-		if perp_staff and (player.inventory[perp_staff] or player.wardrobe[perp_staff]) then
-			idleSet = set_combine(idleSet, {main=perp_staff,sub="Achaq Grip"})
+		gear.perp_staff.name = elements.perpetuance_staff_of[pet.element]
+		if gear.perp_staff.name and (player.inventory[gear.perp_staff.name] or player.wardrobe[gear.perp_staff.name]) then
+			idleSet = set_combine(idleSet, sets.perp.staff_and_grip)
 		end
 		if state.Buff["Avatar's Favor"] and avatars:contains(pet.name) then
 			idleSet = set_combine(idleSet, sets.idle.Avatar.Favor)
@@ -657,8 +661,8 @@ function handle_pacts(cmdParams)
 	end
 
 	if not pet.isvalid then
-		add_to_chat(122,'No avatar currently available. Returning to macro set 4.')
-		set_macro_page(4)
+		add_to_chat(122,'No avatar currently available. Returning to default macro set.')
+		select_default_macro_book()
 		return
 	end
 
