@@ -365,6 +365,12 @@ function init_gear_sets()
 		back="Cornflower Cape",legs="Mavi Tayt +2",feet="Luhlaza Charuqs"}
 
 	sets.midcast['Blue Magic'].Buff = {}
+	
+	sets.midcast.Protect = {ring1="Sheltered Ring"}
+	sets.midcast.Protectra = {ring1="Sheltered Ring"}
+	sets.midcast.Shell = {ring1="Sheltered Ring"}
+	sets.midcast.Shellra = {ring1="Sheltered Ring"}
+	
 
 	
 	
@@ -388,12 +394,12 @@ function init_gear_sets()
 	-- Idle sets
 	sets.idle = {ammo="Impatiens",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hagondes Coat",hands="Serpentes Cuffs",ring1="Defending Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Serpentes Sabots"}
 
 	sets.idle.PDT = {ammo="Impatiens",
 		head="Whirlpool Mask",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
-		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+		body="Hagondes Coat",hands="Iuitl Wristbands",ring1="Defending Ring",ring2="Paguroidea Ring",
 		back="Shadow Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Iuitl Gaiters +1"}
 
 	sets.idle.Town = {main="Buramenk'ah",ammo="Impatiens",
