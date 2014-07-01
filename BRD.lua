@@ -87,8 +87,7 @@ function user_setup()
 	send_command('bind ^` gs c cycle Daurdabla')
 	send_command('bind !` input /ma "Chocobo Mazurka" <me>')
 
-	-- Default macro set/book
-	set_macro_page(2, 18)
+	select_default_macro_book()
 end
 
 
@@ -625,6 +624,11 @@ function daur_song_gap()
 	return false
 end
 
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	set_macro_page(2, 18)
+end
 
 
 -- Examine equipment to determine what our current TP weapon is.
