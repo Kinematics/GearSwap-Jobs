@@ -250,16 +250,16 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs=gear.AugQuiahuiz,feet="Iuitl Gaiters +1"}
 
 	sets.engaged.Fodder = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Charis Casaque +2",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs=gear.AugQuiahuiz,feet="Horos Toe Shoes"}
 	sets.engaged.Fodder.Evasion = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs=gear.AugQuiahuiz,feet="Horos Toe Shoes"}
 
 	sets.engaged.Acc = {ammo="Honed Tathlum",
@@ -286,16 +286,16 @@ function init_gear_sets()
 	-- Custom melee group: High Haste (2x March or Haste)
 	sets.engaged.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
 
 	sets.engaged.Fodder.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Charis Casaque +2",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Charis Casaque +2",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs=gear.AugQuiahuiz,feet="Horos Toe Shoes"}
 	sets.engaged.Fodder.Evasion.HighHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Charis Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Iuitl Gaiters +1"}
 
 	sets.engaged.Acc.HighHaste = {ammo="Honed Tathlum",
@@ -323,17 +323,17 @@ function init_gear_sets()
 	-- Custom melee group: Max Haste (2x March + Haste)
 	sets.engaged.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Windbuffet Belt",legs=gear.AugQuiahuiz,feet="Manibozho Boots"}
 
 	-- Getting Marches+Haste from Trust NPCs, doesn't cap delay.
 	sets.engaged.Fodder.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Thaumas Coat",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Thaumas Coat",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs=gear.AugQuiahuiz,feet="Horos Toe Shoes"}
 	sets.engaged.Fodder.Evasion.MaxHaste = {ammo="Charis Feather",
 		head="Felistris Mask",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-		body="Qaaxo Harness",hands="Iuitl Wristbands",ring1="Rajas Ring",ring2="Epona's Ring",
+		body="Qaaxo Harness",hands="Maxixi Bangles",ring1="Rajas Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Kaabnax Trousers",feet="Manibozho Boots"}
 
 	sets.engaged.Acc.MaxHaste = {ammo="Honed Tathlum",

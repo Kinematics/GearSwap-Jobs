@@ -40,8 +40,7 @@ function user_setup()
 
     gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
 
-    -- Default macro set/book
-    set_macro_page(1, 15)
+	select_default_macro_book()
 end
 
 
@@ -366,4 +365,8 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+    set_macro_page(1, 15)
+end
 

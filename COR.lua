@@ -59,8 +59,7 @@ function user_setup()
 	send_command('bind !` input /ja "Bolter\'s Roll" <me>')
 
 
-	-- Default macro set/book
-	set_macro_page(1, 19)
+	select_default_macro_book()
 end
 
 
@@ -493,3 +492,9 @@ function do_bullet_checks(spell, spellMap, eventArgs)
 		state.warned = false
 	end
 end
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	set_macro_page(1, 19)
+end
+
