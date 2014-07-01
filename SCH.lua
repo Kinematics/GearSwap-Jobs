@@ -66,8 +66,7 @@ function user_setup()
 
 	send_command('bind ^` input /ma Stun <t>')
 
-	-- Default macro set/book
-	set_macro_page(1, 17)
+	select_default_macro_book()
 end
 
 function job_file_unload()
@@ -590,5 +589,11 @@ function get_current_strategem_count()
 	local currentCharges = math.floor(maxStrategems - maxStrategems * stratsRecast / fullRechargeTime)
 
 	return currentCharges
+end
+
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	set_macro_page(1, 17)
 end
 
