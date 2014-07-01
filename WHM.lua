@@ -32,11 +32,8 @@ function user_setup()
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
 
-
-	-- Default macro set/book
-	set_macro_page(4, 14)
+	select_default_macro_book()
 end
-
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
@@ -394,4 +391,10 @@ end
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	-- Default macro set/book
+	set_macro_page(4, 14)
+end
 
