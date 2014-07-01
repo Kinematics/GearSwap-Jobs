@@ -2,8 +2,6 @@
 -- Initialization function that defines sets and variables to be used.
 -------------------------------------------------------------------------------------------------------------------
 
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
-
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
@@ -15,24 +13,14 @@ function job_setup()
 	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
 	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
 	state.Buff['Feint'] = buffactive['feint'] or false
+	
+	include('Mote-TreasureHunter')
 
-	-- TH mode handling
-	options.TreasureModes = {'None','Tag','SATA','Fulltime'}
-	state.TreasureMode = 'Tag'
-
-	-- Tracking vars for TH.
-	tagged_mobs = T{}
-	state.th_gear_is_locked = false
-
+	-- For th_action_check():
 	-- JA IDs for actions that always have TH: Provoke, Animated Flourish
-	info.ja_ids = S{35, 204}
+	info.default_ja_ids = S{35, 204}
 	-- Unblinkable JA IDs for actions that always have TH: Quick/Box/Stutter Step, Desperate/Violent Flourish
-	info.u_ja_ids = S{201, 202, 203, 205, 207}
-
-	-- Register events to allow us to manage TH application.
-	windower.register_event('target change', on_target_change)
-	windower.raw_register_event('action', on_action)
-	windower.raw_register_event('incoming chunk', on_incoming_chunk)
+	info.default_u_ja_ids = S{201, 202, 203, 205, 207}
 end
 
 
@@ -64,7 +52,6 @@ function user_setup()
 	select_default_macro_book()
 end
 
-
 -- Called when this job file is unloaded (eg: job change)
 function job_file_unload()
 	send_command('unbind ^`')
@@ -74,7 +61,7 @@ end
 -- Define sets and vars used by this job file.
 function init_gear_sets()
 	--------------------------------------
-	-- Special sets
+	-- Special sets (required by rules)
 	--------------------------------------
 
 	sets.TreasureHunter = {hands="Plunderer's Armlets +1", waist="Chaac Belt", feet="Raider's Poulaines +2"}
@@ -90,6 +77,11 @@ function init_gear_sets()
 		head="Pillager's Bonnet +1",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Pillager's Vest +1",hands="Pillager's Armlets +1",ring1="Stormsoul Ring",ring2="Epona's Ring",
 		back="Atheling Mantle",waist="Patentia Sash",legs="Pillager's Culottes +1",feet="Plunderer's Poulaines +1"}
+
+	-- Actions we want to use to tag TH.
+	sets.precast.Step = sets.TreasureHunter
+	sets.precast.Flourish1 = sets.TreasureHunter
+	sets.precast.JA.Provoke = sets.TreasureHunter
 
 
 	--------------------------------------
@@ -120,14 +112,8 @@ function init_gear_sets()
 	-- Don't need any special gear for Healing Waltz.
 	sets.precast.Waltz['Healing Waltz'] = {}
 
-	-- TH actions (steps and flourishes don't add TH by themselves)
-	sets.precast.Step = sets.TreasureHunter
-	sets.precast.Flourish1 = sets.TreasureHunter
-	sets.precast.JA.Provoke = sets.TreasureHunter
-
 
 	-- Fast cast sets for spells
-
 	sets.precast.FC = {head="Haruspex Hat",ear2="Loquacious Earring",hands="Thaumas Gloves",ring1="Prolix Ring",legs="Enif Cosciales"}
 
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
@@ -338,7 +324,9 @@ end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.english=='Sneak Attack' or spell.english=='Trick Attack' then
+	if spell.english == 'Aeolian Edge' and state.TreasureMode ~= 'None' then
+		equip(sets.TreasureHunter)
+	elseif spell.english=='Sneak Attack' or spell.english=='Trick Attack' or spell.type == 'WeaponSkill' then
 		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
 			equip(sets.TreasureHunter)
 		end
@@ -347,13 +335,10 @@ end
 
 -- Run after the general midcast() set is constructed.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if state.TreasureMode ~= 'None' then
-		if (spell.action_type == 'Ranged Attack' or spell.action_type == 'Magic') and spell.target.type == 'MONSTER' then
-			equip(sets.TreasureHunter)
-		end
+	if state.TreasureMode ~= 'None' and spell.action_type == 'Ranged Attack' then
+		equip(sets.TreasureHunter)
 	end
 end
-
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
@@ -369,22 +354,11 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 	end
 end
 
+-- Called after the default aftercast handling is complete.
 function job_post_aftercast(spell, action, spellMap, eventArgs)
-	-- If SA/TA/Feint are active, put appropriate gear back on (including TH gear).
-	check_buff('Sneak Attack')
-	check_buff('Trick Attack')
-	check_buff('Feint')
-end
-
-
--- Refactor buff checks from aftercast
-function check_buff(buff_name)
-	if state.Buff[buff_name] then
-		equip(sets.buff[buff_name] or {})
-		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
-			equip(sets.TreasureHunter)
-		end
-	end
+	-- If Feint is active, put that gear set on on top of regular gear.
+	-- This includes overlaying SATA gear.
+	check_buff('Feint', eventArgs)
 end
 
 
@@ -402,12 +376,21 @@ function get_custom_wsmode(spell, spellMap, defaut_wsmode)
 		wsmode = (wsmode or '') .. 'TA'
 	end
 
-	if spell.english == 'Aeolian Edge' and state.TreasureMode ~= 'None' then
-		wsmode = 'TH'
-	end
-
 	return wsmode
 end
+
+
+-- Called any time we attempt to handle automatic gear equips (ie: engaged or idle gear).
+function job_handle_equipping_gear(playerStatus, eventArgs)
+	-- Check that ranged slot is locked, if necessary
+	check_range_lock()
+
+	-- Check for SATA when equipping gear.  If either is active, equip
+	-- that gear specifically, and block equipping default gear.
+	check_buff('Sneak Attack', eventArgs)
+	check_buff('Trick Attack', eventArgs)
+end
+
 
 function customize_idle_set(idleSet)
 	if player.hpp < 80 then
@@ -416,6 +399,7 @@ function customize_idle_set(idleSet)
 
 	return idleSet
 end
+
 
 function customize_melee_set(meleeSet)
 	if state.TreasureMode == 'Fulltime' then
@@ -429,61 +413,16 @@ end
 -- General hooks for change events.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called if we change any user state fields.
-function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'TreasureMode' then
-		if newValue == 'None' then
-			if _settings.debug_mode then add_to_chat(123,'TH Mode set to None. Unlocking gear.') end
-			unlock_TH()
-		elseif oldValue == 'None' then
-			TH_for_first_hit()
-		end
-	end
-end
-
-
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
 		state.Buff[buff] = gain
-		handle_equipping_gear(player.status)
-	end
-end
-
-
--- On engaging a mob, attempt to add TH gear.  For any other status change, unlock TH gear slots.
-function job_status_change(newStatus, oldStatus, eventArgs)
-	if newStatus == 'Engaged' then
-		if _settings.debug_mode then add_to_chat(123,'Engaging '..player.target.id..'.') end
-		TH_for_first_hit()
-	elseif oldStatus == 'Engaged' then
-		if _settings.debug_mode and state.th_gear_is_locked then add_to_chat(123,'Disengaging. Unlocking TH.') end
-		unlock_TH()
-	end
-end
-
-
--- On changing targets, attempt to add TH gear.
-function on_target_change(target_index)
-	-- Only care about changing targets while we're engaged, either manually or via current target death.
-	if player.status == 'Engaged' then
-		-- If current player.target.index isn't the same as the target_index parameter,
-		-- that indicates that the sub-target cursor is being used.  Ignore it.
-		if player.target.index == target_index then
-			if _settings.debug_mode then add_to_chat(123,'Changing target to '..player.target.id..'.') end
-			TH_for_first_hit()
+		if not midaction() then
 			handle_equipping_gear(player.status)
 		end
 	end
-end
-
-
--- Clear out the entire tagged mobs table when zoning.
-function on_zone_change(new_zone, old_zone)
-	if _settings.debug_mode then add_to_chat(123,'Zoning. Clearing tagged mobs table.') end
-	tagged_mobs:clear()
 end
 
 
@@ -493,26 +432,7 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-	if player.status ~= 'Engaged' or cmdParams[1] == 'tagged' then
-		unlock_TH()
-	elseif player.status == 'Engaged' and cmdParams[1] == 'user' then
-		TH_for_first_hit()
-	end
-
-	if _settings.debug_mode and cmdParams[1] == 'user' then
-		print_set(tagged_mobs, 'Tagged mobs')
-	end
-end
-
--- Called any time we attempt to handle automatic gear equips (ie: engaged or idle gear).
-function job_handle_equipping_gear(playerStatus, eventArgs)
-	-- Check that ranged slot is locked, if necessary
-	check_range_lock()
-
-	-- Don't allow normal gear equips if SA/TA/Feint is active.
-	if state.Buff['Sneak Attack'] or state.Buff['Trick Attack'] or state.Buff['Feint'] then
-		eventArgs.handled = true
-	end
+	th_update(cmdParams, eventArgs)
 end
 
 
@@ -539,6 +459,32 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+-- State buff checks that will equip buff gear and mark the event as handled.
+function check_buff(buff_name, eventArgs)
+	if state.Buff[buff_name] then
+		equip(sets.buff[buff_name] or {})
+		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
+			equip(sets.TreasureHunter)
+		end
+		eventArgs.handled = true
+	end
+end
+
+
+-- Check for various actions that we've specified in user code as being used with TH gear.
+-- This will only ever be called if TreasureMode is not 'None'.
+-- Category and Param are as specified in the action event packet.
+function th_action_check(category, param)
+	if category == 2 or -- any ranged attack
+		--category == 4 or -- any magic action
+		(category == 3 and param == 30) or -- Aeolian Edge
+		(category == 6 and info.default_ja_ids:contains(param)) or -- Provoke, Animated Flourish
+		(category == 14 and info.default_u_ja_ids:contains(param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
+		then return true
+	end
+end
+
+
 -- Function to lock the ranged slot if we have a ranged weapon equipped.
 function check_range_lock()
 	if player.equipment.range ~= 'empty' then
@@ -560,127 +506,6 @@ function select_default_macro_book()
 		set_macro_page(4, 5)
 	else
 		set_macro_page(2, 5)
-	end
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- Functions and events to support TH handling.
--------------------------------------------------------------------------------------------------------------------
-
--- Set locked TH flag to true, and disable relevant gear slots.
-function lock_TH()
-	state.th_gear_is_locked = true
-	for slot,item in pairs(sets.TreasureHunter) do
-		disable(slot)
-	end
-end
-
--- Set locked TH flag to false, and enable relevant gear slots.
-function unlock_TH()
-	state.th_gear_is_locked = false
-	for slot,item in pairs(sets.TreasureHunter) do
-		enable(slot)
-	end
-end
-
--- For any active TH mode, if we haven't already tagged this target, equip TH gear and lock slots until we manage to hit it.
-function TH_for_first_hit()
-	if state.TreasureMode == 'None' then
-		unlock_TH()
-	elseif not tagged_mobs[player.target.id] then
-		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.') end
-		equip(sets.TreasureHunter)
-		lock_TH()
-	elseif state.th_gear_is_locked then
-		if _settings.debug_mode then add_to_chat(123,'Prepping for first hit on '..player.target.id..'.  Target has already been tagged.') end
-		unlock_TH()
-	end
-end
-
-
--- On any action event, mark mobs that we tag with TH.  Also, update the last time tagged mobs were acted on.
-function on_action(action)
-	--add_to_chat(123,'cat='..action.category..',param='..action.param)
-	-- If player takes action, adjust TH tagging information
-	if action.actor_id == player.id and state.TreasureMode ~= 'None' then
-		-- category == 1=melee, 2=ranged, 3=weaponskill, 4=spell, 6=job ability, 14=unblinkable JA
-		if state.TreasureMode == 'Fulltime' or
-		   (state.TreasureMode == 'SATA' and (action.category == 1 or ((state.Buff['Sneak Attack'] or state.Buff['Trick Attack']) and action.category == 3))) or
-		   (state.TreasureMode == 'Tag' and action.category == 1 and state.th_gear_is_locked) or -- Tagging with a melee hit
-		   (action.category == 2 or action.category == 4) or -- Any ranged or magic action
-		   (action.category == 3 and action.param == 30) or -- Aeolian Edge
-		   (action.category == 6 and info.ja_ids:contains(action.param)) or -- Provoke, Animated Flourish
-		   (action.category == 14 and info.u_ja_ids:contains(action.param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
-		   then
-			for index,target in pairs(action.targets) do
-				if not tagged_mobs[target.id] and _settings.debug_mode then
-					add_to_chat(123,'Mob '..target.id..' hit. Adding to tagged mobs table.')
-				end
-				tagged_mobs[target.id] = os.time()
-			end
-
-			if state.th_gear_is_locked then
-				send_command('gs c update tagged')
-			end
-		end
-	elseif tagged_mobs[action.actor_id] then
-		-- If mob acts, keep an update of last action time for TH bookkeeping
-		tagged_mobs[action.actor_id] = os.time()
-	else
-		-- If anyone else acts, check if any of the targets are our tagged mobs
-		for index,target in pairs(action.targets) do
-			if tagged_mobs[target.id] then
-				tagged_mobs[target.id] = os.time()
-			end
-		end
-	end
-
-	cleanup_tagged_mobs()
-end
-
-
--- Need to use this event handler to listen for deaths in case Battlemod is loaded,
--- because Battlemod blocks the 'action message' event.
---
--- This function removes mobs from our tracking table when they die.
-function on_incoming_chunk(id, data, modified, injected, blocked)
-    if id == 0x29 then
-        local target_id = data:unpack('I',0x09)
-        local message_id = data:unpack('H',0x19)%32768
-
-		-- Remove mobs that die from our tagged mobs list.
-		if tagged_mobs[target_id] then
-			-- 6 == actor defeats target
-			-- 20 == target falls to the ground
-			if message_id == 6 or message_id == 20 then
-				if _settings.debug_mode then add_to_chat(123,'Mob '..target_id..' died. Removing from tagged mobs table.') end
-				tagged_mobs[target_id] = nil
-			end
-		end
-	end
-end
-
-
--- Remove mobs that we've marked as tagged with TH if we haven't seen any activity from or on them
--- for over 3 minutes.  This is to handle deagros, player deaths, or other random stuff where the
--- mob is lost, but doesn't die.
-function cleanup_tagged_mobs()
-	-- If it's been more than 3 minutes since an action on or by a tagged mob,
-	-- remove them from the tagged mobs list.
-	local current_time = os.time()
-	local remove_mobs = S{}
-	-- Search list and flag old entries.
-	for target_id,action_time in pairs(tagged_mobs) do
-		local time_since_last_action = current_time - action_time
-		if time_since_last_action > 180 then
-			remove_mobs:add(target_id)
-			if _settings.debug_mode then add_to_chat(123,'Over 3 minutes since last action on mob '..target_id..'. Removing from tagged mobs list.') end
-		end
-	end
-	-- Clean out mobs flagged for removal.
-	for mob_id,_ in pairs(remove_mobs) do
-		tagged_mobs[mob_id] = nil
 	end
 end
 
