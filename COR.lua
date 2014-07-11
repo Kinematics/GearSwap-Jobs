@@ -378,8 +378,8 @@ function display_current_job_state(eventArgs)
 	end
 	
 
-	add_to_chat(122,'Offense: '..state.OffenseMode..', Ranged: '..state.RangedMode..', WS: '..state.WeaponskillMode..
-		', Quick Draw: '..state.CastingMode..', '..defenseString..'Kiting: '..on_off_names[state.Kiting]..
+	add_to_chat(122,'Off.: '..state.OffenseMode..', Rng.: '..state.RangedMode..', WS: '..state.WeaponskillMode..
+		', QD: '..state.CastingMode..', '..defenseString..'Kite: '..on_off_names[state.Kiting]..
 		', Roll Size: '..rollsize..pcTarget..npcTarget)
 
 	eventArgs.handled = true
