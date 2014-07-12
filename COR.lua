@@ -94,6 +94,7 @@ function init_gear_sets()
 	sets.precast.CorsairRoll["Allies' Roll"] = set_combine(sets.precast.CorsairRoll, {hands="Navarch's Gants +2"})
 	
 	sets.precast.LuzafRing = {ring2="Luzaf's Ring"}
+	sets.precast.FoldDoubleBust = {hands="Lunan Gants"}
 	
 	sets.precast.CorsairShot = {head="Blood Mask"}
 	
@@ -281,6 +282,11 @@ function job_precast(spell, action, spellMap, eventArgs)
 		equip(sets.precast.LuzafRing)
 	elseif spell.type == 'CorsairShot' and state.CastingMode == 'Resistant' then
 		classes.CustomClass = 'Acc'
+	elseif spell.english == 'Fold' and buffactive['Bust'] == 2 then
+		if sets.precast.FoldDoubleBust then
+			equip(sets.precast.FoldDoubleBust)
+			eventArgs.handled = true
+		end
 	end
 end
 
@@ -372,8 +378,8 @@ function display_current_job_state(eventArgs)
 	end
 	
 
-	add_to_chat(122,'Offense: '..state.OffenseMode..', Ranged: '..state.RangedMode..', WS: '..state.WeaponskillMode..
-		', Quick Draw: '..state.CastingMode..', '..defenseString..'Kiting: '..on_off_names[state.Kiting]..
+	add_to_chat(122,'Off.: '..state.OffenseMode..', Rng.: '..state.RangedMode..', WS: '..state.WeaponskillMode..
+		', QD: '..state.CastingMode..', '..defenseString..'Kite: '..on_off_names[state.Kiting]..
 		', Roll Size: '..rollsize..pcTarget..npcTarget)
 
 	eventArgs.handled = true

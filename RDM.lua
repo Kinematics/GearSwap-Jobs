@@ -231,10 +231,9 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	if spell.skill == 'Enfeebling Magic' and state.Buff.Saboteur then
 		equip(sets.buff.Saboteur)
 	elseif spell.skill == 'Enhancing Magic' then
+		equip(sets.midcast.EnhancingDuration)
 		if buffactive.composure and spell.target.type == 'PLAYER' then
 			equip(sets.buff.ComposureOther)
-		elseif spell.target.type == 'SELF' then
-			equip(sets.midcast.EnhancingDuration)
 		end
 	end
 end
