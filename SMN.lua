@@ -459,7 +459,7 @@ function job_pet_change(petparam, gain)
 			classes.CustomIdleGroups:append('Spirit')
 		end
 	else
-		select_default_macro_book()
+		select_default_macro_book('reset')
 	end
 end
 
@@ -662,7 +662,7 @@ function handle_pacts(cmdParams)
 
 	if not pet.isvalid then
 		add_to_chat(122,'No avatar currently available. Returning to default macro set.')
-		select_default_macro_book()
+		select_default_macro_book('reset')
 		return
 	end
 
@@ -737,7 +737,11 @@ end
 
 
 -- Select default macro book on initial load or subjob change.
-function select_default_macro_book()
+function select_default_macro_book(reset)
+	if reset == 'reset' then
+		-- lost pet, or tried to use pact when pet is gone
+	end
+	
 	-- Default macro set/book
 	set_macro_page(4, 16)
 end
