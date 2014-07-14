@@ -94,7 +94,7 @@ function init_gear_sets()
 	sets.precast.CorsairRoll["Allies' Roll"] = set_combine(sets.precast.CorsairRoll, {hands="Navarch's Gants +2"})
 	
 	sets.precast.LuzafRing = {ring2="Luzaf's Ring"}
-	sets.precast.FoldDoubleBust = {hands="Lunan Gants"}
+	sets.precast.FoldDoubleBust = {hands="Lanun Gants"}
 	
 	sets.precast.CorsairShot = {head="Blood Mask"}
 	
