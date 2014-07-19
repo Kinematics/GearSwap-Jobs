@@ -599,7 +599,10 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function get_combat_form()
-	if not (player.equipment.sub == "Genbu's Shield" or player.equipment.sub == 'empty') then
+	if player.equipment.main == 'empty' and player.equipment.sub == 'empty' then
+		-- H2H
+		return
+	elseif not (player.equipment.sub == "Genbu's Shield" or player.equipment.sub == 'empty') then
 		return 'DW'
 	end
 end

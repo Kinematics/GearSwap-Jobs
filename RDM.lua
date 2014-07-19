@@ -32,8 +32,6 @@ function user_setup()
 	state.Defense.PhysicalMode = 'PDT'
 	state.OffenseMode = 'None'
 
-	MeleeWeapons = S{"Buramenk'ah"}
-
 	gear.default.obi_waist = "Sekhmet Corset"
 	
 	select_default_macro_book()
@@ -286,10 +284,10 @@ end
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
 	if stateField == 'OffenseMode' then
-		if newValue == 'Melee' then
-			disable('main','sub')
-		else
+		if newValue == 'None' then
 			enable('main','sub')
+		else
+			disable('main','sub')
 		end
 	elseif stateField == 'Reset' then
 		if state.OffenseMode == 'None' then

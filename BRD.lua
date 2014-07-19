@@ -25,6 +25,8 @@
 	/console gs c set daurdabla Dummy
 	/ma "Shining Fantasia" <me>
 	
+	To use a Terpander rather than Daurdabla, set the info.DaurdablaInstrument variable to
+	'Terpander', and info.DaurdablaSongs to 1.
 	
 	There is also an auto-handling of Daurdabla songs, via the state.AutoDaurdabla flag:
 	

@@ -94,7 +94,7 @@ function init_gear_sets()
 	sets.precast.CorsairRoll["Allies' Roll"] = set_combine(sets.precast.CorsairRoll, {hands="Navarch's Gants +2"})
 	
 	sets.precast.LuzafRing = {ring2="Luzaf's Ring"}
-	sets.precast.FoldDoubleBust = {hands="Lunan Gants"}
+	sets.precast.FoldDoubleBust = {hands="Lanun Gants"}
 	
 	sets.precast.CorsairShot = {head="Blood Mask"}
 	
@@ -490,9 +490,17 @@ function do_bullet_checks(spell, spellMap, eventArgs)
 	-- Low ammo warning.
 	if spell.type ~= 'CorsairShot' and not state.warned
 	    and available_bullets.count > 1 and available_bullets.count <= options.ammo_warning_limit then
-		add_to_chat(104, '*******************************')
-		add_to_chat(104, '*****  LOW AMMO WARNING *****')
-		add_to_chat(104, '*******************************')
+	   	local msg = '*****  LOW AMMO WARNING: '..bullet_name..' *****'
+	   	--local border = string.repeat("*", #msg)
+	   	local border = ""
+	   	for i = 1, #msg do
+	   		border = border .. "*"
+	   	end
+	   	
+	   	add_to_chat(104, border)
+	   	add_to_chat(104, msg)
+	   	add_to_chat(104, border)
+
 		state.warned = true
 	elseif available_bullets.count > options.ammo_warning_limit and state.warned then
 		state.warned = false
