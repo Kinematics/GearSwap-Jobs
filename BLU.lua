@@ -51,7 +51,8 @@ function job_setup()
 	blue_magic_maps.PhysicalDex = S{
 		'Amorphic Spikes','Asuran Claws','Barbed Crescent','Claw Cyclone','Disseverment',
 		'Foot Kick','Frenetic Rip','Goblin Rush','Hysteric Barrage','Paralyzing Triad',
-		'Seedspray','Sickle Slash','Smite of Rage','Terror Touch','Vanity Dive'
+		'Seedspray','Sickle Slash','Smite of Rage','Terror Touch','Thrashing Assault',
+		'Vanity Dive'
 	}
 		
 	-- Physical spells with Vit stat mod
@@ -93,7 +94,7 @@ function job_setup()
 		'Blastbomb','Blazing Bound','Bomb Toss','Cursed Sphere','Dark Orb','Death Ray',
 		'Droning Whirlwind','Embalming Earth','Firespit','Foul Waters','Ice Break',
 		'Leafstorm','Maelstrom','Regurgitation','Rending Deluge','Retinal Glare',
-		'Tem. Upheaval','Water Bomb'
+		'Subduction','Tem. Upheaval','Water Bomb'
 	}
 
 	-- Magical spells with a primary Mnd mod
@@ -150,21 +151,17 @@ function job_setup()
 	
 	-- Buffs that depend on blue magic skill
 	blue_magic_maps.SkillBasedBuff = S{
-		'Diamondhide','Metallic Body',
+		'Barrier Tusk','Diamondhide','Magic Barrier','Metallic Body','Plasma Charge',
+		'Pyric Bulwark','Reactor Cool',
 	}
-
-		-- Buff spells where Blue Magic Skill matters (need verification)
-		--['Metallic Body']='BuffSkill',['Diamondhide']='BuffSkill',['Reactor Cool']='BuffSkill',['Plasma Charge']='BuffSkill',
-		--['Magic Barrier']='BuffSkill',['Barrier Tusk']='BuffSkill',['Orcish Counterstance']='BuffSkill',['Pyric Bulwark']='BuffSkill',
-		--['Nature\'s Meditation']='BuffSkill',['Carcharian Verve']='BuffSkill',
 
 	-- Other general buffs
 	blue_magic_maps.Buff = S{
-		'Amplification','Animating Wail','Barrier Tusk','Battery Charge',
-		'Carcharian Verve','Cocoon','Exuviation','Fantod','Feather Barrier','Harden Shell',
-		'Magic Barrier','Memento Mori','Nat. Meditation','Occultation','Orcish Counterstance',
-		'Plasma Charge','Pyric Bulwark','Reactor Cool','Refueling','Regeneration',
-		'Saline Coat','Triumphant Roar','Warm-Up','Winds of Promyvion','Zephyr Mantle'
+		'Amplification','Animating Wail','Battery Charge','Carcharian Verve','Cocoon',
+		'Erratic Flutter','Exuviation','Fantod','Feather Barrier','Harden Shell',
+		'Memento Mori','Nat. Meditation','Occultation','Orcish Counterstance','Refueling',
+		'Regeneration','Saline Coat','Triumphant Roar','Warm-Up','Winds of Promyvion',
+		'Zephyr Mantle'
 	}
 	
 	
@@ -465,6 +462,7 @@ function init_gear_sets()
 	sets.engaged.DW.Learning = set_combine(sets.engaged.DW, sets.Learning)
 
 
+	sets.self_healing = {ring1="Kunaji Ring",ring2="Asklepian Ring"}
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -494,6 +492,9 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 			if active and sets.buff[buff] then
 				equip(sets.buff[buff])
 			end
+		end
+		if spellMap == 'Healing' and spell.target.type == 'SELF' and sets.self_healing then
+			equip(sets.self_healing)
 		end
 	end
 
