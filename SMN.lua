@@ -363,10 +363,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-
     if state.Buff['Astral Conduit'] and pet_midcast() then
         eventArgs.handled = true
     end
@@ -377,14 +373,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
         eventArgs.handled = true
     end
 end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-end
-
 
 -- Runs when pet completes an action.
 function job_pet_aftercast(spell, action, spellMap, eventArgs)
@@ -441,7 +429,6 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
 		handle_equipping_gear(player.status)
 	elseif storms:contains(buff) then
 		handle_equipping_gear(player.status)

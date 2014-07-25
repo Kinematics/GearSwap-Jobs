@@ -312,14 +312,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-end
-
 -- Run after the general midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
@@ -331,9 +323,7 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	elseif not spell.interrupted and spell.english == "Migawari: Ichi" then
+	if not spell.interrupted and spell.english == "Migawari: Ichi" then
 		state.Buff.Migawari = true
 	end
 end
@@ -393,7 +383,6 @@ function job_buff_change(buff, gain)
 		determine_haste_group()
 		handle_equipping_gear(player.status)
 	elseif state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
 		handle_equipping_gear(player.status)
 	end
 end

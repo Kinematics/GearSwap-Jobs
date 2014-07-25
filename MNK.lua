@@ -283,10 +283,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type == 'WeaponSkill' and state.Defense.Active then
 		eventArgs.handled = true
@@ -313,10 +309,6 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 end
 
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-
 	if spell.type == 'WeaponSkill' and not spell.interrupted and state.FootworkWS and state.Buff.Footwork then
 		send_command('cancel Footwork')
 	end
@@ -330,10 +322,6 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-
 	-- Set Footwork as combat form any time it's active and Hundred Fists is not.
 	if buff == 'Footwork' and gain and not buffactive['hundred fists'] then
 		state.CombatForm = 'Footwork'

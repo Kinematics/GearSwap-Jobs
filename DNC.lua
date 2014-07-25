@@ -373,10 +373,6 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	--auto_presto(spell)
-
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
 end
 
 
@@ -395,9 +391,6 @@ end
 -- Return true if we handled the aftercast work.  Otherwise it will fall back
 -- to the general aftercast() code in Mote-Include.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
 	if not spell.interrupted then
 		if spell.english == "Wild Flourish" then
 			skillchainPending = true
@@ -444,10 +437,6 @@ end
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff,gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-
 	-- If we gain or lose any haste buffs, adjust which gear set we target.
 	if S{'haste','march','embrava','haste samba'}:contains(buff:lower()) then
 		determine_haste_group()

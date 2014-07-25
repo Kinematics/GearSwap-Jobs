@@ -312,10 +312,6 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
 		if ((spell.target.type == 'PLAYER' and not spell.target.charmed) or (spell.target.type == 'NPC' and spell.target.in_party)) and
@@ -361,10 +357,6 @@ end
 
 -- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-
 	if spell.type == 'BardSong' and not spell.interrupted then
 		if spell.target and spell.target.type and spell.target.type == 'SELF' then
 			adjust_timers(spell, spellMap)
@@ -383,12 +375,6 @@ function customize_idle_set(idleSet)
 	end
 	
 	return idleSet
-end
-
-function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
 end
 
 -------------------------------------------------------------------------------------------------------------------

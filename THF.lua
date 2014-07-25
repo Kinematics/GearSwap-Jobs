@@ -316,12 +316,6 @@ end
 -- Job-specific hooks that are called to process player actions at specific points in time.
 -------------------------------------------------------------------------------------------------------------------
 
-function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-end
-
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
 	if spell.english == 'Aeolian Edge' and state.TreasureMode ~= 'None' then
@@ -342,10 +336,6 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-
 	-- Weaponskills wipe SATA/Feint.  Turn those state vars off before default gearing is attempted.
 	if spell.type == 'WeaponSkill' and not spell.interrupted then
 		state.Buff['Sneak Attack'] = false
