@@ -38,8 +38,6 @@ function user_setup()
 	state.Defense.PhysicalMode = 'PDT'
 	
 	state.FootworkWS = false
-	state.Buff.Footwork = buffactive.Footwork or false
-	state.Buff.Impetus = buffactive.Impetus or false
 
 	select_default_macro_book()
 end

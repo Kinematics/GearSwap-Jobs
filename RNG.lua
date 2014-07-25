@@ -13,7 +13,9 @@ end
 
 -- Setup vars that are user-independent.
 function job_setup()
-
+	state.Buff.Barrage = buffactive.Barrage or false
+	state.Buff.Camouflage = buffactive.Camouflage or false
+	state.Buff['Unlimited Shot'] = buffactive['Unlimited Shot'] or false
 end
 
 
@@ -32,10 +34,6 @@ function user_setup()
 
 	state.Defense.PhysicalMode = 'PDT'
 	
-	state.Buff.Barrage = buffactive.Barrage or false
-	state.Buff.Camouflage = buffactive.Camouflage or false
-	state.Buff['Unlimited Shot'] = buffactive['Unlimited Shot'] or false
-
 	gear.default.weaponskill_neck = "Ocachi Gorget"
 	gear.default.weaponskill_waist = "Elanid Belt"
 	
