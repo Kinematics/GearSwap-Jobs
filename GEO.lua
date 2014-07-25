@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -10,10 +8,14 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 
 end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -186,32 +188,9 @@ function init_gear_sets()
 
 end
 
--------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
--------------------------------------------------------------------------------------------------------------------
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_midcast(spell, action, spellMap, eventArgs)
-
-end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
-function customize_idle_set(idleSet)
-    if player.mpp < 51 then
-        idleSet = set_combine(idleSet, sets.latent_refresh)
-    end
-	return idleSet
-end
-
-function customize_melee_set(meleeSet)
-	return meleeSet
-end
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -227,20 +206,6 @@ function job_buff_change(buff, gain)
 	end
 end
 
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Called by the 'update' self-command.
-function job_update(cmdParams, eventArgs)
-	classes.CustomIdleGroups:clear()
-	if player.indi then
-		classes.CustomIdleGroups:append('Indi')
-	end
-end
-
-
 function job_state_change(stateField, newValue, oldValue)
 	if stateField == 'OffenseMode' then
 		if newValue == 'Normal' then
@@ -255,6 +220,24 @@ function job_state_change(stateField, newValue, oldValue)
 	end
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
+
+function customize_idle_set(idleSet)
+    if player.mpp < 51 then
+        idleSet = set_combine(idleSet, sets.latent_refresh)
+    end
+	return idleSet
+end
+
+-- Called by the 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	classes.CustomIdleGroups:clear()
+	if player.indi then
+		classes.CustomIdleGroups:append('Indi')
+	end
+end
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.

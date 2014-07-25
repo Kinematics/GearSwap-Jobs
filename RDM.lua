@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,11 +9,14 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff.Saboteur = buffactive.saboteur or false
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -212,7 +213,7 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Run after the default midcast() is done.
@@ -231,25 +232,7 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
--- Modify the default idle set after it was constructed.
-function customize_idle_set(idleSet)
-	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.latent_refresh)
-	end
-	
-	return idleSet
-end
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
--------------------------------------------------------------------------------------------------------------------
-
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Handle notifications of general user state change.
@@ -267,7 +250,18 @@ function job_state_change(stateField, newValue, oldValue)
 	end
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
 
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
+end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)

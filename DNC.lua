@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 --[[
 	Custom commands:
@@ -37,7 +35,7 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff['Climactic Flourish'] = buffactive['climactic flourish'] or false
 
@@ -54,6 +52,9 @@ function job_setup()
 	determine_haste_group()
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -366,7 +367,7 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -402,35 +403,8 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
-function customize_idle_set(idleSet)
-	if player.hpp < 80 and not areas.Cities:contains(world.area) then
-		idleSet = set_combine(idleSet, sets.ExtraRegen)
-	end
-	
-	return idleSet
-end
-
-
-function customize_melee_set(meleeSet)
-	if not state.Defense.Active then
-		if buffactive['saber dance'] then
-			meleeSet = set_combine(meleeSet, sets.buff['Saber Dance'])
-		end
-		if state.Buff['Climactic Flourish'] then
-			meleeSet = set_combine(meleeSet, sets.buff['Climactic Flourish'])
-		end
-	end
-	
-	return meleeSet
-end
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other game events.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -447,78 +421,42 @@ function job_buff_change(buff,gain)
 end
 
 
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Called for custom player commands.
-function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1] == 'clear' and cmdParams[2] and cmdParams[2]:lower() == 'skillchainpending' then
-		skillchainPending = false
-	elseif cmdParams[1] == 'step' then
-		if cmdParams[2] == 't' then
-			state.IgnoreTargetting = true
-		end
-
-		local doStep = state.MainStep
-		if state.UseAltStep then
-			doStep = state[state.CurrentStep..'Step']
-			if state.CurrentStep == 'Main' then
-				state.CurrentStep = 'Alt'
-			else
-				state.CurrentStep = 'Main'
-			end
-		end
-		
-		send_command('@input /ja "'..doStep..'" <t>')
-	end
-end
-
-
 function job_status_change(new_status, old_status)
 	if new_status == 'Engaged' then
 		determine_haste_group()
 	end
 end
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
+
 -- Called by the default 'update' self-command.
 function job_update(cmdParams, eventArgs)
 	determine_haste_group()
 end
 
--- Hooks for step mode handling.
 
--- Job-specific toggles.
-function job_toggle_state(field)
-	if field:lower() == 'selectsteptarget' then
-		state.SelectStepTarget = not state.SelectStepTarget
-		return "Select Step Target", state.SelectStepTarget
-	elseif field:lower() == 'usealtstep' then
-		state.UseAltStep = not state.UseAltStep
-		return "Use Alt Step", state.UseAltStep
+function customize_idle_set(idleSet)
+	if player.hpp < 80 and not areas.Cities:contains(world.area) then
+		idleSet = set_combine(idleSet, sets.ExtraRegen)
 	end
+	
+	return idleSet
 end
 
--- Request job-specific mode tables.
--- Return the list, and the current value for the requested field.
-function job_get_option_modes(field)
-	if field == 'Mainstep' then
-		return options.StepModes, state.MainStep
-	elseif field == 'Altstep' then
-		return options.StepModes, state.AltStep
+function customize_melee_set(meleeSet)
+	if not state.Defense.Active then
+		if buffactive['saber dance'] then
+			meleeSet = set_combine(meleeSet, sets.buff['Saber Dance'])
+		end
+		if state.Buff['Climactic Flourish'] then
+			meleeSet = set_combine(meleeSet, sets.buff['Climactic Flourish'])
+		end
 	end
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_option_mode(field, val)
-	if field == 'Mainstep' then
-		state.MainStep = val
-		return true
-	elseif field == 'Altstep' then
-		state.AltStep = val
-		return true
-	end
+	
+	return meleeSet
 end
 
 -- Handle auto-targetting based on local setup.
@@ -563,6 +501,72 @@ function display_current_job_state(eventArgs)
 		'Kiting: '..on_off_names[state.Kiting]..steps)
 
 	eventArgs.handled = true
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- User self-commands.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1] == 'clear' and cmdParams[2] and cmdParams[2]:lower() == 'skillchainpending' then
+		skillchainPending = false
+	elseif cmdParams[1] == 'step' then
+		if cmdParams[2] == 't' then
+			state.IgnoreTargetting = true
+		end
+
+		local doStep = state.MainStep
+		if state.UseAltStep then
+			doStep = state[state.CurrentStep..'Step']
+			if state.CurrentStep == 'Main' then
+				state.CurrentStep = 'Alt'
+			else
+				state.CurrentStep = 'Main'
+			end
+		end
+		
+		send_command('@input /ja "'..doStep..'" <t>')
+	end
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- Hooks for custom mode handling.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Job-specific toggles.
+function job_toggle_state(field)
+	if field:lower() == 'selectsteptarget' then
+		state.SelectStepTarget = not state.SelectStepTarget
+		return "Select Step Target", state.SelectStepTarget
+	elseif field:lower() == 'usealtstep' then
+		state.UseAltStep = not state.UseAltStep
+		return "Use Alt Step", state.UseAltStep
+	end
+end
+
+-- Request job-specific mode tables.
+-- Return the list, and the current value for the requested field.
+function job_get_option_modes(field)
+	if field == 'Mainstep' then
+		return options.StepModes, state.MainStep
+	elseif field == 'Altstep' then
+		return options.StepModes, state.AltStep
+	end
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_option_mode(field, val)
+	if field == 'Mainstep' then
+		state.MainStep = val
+		return true
+	elseif field == 'Altstep' then
+		state.AltStep = val
+		return true
+	end
 end
 
 

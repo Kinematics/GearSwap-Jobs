@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,11 +9,14 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -237,7 +238,7 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -275,7 +276,38 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- Job-specific hooks for non-casting events.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called when a player gains or loses a buff.
+-- buff == buff gained or lost
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
+    -- Unlock feet when Mana Wall buff is lost.
+    if buff == "Mana Wall" and not gain then
+        enable('feet')
+        handle_equipping_gear(player.status)
+    end
+end
+
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue, oldValue)
+    if stateField == 'OffenseMode' then
+        if newValue == 'Normal' then
+            disable('main','sub')
+        else
+            enable('main','sub')
+        end
+    elseif stateField == 'Reset' then
+        if state.OffenseMode == 'None' then
+            enable('main','sub')
+        end
+    end
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Custom spell mapping.
@@ -298,42 +330,6 @@ function customize_idle_set(idleSet)
     end
     
     return idleSet
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain == true if the buff was gained, false if it was lost.
-function job_buff_change(buff, gain)
-    -- Unlock feet when Mana Wall buff is lost.
-    if buff == "Mana Wall" and not gain then
-        enable('feet')
-        handle_equipping_gear(player.status)
-    end
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Handle notifications of general user state change.
-function job_state_change(stateField, newValue, oldValue)
-    if stateField == 'OffenseMode' then
-        if newValue == 'Normal' then
-            disable('main','sub')
-        else
-            enable('main','sub')
-        end
-    elseif stateField == 'Reset' then
-        if state.OffenseMode == 'None' then
-            enable('main','sub')
-        end
-    end
 end
 
 

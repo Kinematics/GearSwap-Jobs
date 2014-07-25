@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,7 +9,7 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.CombatForm = get_combat_form()
 	
@@ -22,8 +20,11 @@ function job_setup()
 	state.Buff['Meikyo Shisui'] = buffactive['Meikyo Shisui'] or false
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
--- Setup vars that are user-dependent.  Can override this function in a sidecar file.
+-- Setup vars that are user-dependent.
 function user_setup()
 	-- Options: Override default values
 	options.OffenseModes = {'Normal', 'Acc'}
@@ -224,7 +225,7 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
@@ -268,15 +269,7 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
--------------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called by the 'update' self-command, for common needs.

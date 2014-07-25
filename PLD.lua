@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -10,13 +8,16 @@ function get_sets()
     include('Mote-Include.lua')
 end
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
     state.Buff.Sentinel = buffactive.sentinel or false
     state.Buff.Cover = buffactive.cover or false
     state.Buff.Doomed = buffactive.doomed or false
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -275,7 +276,7 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -288,8 +289,26 @@ function job_precast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
+
+-- Called when the player's status changes.
+function job_state_change(field, new_value, old_value)
+    if field == 'HybridDefenseMode' then
+        classes.CustomDefenseGroups:clear()
+        classes.CustomDefenseGroups:append(new_value)
+    end
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called by the 'update' self-command, for common needs.
+-- Set eventArgs.handled to true if we don't want automatic equipping of gear.
+function job_update(cmdParams, eventArgs)
+    update_defense_mode()
+end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
@@ -303,34 +322,6 @@ end
 -- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
     return meleeSet
-end
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for change events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_state_change(field, new_value, old_value)
-    if field == 'HybridDefenseMode' then
-        classes.CustomDefenseGroups:clear()
-        classes.CustomDefenseGroups:append(new_value)
-    end
-end
-
--- Called by the 'update' self-command, for common needs.
--- Set eventArgs.handled to true if we don't want automatic equipping of gear.
-function job_update(cmdParams, eventArgs)
-    update_defense_mode()
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Set eventArgs.handled to true if we don't want the automatic display to be run.
-function display_current_job_state(eventArgs)
-
 end
 
 -------------------------------------------------------------------------------------------------------------------

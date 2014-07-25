@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,13 +9,16 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff.Barrage = buffactive.Barrage or false
 	state.Buff.Camouflage = buffactive.Camouflage or false
 	state.Buff['Unlimited Shot'] = buffactive['Unlimited Shot'] or false
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -184,7 +185,7 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
@@ -215,11 +216,7 @@ function job_midcast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -236,9 +233,8 @@ function job_buff_change(buff, gain)
 	end
 end
 
-
 -------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.

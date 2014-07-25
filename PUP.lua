@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,7 +9,7 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	-- List of pet weaponskills to check for
 	petWeaponskills = S{"Slapstick", "Knockout", "Magic Mortar",
@@ -36,6 +34,9 @@ function job_setup()
 	update_pet_mode()
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -207,13 +208,8 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called when player is about to perform an action
-function job_precast(spell, action, spellMap, eventArgs)
-
-end
 
 -- Called when pet is about to perform an action
 function job_pet_midcast(spell, action, spellMap, eventArgs)
@@ -224,7 +220,7 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other game events.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -252,27 +248,8 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
-
--- Called for custom player commands.
-function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1] == 'maneuver' then
-		if pet.isvalid then
-			local man = defaultManeuvers[state.PetMode]
-			if man and tonumber(cmdParams[2]) then
-				man = man[tonumber(cmdParams[2])]
-			end
-
-			if man then
-				send_command('input /pet "'..man..'" <me>')
-			end
-		else
-			add_to_chat(123,'No valid pet.')
-		end
-	end
-end
-
 
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
@@ -299,6 +276,29 @@ function display_current_job_state(eventArgs)
 	display_pet_status()
 
 	eventArgs.handled = true
+end
+
+
+-------------------------------------------------------------------------------------------------------------------
+-- User self-commands.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1] == 'maneuver' then
+		if pet.isvalid then
+			local man = defaultManeuvers[state.PetMode]
+			if man and tonumber(cmdParams[2]) then
+				man = man[tonumber(cmdParams[2])]
+			end
+
+			if man then
+				send_command('input /pet "'..man..'" <me>')
+			end
+		else
+			add_to_chat(123,'No valid pet.')
+		end
+	end
 end
 
 

@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,11 +9,15 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 
 end
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -125,7 +127,7 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic target handling to be done.
@@ -193,7 +195,33 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- Job-specific hooks for non-casting events.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called when the player's status changes.
+function job_status_change(newStatus, oldStatus, eventArgs)
+
+end
+
+-- Called when the player's pet's status changes.
+function job_pet_status_change(newStatus, oldStatus, eventArgs)
+
+end
+
+-- Called when a player gains or loses a buff.
+-- buff == buff gained or lost
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
+
+end
+
+-- Called when a generally-handled state value has been changed.
+function job_state_change(stateField, newValue, oldValue)
+
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called before the Include starts constructing melee/idle/resting sets.
@@ -226,24 +254,14 @@ function customize_melee_set(meleeSet)
 	return meleeSet
 end
 
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
+-- Called by the 'update' self-command, for common needs.
+-- Set eventArgs.handled to true if we don't want automatic equipping of gear.
+function job_update(cmdParams, eventArgs)
 
 end
 
--- Called when the player's pet's status changes.
-function job_pet_status_change(newStatus, oldStatus, eventArgs)
-
-end
-
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain == true if the buff was gained, false if it was lost.
-function job_buff_change(buff, gain)
+-- Set eventArgs.handled to true if we don't want the automatic display to be run.
+function display_current_job_state(eventArgs)
 
 end
 
@@ -254,12 +272,6 @@ end
 
 -- Called for custom player commands.
 function job_self_command(cmdParams, eventArgs)
-
-end
-
--- Called by the 'update' self-command, for common needs.
--- Set eventArgs.handled to true if we don't want automatic equipping of gear.
-function job_update(cmdParams, eventArgs)
 
 end
 
@@ -282,16 +294,6 @@ end
 
 -- Handle auto-targetting based on local setup.
 function job_auto_change_target(spell, action, spellMap, eventArgs)
-
-end
-
--- Handle notifications of user state values being changed.
-function job_state_change(stateField, newValue, oldValue)
-
-end
-
--- Set eventArgs.handled to true if we don't want the automatic display to be run.
-function display_current_job_state(eventArgs)
 
 end
 
