@@ -50,6 +50,7 @@ end
 -- Setup vars that are user-independent.
 function job_setup()
 	state.Buff["Avatar's Favor"] = buffactive["Avatar's Favor"] or false
+	state.Buff["Astral Conduit"] = buffactive["Astral Conduit"] or false
 
 	spirits = S{"LightSpirit", "DarkSpirit", "FireSpirit", "EarthSpirit", "WaterSpirit", "AirSpirit", "IceSpirit", "ThunderSpirit"}
 	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander", "Cait Sith"}
@@ -365,6 +366,16 @@ function job_precast(spell, action, spellMap, eventArgs)
 	if state.Buff[spell.english] ~= nil then
 		state.Buff[spell.english] = true
 	end
+
+    if state.Buff['Astral Conduit'] and pet_midcast() then
+        eventArgs.handled = true
+    end
+end
+
+function job_midcast(spell, action, spellMap, eventArgs)
+    if state.Buff['Astral Conduit'] and pet_midcast() then
+        eventArgs.handled = true
+    end
 end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
