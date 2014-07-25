@@ -362,10 +362,7 @@ function display_current_job_state(eventArgs)
 		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
 	end
 	
-	local rollsize = 'Small'
-	if state.LuzafRing then
-		rollsize = 'Large'
-	end
+	local rollsize = (state.LuzafRing and 'Large') or 'Small'
 	
 	local pcTarget = ''
 	if state.PCTargetMode ~= 'default' then
@@ -425,10 +422,8 @@ end
 
 function display_roll_info(spell)
 	rollinfo = rolls[spell.english]
-	local rollsize = 'Small'
-	if state.LuzafRing then
-		rollsize = 'Large'
-	end
+	local rollsize = (state.LuzafRing and 'Large') or 'Small'
+
 	if rollinfo then
 		add_to_chat(104, spell.english..' provides a bonus to '..rollinfo.bonus..'.  Roll size: '..rollsize)
 		add_to_chat(104, 'Lucky roll is '..tostring(rollinfo.lucky)..', Unlucky roll is '..tostring(rollinfo.unlucky)..'.')
