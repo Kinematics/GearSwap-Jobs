@@ -69,7 +69,7 @@ function user_setup()
 	select_default_macro_book()
 end
 
-function job_file_unload()
+function user_unload()
 	send_command('unbind ^`')
 end
 

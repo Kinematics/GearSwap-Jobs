@@ -36,7 +36,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function job_file_unload()
+function user_unload()
 
 end
 
