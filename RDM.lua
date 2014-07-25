@@ -101,6 +101,7 @@ function init_gear_sets()
 		back="Swith Cape +1",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
+	sets.midcast.CureSelf = {ring1="Kunaji Ring",ring2="Asklepian Ring"}
 
 	sets.midcast['Enhancing Magic'] = {
 		head="Atrophy Chapeau +1",neck="Colossus's Torque",
@@ -233,6 +234,8 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 		if buffactive.composure and spell.target.type == 'PLAYER' then
 			equip(sets.buff.ComposureOther)
 		end
+	elseif spellMap == 'Cure' and spell.target.type == 'SELF' then
+		equip(sets.midcast.CureSelf)
 	end
 end
 
