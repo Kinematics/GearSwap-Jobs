@@ -10,7 +10,8 @@ end
 
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-
+    indi_timer = ''
+    indi_duration = 180
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -188,6 +189,29 @@ function init_gear_sets()
 
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- Job-specific hooks for standard casting events.
+-------------------------------------------------------------------------------------------------------------------
+
+function job_aftercast(spell, action, spellMap, eventArgs)
+    if not spell.interrupted then
+        if spell.english:startswith('Indi') then
+            if not classes.CustomIdleGroups:contains('Indi') then
+                classes.CustomIdleGroups:append('Indi')
+            end
+            send_command('@timers d "'..indi_timer..'"')
+            indi_timer = spell.english
+            send_command('@timers c "'..indi_timer..'" '..indi_duration..' down spells/00136.png')
+        elseif spell.english == 'Sleep' or spell.english == 'Sleepga' then
+            send_command('@timers c "'..spell.english..' ['..spell.target.name..']" 60 down spells/00220.png')
+        elseif spell.english == 'Sleep II' or spell.english == 'Sleepga II' then
+            send_command('@timers c "'..spell.english..' ['..spell.target.name..']" 90 down spells/00220.png')
+        end
+    elseif not player.indi then
+        classes.CustomIdleGroups:clear()
+    end
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- Job-specific hooks for non-casting events.
@@ -259,8 +283,6 @@ function display_current_job_state()
 
 	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
 		'Kiting: '..on_off_names[state.Kiting])
-
-	eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
