@@ -2,6 +2,19 @@
 -- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
 
+--[[
+	Custom commands:
+
+	gs c cycle treasuremode (set on ctrl-= by default): Cycles through the available treasure hunter modes.
+	
+	Treasure hunter modes:
+		None - Will never equip TH gear
+		Tag - Will equip TH gear sufficient for initial contact with a mob (either melee, ranged hit, or Aeolian Edge AOE)
+		SATA - Will equip TH gear sufficient for initial contact with a mob, and when using SATA
+		Fulltime - Will keep TH gear equipped fulltime
+
+--]]
+
 -- Initialization function for this job file.
 function get_sets()
 	-- Load and initialize the include file.
