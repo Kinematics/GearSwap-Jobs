@@ -1,6 +1,19 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
+
+--[[
+	Custom commands:
+
+	gs c cycle treasuremode (set on ctrl-= by default): Cycles through the available treasure hunter modes.
+	
+	Treasure hunter modes:
+		None - Will never equip TH gear
+		Tag - Will equip TH gear sufficient for initial contact with a mob (either melee, ranged hit, or Aeolian Edge AOE)
+		SATA - Will equip TH gear sufficient for initial contact with a mob, and when using SATA
+		Fulltime - Will keep TH gear equipped fulltime
+
+--]]
 
 -- Initialization function for this job file.
 function get_sets()
@@ -8,7 +21,7 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff['Sneak Attack'] = buffactive['sneak attack'] or false
 	state.Buff['Trick Attack'] = buffactive['trick attack'] or false
@@ -23,6 +36,9 @@ function job_setup()
 	info.default_u_ja_ids = S{201, 202, 203, 205, 207}
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -53,7 +69,7 @@ function user_setup()
 end
 
 -- Called when this job file is unloaded (eg: job change)
-function job_file_unload()
+function user_unload()
 	send_command('unbind ^`')
 	send_command('unbind !-')
 end
@@ -313,14 +329,8 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
-
-function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
@@ -342,10 +352,6 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-
 	-- Weaponskills wipe SATA/Feint.  Turn those state vars off before default gearing is attempted.
 	if spell.type == 'WeaponSkill' and not spell.interrupted then
 		state.Buff['Sneak Attack'] = false
@@ -361,9 +367,25 @@ function job_post_aftercast(spell, action, spellMap, eventArgs)
 	check_buff('Feint', eventArgs)
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- Job-specific hooks for non-casting events.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called when a player gains or loses a buff.
+-- buff == buff gained or lost
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
+	if state.Buff[buff] ~= nil then
+		state.Buff[buff] = gain
+		if not midaction() then
+			handle_equipping_gear(player.status)
+		end
+	end
+end
+
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 function get_custom_wsmode(spell, spellMap, defaut_wsmode)
@@ -409,32 +431,11 @@ function customize_melee_set(meleeSet)
 	return meleeSet
 end
 
--------------------------------------------------------------------------------------------------------------------
--- General hooks for change events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain == true if the buff was gained, false if it was lost.
-function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-		if not midaction() then
-			handle_equipping_gear(player.status)
-		end
-	end
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- Various update events.
--------------------------------------------------------------------------------------------------------------------
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
 	th_update(cmdParams, eventArgs)
 end
-
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.

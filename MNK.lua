@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,7 +9,7 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.CombatForm = get_combat_form()
 	update_melee_groups()
@@ -23,6 +21,10 @@ function job_setup()
 	windower.raw_register_event('action', on_action_for_impetus)
 end
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -38,8 +40,6 @@ function user_setup()
 	state.Defense.PhysicalMode = 'PDT'
 	
 	state.FootworkWS = false
-	state.Buff.Footwork = buffactive.Footwork or false
-	state.Buff.Impetus = buffactive.Impetus or false
 
 	select_default_macro_book()
 end
@@ -279,16 +279,12 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-
 	-- Don't gearswap for weaponskills when Defense is on.
 	if spell.type == 'WeaponSkill' and state.Defense.Active then
 		eventArgs.handled = true
@@ -315,27 +311,19 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 end
 
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-
 	if spell.type == 'WeaponSkill' and not spell.interrupted and state.FootworkWS and state.Buff.Footwork then
 		send_command('cancel Footwork')
 	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- General hooks for other game events.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
 -- buff == buff gained or lost
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-
 	-- Set Footwork as combat form any time it's active and Hundred Fists is not.
 	if buff == 'Footwork' and gain and not buffactive['hundred fists'] then
 		state.CombatForm = 'Footwork'
@@ -365,6 +353,10 @@ function job_buff_change(buff, gain)
 end
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
+
 function customize_idle_set(idleSet)
 	if player.hpp < 75 then
 		idleSet = set_combine(idleSet, sets.ExtraRegen)
@@ -372,11 +364,6 @@ function customize_idle_set(idleSet)
 	
 	return idleSet
 end
-
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
@@ -424,6 +411,10 @@ function select_default_macro_book()
 	end
 end
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- Custom event hooks.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Keep track of the current hit count while Impetus is up.
 function on_action_for_impetus(action)

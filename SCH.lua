@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 --[[
 		Custom commands:
@@ -31,7 +29,7 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	info.addendumNukes = S{"Stone IV", "Water IV", "Aero IV", "Fire IV", "Blizzard IV", "Thunder IV",
 		"Stone V", "Water V", "Aero V", "Fire V", "Blizzard V", "Thunder V"}
@@ -40,6 +38,9 @@ function job_setup()
 	update_active_strategems()
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -69,7 +70,7 @@ function user_setup()
 	select_default_macro_book()
 end
 
-function job_file_unload()
+function user_unload()
 	send_command('unbind ^`')
 end
 
@@ -293,16 +294,8 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-end
 
 -- Run after the general midcast() is done.
 function job_post_midcast(spell, action, spellMap, eventArgs)
@@ -311,16 +304,36 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+-------------------------------------------------------------------------------------------------------------------
+-- Job-specific hooks for non-casting events.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called when a player gains or loses a buff.
+-- buff == buff gained or lost
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
+	if buff == "Sublimation: Activated" then
+		handle_equipping_gear(player.status)
 	end
 end
 
+-- Handle notifications of general user state change.
+function job_state_change(stateField, newValue, oldValue)
+	if stateField == 'OffenseMode' then
+		if newValue == 'Normal' then
+			disable('main','sub')
+		else
+			enable('main','sub')
+		end
+	elseif stateField == 'Reset' then
+		if state.OffenseMode == 'None' then
+			enable('main','sub')
+		end
+	end
+end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Custom spell mapping.
@@ -364,52 +377,6 @@ function customize_idle_set(idleSet)
 	return idleSet
 end
 
--------------------------------------------------------------------------------------------------------------------
--- General hooks for change events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain == true if the buff was gained, false if it was lost.
-function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-
-	if buff == "Sublimation: Activated" then
-		handle_equipping_gear(player.status)
-	end
-end
-
--- Handle notifications of general user state change.
-function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'OffenseMode' then
-		if newValue == 'Normal' then
-			disable('main','sub')
-		else
-			enable('main','sub')
-		end
-	elseif stateField == 'Reset' then
-		if state.OffenseMode == 'None' then
-			enable('main','sub')
-		end
-	end
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Called for direct player commands.
-function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1]:lower() == 'scholar' then
-		handle_strategems(cmdParams)
-		eventArgs.handled = true
-	end
-end
-
-
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
 	if cmdParams[1] == 'user' and not (buffactive['light arts']      or buffactive['dark arts'] or
@@ -424,7 +391,6 @@ function job_update(cmdParams, eventArgs)
 	update_active_strategems()
 	update_sublimation()
 end
-
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
@@ -448,6 +414,18 @@ function display_current_job_state(eventArgs)
 		'Kiting: '..on_off_names[state.Kiting])
 
 	eventArgs.handled = true
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements self-commands.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called for direct player commands.
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1]:lower() == 'scholar' then
+		handle_strategems(cmdParams)
+		eventArgs.handled = true
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------

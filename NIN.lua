@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,7 +9,7 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff.Migawari = buffactive.migawari or false
 	state.Buff.Doomed = buffactive.doomed or false
@@ -22,6 +20,9 @@ function job_setup()
 	determine_haste_group()
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -309,16 +310,8 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-end
 
 -- Run after the general midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
@@ -331,16 +324,37 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	elseif not spell.interrupted and spell.english == "Migawari: Ichi" then
+	if not spell.interrupted and spell.english == "Migawari: Ichi" then
 		state.Buff.Migawari = true
+	end
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Job-specific hooks for non-casting events.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called when a player gains or loses a buff.
+-- buff == buff gained or lost
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
+	-- If we gain or lose any haste buffs, adjust which gear set we target.
+	if S{'haste','march','embrava','haste samba'}:contains(buff:lower()) then
+		determine_haste_group()
+		handle_equipping_gear(player.status)
+	elseif state.Buff[buff] ~= nil then
+		handle_equipping_gear(player.status)
+	end
+end
+
+function job_status_change(new_status, old_status)
+	if new_status == 'Idle' then
+		select_movement_feet()
 	end
 end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Get custom spell maps
@@ -355,7 +369,6 @@ function job_get_spell_map(spell, default_spell_map)
 		end
 	end
 end
-
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
@@ -379,34 +392,6 @@ function customize_melee_set(meleeSet)
 	end
 	return meleeSet
 end
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for change events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain == true if the buff was gained, false if it was lost.
-function job_buff_change(buff, gain)
-	-- If we gain or lose any haste buffs, adjust which gear set we target.
-	if S{'haste','march','embrava','haste samba'}:contains(buff:lower()) then
-		determine_haste_group()
-		handle_equipping_gear(player.status)
-	elseif state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-		handle_equipping_gear(player.status)
-	end
-end
-
-function job_status_change(new_status, old_status)
-	if new_status == 'Idle' then
-		select_movement_feet()
-	end
-end
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
 
 -- Called by the default 'update' self-command.
 function job_update(cmdParams, eventArgs)

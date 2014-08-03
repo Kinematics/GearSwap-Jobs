@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 -- Initialization function for this job file.
 function get_sets()
@@ -11,11 +9,14 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff.Saboteur = buffactive.saboteur or false
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -101,6 +102,7 @@ function init_gear_sets()
 		back="Swith Cape +1",waist="Witful Belt",legs="Atrophy Tights",feet="Hagondes Sabots"}
 		
 	sets.midcast.Curaga = sets.midcast.Cure
+	sets.midcast.CureSelf = {ring1="Kunaji Ring",ring2="Asklepian Ring"}
 
 	sets.midcast['Enhancing Magic'] = {
 		head="Atrophy Chapeau +1",neck="Colossus's Torque",
@@ -211,17 +213,8 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-end
-
 
 -- Run after the default midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
@@ -233,53 +226,14 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 		if buffactive.composure and spell.target.type == 'PLAYER' then
 			equip(sets.buff.ComposureOther)
 		end
-	end
-end
-
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
+	elseif spellMap == 'Cure' and spell.target.type == 'SELF' then
+		equip(sets.midcast.CureSelf)
 	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Modify the default idle set after it was constructed.
-function customize_idle_set(idleSet)
-	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.latent_refresh)
-	end
-	
-	return idleSet
-end
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when a player gains or loses a buff.
--- buff == buff gained or lost
--- gain == true if the buff was gained, false if it was lost.
-function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Called by the 'update' self-command, for common needs.
--- Set eventArgs.handled to true if we don't want automatic equipping of gear.
-function job_update(cmdParams, eventArgs)
-
-end
-
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
@@ -296,7 +250,18 @@ function job_state_change(stateField, newValue, oldValue)
 	end
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
 
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
+end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)

@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and it's supplementary files) to go with this.
 
 -- Also, you'll need the Shortcuts addon to handle the auto-targetting of the custom pact commands.
 
@@ -47,9 +45,10 @@ function get_sets()
 	include('Mote-Include.lua')
 end
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff["Avatar's Favor"] = buffactive["Avatar's Favor"] or false
+	state.Buff["Astral Conduit"] = buffactive["Astral Conduit"] or false
 
 	spirits = S{"LightSpirit", "DarkSpirit", "FireSpirit", "EarthSpirit", "WaterSpirit", "AirSpirit", "IceSpirit", "ThunderSpirit"}
 	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander", "Cait Sith"}
@@ -121,6 +120,9 @@ function job_setup()
 	
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -356,24 +358,22 @@ function init_gear_sets()
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks that are called to process player actions at specific points in time.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
+    if state.Buff['Astral Conduit'] and pet_midcast() then
+        eventArgs.handled = true
+    end
 end
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
-function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
+function job_midcast(spell, action, spellMap, eventArgs)
+    if state.Buff['Astral Conduit'] and pet_midcast() then
+        eventArgs.handled = true
+    end
 end
-
 
 -- Runs when pet completes an action.
 function job_pet_aftercast(spell, action, spellMap, eventArgs)
@@ -384,45 +384,8 @@ function job_pet_aftercast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
 -------------------------------------------------------------------------------------------------------------------
--- Customization hooks for idle and melee sets, after they've been automatically constructed.
--------------------------------------------------------------------------------------------------------------------
-
--- Modify the default idle set after it was constructed.
-function customize_idle_set(idleSet)
-	if pet.isvalid then
-		if pet.element == world.day_element then
-			idleSet = set_combine(idleSet, sets.perp.Day)
-		end
-		if pet.element == world.weather_element then
-			idleSet = set_combine(idleSet, sets.perp.Weather)
-		end
-		if sets.perp[pet.name] then
-			idleSet = set_combine(idleSet, sets.perp[pet.name])
-		end
-		gear.perp_staff.name = elements.perpetuance_staff_of[pet.element]
-		if gear.perp_staff.name and (player.inventory[gear.perp_staff.name] or player.wardrobe[gear.perp_staff.name]) then
-			idleSet = set_combine(idleSet, sets.perp.staff_and_grip)
-		end
-		if state.Buff["Avatar's Favor"] and avatars:contains(pet.name) then
-			idleSet = set_combine(idleSet, sets.idle.Avatar.Favor)
-		end
-		if pet.status == 'Engaged' then
-			idleSet = set_combine(idleSet, sets.idle.Avatar.Melee)
-		end
-	end
-	
-	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.latent_refresh)
-	end
-	
-	return idleSet
-end
-
-
--------------------------------------------------------------------------------------------------------------------
--- General hooks for other events.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Called when a player gains or loses a buff.
@@ -430,7 +393,6 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
 		handle_equipping_gear(player.status)
 	elseif storms:contains(buff) then
 		handle_equipping_gear(player.status)
@@ -463,27 +425,52 @@ function job_pet_change(petparam, gain)
 	end
 end
 
-
 -------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
+-- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
--- Called for custom player commands.
-function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1]:lower() == 'petweather' then
-		handle_petweather()
-		eventArgs.handled = true
-	elseif cmdParams[1]:lower() == 'siphon' then
-		handle_siphoning()
-		eventArgs.handled = true
-	elseif cmdParams[1]:lower() == 'pact' then
-		handle_pacts(cmdParams)
-		eventArgs.handled = true
-	elseif cmdParams[1] == 'reset_ward_flag' then
-	    wards.flag = false
-	    wards.spell = ''
-		eventArgs.handled = true
+-- Custom spell mapping.
+function job_get_spell_map(spell)
+	if spell.type == 'BloodPactRage' then
+		if magicalRagePacts:contains(spell.english) then
+			return 'MagicalBloodPactRage'
+		else
+			return 'PhysicalBloodPactRage'
+		end
+	elseif spell.type == 'BloodPactWard' and spell.target.type == 'MONSTER' then
+		return 'DebuffBloodPactWard'
 	end
+end
+
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if pet.isvalid then
+		if pet.element == world.day_element then
+			idleSet = set_combine(idleSet, sets.perp.Day)
+		end
+		if pet.element == world.weather_element then
+			idleSet = set_combine(idleSet, sets.perp.Weather)
+		end
+		if sets.perp[pet.name] then
+			idleSet = set_combine(idleSet, sets.perp[pet.name])
+		end
+		gear.perp_staff.name = elements.perpetuance_staff_of[pet.element]
+		if gear.perp_staff.name and (player.inventory[gear.perp_staff.name] or player.wardrobe[gear.perp_staff.name]) then
+			idleSet = set_combine(idleSet, sets.perp.staff_and_grip)
+		end
+		if state.Buff["Avatar's Favor"] and avatars:contains(pet.name) then
+			idleSet = set_combine(idleSet, sets.idle.Avatar.Favor)
+		end
+		if pet.status == 'Engaged' then
+			idleSet = set_combine(idleSet, sets.idle.Avatar.Melee)
+		end
+	end
+	
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
 end
 
 -- Called by the 'update' self-command, for common needs.
@@ -504,23 +491,33 @@ function display_current_job_state(eventArgs)
 
 end
 
+
 -------------------------------------------------------------------------------------------------------------------
--- Utility functions specific to this job.
+-- User self-commands.
 -------------------------------------------------------------------------------------------------------------------
 
--- Custom spell mapping.
-function job_get_spell_map(spell)
-	if spell.type == 'BloodPactRage' then
-		if magicalRagePacts:contains(spell.english) then
-			return 'MagicalBloodPactRage'
-		else
-			return 'PhysicalBloodPactRage'
-		end
-	elseif spell.type == 'BloodPactWard' and spell.target.type == 'MONSTER' then
-		return 'DebuffBloodPactWard'
+-- Called for custom player commands.
+function job_self_command(cmdParams, eventArgs)
+	if cmdParams[1]:lower() == 'petweather' then
+		handle_petweather()
+		eventArgs.handled = true
+	elseif cmdParams[1]:lower() == 'siphon' then
+		handle_siphoning()
+		eventArgs.handled = true
+	elseif cmdParams[1]:lower() == 'pact' then
+		handle_pacts(cmdParams)
+		eventArgs.handled = true
+	elseif cmdParams[1] == 'reset_ward_flag' then
+	    wards.flag = false
+	    wards.spell = ''
+		eventArgs.handled = true
 	end
 end
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- Utility functions specific to this job.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Cast the appopriate storm for the currently summoned avatar, if possible.
 function handle_petweather()

@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------------------------------------------
--- Initialization function that defines sets and variables to be used.
+-- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
-
--- IMPORTANT: Make sure to also get the Mote-Include.lua file (and its supplementary files) to go with this.
 
 --[[
 	Custom commands:
@@ -44,7 +42,7 @@ function get_sets()
 end
 
 
--- Setup vars that are user-independent.
+-- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
 
@@ -55,6 +53,9 @@ function job_setup()
 	custom_timers = {}
 end
 
+-------------------------------------------------------------------------------------------------------------------
+-- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
+-------------------------------------------------------------------------------------------------------------------
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
@@ -94,7 +95,7 @@ end
 
 
 -- Called when this job file is unloaded (eg: job change)
-function job_file_unload()
+function user_unload()
 	send_command('unbind ^`')
 	send_command('unbind !`')
 end
@@ -306,16 +307,12 @@ end
 
 
 -------------------------------------------------------------------------------------------------------------------
--- Job- versions of event handlers, allowing overriding default handling.
+-- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = true
-	end
-
 	if spell.type == 'BardSong' then
 		-- Auto-Pianissimo
 		if ((spell.target.type == 'PLAYER' and not spell.target.charmed) or (spell.target.type == 'NPC' and spell.target.in_party)) and
@@ -331,7 +328,6 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Magic' then
@@ -345,7 +341,6 @@ function job_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
 		if state.DaurdablaMode == 'Daurdabla' then
@@ -358,13 +353,8 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 end
 
-
 -- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
-	if state.Buff[spell.english] ~= nil then
-		state.Buff[spell.english] = not spell.interrupted or buffactive[spell.english]
-	end
-
 	if spell.type == 'BardSong' and not spell.interrupted then
 		if spell.target and spell.target.type and spell.target.type == 'SELF' then
 			adjust_timers(spell, spellMap)
@@ -373,58 +363,8 @@ function job_aftercast(spell, action, spellMap, eventArgs)
 end
 
 -------------------------------------------------------------------------------------------------------------------
--- Hooks for other events that aren't handled by the include file.
+-- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
-
--- Modify the default idle set after it was constructed.
-function customize_idle_set(idleSet)
-	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.latent_refresh)
-	end
-	
-	return idleSet
-end
-
-function job_buff_change(buff, gain)
-	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
-	end
-end
-
--------------------------------------------------------------------------------------------------------------------
--- Hooks for Daurdabla mode handling.
--------------------------------------------------------------------------------------------------------------------
-
--- Request job-specific mode tables.
--- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_option_modes(field)
-	if field == 'Daurdabla' then
-		if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
-			return options.DaurdablaModes, state.DaurdablaMode
-		else
-			add_to_chat(123, info.DaurdablaInstrument..' is not in player inventory.')
-		end
-	end
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_option_mode(field, val)
-	if field == 'Daurdabla' then
-		state.DaurdablaMode = val
-		return true
-	end
-end
-
--------------------------------------------------------------------------------------------------------------------
--- User code that supplements self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Called by the 'update' self-command.
-function job_update(cmdParams, eventArgs)
-	pick_tp_weapon()
-end
-
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
@@ -440,6 +380,26 @@ function job_state_change(stateField, newValue, oldValue)
 		end
 	end
 end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Called by the 'update' self-command.
+function job_update(cmdParams, eventArgs)
+	pick_tp_weapon()
+end
+
+
+-- Modify the default idle set after it was constructed.
+function customize_idle_set(idleSet)
+	if player.mpp < 51 then
+	    idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
+	
+	return idleSet
+end
+
 
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
@@ -467,6 +427,31 @@ function display_current_job_state(eventArgs)
 		'Kiting: '..on_off_names[state.Kiting])
 
 	eventArgs.handled = true
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- Hooks for custom mode handling.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Request job-specific mode tables.
+-- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
+function job_get_option_modes(field)
+	if field == 'Daurdabla' then
+		if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
+			return options.DaurdablaModes, state.DaurdablaMode
+		else
+			add_to_chat(123, info.DaurdablaInstrument..' is not in player inventory.')
+		end
+	end
+end
+
+-- Set job-specific mode values.
+-- Return true if we recognize and set the requested field.
+function job_set_option_mode(field, val)
+	if field == 'Daurdabla' then
+		state.DaurdablaMode = val
+		return true
+	end
 end
 
 -------------------------------------------------------------------------------------------------------------------
