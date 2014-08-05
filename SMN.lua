@@ -54,7 +54,7 @@ function job_setup()
 	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander", "Cait Sith"}
 
 	magicalRagePacts = S{
-		'Inferno','Earthen Fury','Tidal Wave','Aerial Blast','Diamond Dust','Judgement Bolt','Searing Light','Howling Moon','Ruinous Omen',
+		'Inferno','Earthen Fury','Tidal Wave','Aerial Blast','Diamond Dust','Judgment Bolt','Searing Light','Howling Moon','Ruinous Omen',
 		'Fire II','Stone II','Water II','Aero II','Blizzard II','Thunder II',
 		'Fire IV','Stone IV','Water IV','Aero IV','Blizzard IV','Thunder IV',
 		'Thunderspark','Burning Strike','Meteorite','Nether Blast','Flaming Crush',
