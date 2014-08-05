@@ -558,8 +558,8 @@ function calculate_duration(spellName, spellMap)
 	if player.equipment.range == "Gjallarhorn" then mult = mult + 0.4 end -- change to 0.3 with 95 Gjall
 	
 	if player.equipment.main == "Carnwenhan" then mult = mult + 0.1 end -- 0.1 for 75, 0.4 for 95, 0.5 for 99/119
-	if player.equipment.main == "Legato Dagger" then mult = mult + 0.1 end
-	if player.equipment.sub == "Legato Dagger" then mult = mult + 0.1 end
+	if player.equipment.main == "Legato Dagger" then mult = mult + 0.05 end
+	if player.equipment.sub == "Legato Dagger" then mult = mult + 0.05 end
 	if player.equipment.neck == "Aoidos' Matinee" then mult = mult + 0.1 end
 	if player.equipment.body == "Aoidos' Hngrln. +2" then mult = mult + 0.1 end
 	if player.equipment.legs == "Mdk. Shalwar +1" then mult = mult + 0.1 end
@@ -585,10 +585,7 @@ function calculate_duration(spellName, spellMap)
 		end
 	end
 	
-	-- Tweak for inaccuracies in cast vs aftercast timing
-	mult = mult - 0.05
-	
-	local totalDuration = mult*120
+	local totalDuration = math.floor(mult*120)
 
 	return totalDuration
 end

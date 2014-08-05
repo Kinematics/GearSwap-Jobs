@@ -70,7 +70,7 @@ function init_gear_sets()
 
 	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
 	sets.precast.WS['Flash Nova'] = {ammo="Dosis Tathlum",
-		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+		head="Hagondes Hat",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Crematio Earring",
 		body="Hagondes Coat",hands="Yaoyotl Gloves",ring1="Acumen Ring",ring2="Strendu Ring",
 		back="Toro Cape",waist="Snow Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
@@ -90,6 +90,7 @@ function init_gear_sets()
 		back="Swith Cape +1",waist="Goading Belt",legs="Hagondes Pants",feet="Hagondes Sabots"}
 
 	sets.midcast.Geomancy = {range="Nepote Bell"}
+	sets.midcast.Geomancy.Indi = {range="Nepote Bell",legs="Bagua Pants"}
 
 	sets.midcast.Cure = {main="Tamaxchi",sub="Genbu's Shield",
 		body="Heka's Kalasiris",hands="Bokwus Gloves",ring1="Haoma Ring",ring2="Sirona's Ring",
@@ -248,10 +249,26 @@ end
 -- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
+function job_get_spell_map(spell, default_spell_map)
+	if spell.action_type == 'Magic' then
+		if spell.skill == 'Enfeebling Magic' then
+			if spell.type == 'WhiteMagic' then
+				return 'MndEnfeebles'
+			else
+				return 'IntEnfeebles'
+			end
+		elseif spell.skill == 'Geomancy' then
+			if spell.english:startswith('Indi') then
+				return 'Indi'
+			end
+		end
+	end
+end
+
 function customize_idle_set(idleSet)
-    if player.mpp < 51 then
-        idleSet = set_combine(idleSet, sets.latent_refresh)
-    end
+	if player.mpp < 51 then
+		idleSet = set_combine(idleSet, sets.latent_refresh)
+	end
 	return idleSet
 end
 

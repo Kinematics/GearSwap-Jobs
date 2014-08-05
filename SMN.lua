@@ -54,7 +54,7 @@ function job_setup()
 	avatars = S{"Carbuncle", "Fenrir", "Diabolos", "Ifrit", "Titan", "Leviathan", "Garuda", "Shiva", "Ramuh", "Odin", "Alexander", "Cait Sith"}
 
 	magicalRagePacts = S{
-		'Inferno','Earthen Fury','Tidal Wave','Aerial Blast','Diamond Dust','Judgement Bolt','Searing Light','Howling Moon','Ruinous Omen',
+		'Inferno','Earthen Fury','Tidal Wave','Aerial Blast','Diamond Dust','Judgment Bolt','Searing Light','Howling Moon','Ruinous Omen',
 		'Fire II','Stone II','Water II','Aero II','Blizzard II','Thunder II',
 		'Fire IV','Stone IV','Water IV','Aero IV','Blizzard IV','Thunder IV',
 		'Thunderspark','Burning Strike','Meteorite','Nether Blast','Flaming Crush',
@@ -577,10 +577,9 @@ function handle_siphoning()
 	-- If current (single) weather is opposed by the current day, we want to change the weather to match
 	-- the current day, if possible.
 	elseif player.sub_job == 'SCH' and world.weather_element ~= 'None' then
-		local intense = get_weather_intensity()
 		-- We can override single-intensity weather; leave double weather alone, since even if
 		-- it's partially countered by the day, it's not worth changing.
-		if intense == 1 then
+		if get_weather_intensity() == 1 then
 			-- If current weather is weak to the current day, it cancels the benefits for
 			-- siphon.  Change it to the day's weather if possible (+0 to +20%), or any non-weak
 			-- weather if not.
@@ -601,7 +600,7 @@ function handle_siphoning()
 	-- If we decided to use a storm, set that as the spirit element to cast.
 	if stormElementToUse then
 		siphonElement = stormElementToUse
-	elseif world.weather_element ~= 'None' and world.weather_element ~= elements.weak_to[world.day_element] then
+	elseif world.weather_element ~= 'None' and (get_weather_intensity() == 2 or world.weather_element ~= elements.weak_to[world.day_element]) then
 		siphonElement = world.weather_element
 	else
 		siphonElement = world.day_element
