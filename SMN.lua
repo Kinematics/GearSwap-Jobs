@@ -577,10 +577,9 @@ function handle_siphoning()
 	-- If current (single) weather is opposed by the current day, we want to change the weather to match
 	-- the current day, if possible.
 	elseif player.sub_job == 'SCH' and world.weather_element ~= 'None' then
-		local intense = get_weather_intensity()
 		-- We can override single-intensity weather; leave double weather alone, since even if
 		-- it's partially countered by the day, it's not worth changing.
-		if intense == 1 then
+		if get_weather_intensity() == 1 then
 			-- If current weather is weak to the current day, it cancels the benefits for
 			-- siphon.  Change it to the day's weather if possible (+0 to +20%), or any non-weak
 			-- weather if not.
