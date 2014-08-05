@@ -140,7 +140,7 @@ function init_gear_sets()
 	sets.idle.Indi = set_combine(sets.idle, {legs="Bagua Pants"})
 	sets.idle.Pet.Indi = set_combine(sets.idle.Pet, {legs="Bagua Pants"})
 	sets.idle.PDT.Indi = set_combine(sets.idle.PDT, {legs="Bagua Pants"})
-	sets.idle.PDT.Pet.Indi = set_combine(sets.idle.Pet, {legs="Bagua Pants"})
+	sets.idle.PDT.Pet.Indi = set_combine(sets.idle.PDT.Pet, {legs="Bagua Pants"})
 
 	sets.idle.Town = {main="Bolelabunga",sub="Genbu's Shield",range="Nepote Bell",
 		head="Nefer Khat +1",neck="Wiglen Gorget",ear1="Bloodgem Earring",ear2="Loquacious Earring",
