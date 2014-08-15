@@ -11,7 +11,9 @@ end
 
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-
+	-- Additional local binds
+	send_command('bind ^` input /ma Stun <t>')
+	send_command('bind @` gs c activate MagicBurst')
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -32,6 +34,7 @@ function user_setup()
 
     state.Defense.PhysicalMode = 'PDT'
     state.OffenseMode = 'None'
+    state.MagicBurst = false
 
     lowTierNukes = S{'Stone', 'Water', 'Aero', 'Fire', 'Blizzard', 'Thunder',
         'Stone II', 'Water II', 'Aero II', 'Fire II', 'Blizzard II', 'Thunder II',
@@ -40,8 +43,14 @@ function user_setup()
         'Stonega II', 'Waterga II', 'Aeroga II', 'Firaga II', 'Blizzaga II', 'Thundaga II'}
 
     gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
-
+    
 	select_default_macro_book()
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function user_unload()
+	send_command('unbind ^`')
+	send_command('unbind @`')
 end
 
 
@@ -221,7 +230,8 @@ function init_gear_sets()
     -- Buff sets: Gear that needs to be worn to actively enhance a current player buff.
     
     sets.buff['Mana Wall'] = {feet="Goetia Sabots +2"}
-    
+
+    sets.magic_burst = {neck="Mizukage-no-Kubikazari"}
 
     -- Engaged sets
 
@@ -265,13 +275,22 @@ function job_midcast(spell, action, spellMap, eventArgs)
     end
 end
 
+function job_post_midcast(spell, action, spellMap, eventArgs)
+    if spell.skill == 'Elemental Magic' and state.MagicBurst then
+        equip(sets.magic_burst)
+    end
+end
 
 function job_aftercast(spell, action, spellMap, eventArgs)
     -- Lock feet after using Mana Wall.
-    if not spell.interrupted and spell.english == 'Mana Wall' then
-        enable('feet')
-        equip(sets.buff['Mana Wall'])
-        disable('feet')
+    if not spell.interrupted then
+        if spell.english == 'Mana Wall' then
+            enable('feet')
+            equip(sets.buff['Mana Wall'])
+            disable('feet')
+        elseif spell.skill == 'Elemental Magic' then
+            state.MagicBurst = false
+        end
     end
 end
 
