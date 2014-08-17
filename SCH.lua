@@ -10,6 +10,8 @@
 
 										Light Arts              Dark Arts
 
+        gs c scholar light              Light Arts/Addendum
+        gs c scholar dark                                       Dark Arts/Addendum
 		gs c scholar cost               Penury                  Parsimony
 		gs c scholar speed              Celerity                Alacrity
 		gs c scholar aoe                Accession               Manifestation
@@ -489,47 +491,63 @@ function handle_strategems(cmdParams)
 	end
 	local strategem = cmdParams[2]:lower()
 
-	if buffactive['light arts'] or buffactive['addendum: white'] then
+    if strategem == 'light' then
+        if buffactive['light arts'] then
+            send_command('input /ja "Addendum: White" <me>')
+        elseif buffactive['addendum: white'] then
+            add_to_chat(122,'Error: Addendum: White is already active.')
+        else
+            send_command('input /ja "Light Arts" <me>')
+        end
+    elseif strategem == 'dark' then
+        if buffactive['dark arts'] then
+            send_command('input /ja "Addendum: Black" <me>')
+        elseif buffactive['addendum: black'] then
+            add_to_chat(122,'Error: Addendum: Black is already active.')
+        else
+            send_command('input /ja "Dark Arts" <me>')
+        end
+	elseif buffactive['light arts'] or buffactive['addendum: white'] then
 		if strategem == 'cost' then
-			send_command('@input /ja Penury <me>')
+			send_command('input /ja Penury <me>')
 		elseif strategem == 'speed' then
-			send_command('@input /ja Celerity <me>')
+			send_command('input /ja Celerity <me>')
 		elseif strategem == 'aoe' then
-			send_command('@input /ja Accession <me>')
+			send_command('input /ja Accession <me>')
 		elseif strategem == 'power' then
-			send_command('@input /ja Rapture <me>')
+			send_command('input /ja Rapture <me>')
 		elseif strategem == 'duration' then
-			send_command('@input /ja Perpetuance <me>')
+			send_command('input /ja Perpetuance <me>')
 		elseif strategem == 'accuracy' then
-			send_command('@input /ja Altruism <me>')
+			send_command('input /ja Altruism <me>')
 		elseif strategem == 'enmity' then
-			send_command('@input /ja Tranquility <me>')
+			send_command('input /ja Tranquility <me>')
 		elseif strategem == 'skillchain' then
 			add_to_chat(122,'Error: Light Arts does not have a skillchain strategem.')
 		elseif strategem == 'addendum' then
-			send_command('@input /ja "Addendum: White" <me>')
+			send_command('input /ja "Addendum: White" <me>')
 		else
 			add_to_chat(123,'Error: Unknown strategem ['..strategem..']')
 		end
 	elseif buffactive['dark arts']  or buffactive['addendum: black'] then
 		if strategem == 'cost' then
-			send_command('@input /ja Parsimony <me>')
+			send_command('input /ja Parsimony <me>')
 		elseif strategem == 'speed' then
-			send_command('@input /ja Alacrity <me>')
+			send_command('input /ja Alacrity <me>')
 		elseif strategem == 'aoe' then
-			send_command('@input /ja Manifestation <me>')
+			send_command('input /ja Manifestation <me>')
 		elseif strategem == 'power' then
-			send_command('@input /ja Ebullience <me>')
+			send_command('input /ja Ebullience <me>')
 		elseif strategem == 'duration' then
 			add_to_chat(122,'Error: Dark Arts does not have a duration strategem.')
 		elseif strategem == 'accuracy' then
-			send_command('@input /ja Focalization <me>')
+			send_command('input /ja Focalization <me>')
 		elseif strategem == 'enmity' then
-			send_command('@input /ja Equanimity <me>')
+			send_command('input /ja Equanimity <me>')
 		elseif strategem == 'skillchain' then
-			send_command('@input /ja Immanence <me>')
+			send_command('input /ja Immanence <me>')
 		elseif strategem == 'addendum' then
-			send_command('@input /ja "Addendum: Black" <me>')
+			send_command('input /ja "Addendum: Black" <me>')
 		else
 			add_to_chat(123,'Error: Unknown strategem ['..strategem..']')
 		end
@@ -546,21 +564,7 @@ function get_current_strategem_count()
 	local allRecasts = windower.ffxi.get_ability_recasts()
 	local stratsRecast = allRecasts[231]
 
-	local maxStrategems
-
-	if player.main_job_level >= 90 then
-		maxStrategems = 5
-	elseif player.main_job_level >= 70 then
-		maxStrategems = 4
-	elseif player.main_job_level >= 50 then
-		maxStrategems = 3
-	elseif player.main_job_level >= 30 then
-		maxStrategems = 2
-	elseif player.main_job_level >= 10 then
-		maxStrategems = 1
-	else
-		maxStrategems = 0
-	end
+	local maxStrategems = (player.main_job_level + 10) / 20
 
 	local fullRechargeTime = 4*60
 
