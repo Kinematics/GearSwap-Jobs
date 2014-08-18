@@ -33,6 +33,8 @@ function user_setup()
 	state.ExtraDefenseMode = M{['description']='Extra Defense Mode', 'None', 'MP', 'Knockback', 'MP_Knockback'}
 	state.EquipShield = M(false, 'Equip Shield w/Defense')
 
+    update_defense_mode()
+    
 	send_command('bind ^f11 gs c cycle MagicalDefenseMode')
 	send_command('bind !f11 gs c cycle ExtraDefenseMode')
 	send_command('bind @f10 gs c toggle EquipShield')
@@ -200,7 +202,7 @@ function init_gear_sets()
     -- Basic defense sets.
         
     sets.defense.PDT = {ammo="Iron Gobbet",
-        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Buckler Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
         back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
     sets.defense.HP = {ammo="Iron Gobbet",
@@ -212,7 +214,7 @@ function init_gear_sets()
         body="Twilight Mail",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
         back="Weard Mantle",waist="Nierenschutz",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
     sets.defense.Charm = {ammo="Iron Gobbet",
-        head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Bloodgem Earring",
+        head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Buckler Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
         back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
     -- To cap MDT with Shell IV (52/256), need 76/256 in gear.
@@ -352,8 +354,8 @@ end
 function display_current_job_state(eventArgs)
     local msg = 'Melee'
     
-    if state.CombatForm then
-        msg = msg .. ' (' .. state.CombatForm .. ')'
+    if state.CombatForm.has_value then
+        msg = msg .. ' (' .. state.CombatForm.value .. ')'
     end
     
     msg = msg .. ': '
@@ -376,7 +378,7 @@ function display_current_job_state(eventArgs)
         msg = msg .. ', Force Equip Shield'
     end
     
-    if state.Kiting.value then
+    if state.Kiting.value == true then
         msg = msg .. ', Kiting'
     end
 
@@ -384,7 +386,7 @@ function display_current_job_state(eventArgs)
         msg = msg .. ', Target PC: '..state.PCTargetMode.value
     end
 
-    if state.SelectNPCTargets.value then
+    if state.SelectNPCTargets.value == true then
         msg = msg .. ', Target NPCs'
     end
 
@@ -405,9 +407,9 @@ function update_defense_mode()
     if player.sub_job == 'NIN' or player.sub_job == 'DNC' then
         if player.equipment.sub and not player.equipment.sub:contains('Shield') and
            player.equipment.sub ~= 'Aegis' and player.equipment.sub ~= 'Ochain' then
-            state.CombatForm = 'DW'
+            state.CombatForm:set('DW')
         else
-            state.CombatForm = nil
+            state.CombatForm:reset()
         end
     end
 end

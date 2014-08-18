@@ -62,6 +62,8 @@ function user_setup()
 	state.WeaponskillMode:options('Normal', 'Acc')
 	state.IdleMode:options('Normal', 'Refresh', 'Reraise')
 	state.PhysicalDefenseMode:options('PDT', 'Hybrid', 'Killer')
+
+    update_combat_form()
 end
 
 
@@ -305,7 +307,7 @@ end
 
 function job_buff_change(buff, gain)
     if buff == 'Killer Instinct' then
-        state.CombatForm = get_combat_form()
+        update_combat_form()
         handle_equipping_gear(player.status)
     end
 end
@@ -321,7 +323,7 @@ function job_state_change(stateField, newValue, oldValue)
         -- Thena, Zeta or Eta
         RewardFood.name = "Pet Food " .. newValue
     elseif stateField == 'Pet Mode' then
-        state.CombatWeapon = newValue
+        state.CombatWeapon:set(newValue)
     end
 end
 
@@ -340,7 +342,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-    state.CombatForm = get_combat_form()
+    update_combat_form()
 end
 
 
@@ -348,8 +350,8 @@ end
 function display_current_job_state(eventArgs)
     local msg = 'Melee'
     
-    if state.CombatForm then
-        msg = msg .. ' (' .. state.CombatForm .. ')'
+    if state.CombatForm.has_value then
+        msg = msg .. ' (' .. state.CombatForm.value .. ')'
     end
     
     msg = msg .. ': '
@@ -380,15 +382,17 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_combat_form()
+function update_combat_form()
     if buffactive['Killer Instinct'] then
         if (player.sub_job == 'NIN' or player.sub_job == 'DNC') and player.equipment.sub:endswith('Axe') then
-            return 'KillerDW'
+            state.CombatForm:set('KillerDW')
         else
-            return 'Killer'
+            state.CombatForm:set('Killer')
         end
     elseif (player.sub_job == 'NIN' or player.sub_job == 'DNC') and player.equipment.sub:endswith('Axe') then
-        return 'DW'
+        state.CombatForm:set('DW')
+    else
+        state.CombatForm:reset()
     end
 end
 

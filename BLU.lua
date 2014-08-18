@@ -190,6 +190,7 @@ function user_setup()
 	send_command('bind ^` input /ja "Chain Affinity" <me>')
 	send_command('bind !` input /ja "Burst Affinity" <me>')
 
+    update_combat_form()
 	select_default_macro_book()
 end
 
@@ -539,7 +540,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	state.CombatForm = get_combat_form()
+    update_combat_form()
 end
 
 
@@ -547,12 +548,12 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_combat_form()
-	if player.equipment.main == 'empty' and player.equipment.sub == 'empty' then
-		-- H2H
-		return
-	elseif not (player.equipment.sub == "Genbu's Shield" or player.equipment.sub == 'empty') then
-		return 'DW'
+function update_combat_form()
+	-- Check for H2H or single-wielding
+    if player.equipment.sub == "Genbu's Shield" or player.equipment.sub == 'empty' then
+        state.CombatForm:reset()
+	else
+        state.CombatForm:set('DW')
 	end
 end
 

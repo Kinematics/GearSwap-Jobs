@@ -13,8 +13,6 @@ end
 
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-	state.CombatForm = get_combat_form()
-	
 	state.Buff.Hasso = buffactive.Hasso or false
 	state.Buff.Seigan = buffactive.Seigan or false
 	state.Buff.Sekkanoki = buffactive.Sekkanoki or false
@@ -33,6 +31,8 @@ function user_setup()
 	state.WeaponskillMode:options('Normal', 'Acc', 'Mod')
 	state.PhysicalDefenseMode:options('PDT', 'Reraise')
 
+	update_combat_form()
+	
 	-- Additional local binds
 	send_command('bind ^` input /ja "Hasso" <me>')
 	send_command('bind !` input /ja "Seigan" <me>')
@@ -270,7 +270,7 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-	state.CombatForm = get_combat_form()
+	update_combat_form()
 end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
@@ -282,9 +282,11 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_combat_form()
+function update_combat_form()
 	if areas.Adoulin:contains(world.area) and buffactive.ionis then
-		return 'Adoulin'
+		state.CombatForm:set('Adoulin')
+	else
+	    state.CombatForm:reset()
 	end
 end
 

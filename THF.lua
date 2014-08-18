@@ -436,8 +436,8 @@ end
 function display_current_job_state(eventArgs)
     local msg = 'Melee'
     
-    if state.CombatForm then
-        msg = msg .. ' (' .. state.CombatForm .. ')'
+    if state.CombatForm.has_value then
+        msg = msg .. ' (' .. state.CombatForm.value .. ')'
     end
     
     msg = msg .. ': '
@@ -452,7 +452,7 @@ function display_current_job_state(eventArgs)
         msg = msg .. ', ' .. 'Defense: ' .. state.DefenseMode.value .. ' (' .. state[state.DefenseMode.value .. 'DefenseMode'].value .. ')'
     end
     
-    if state.Kiting.value then
+    if state.Kiting.value == true then
         msg = msg .. ', Kiting'
     end
 
@@ -460,7 +460,7 @@ function display_current_job_state(eventArgs)
         msg = msg .. ', Target PC: '..state.PCTargetMode.value
     end
 
-    if state.SelectNPCTargets.value then
+    if state.SelectNPCTargets.value == true then
         msg = msg .. ', Target NPCs'
     end
     

@@ -472,8 +472,8 @@ end
 function display_current_job_state(eventArgs)
     local msg = 'Melee'
     
-    if state.CombatForm then
-        msg = msg .. ' (' .. state.CombatForm .. ')'
+    if state.CombatForm.has_value then
+        msg = msg .. ' (' .. state.CombatForm.value .. ')'
     end
     
     msg = msg .. ': '

@@ -13,11 +13,10 @@ end
 
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-	state.CombatForm = get_combat_form()
-	update_melee_groups()
-
 	state.Buff.Footwork = buffactive.Footwork or false
 	state.Buff.Impetus = buffactive.Impetus or false
+
+	state.FootworkWS = M(false, 'Footwork on WS')
 
 	info.impetus_hit_count = 0
 	windower.raw_register_event('action', on_action_for_impetus)
@@ -34,6 +33,9 @@ function user_setup()
 	state.WeaponskillMode:options('Normal', 'SomeAcc', 'Acc', 'Fodder')
 	state.HybridMode:options('Normal', 'PDT', 'Counter')
 	state.PhysicalDefenseMode:options('PDT', 'HP')
+
+	update_combat_form()
+	update_melee_groups()
 
 	select_default_macro_book()
 end
@@ -370,9 +372,11 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_combat_form()
+function update_combat_form()
 	if buffactive.footwork and not buffactive['hundred fists'] then
-		return 'Footwork'
+		state.CombatForm:set('Footwork')
+	else
+	    state.CombatForm:reset()
 	end
 end
 

@@ -192,7 +192,7 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	if spell.action_type == 'Ranged Attack' then
-		state.CombatWeapon = player.equipment.range
+		state.CombatWeapon:set(player.equipment.range)
 	end
 
 	if spell.action_type == 'Ranged Attack' or

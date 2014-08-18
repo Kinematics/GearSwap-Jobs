@@ -276,7 +276,7 @@ function init_gear_sets()
 		back="Atheling Mantle",waist="Goading Belt",legs="Brioso Cannions +1",feet="Gendewitha Galoshes"}
 
 	-- Set if dual-wielding
-	sets.engaged.DualWield = {range="Angel Lyre",
+	sets.engaged.DW = {range="Angel Lyre",
 		head="Nahtirah Hat",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
 		body="Bihu Justaucorps",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Brioso Cannions +1",feet="Gendewitha Galoshes"}
@@ -518,16 +518,16 @@ end
 -- Examine equipment to determine what our current TP weapon is.
 function pick_tp_weapon()
 	if brd_daggers:contains(player.equipment.main) then
-		state.CombatWeapon = 'Dagger'
+		state.CombatWeapon:set('Dagger')
 		
 		if S{'NIN','DNC'}:contains(player.sub_job) and brd_daggers:contains(player.equipment.sub) then
-			state.CombatForm = "DualWield"
+    		state.CombatForm:set('DW')
 		else
-			state.CombatForm = nil
+    		state.CombatForm:reset()
 		end
 	else
-		state.CombatWeapon = nil
-		state.CombatForm = nil
+		state.CombatWeapon:reset()
+		state.CombatForm:reset()
 	end
 end
 
