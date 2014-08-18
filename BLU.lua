@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -164,7 +166,7 @@ function job_setup()
 	
 	
 	-- Spells that require Unbridled Learning to cast.
-		unbridled_spells = S{
+	unbridled_spells = S{
 		'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
 		'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
 		'Tourbillion'
@@ -177,17 +179,10 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Refresh', 'Learning'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
-	options.CastingModes = {'Normal', 'Resistant'}
-	options.IdleModes = {'Normal', 'PDT', 'Learning'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode:options('Normal', 'Acc', 'Refresh', 'Learning')
+	state.WeaponskillMode:options('Normal', 'Acc')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT', 'Learning')
 
 	gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
 
@@ -497,7 +492,7 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	end
 
 	-- If in learning mode, keep on gear intended to help with that, regardless of action.
-	if state.OffenseMode == 'Learning' then
+	if state.OffenseMode.value == 'Learning' then
 		equip(sets.Learning)
 	end
 end
@@ -547,39 +542,6 @@ function job_update(cmdParams, eventArgs)
 	state.CombatForm = get_combat_form()
 end
 
--- Set eventArgs.handled to true if we don't want the automatic display to be run.
-function display_current_job_state(eventArgs)
-	local dwString  = ''
-	if state.CombatForm == 'DW' then
-		dwString = ' (DW)'
-	end
-	
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
-
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-	end
-	
-	local pcTarget = ''
-	if state.PCTargetMode ~= 'default' then
-		pcTarget = ', Target PC: '..state.PCTargetMode
-	end
-
-	local npcTarget = ''
-	if state.SelectNPCTargets then
-		pcTarget = ', Target NPCs'
-	end
-	
-
-	add_to_chat(122,'Melee'..dwString..': '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting]..pcTarget..npcTarget)
-
-	eventArgs.handled = true
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.

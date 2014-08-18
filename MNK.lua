@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -28,18 +30,10 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'SomeAcc', 'Acc', 'Mod'}
-	options.DefenseModes = {'Normal', 'PDT', 'Counter'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Mod'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'HP'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
-	
-	state.FootworkWS = false
+	state.OffenseMode:options('Normal', 'SomeAcc', 'Acc', 'Fodder')
+	state.WeaponskillMode:options('Normal', 'SomeAcc', 'Acc', 'Fodder')
+	state.HybridMode:options('Normal', 'PDT', 'Counter')
+	state.PhysicalDefenseMode:options('PDT', 'HP')
 
 	select_default_macro_book()
 end
@@ -286,17 +280,17 @@ end
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
 	-- Don't gearswap for weaponskills when Defense is on.
-	if spell.type == 'WeaponSkill' and state.Defense.Active then
+	if spell.type == 'WeaponSkill' and state.DefenseMode.current ~= 'None' then
 		eventArgs.handled = true
 	end
 end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.type == 'WeaponSkill' and not state.Defense.Active then
+	if spell.type == 'WeaponSkill' and state.DefenseMode.current ~= 'None' then
 		if state.Buff.Impetus and (spell.english == "Ascetic's Fury" or spell.english == "Victory Smite") then
 			-- Need 6 hits at capped dDex, or 9 hits if dDex is uncapped, for Tantra to tie or win.
-			if (state.OffenseMode == 'Mod' and info.impetus_hit_count > 5) or (info.impetus_hit_count > 8) then
+			if (state.OffenseMode.current == 'Fodder' and info.impetus_hit_count > 5) or (info.impetus_hit_count > 8) then
 				equip(sets.impetus_body)
 			end
 		elseif state.Buff.Footwork and (spell.english == "Dragon's Kick" or spell.english == "Tornado Kick") then

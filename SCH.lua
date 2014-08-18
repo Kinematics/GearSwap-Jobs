@@ -27,6 +27,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -46,18 +48,10 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.CastingModes = {'Normal', 'Resistant'}
-	options.OffenseModes = {'None', 'Normal'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal'}
-	options.IdleModes = {'Normal', 'PDT', 'Stun'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
+	state.OffenseMode:options('None', 'Normal')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT')
 
-	state.OffenseMode = 'None'
-	state.Defense.PhysicalMode = 'PDT'
 
 	info.low_nukes = S{"Stone", "Water", "Aero", "Fire", "Blizzard", "Thunder"}
 	info.mid_nukes = S{"Stone II", "Water II", "Aero II", "Fire II", "Blizzard II", "Thunder II",
@@ -321,15 +315,11 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'OffenseMode' then
+	if stateField == 'Offense Mode' then
 		if newValue == 'Normal' then
-			disable('main','sub')
+			disable('main','sub','range')
 		else
-			enable('main','sub')
-		end
-	elseif stateField == 'Reset' then
-		if state.OffenseMode == 'None' then
-			enable('main','sub')
+			enable('main','sub','range')
 		end
 	end
 end
@@ -365,9 +355,9 @@ end
 
 function customize_idle_set(idleSet)
 	if state.Buff['Sublimation: Activated'] then
-		if state.IdleMode == 'Normal' then
+		if state.IdleMode.value == 'Normal' then
 			idleSet = set_combine(idleSet, sets.buff.FullSublimation)
-		elseif state.IdleMode == 'PDT' then
+		elseif state.IdleMode.value == 'PDT' then
 			idleSet = set_combine(idleSet, sets.buff.PDTSublimation)
 		end
 	end
@@ -383,7 +373,7 @@ end
 function job_update(cmdParams, eventArgs)
 	if cmdParams[1] == 'user' and not (buffactive['light arts']      or buffactive['dark arts'] or
 					   buffactive['addendum: white'] or buffactive['addendum: black']) then
-		if state.IdleMode == 'Stun' then
+		if state.IdleMode.value == 'Stun' then
 			send_command('@input /ja "Dark Arts" <me>')
 		else
 			send_command('@input /ja "Light Arts" <me>')
@@ -397,25 +387,8 @@ end
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
-
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-	end
-
-	local meleeString = ''
-	if state.OffenseMode == 'Normal' then
-		meleeString = 'Melee: Weapons locked, '
-	end
-
-	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting])
-
-	eventArgs.handled = true
+    display_current_caster_state()
+    eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------

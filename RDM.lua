@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -20,18 +22,10 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'None', 'Melee'}
-	options.DefenseModes = {'Normal', 'Defense'}
-	options.WeaponskillModes = {'Normal'}
-	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
-	state.OffenseMode = 'None'
+	state.OffenseMode:options('None', 'Normal')
+	state.HybridMode:options('Normal', 'PhysicalDef', 'MagicalDef')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT')
 
 	gear.default.obi_waist = "Sekhmet Corset"
 	
@@ -239,13 +233,9 @@ end
 function job_state_change(stateField, newValue, oldValue)
 	if stateField == 'OffenseMode' then
 		if newValue == 'None' then
-			enable('main','sub')
+			enable('main','sub','range')
 		else
-			disable('main','sub')
-		end
-	elseif stateField == 'Reset' then
-		if state.OffenseMode == 'None' then
-			enable('main','sub')
+			disable('main','sub','range')
 		end
 	end
 end
@@ -265,25 +255,8 @@ end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
-
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-	end
-
-	local meleeString = ''
-	if state.OffenseMode == 'Melee' then
-		meleeString = 'Offense: Melee, '
-	end
-
-	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting])
-
-	eventArgs.handled = true
+    display_current_caster_state()
+    eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -292,10 +265,6 @@ end
 
 -- Select default macro book on initial load or subjob change.
 function select_default_macro_book()
-	-- Default macro set/book
-	set_macro_page(3, 4)
-	
-
 	-- Default macro set/book
 	if player.sub_job == 'DNC' then
 		set_macro_page(2, 4)

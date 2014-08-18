@@ -41,6 +41,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -126,17 +128,10 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal'}
-	options.CastingModes = {'Normal', 'Resistant'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
+	state.OffenseMode:options('None', 'Normal', 'Acc')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT')
 
-	state.Defense.PhysicalMode = 'PDT'
 	gear.perp_staff = {name=""}
 	
 	select_default_macro_book()
@@ -364,13 +359,13 @@ end
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 -- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
 function job_precast(spell, action, spellMap, eventArgs)
-    if state.Buff['Astral Conduit'] and pet_midcast() then
+    if state.Buff['Astral Conduit'] and pet_midaction() then
         eventArgs.handled = true
     end
 end
 
 function job_midcast(spell, action, spellMap, eventArgs)
-    if state.Buff['Astral Conduit'] and pet_midcast() then
+    if state.Buff['Astral Conduit'] and pet_midaction() then
         eventArgs.handled = true
     end
 end
@@ -681,7 +676,7 @@ function handle_pacts(cmdParams)
 	
 	if pacts[pact][pet.name] then
 		if pact == 'astralflow' and not buffactive['astral flow'] then
-			add_to_chat(122,'Cannot use Astral Flow pacts without 2hr active.')
+			add_to_chat(122,'Cannot use Astral Flow pacts at this time.')
 			return
 		end
 		

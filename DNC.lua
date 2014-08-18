@@ -30,6 +30,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -39,15 +41,14 @@ end
 function job_setup()
 	state.Buff['Climactic Flourish'] = buffactive['climactic flourish'] or false
 
-	options.StepModes = {'Box Step', 'Quickstep', 'Feather Step', 'Stutter Step'}
-	state.MainStep = 'Box Step'
-	state.AltStep = 'Quickstep'
-	state.CurrentStep = 'Main'
-	state.UseAltStep = false
-	state.SelectStepTarget = false
-	state.IgnoreTargetting = false
-	
-	skillchainPending = false
+    state.MainStep = M{['description']='Main Step', 'Box Step', 'Quickstep', 'Feather Step', 'Stutter Step'}
+    state.AltStep = M{['description']='Alt Step', 'Quickstep', 'Feather Step', 'Stutter Step', 'Box Step'}
+    state.UseAltStep = M(false, 'Use Alt Step')
+    state.SelectStepTarget = M(false, 'Select Step Target')
+    state.IgnoreTargetting = M(false, 'Ignore Targetting')
+
+	state.CurrentStep = M{['description']='Current Step', 'Main', 'Alt'}
+    state.SkillchainPending = M(false, 'Skillchain Pending')
 
 	determine_haste_group()
 end
@@ -58,21 +59,15 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Fodder'}
-	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Fodder'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
+	state.OffenseMode:options('Normal', 'Acc', 'Fodder')
+	state.HybridMode:options('Normal', 'Evasion', 'PDT')
+	state.WeaponskillMode:options('Normal', 'Acc', 'Fodder')
+	state.PhysicalDefenseMode:options('Evasion', 'PDT')
 
-	state.Defense.PhysicalMode = 'Evasion'
 
 	gear.default.weaponskill_neck = "Asperity Necklace"
 	gear.default.weaponskill_waist = "Caudata Belt"
 	gear.AugQuiahuiz = {name="Quiahuiz Trousers", augments={'Haste+2','"Snapshot"+2','STR+8'}}
-
 
 	-- Additional local binds
 	send_command('bind ^= gs c cycle mainstep')
@@ -378,11 +373,11 @@ end
 
 
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.type:lower() == "weaponskill" then
+	if spell.type == "WeaponSkill" then
 		if state.Buff['Climactic Flourish'] then
 			equip(sets.buff['Climactic Flourish'])
 		end
-		if skillchainPending then
+		if state.SkillchainPending.value == true then
 			equip(sets.precast.Skillchain)
 		end
 	end
@@ -394,11 +389,11 @@ end
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if not spell.interrupted then
 		if spell.english == "Wild Flourish" then
-			skillchainPending = true
-			send_command('wait 5;gs c clear skillchainPending')
+			state.SkillchainPending:set()
+			send_command('wait 5;gs c unset SkillchainPending')
 		elseif spell.type:lower() == "weaponskill" then
-			skillchainPending = not skillchainPending
-			send_command('wait 6;gs c clear skillchainPending')
+			state.SkillchainPending:toggle()
+			send_command('wait 6;gs c unset SkillchainPending')
 		end
 	end
 end
@@ -447,7 +442,7 @@ function customize_idle_set(idleSet)
 end
 
 function customize_melee_set(meleeSet)
-	if not state.Defense.Active then
+	if state.DefenseMode.value ~= 'None' then
 		if buffactive['saber dance'] then
 			meleeSet = set_combine(meleeSet, sets.buff['Saber Dance'])
 		end
@@ -462,12 +457,12 @@ end
 -- Handle auto-targetting based on local setup.
 function job_auto_change_target(spell, action, spellMap, eventArgs)
 	if spell.type == 'Step' then
-		if state.IgnoreTargetting then
-			state.IgnoreTargetting = false
+		if state.IgnoreTargetting.value == true then
+			state.IgnoreTargetting:reset()
 			eventArgs.handled = true
 		end
 		
-		eventArgs.SelectNPCTargets = state.SelectStepTarget
+		eventArgs.SelectNPCTargets = state.SelectStepTarget.value
 	end
 end
 
@@ -475,30 +470,41 @@ end
 -- Function to display the current relevant user state when doing an update.
 -- Set eventArgs.handled to true if display was handled, and you don't want the default info shown.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
+    local msg = 'Melee'
+    
+    if state.CombatForm then
+        msg = msg .. ' (' .. state.CombatForm .. ')'
+    end
+    
+    msg = msg .. ': '
+    
+    msg = msg .. state.OffenseMode.value
+    if state.HybridMode.value ~= 'Normal' then
+        msg = msg .. '/' .. state.HybridMode.value
+    end
+    msg = msg .. ', WS: ' .. state.WeaponskillMode.value
+    
+    if state.DefenseMode.value ~= 'None' then
+        msg = msg .. ', ' .. 'Defense: ' .. state.DefenseMode.value .. ' (' .. state[state.DefenseMode.value .. 'DefenseMode'].value .. ')'
+    end
+    
+    if state.Kiting.value then
+        msg = msg .. ', Kiting'
+    end
 
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+	msg = msg .. ', ['..state.MainStep.current
+
+	if state.UseAltStep.value == true then
+		msg = msg .. '/'..state.AltStep.current
 	end
 	
-	local steps = ''
-	if state.UseAltStep then
-		steps = ', ['..state.MainStep..'/'..state.AltStep..']'
-	else
-		steps = ', ['..state.MainStep..']'
-	end
+	msg = msg .. ']'
 
-	if state.SelectStepTarget then
+	if state.SelectStepTarget.value == true then
 		steps = steps..' (Targetted)'
 	end
 
-
-	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting]..steps)
+    add_to_chat(122, msg)
 
 	eventArgs.handled = true
 end
@@ -510,65 +516,22 @@ end
 
 -- Called for custom player commands.
 function job_self_command(cmdParams, eventArgs)
-	if cmdParams[1] == 'clear' and cmdParams[2] and cmdParams[2]:lower() == 'skillchainpending' then
-		skillchainPending = false
-	elseif cmdParams[1] == 'step' then
+	if cmdParams[1] == 'step' then
 		if cmdParams[2] == 't' then
-			state.IgnoreTargetting = true
+			state.IgnoreTargetting:set()
 		end
 
-		local doStep = state.MainStep
-		if state.UseAltStep then
-			doStep = state[state.CurrentStep..'Step']
-			if state.CurrentStep == 'Main' then
-				state.CurrentStep = 'Alt'
-			else
-				state.CurrentStep = 'Main'
-			end
-		end
+        local doStep = ''
+		if state.UseAltStep.value == true then
+			doStep = state[state.CurrentStep.current..'Step'].current
+			state.CurrentStep:cycle()
+        else
+			doStep = state.MainStep.current
+        end        
 		
 		send_command('@input /ja "'..doStep..'" <t>')
 	end
 end
-
-
--------------------------------------------------------------------------------------------------------------------
--- Hooks for custom mode handling.
--------------------------------------------------------------------------------------------------------------------
-
--- Job-specific toggles.
-function job_toggle_state(field)
-	if field:lower() == 'selectsteptarget' then
-		state.SelectStepTarget = not state.SelectStepTarget
-		return "Select Step Target", state.SelectStepTarget
-	elseif field:lower() == 'usealtstep' then
-		state.UseAltStep = not state.UseAltStep
-		return "Use Alt Step", state.UseAltStep
-	end
-end
-
--- Request job-specific mode tables.
--- Return the list, and the current value for the requested field.
-function job_get_option_modes(field)
-	if field == 'Mainstep' then
-		return options.StepModes, state.MainStep
-	elseif field == 'Altstep' then
-		return options.StepModes, state.AltStep
-	end
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_option_mode(field, val)
-	if field == 'Mainstep' then
-		state.MainStep = val
-		return true
-	elseif field == 'Altstep' then
-		state.AltStep = val
-		return true
-	end
-end
-
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.

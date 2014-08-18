@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -20,18 +22,9 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'None', 'Normal'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal'}
-	options.CastingModes = {'Normal', 'Resistant', 'Dire'}
-	options.IdleModes = {'Normal', 'PDT'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-	
-	state.Defense.PhysicalMode = 'PDT'
-	state.OffenseMode = 'None'
+	state.OffenseMode:options('None', 'Normal')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT')
 
 	select_default_macro_book()
 end
@@ -272,15 +265,11 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'OffenseMode' then
+	if stateField == 'Offense Mode' then
 		if newValue == 'Normal' then
-			disable('main','sub')
+			disable('main','sub','range')
 		else
-			enable('main','sub')
-		end
-	elseif stateField == 'Reset' then
-		if state.OffenseMode == 'None' then
-			enable('main','sub')
+			enable('main','sub','range')
 		end
 	end
 end
@@ -337,27 +326,9 @@ end
 
 
 -- Function to display the current relevant user state when doing an update.
--- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
-
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-	end
-	
-	local meleeString = ''
-	if state.OffenseMode == 'Normal' then
-		meleeString = 'Melee: Weapons locked, '
-	end
-
-	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting])
-
-	eventArgs.handled = true
+    display_current_caster_state()
+    eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------

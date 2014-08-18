@@ -5,38 +5,28 @@
 --[[
 	Custom commands:
 	
-	Daurdabla has a set of modes: None, Dummy, Daurdabla
+	ExtraSongsMode may take one of three values: None, Dummy, FullLength
 	
 	You can set these via the standard 'set' and 'cycle' self-commands.  EG:
-	gs c cycle daurdabla
-	gs c set daurdabla Dummy
+	gs c cycle ExtraSongsMode
+	gs c set ExtraSongsMode Dummy
 	
-	The Dummy state will equip the Daurdabla and ensure non-duration gear is equipped.
-	The Daurdabla state will simply equip the Daurdabla on top of standard gear.
-	
-	Use the Dummy version to put up dummy songs that can be overwritten by full-potency songs.
-	
-	Use the Daurdabla version to simply put up additional songs without worrying about dummy songs.
+	The Dummy state will equip the bonus song instrument and ensure non-duration gear is equipped.
+	The FullLength state will simply equip the bonus song instrument on top of standard gear.
 	
 	
 	Simple macro to cast a dummy Daurdabla song:
-	/console gs c set daurdabla Dummy
+	/console gs c set ExtraSongsMode Dummy
 	/ma "Shining Fantasia" <me>
 	
-	To use a Terpander rather than Daurdabla, set the info.DaurdablaInstrument variable to
-	'Terpander', and info.DaurdablaSongs to 1.
-	
-	There is also an auto-handling of Daurdabla songs, via the state.AutoDaurdabla flag:
-	
-	If state.DaurdablaMode is None, and if currently tracked songs (via timers) is less
-	than the max we could sing while using the Daurdabla, and if the song is cast on
-	self (rather than Pianissimo on another player), then it will equip the Daurdabla on
-	top of standard duration gear.
-
+	To use a Terpander rather than Daurdabla, set the info.BonusSongInstrument variable to
+	'Terpander', and info.ExtraSongs to 1.
 --]]
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -44,10 +34,9 @@ end
 
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
+	state.ExtraSongsMode = M{['description']='Extra Songs', 'None', 'Dummy', 'FullLength'}
 
-	options.DaurdablaModes = {'None','Dummy','Daurdabla'}
-	state.DaurdablaMode = 'None'
+	state.Buff['Pianissimo'] = buffactive['pianissimo'] or false
 
 	-- For tracking current recast timers via the Timers plugin.
 	custom_timers = {}
@@ -59,35 +48,23 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.CastingModes = {'Normal', 'Resistant'}
-	options.OffenseModes = {'None', 'Normal'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal'}
-	options.IdleModes = {'Normal', 'PDT'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
-	state.OffenseMode = 'None'
+	state.OffenseMode:options('None', 'Normal')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT')
 
 	brd_daggers = S{'Izhiikoh', 'Vanir Knife', 'Atoyac', 'Aphotic Kukri', 'Sabebus'}
 	pick_tp_weapon()
 	
 	-- Adjust this if using the Terpander (new +song instrument)
-	info.DaurdablaInstrument = 'Daurdabla'
+	info.BonusSongInstrument = 'Daurdabla'
 	-- How many extra songs we can keep from Daurdabla/Terpander
-	info.DaurdablaSongs = 2
-	-- Whether to try to automatically use Daurdabla when an appropriate gap in current vs potential
-	-- songs appears, and you haven't specifically changed state.DaurdablaMode.
-	state.AutoDaurdabla = false
+	info.ExtraSongs = 2
 	
 	-- Set this to false if you don't want to use custom timers.
-	state.UseCustomTimers = true
+	state.UseCustomTimers = M(true, 'Use Custom Timers')
 	
 	-- Additional local binds
-	send_command('bind ^` gs c cycle Daurdabla')
+	send_command('bind ^` gs c cycle ExtraSongsMode')
 	send_command('bind !` input /ma "Chocobo Mazurka" <me>')
 
 	select_default_macro_book()
@@ -125,7 +102,7 @@ function init_gear_sets()
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape +1",waist="Witful Belt",legs="Gendewitha Spats",feet="Bihu Slippers"}
 
-	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range=info.DaurdablaInstrument})
+	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range=info.BonusSongInstrument})
 		
 	
 	-- Precast sets to enhance JAs
@@ -178,7 +155,7 @@ function init_gear_sets()
 	sets.midcast["Sentinel's Scherzo"] = {feet="Aoidos' Cothrn. +2"}
 	sets.midcast['Magic Finale'] = {neck="Wind Torque",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	sets.midcast.Mazurka = {range=info.DaurdablaInstrument}
+	sets.midcast.Mazurka = {range=info.BonusSongInstrument}
 	
 
 	-- For song buffs (duration and AF3 set bonus)
@@ -204,13 +181,13 @@ function init_gear_sets()
 		ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range=info.DaurdablaInstrument})
+	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range=info.BonusSongInstrument})
 
 	-- Cast spell with normal gear, except using Daurdabla instead
-	sets.midcast.Daurdabla = {range=info.DaurdablaInstrument}
+	sets.midcast.Daurdabla = {range=info.BonusSongInstrument}
 
 	-- Dummy song with Daurdabla; minimize duration to make it easy to overwrite.
-	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range=info.DaurdablaInstrument,
+	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range=info.BonusSongInstrument,
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Swith Cape +1",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
@@ -343,20 +320,18 @@ end
 
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' then
-		if state.DaurdablaMode == 'Daurdabla' then
-			equip(sets.midcast.Daurdabla)
-		elseif state.DaurdablaMode == 'None' and spell.target.type == 'SELF' and state.AutoDaurdabla and daur_song_gap() then
+		if state.ExtraSongsMode.value == 'FullLength' then
 			equip(sets.midcast.Daurdabla)
 		end
 
-		state.DaurdablaMode = 'None'
+		state.ExtraSongsMode:reset()
 	end
 end
 
 -- Set eventArgs.handled to true if we don't want automatic gear equipping to be done.
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if spell.type == 'BardSong' and not spell.interrupted then
-		if spell.target and spell.target.type and spell.target.type == 'SELF' then
+		if spell.target and spell.target.type == 'SELF' then
 			adjust_timers(spell, spellMap)
 		end
 	end
@@ -368,15 +343,11 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'OffenseMode' then
+	if stateField == 'Offense Mode' then
 		if newValue == 'Normal' then
-			disable('main','sub')
+			disable('main','sub','ammo')
 		else
-			enable('main','sub')
-		end
-	elseif stateField == 'Reset' then
-		if state.OffenseMode == 'None' then
-			enable('main','sub')
+			enable('main','sub','ammo')
 		end
 	end
 end
@@ -402,56 +373,9 @@ end
 
 
 -- Function to display the current relevant user state when doing an update.
--- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
-
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-	end
-	
-	local meleeString = ''
-	if state.OffenseMode == 'Normal' then
-		if state.CombatForm then
-			meleeString = 'Melee: Dual-wield, '
-		else
-			meleeString = 'Melee: Single-wield, '
-		end
-	end
-
-	add_to_chat(122,'Casting ['..state.CastingMode..'], '..meleeString..'Idle ['..state.IdleMode..'], '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting])
-
-	eventArgs.handled = true
-end
-
--------------------------------------------------------------------------------------------------------------------
--- Hooks for custom mode handling.
--------------------------------------------------------------------------------------------------------------------
-
--- Request job-specific mode tables.
--- Return true on the third returned value to indicate an error: that we didn't recognize the requested field.
-function job_get_option_modes(field)
-	if field == 'Daurdabla' then
-		if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
-			return options.DaurdablaModes, state.DaurdablaMode
-		else
-			add_to_chat(123, info.DaurdablaInstrument..' is not in player inventory.')
-		end
-	end
-end
-
--- Set job-specific mode values.
--- Return true if we recognize and set the requested field.
-function job_set_option_mode(field, val)
-	if field == 'Daurdabla' then
-		state.DaurdablaMode = val
-		return true
-	end
+    display_current_caster_state()
+    eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -479,7 +403,7 @@ end
 -- keeping only the actual valid songs rather than spamming the default
 -- buff remaining timers.
 function adjust_timers(spell, spellMap)
-	if not state.UseCustomTimers then
+	if state.UseCustomTimers.value == false then
 		return
 	end
 	
@@ -514,8 +438,8 @@ function adjust_timers(spell, spellMap)
 	else
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
-		if player.equipment.range == info.DaurdablaInstrument then
-			maxsongs = maxsongs + info.DaurdablaSongs
+		if player.equipment.range == info.BonusSongInstrument then
+			maxsongs = maxsongs + info.ExtraSongs
 		end
 		if buffactive['Clarion Call'] then
 			maxsongs = maxsongs + 1
@@ -591,30 +515,6 @@ function calculate_duration(spellName, spellMap)
 end
 
 
-function daur_song_gap()
-	if player.inventory[info.DaurdablaInstrument] or player.wardrobe[info.DaurdablaInstrument] then
-		-- Figure out how many songs we can maintain.
-		local maxsongs = 2 + info.DaurdablaSongs
-		
-		local activesongs = table.length(custom_timers)
-		
-		-- If we already have at least 2 songs on, but not enough to max out
-		-- on possible Daur songs, flag us as Daur-ready.
-		if activesongs >= 2 and activesongs < maxsongs then
-			return true
-		end
-	end
-	
-	return false
-end
-
-
--- Select default macro book on initial load or subjob change.
-function select_default_macro_book()
-	set_macro_page(2, 18)
-end
-
-
 -- Examine equipment to determine what our current TP weapon is.
 function pick_tp_weapon()
 	if brd_daggers:contains(player.equipment.main) then
@@ -638,6 +538,13 @@ function reset_timers()
     end
     custom_timers = {}
 end
+
+
+-- Select default macro book on initial load or subjob change.
+function select_default_macro_book()
+	set_macro_page(2, 18)
+end
+
 
 windower.register_event('zone change',reset_timers)
 windower.register_event('logout',reset_timers)

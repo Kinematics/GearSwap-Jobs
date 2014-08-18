@@ -17,6 +17,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -42,22 +44,15 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc', 'Mod'} -- Mod for trivially weak mobs
-	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
-	options.RangedModes = {'Normal', 'Acc'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Mod'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'Evasion', 'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
+	state.OffenseMode:options('Normal', 'Acc', 'Mod')
+	state.HybridMode:options('Normal', 'Evasion', 'PDT')
+	state.RangedMode:options('Normal', 'Acc')
+	state.WeaponskillMode:options('Normal', 'Acc', 'Mod')
+	state.PhysicalDefenseMode:options('Evasion', 'PDT')
 
-	state.RangedMode = 'Normal'
-	state.Defense.PhysicalMode = 'Evasion'
 
 	gear.default.weaponskill_neck = "Asperity Necklace"
 	gear.default.weaponskill_waist = "Caudata Belt"
-	
 	gear.AugQuiahuiz = {name="Quiahuiz Trousers", augments={'Haste+2','"Snapshot"+2','STR+8'}}
 
 	-- Additional local binds
@@ -334,10 +329,10 @@ end
 
 -- Run after the general precast() is done.
 function job_post_precast(spell, action, spellMap, eventArgs)
-	if spell.english == 'Aeolian Edge' and state.TreasureMode ~= 'None' then
+	if spell.english == 'Aeolian Edge' and state.TreasureMode.value ~= 'None' then
 		equip(sets.TreasureHunter)
 	elseif spell.english=='Sneak Attack' or spell.english=='Trick Attack' or spell.type == 'WeaponSkill' then
-		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
+		if state.TreasureMode.value == 'SATA' or state.TreasureMode.value == 'Fulltime' then
 			equip(sets.TreasureHunter)
 		end
 	end
@@ -345,7 +340,7 @@ end
 
 -- Run after the general midcast() set is constructed.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if state.TreasureMode ~= 'None' and spell.action_type == 'Ranged Attack' then
+	if state.TreasureMode.value ~= 'None' and spell.action_type == 'Ranged Attack' then
 		equip(sets.TreasureHunter)
 	end
 end
@@ -376,7 +371,6 @@ end
 -- gain == true if the buff was gained, false if it was lost.
 function job_buff_change(buff, gain)
 	if state.Buff[buff] ~= nil then
-		state.Buff[buff] = gain
 		if not midaction() then
 			handle_equipping_gear(player.status)
 		end
@@ -424,7 +418,7 @@ end
 
 
 function customize_melee_set(meleeSet)
-	if state.TreasureMode == 'Fulltime' then
+	if state.TreasureMode.value == 'Fulltime' then
 		meleeSet = set_combine(meleeSet, sets.TreasureHunter)
 	end
 
@@ -440,18 +434,39 @@ end
 -- Function to display the current relevant user state when doing an update.
 -- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
+    local msg = 'Melee'
+    
+    if state.CombatForm then
+        msg = msg .. ' (' .. state.CombatForm .. ')'
+    end
+    
+    msg = msg .. ': '
+    
+    msg = msg .. state.OffenseMode.value
+    if state.HybridMode.value ~= 'Normal' then
+        msg = msg .. '/' .. state.HybridMode.value
+    end
+    msg = msg .. ', WS: ' .. state.WeaponskillMode.value
+    
+    if state.DefenseMode.value ~= 'None' then
+        msg = msg .. ', ' .. 'Defense: ' .. state.DefenseMode.value .. ' (' .. state[state.DefenseMode.value .. 'DefenseMode'].value .. ')'
+    end
+    
+    if state.Kiting.value then
+        msg = msg .. ', Kiting'
+    end
 
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..'  '
-	end
+    if state.PCTargetMode.value ~= 'default' then
+        msg = msg .. ', Target PC: '..state.PCTargetMode.value
+    end
 
-	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..'  WS: '..state.WeaponskillMode..'  '..
-		defenseString..'Kiting: '..on_off_names[state.Kiting]..'  TH: '..state.TreasureMode)
+    if state.SelectNPCTargets.value then
+        msg = msg .. ', Target NPCs'
+    end
+    
+    msg = msg .. ', TH: ' .. state.TreasureMode.value
+
+    add_to_chat(122, msg)
 
 	eventArgs.handled = true
 end
@@ -464,7 +479,7 @@ end
 function check_buff(buff_name, eventArgs)
 	if state.Buff[buff_name] then
 		equip(sets.buff[buff_name] or {})
-		if state.TreasureMode == 'SATA' or state.TreasureMode == 'Fulltime' then
+		if state.TreasureMode.value == 'SATA' or state.TreasureMode.value == 'Fulltime' then
 			equip(sets.TreasureHunter)
 		end
 		eventArgs.handled = true

@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -30,8 +32,7 @@ function job_setup()
 	magicPetModes = S{'Nuke','Heal','Magic'}
 	
 	-- Var to track the current pet mode.
-	state.PetMode = 'Melee'
-	update_pet_mode()
+	state.PetMode = M{['description']='Pet Mode', 'None', 'Melee', 'Ranged', 'Tank', 'Magic', 'Heal', 'Nuke'}
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -40,16 +41,10 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal', 'DT'}
-	options.WeaponskillModes = {'Normal', 'Att', 'Mod'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode:options('Normal', 'Acc', 'Fodder')
+	state.HybridMode:options('Normal', 'DT')
+	state.WeaponskillMode:options('Normal', 'Acc', 'Fodder')
+	state.PhysicalDefenseMode:options('PDT', 'Evasion')
 
 	-- Default maneuvers 1, 2, 3 and 4 for each pet mode.
 	defaultManeuvers = {
@@ -61,6 +56,7 @@ function user_setup()
 		['Nuke'] = {'Ice Maneuver', 'Dark Maneuver', 'Light Maneuver', 'Earth Maneuver'}
 	}
 
+	update_pet_mode()
 	select_default_macro_book()
 end
 
@@ -260,22 +256,7 @@ end
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
-
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-	end
-
-	add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
-		'Kiting: '..on_off_names[state.Kiting])
-
 	display_pet_status()
-
-	eventArgs.handled = true
 end
 
 
@@ -287,7 +268,7 @@ end
 function job_self_command(cmdParams, eventArgs)
 	if cmdParams[1] == 'maneuver' then
 		if pet.isvalid then
-			local man = defaultManeuvers[state.PetMode]
+			local man = defaultManeuvers[state.PetMode.value]
 			if man and tonumber(cmdParams[2]) then
 				man = man[tonumber(cmdParams[2])]
 			end
@@ -310,13 +291,13 @@ end
 -- Returns nil if pet is not valid.
 function get_pet_mode()
 	if pet.isvalid then
-		return petModes[pet.head]
+		return petModes[pet.head] or 'None'
 	end
 end
 
 -- Update state.PetMode, as well as functions that use it for set determination.
 function update_pet_mode()
-	state.PetMode = get_pet_mode()
+	state.PetMode:set(get_pet_mode())
 	update_custom_groups()
 end
 
@@ -324,7 +305,7 @@ end
 function update_custom_groups()
 	classes.CustomIdleGroups:clear()
 	if pet.isvalid then
-		classes.CustomIdleGroups:append(state.PetMode)
+		classes.CustomIdleGroups:append(state.PetMode.value)
 	end
 end
 
@@ -333,7 +314,7 @@ function display_pet_status()
 	if pet.isvalid then
 		local petInfoString = pet.name..' ['..pet.head..']: '..tostring(pet.status)..'  TP='..tostring(pet.tp)..'  HP%='..tostring(pet.hpp)
 		
-		if magicPetModes:contains(state.PetMode) then
+		if magicPetModes:contains(state.PetMode.value) then
 			petInfoString = petInfoString..'  MP%='..tostring(pet.mpp)
 		end
 		

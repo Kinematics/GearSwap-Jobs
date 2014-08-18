@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -12,7 +14,7 @@ end
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	state.Buff.Migawari = buffactive.migawari or false
-	state.Buff.Doomed = buffactive.doomed or false
+	state.Buff.Doom = buffactive.doom or false
 	state.Buff.Yonin = buffactive.Yonin or false
 	state.Buff.Innin = buffactive.Innin or false
 	state.Buff.Futae = buffactive.Futae or false
@@ -26,17 +28,11 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal', 'Evasion', 'PDT'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Mod'}
-	options.CastingModes = {'Normal', 'Resistant'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Evasion'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode:options('Normal', 'Acc')
+	state.HybridMode:options('Normal', 'Evasion', 'PDT')
+	state.WeaponskillMode:options('Normal', 'Acc', 'Mod')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.PhysicalDefenseMode:options('PDT', 'Evasion')
 
 	gear.MovementFeet = {name="Danzo Sune-ate"}
 	gear.DayFeet = "Danzo Sune-ate"
@@ -304,7 +300,7 @@ function init_gear_sets()
 	--------------------------------------
 
 	sets.buff.Migawari = {body="Iga Ningi +2"}
-	sets.buff.Doomed = {ring2="Saida Ring"}
+	sets.buff.Doom = {ring2="Saida Ring"}
 	sets.buff.Yonin = {}
 	sets.buff.Innin = {}
 end
@@ -316,8 +312,8 @@ end
 -- Run after the general midcast() is done.
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
-	if state.Buff.Doomed then
-		equip(sets.buff.Doomed)
+	if state.Buff.Doom then
+		equip(sets.buff.Doom)
 	end
 end
 
@@ -375,8 +371,8 @@ function customize_idle_set(idleSet)
 	if state.Buff.Migawari then
 		idleSet = set_combine(idleSet, sets.buff.Migawari)
 	end
-	if state.Buff.Doomed then
-		idleSet = set_combine(idleSet, sets.buff.Doomed)
+	if state.Buff.Doom then
+		idleSet = set_combine(idleSet, sets.buff.Doom)
 	end
 	return idleSet
 end
@@ -387,8 +383,8 @@ function customize_melee_set(meleeSet)
 	if state.Buff.Migawari then
 		meleeSet = set_combine(meleeSet, sets.buff.Migawari)
 	end
-	if state.Buff.Doomed then
-		meleeSet = set_combine(meleeSet, sets.buff.Doomed)
+	if state.Buff.Doom then
+		meleeSet = set_combine(meleeSet, sets.buff.Doom)
 	end
 	return meleeSet
 end

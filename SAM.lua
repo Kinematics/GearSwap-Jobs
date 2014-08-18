@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -26,17 +28,10 @@ end
 
 -- Setup vars that are user-dependent.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal', 'Acc'}
-	options.DefenseModes = {'Normal', 'PDT', 'Reraise'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
-	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT', 'Reraise'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode:options('Normal', 'Acc')
+	state.HybridMode:options('Normal', 'PDT', 'Reraise')
+	state.WeaponskillMode:options('Normal', 'Acc', 'Mod')
+	state.PhysicalDefenseMode:options('PDT', 'Reraise')
 
 	-- Additional local binds
 	send_command('bind ^` input /ja "Hasso" <me>')
@@ -167,11 +162,11 @@ function init_gear_sets()
 	-- Delay 450 GK, 25 Save TP => 65 Store TP for a 5-hit (25 Store TP in gear)
 	sets.engaged = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Karieyh Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Gorney Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Atheling Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Acc = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Karieyh Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Gorney Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Letalis Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.PDT = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Twilight Torque",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -194,7 +189,7 @@ function init_gear_sets()
 	-- Delay 450 GK, 35 Save TP => 89 Store TP for a 4-hit (49 Store TP in gear), 2 Store TP for a 5-hit
 	sets.engaged.Adoulin = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-		body="Karieyh Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+		body="Gorney Haubert +1",hands="Otronif Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
 		back="Takaha Mantle",waist="Goading Belt",legs="Unkai Haidate +2",feet="Otronif Boots +1"}
 	sets.engaged.Adoulin.Acc = {ammo="Thew Bomblet",
 		head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -262,8 +257,8 @@ end
 -- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
 function job_post_midcast(spell, action, spellMap, eventArgs)
 	-- Effectively lock these items in place.
-	if state.DefenseMode == 'Reraise' or
-		(state.Defense.Active and state.Defense.Type == 'Physical' and state.Defense.PhysicalMode == 'Reraise') then
+	if state.HybridMode.value == 'Reraise' or
+		(state.DefenseMode.value == 'Physical' and state.PhysicalDefenseMode.value == 'Reraise') then
 		equip(sets.Reraise)
 	end
 end

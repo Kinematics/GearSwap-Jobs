@@ -14,6 +14,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -21,9 +23,9 @@ end
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
 	-- Whether to use Luzaf's Ring
-	state.LuzafRing = false
+	state.LuzafRing = M(false, "Luzaf's Ring")
 	-- Whether a warning has been given for low ammo
-	state.warned = false
+	state.warned = M(false)
 
 	define_roll_values()
 end
@@ -34,17 +36,11 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Ranged', 'Melee', 'Acc'}
-	options.RangedModes = {'Normal', 'Acc'}
-	options.WeaponskillModes = {'Normal', 'Acc', 'Att', 'Mod'}
-	options.CastingModes = {'Normal', 'Resistant'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode:options('Ranged', 'Melee', 'Acc')
+	state.RangedMode:options('Normal', 'Acc')
+	state.WeaponskillMode:options('Normal', 'Acc', 'Att', 'Mod')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT', 'Refresh')
 
 	gear.RAbullet = "Adlivun Bullet"
 	gear.WSbullet = "Adlivun Bullet"
@@ -53,12 +49,8 @@ function user_setup()
 	options.ammo_warning_limit = 15
 
 	-- Additional local binds
-	-- Cor doesn't use hybrid defense mode; using that for ranged mode adjustments.
-	send_command('bind ^f9 gs c cycle RangedMode')
-
 	send_command('bind ^` input /ja "Double-up" <me>')
 	send_command('bind !` input /ja "Bolter\'s Roll" <me>')
-
 
 	select_default_macro_book()
 end
@@ -279,9 +271,9 @@ function job_precast(spell, action, spellMap, eventArgs)
 	end
 
 	-- gear sets
-	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.LuzafRing then
+	if (spell.type == 'CorsairRoll' or spell.english == "Double-Up") and state.LuzafRing.value then
 		equip(sets.precast.LuzafRing)
-	elseif spell.type == 'CorsairShot' and state.CastingMode == 'Resistant' then
+	elseif spell.type == 'CorsairShot' and state.CastingMode.value == 'Resistant' then
 		classes.CustomClass = 'Acc'
 	elseif spell.english == 'Fold' and buffactive['Bust'] == 2 then
 		if sets.precast.FoldDoubleBust then
@@ -296,17 +288,6 @@ end
 function job_aftercast(spell, action, spellMap, eventArgs)
 	if spell.type == 'CorsairRoll' and not spell.interrupted then
 		display_roll_info(spell)
-	end
-end
-
--------------------------------------------------------------------------------------------------------------------
--- Job-specific hooks for non-casting events.
--------------------------------------------------------------------------------------------------------------------
-
--- Called when the player's status changes.
-function job_status_change(newStatus, oldStatus, eventArgs)
-	if newStatus == 'Engaged' and player.equipment.main == 'Chatoyant Staff' then
-		state.OffenseMode = 'Ranged'
 	end
 end
 
@@ -327,54 +308,44 @@ end
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
 	if newStatus == 'Engaged' and player.equipment.main == 'Chatoyant Staff' then
-		state.OffenseMode = 'Ranged'
+		state.OffenseMode:set('Ranged')
 	end
 end
 
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
-	local defenseString = ''
-	if state.Defense.Active then
-		local defMode = state.Defense.PhysicalMode
-		if state.Defense.Type == 'Magical' then
-			defMode = state.Defense.MagicalMode
-		end
+    local msg = ''
+    
+    msg = msg .. 'Off.: '..state.OffenseMode.current
+    msg = msg .. ', Rng.: '..state.RangedMode.current
+    msg = msg .. ', WS.: '..state.WeaponskillMode.current
+    msg = msg .. ', QD.: '..state.CastingMode.current
 
-		defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+	if state.DefenseMode.value ~= 'None' then
+		local defMode = state[state.DefenseMode.value ..'DefenseMode'].current
+		msg = msg .. ', Defense: '..state.DefenseMode.value..' '..defMode
 	end
 	
-	local rollsize = (state.LuzafRing and 'Large') or 'Small'
-	
-	local pcTarget = ''
-	if state.PCTargetMode ~= 'default' then
-		pcTarget = ', Target PC: '..state.PCTargetMode
-	end
-
-	local npcTarget = ''
-	if state.SelectNPCTargets then
-		pcTarget = ', Target NPCs'
+	if state.Kiting.value then
+	    msg = msg .. ', Kiting'
 	end
 	
+    if state.PCTargetMode.value ~= 'default' then
+        msg = msg .. ', Target PC: '..state.PCTargetMode.value
+    end
 
-	add_to_chat(122,'Off.: '..state.OffenseMode..', Rng.: '..state.RangedMode..', WS: '..state.WeaponskillMode..
-		', QD: '..state.CastingMode..', '..defenseString..'Kite: '..on_off_names[state.Kiting]..
-		', Roll Size: '..rollsize..pcTarget..npcTarget)
+    if state.SelectNPCTargets.value then
+        msg = msg .. ', Target NPCs'
+    end
+
+	msg = msg .. ', Roll Size: ' .. (state.LuzafRing.value and 'Large') or 'Small'
+	
+    add_to_chat(122, msg)
 
 	eventArgs.handled = true
 end
 
--------------------------------------------------------------------------------------------------------------------
--- User self-commands.
--------------------------------------------------------------------------------------------------------------------
-
--- Job-specific toggles.
-function job_toggle_state(field)
-	if field:lower() == 'luzaf' then
-		state.LuzafRing = not state.LuzafRing
-		return "Use of Luzaf Ring", state.LuzafRing
-	end
-end
 
 -------------------------------------------------------------------------------------------------------------------
 -- Utility functions specific to this job.
@@ -416,7 +387,7 @@ end
 
 function display_roll_info(spell)
 	rollinfo = rolls[spell.english]
-	local rollsize = (state.LuzafRing and 'Large') or 'Small'
+	local rollsize = (state.LuzafRing.value and 'Large') or 'Small'
 
 	if rollinfo then
 		add_to_chat(104, spell.english..' provides a bonus to '..rollinfo.bonus..'.  Roll size: '..rollsize)
@@ -477,7 +448,7 @@ function do_bullet_checks(spell, spellMap, eventArgs)
 	end
 	
 	-- Low ammo warning.
-	if spell.type ~= 'CorsairShot' and not state.warned
+	if spell.type ~= 'CorsairShot' and state.warned.value == false
 	    and available_bullets.count > 1 and available_bullets.count <= options.ammo_warning_limit then
 	   	local msg = '*****  LOW AMMO WARNING: '..bullet_name..' *****'
 	   	--local border = string.repeat("*", #msg)
@@ -490,9 +461,9 @@ function do_bullet_checks(spell, spellMap, eventArgs)
 	   	add_to_chat(104, msg)
 	   	add_to_chat(104, border)
 
-		state.warned = true
+		state.warned:set()
 	elseif available_bullets.count > options.ammo_warning_limit and state.warned then
-		state.warned = false
+		state.warned:reset()
 	end
 end
 
