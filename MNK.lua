@@ -363,7 +363,7 @@ end
 
 -- Called by the 'update' self-command.
 function job_update(cmdParams, eventArgs)
-	state.CombatForm = get_combat_form()
+	update_combat_form()
 	update_melee_groups()
 end
 
