@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -22,18 +24,8 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.RangedModes = {'Normal', 'Acc'}
-	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal', 'Acc'}
-	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.RangedMode:options('Normal', 'Acc')
+	state.WeaponskillMode:options('Normal', 'Acc')
 	
 	gear.default.weaponskill_neck = "Ocachi Gorget"
 	gear.default.weaponskill_waist = "Elanid Belt"
@@ -200,7 +192,7 @@ function job_precast(spell, action, spellMap, eventArgs)
 		check_ammo(spell, action, spellMap, eventArgs)
 	end
 	
-	if state.Defense.Active and spell.type == 'WeaponSkill' then
+	if state.DefenseMode.value ~= 'None' and spell.type == 'WeaponSkill' then
 		-- Don't gearswap for weaponskills when Defense is active.
 		eventArgs.handled = true
 	end
