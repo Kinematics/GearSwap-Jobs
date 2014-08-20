@@ -322,11 +322,11 @@ end
 function job_buff_change(buff, gain)
 	-- Set Footwork as combat form any time it's active and Hundred Fists is not.
 	if buff == 'Footwork' and gain and not buffactive['hundred fists'] then
-		state.CombatForm = 'Footwork'
+		state.CombatForm:set('Footwork')
 	elseif buff == "Hundred Fists" and not gain and buffactive.footwork then
-		state.CombatForm = 'Footwork'
+		state.CombatForm:set('Footwork')
 	else
-		state.CombatForm = nil
+		state.CombatForm:reset()
 	end
 	
 	-- Hundred Fists and Impetus modify the custom melee groups
