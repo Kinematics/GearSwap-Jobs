@@ -391,7 +391,7 @@ function get_song_class(spell)
 		else
 			return 'SongDebuff'
 		end
-	elseif state.DaurdablaMode == 'Dummy' then
+	elseif state.ExtraSongsMode.value == 'Dummy' then
 		return 'DaurdablaDummy'
 	else
 		return 'SongEffect'
