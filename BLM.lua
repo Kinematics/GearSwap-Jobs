@@ -263,12 +263,7 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
-    if spell.action_type == 'Magic' then
-        if spell.skill == 'Elemental Magic' and state.CastingMode.value == 'Proc' then
-            add_to_chat(15,'Proc mode, no damage gear for midcast.')
-            eventArgs.handled = true
-        end
-    end
+
 end
 
 function job_post_midcast(spell, action, spellMap, eventArgs)
