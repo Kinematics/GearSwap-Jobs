@@ -19,7 +19,7 @@
 	/console gs c set ExtraSongsMode Dummy
 	/ma "Shining Fantasia" <me>
 	
-	To use a Terpander rather than Daurdabla, set the info.BonusSongInstrument variable to
+	To use a Terpander rather than Daurdabla, set the info.ExtraSongInstrument variable to
 	'Terpander', and info.ExtraSongs to 1.
 --]]
 
@@ -56,7 +56,7 @@ function user_setup()
 	pick_tp_weapon()
 	
 	-- Adjust this if using the Terpander (new +song instrument)
-	info.BonusSongInstrument = 'Daurdabla'
+	info.ExtraSongInstrument = 'Daurdabla'
 	-- How many extra songs we can keep from Daurdabla/Terpander
 	info.ExtraSongs = 2
 	
@@ -102,7 +102,7 @@ function init_gear_sets()
 		body="Sha'ir Manteel",hands="Gendewitha Gages",ring1="Prolix Ring",
 		back="Swith Cape +1",waist="Witful Belt",legs="Gendewitha Spats",feet="Bihu Slippers"}
 
-	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range=info.BonusSongInstrument})
+	sets.precast.FC.Daurdabla = set_combine(sets.precast.FC.BardSong, {range=info.ExtraSongInstrument})
 		
 	
 	-- Precast sets to enhance JAs
@@ -155,7 +155,7 @@ function init_gear_sets()
 	sets.midcast["Sentinel's Scherzo"] = {feet="Aoidos' Cothrn. +2"}
 	sets.midcast['Magic Finale'] = {neck="Wind Torque",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	sets.midcast.Mazurka = {range=info.BonusSongInstrument}
+	sets.midcast.Mazurka = {range=info.ExtraSongInstrument}
 	
 
 	-- For song buffs (duration and AF3 set bonus)
@@ -181,13 +181,13 @@ function init_gear_sets()
 		ring1="Prolix Ring",
 		back="Harmony Cape",waist="Corvax Sash",legs="Aoidos' Rhing. +2"}
 
-	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range=info.BonusSongInstrument})
+	--sets.midcast.Daurdabla = set_combine(sets.midcast.FastRecast, sets.midcast.SongRecast, {range=info.ExtraSongInstrument})
 
 	-- Cast spell with normal gear, except using Daurdabla instead
-	sets.midcast.Daurdabla = {range=info.BonusSongInstrument}
+	sets.midcast.Daurdabla = {range=info.ExtraSongInstrument}
 
 	-- Dummy song with Daurdabla; minimize duration to make it easy to overwrite.
-	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range=info.BonusSongInstrument,
+	sets.midcast.DaurdablaDummy = {main="Izhiikoh",range=info.ExtraSongInstrument,
 		head="Nahtirah Hat",neck="Wind Torque",ear1="Psystorm Earring",ear2="Lifestorm Earring",
 		body="Brioso Justaucorps +1",hands="Aoidos' Manchettes +2",ring1="Prolix Ring",ring2="Sangoma Ring",
 		back="Swith Cape +1",waist="Goading Belt",legs="Gendewitha Spats",feet="Bokwus Boots"}
@@ -438,7 +438,7 @@ function adjust_timers(spell, spellMap)
 	else
 		-- Figure out how many songs we can maintain.
 		local maxsongs = 2
-		if player.equipment.range == info.BonusSongInstrument then
+		if player.equipment.range == info.ExtraSongInstrument then
 			maxsongs = maxsongs + info.ExtraSongs
 		end
 		if buffactive['Clarion Call'] then
