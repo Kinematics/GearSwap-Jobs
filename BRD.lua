@@ -546,5 +546,6 @@ function select_default_macro_book()
 end
 
 
-windower.register_event('zone change',reset_timers)
-windower.register_event('logout',reset_timers)
+windower.raw_register_event('zone change',reset_timers)
+windower.raw_register_event('logout',reset_timers)
+
