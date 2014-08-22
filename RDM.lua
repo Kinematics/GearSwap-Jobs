@@ -231,7 +231,7 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'OffenseMode' then
+	if stateField == 'Offense Mode' then
 		if newValue == 'None' then
 			enable('main','sub','range')
 		else
