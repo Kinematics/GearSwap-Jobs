@@ -300,7 +300,7 @@ function job_post_precast(spell, action, spellMap, eventArgs)
 		end
 		
 		-- Replace Moonshade Earring if we're at cap TP
-		if player.tp == 300 then
+		if player.tp == 3000 then
 			equip(sets.precast.MaxTP)
 		end
 	end
