@@ -23,39 +23,39 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	state.OffenseMode:options('Normal', 'Acc')
-	state.HybridMode:options('Normal', 'PDT', 'Reraise')
-	state.WeaponskillMode:options('Normal', 'Acc')
-	state.CastingMode:options('Normal', 'Resistant')
-	state.PhysicalDefenseMode:options('PDT', 'HP', 'Reraise', 'Charm')
-	state.MagicalDefenseMode:options('MDT', 'HP', 'Reraise', 'Charm')
-	
-	state.ExtraDefenseMode = M{['description']='Extra Defense Mode', 'None', 'MP', 'Knockback', 'MP_Knockback'}
-	state.EquipShield = M(false, 'Equip Shield w/Defense')
+    state.OffenseMode:options('Normal', 'Acc')
+    state.HybridMode:options('Normal', 'PDT', 'Reraise')
+    state.WeaponskillMode:options('Normal', 'Acc')
+    state.CastingMode:options('Normal', 'Resistant')
+    state.PhysicalDefenseMode:options('PDT', 'HP', 'Reraise', 'Charm')
+    state.MagicalDefenseMode:options('MDT', 'HP', 'Reraise', 'Charm')
+    
+    state.ExtraDefenseMode = M{['description']='Extra Defense Mode', 'None', 'MP', 'Knockback', 'MP_Knockback'}
+    state.EquipShield = M(false, 'Equip Shield w/Defense')
 
     update_defense_mode()
     
-	send_command('bind ^f11 gs c cycle MagicalDefenseMode')
-	send_command('bind !f11 gs c cycle ExtraDefenseMode')
-	send_command('bind @f10 gs c toggle EquipShield')
-	send_command('bind @f11 gs c toggle EquipShield')
+    send_command('bind ^f11 gs c cycle MagicalDefenseMode')
+    send_command('bind !f11 gs c cycle ExtraDefenseMode')
+    send_command('bind @f10 gs c toggle EquipShield')
+    send_command('bind @f11 gs c toggle EquipShield')
 
     select_default_macro_book()
 end
 
 function user_unload()
-	send_command('unbind ^f11')
-	send_command('unbind !f11')
-	send_command('unbind @f10')
-	send_command('unbind @f11')
+    send_command('unbind ^f11')
+    send_command('unbind !f11')
+    send_command('unbind @f10')
+    send_command('unbind @f11')
 end
 
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-	--------------------------------------
-	-- Precast sets
-	--------------------------------------
+    --------------------------------------
+    -- Precast sets
+    --------------------------------------
     
     -- Precast sets to enhance JAs
     sets.precast.JA['Invincible'] = {legs="Caballarius Breeches"}
@@ -123,9 +123,9 @@ function init_gear_sets()
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Rajas Ring",ring2="Vexer Ring",
         back="Fierabras's Mantle",waist=gear.ElementalBelt,legs="Reverence Breeches +1",feet="Caballarius Leggings"}
     
-	--------------------------------------
-	-- Midcast sets
-	--------------------------------------
+    --------------------------------------
+    -- Midcast sets
+    --------------------------------------
 
     sets.midcast.FastRecast = {
         head="Reverence Coronet +1",
@@ -151,9 +151,9 @@ function init_gear_sets()
     sets.midcast.Protect = {ring1="Sheltered Ring"}
     sets.midcast.Shell = {ring1="Sheltered Ring"}
     
-	--------------------------------------
-	-- Idle/resting/defense/etc sets
-	--------------------------------------
+    --------------------------------------
+    -- Idle/resting/defense/etc sets
+    --------------------------------------
 
     sets.Reraise = {head="Twilight Helm", body="Twilight Mail"}
     
@@ -182,12 +182,12 @@ function init_gear_sets()
     
     sets.Kiting = {legs="Crimson Cuisses"}
 
-	sets.latent_refresh = {waist="Fucho-no-obi"}
+    sets.latent_refresh = {waist="Fucho-no-obi"}
 
 
-	--------------------------------------
-	-- Defense sets
-	--------------------------------------
+    --------------------------------------
+    -- Defense sets
+    --------------------------------------
     
     -- Extra defense sets.  Apply these on top of melee or defense sets.
     sets.Knockback = {back="Repulse Mantle"}
@@ -225,9 +225,9 @@ function init_gear_sets()
         back="Engulfer Cape",waist="Creed Baudrier",legs="Osmium Cuisses",feet="Reverence Leggings +1"}
 
 
-	--------------------------------------
-	-- Engaged sets
-	--------------------------------------
+    --------------------------------------
+    -- Engaged sets
+    --------------------------------------
     
     sets.engaged = {ammo="Ginsen",
         head="Otomi Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
@@ -260,11 +260,11 @@ function init_gear_sets()
     sets.engaged.DW.Acc.Reraise = set_combine(sets.engaged.DW.Acc, sets.Reraise)
 
 
-	--------------------------------------
-	-- Custom buff sets
-	--------------------------------------
+    --------------------------------------
+    -- Custom buff sets
+    --------------------------------------
 
-	sets.buff.Doom = {ring2="Saida Ring"}
+    sets.buff.Doom = {ring2="Saida Ring"}
     sets.buff.Cover = {head="Reverence Coronet +1", body="Caballarius Surcoat"}
 end
 
@@ -315,38 +315,38 @@ end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
-	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.latent_refresh)
-	end
-	if state.Buff.Doom then
-		idleSet = set_combine(idleSet, sets.buff.Doom)
-	end
-	
-	return idleSet
+    if player.mpp < 51 then
+        idleSet = set_combine(idleSet, sets.latent_refresh)
+    end
+    if state.Buff.Doom then
+        idleSet = set_combine(idleSet, sets.buff.Doom)
+    end
+    
+    return idleSet
 end
 
 -- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
-	if state.Buff.Doom then
-		meleeSet = set_combine(meleeSet, sets.buff.Doom)
-	end
-	
+    if state.Buff.Doom then
+        meleeSet = set_combine(meleeSet, sets.buff.Doom)
+    end
+    
     return meleeSet
 end
 
 function customize_defense_set(defenseSet)
     if state.ExtraDefenseMode.value ~= 'None' then
-		defenseSet = set_combine(defenseSet, sets[state.ExtraDefenseMode.value])
+        defenseSet = set_combine(defenseSet, sets[state.ExtraDefenseMode.value])
     end
     
     if state.EquipShield.value == true then
-		defenseSet = set_combine(defenseSet, sets[state.DefenseMode.current .. 'Shield'])
+        defenseSet = set_combine(defenseSet, sets[state.DefenseMode.current .. 'Shield'])
     end
     
-	if state.Buff.Doom then
-		defenseSet = set_combine(defenseSet, sets.buff.Doom)
-	end
-	
+    if state.Buff.Doom then
+        defenseSet = set_combine(defenseSet, sets.buff.Doom)
+    end
+    
     return defenseSet
 end
 

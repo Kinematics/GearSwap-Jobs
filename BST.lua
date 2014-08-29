@@ -58,10 +58,10 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function user_setup()
-	state.OffenseMode:options('Normal', 'Acc')
-	state.WeaponskillMode:options('Normal', 'Acc')
-	state.IdleMode:options('Normal', 'Refresh', 'Reraise')
-	state.PhysicalDefenseMode:options('PDT', 'Hybrid', 'Killer')
+    state.OffenseMode:options('Normal', 'Acc')
+    state.WeaponskillMode:options('Normal', 'Acc')
+    state.IdleMode:options('Normal', 'Refresh', 'Reraise')
+    state.PhysicalDefenseMode:options('PDT', 'Hybrid', 'Killer')
 
     update_combat_form()
 end

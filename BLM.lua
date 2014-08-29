@@ -22,11 +22,11 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	state.OffenseMode:options('None', 'Normal')
-	state.CastingMode:options('Normal', 'Resistant', 'Proc')
-	state.IdleMode:options('Normal', 'PDT')
-	
-	state.MagicBurst = M(false, 'Magic Burst')
+    state.OffenseMode:options('None', 'Normal')
+    state.CastingMode:options('Normal', 'Resistant', 'Proc')
+    state.IdleMode:options('Normal', 'PDT')
+    
+    state.MagicBurst = M(false, 'Magic Burst')
 
     lowTierNukes = S{'Stone', 'Water', 'Aero', 'Fire', 'Blizzard', 'Thunder',
         'Stone II', 'Water II', 'Aero II', 'Fire II', 'Blizzard II', 'Thunder II',
@@ -36,17 +36,17 @@ function user_setup()
 
     gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
     
-	-- Additional local binds
-	send_command('bind ^` input /ma Stun <t>')
-	send_command('bind @` gs c activate MagicBurst')
+    -- Additional local binds
+    send_command('bind ^` input /ma Stun <t>')
+    send_command('bind @` gs c activate MagicBurst')
 
-	select_default_macro_book()
+    select_default_macro_book()
 end
 
 -- Called when this job file is unloaded (eg: job change)
 function user_unload()
-	send_command('unbind ^`')
-	send_command('unbind @`')
+    send_command('unbind ^`')
+    send_command('unbind @`')
 end
 
 
