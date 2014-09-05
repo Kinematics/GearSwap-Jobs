@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
 	-- Load and initialize the include file.
 	include('Mote-Include.lua')
 end
@@ -21,17 +23,15 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-	-- Options: Override default values
-	options.OffenseModes = {'Normal'}
-	options.DefenseModes = {'Normal'}
-	options.WeaponskillModes = {'Normal'}
-	options.CastingModes = {'Normal'}
-	options.IdleModes = {'Normal'}
-	options.RestingModes = {'Normal'}
-	options.PhysicalDefenseModes = {'PDT'}
-	options.MagicalDefenseModes = {'MDT'}
-
-	state.Defense.PhysicalMode = 'PDT'
+	state.OffenseMode:options('Normal')
+	state.RangedMode:options('Normal')
+	state.HybridMode:options('Normal')
+	state.WeaponskillMode:options('Normal')
+	state.CastingMode:options('Normal')
+	state.IdleMode:options('Normal')
+	state.RestingMode:options('Normal')
+	state.PhysicalDefenseMode:options('PDT')
+	state.MagicalDefenseMode:options('MDT')
 
 	select_default_macro_book()
 end
@@ -43,50 +43,47 @@ function user_unload()
 end
 
 function init_gear_sets()
+	
 	--------------------------------------
-	-- Start defining the sets
+	-- Precast sets
 	--------------------------------------
 	
-	-- Precast Sets
-	
-	-- Precast sets to enhance JAs
+	-- Sets to apply to arbitrary JAs
 	sets.precast.JA['No Foot Rise'] = {body="Etoile Casaque +2"}
 	
-
-	-- Waltz set (chr and vit)
+	-- Sets to apply to any actions of spell.type
 	sets.precast.Waltz = {}
 		
-	-- Don't need any special gear for Healing Waltz.
+	-- Sets for specific actions within spell.type
 	sets.precast.Waltz['Healing Waltz'] = {}
 
-	-- Fast cast sets for spells
-	
+    -- Sets for fast cast gear for spells
 	sets.precast.FC = {ear2="Loquacious Earring"}
 
+    -- Fast cast gear for specific spells or spell maps
 	sets.precast.FC.Utsusemi = set_combine(sets.precast.FC, {neck="Magoraga Beads"})
 
-       
 	-- Weaponskill sets
-	-- Default set for any weaponskill that isn't any more specifically defined
 	sets.precast.WS = {}
 
-	-- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
+	-- Specific weaponskill sets.
 	sets.precast.WS['Exenterator'] = set_combine(sets.precast.WS, {})
 
-	sets.precast.WS['Aeolian Edge'] = {ammo="Charis Feather",
-		head="Wayfarer Circlet",neck="Stoicheion Medal",ear1="Friomisi Earring",ear2="Hecate's Earring",
-		body="Manibozho Jerkin",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Demon's Ring",
-		back="Toro Cape",waist="Thunder Belt",legs="Iuitl Tights",feet="Iuitl Gaiters +1"}
 	
-	
-	-- Midcast Sets
+	--------------------------------------
+	-- Midcast sets
+	--------------------------------------
+
+    -- Generic spell recast set
 	sets.midcast.FastRecast = {}
 		
 	-- Specific spells
 	sets.midcast.Utsusemi = {}
 
 	
-	-- Sets to return to when not performing an action.
+	--------------------------------------
+	-- Idle/resting/defense/etc sets
+	--------------------------------------
 	
 	-- Resting sets
 	sets.resting = {head="Ocelomeh Headpiece +1",neck="Wiglen Gorget",
@@ -111,9 +108,12 @@ function init_gear_sets()
 
 	sets.defense.MDT = {}
 
+    -- Gear to wear for kiting
 	sets.Kiting = {feet="Skadi's Jambeaux +1"}
 
+	--------------------------------------
 	-- Engaged sets
+	--------------------------------------
 
 	-- Variations for TP weapon and (optional) offense/defense modes.  Code will fall back on previous
 	-- sets if more refined versions aren't defined.
@@ -123,6 +123,13 @@ function init_gear_sets()
 	-- Normal melee group
 	sets.engaged = {}
 	sets.engaged.Acc = {}
+
+	--------------------------------------
+	-- Custom buff sets
+	--------------------------------------
+
+	sets.buff.Barrage = set_combine(sets.midcast.RA.Acc, {hands="Orion Bracers +1"})
+	sets.buff.Camouflage = {body="Orion Jerkin +1"}
 
 end
 
@@ -252,6 +259,11 @@ end
 -- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
 	return meleeSet
+end
+
+-- Modify the default defense set after it was constructed.
+function customize_defense_set(defenseSet)
+	return defenseSet
 end
 
 -- Called by the 'update' self-command, for common needs.

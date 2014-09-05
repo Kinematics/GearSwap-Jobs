@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
     -- Load and initialize the include file.
     include('Mote-Include.lua')
 end
@@ -11,9 +13,7 @@ end
 
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-	-- Additional local binds
-	send_command('bind ^` input /ma Stun <t>')
-	send_command('bind @` gs c activate MagicBurst')
+
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -22,19 +22,11 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-    -- Options: Override default values
-    options.CastingModes = {'Normal', 'Resistant', 'Proc'}
-    options.OffenseModes = {'None', 'Normal'}
-    options.DefenseModes = {'Normal'}
-    options.WeaponskillModes = {'Normal'}
-    options.IdleModes = {'Normal', 'PDT'}
-    options.RestingModes = {'Normal'}
-    options.PhysicalDefenseModes = {'PDT'}
-    options.MagicalDefenseModes = {'MDT'}
-
-    state.Defense.PhysicalMode = 'PDT'
-    state.OffenseMode = 'None'
-    state.MagicBurst = false
+    state.OffenseMode:options('None', 'Normal')
+    state.CastingMode:options('Normal', 'Resistant', 'Proc')
+    state.IdleMode:options('Normal', 'PDT')
+    
+    state.MagicBurst = M(false, 'Magic Burst')
 
     lowTierNukes = S{'Stone', 'Water', 'Aero', 'Fire', 'Blizzard', 'Thunder',
         'Stone II', 'Water II', 'Aero II', 'Fire II', 'Blizzard II', 'Thunder II',
@@ -44,13 +36,17 @@ function user_setup()
 
     gear.macc_hagondes = {name="Hagondes Cuffs", augments={'Phys. dmg. taken -3%','Mag. Acc.+29'}}
     
-	select_default_macro_book()
+    -- Additional local binds
+    send_command('bind ^` input /ma Stun <t>')
+    send_command('bind @` gs c activate MagicBurst')
+
+    select_default_macro_book()
 end
 
 -- Called when this job file is unloaded (eg: job change)
 function user_unload()
-	send_command('unbind ^`')
-	send_command('unbind @`')
+    send_command('unbind ^`')
+    send_command('unbind @`')
 end
 
 
@@ -258,7 +254,7 @@ function job_precast(spell, action, spellMap, eventArgs)
         gear.default.obi_waist = "Goading Belt"
     elseif spell.skill == 'Elemental Magic' then
         gear.default.obi_waist = "Sekhmet Corset"
-        if state.CastingMode == 'Proc' then
+        if state.CastingMode.value == 'Proc' then
             classes.CustomClass = 'Proc'
         end
     end
@@ -267,16 +263,11 @@ end
 
 -- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
 function job_midcast(spell, action, spellMap, eventArgs)
-    if spell.action_type == 'Magic' then
-        if spell.skill == 'Elemental Magic' and state.CastingMode == 'Proc' then
-            add_to_chat(15,'Proc mode, no damage gear for midcast.')
-            eventArgs.handled = true
-        end
-    end
+
 end
 
 function job_post_midcast(spell, action, spellMap, eventArgs)
-    if spell.skill == 'Elemental Magic' and state.MagicBurst then
+    if spell.skill == 'Elemental Magic' and state.MagicBurst.value then
         equip(sets.magic_burst)
     end
 end
@@ -289,7 +280,7 @@ function job_aftercast(spell, action, spellMap, eventArgs)
             equip(sets.buff['Mana Wall'])
             disable('feet')
         elseif spell.skill == 'Elemental Magic' then
-            state.MagicBurst = false
+            state.MagicBurst:reset()
         end
     end
 end
@@ -311,15 +302,11 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
-    if stateField == 'OffenseMode' then
+    if stateField == 'Offense Mode' then
         if newValue == 'Normal' then
-            disable('main','sub')
+            disable('main','sub','range')
         else
-            enable('main','sub')
-        end
-    elseif stateField == 'Reset' then
-        if state.OffenseMode == 'None' then
-            enable('main','sub')
+            enable('main','sub','range')
         end
     end
 end
@@ -353,26 +340,8 @@ end
 
 
 -- Function to display the current relevant user state when doing an update.
--- Return true if display was handled, and you don't want the default info shown.
 function display_current_job_state(eventArgs)
-    local meleeString = ''
-    if state.OffenseMode == 'Normal' then
-        meleeString = 'Melee: Weapons locked, '
-    end
-    
-    local defenseString = ''
-    if state.Defense.Active then
-        local defMode = state.Defense.PhysicalMode
-        if state.Defense.Type == 'Magical' then
-            defMode = state.Defense.MagicalMode
-        end
-
-        defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
-    end
-
-    add_to_chat(122,meleeString..'Casting ['..state.CastingMode..'], Idle ['..state.IdleMode..'], '..defenseString..
-        'Kiting: '..on_off_names[state.Kiting])
-
+    display_current_caster_state()
     eventArgs.handled = true
 end
 

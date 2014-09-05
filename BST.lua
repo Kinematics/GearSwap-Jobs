@@ -17,26 +17,24 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+    
     -- Load and initialize the include file.
     include('Mote-Include.lua')
 end
 
 function job_setup()
     -- Set up Reward Modes and keybind Ctrl-F8
-    options.RewardModes = {'Theta','Zeta','Eta'}
-    state.RewardMode = 'Theta'
+    state.RewardMode = M{['description']='Reward Mode', 'Theta', 'Zeta', 'Eta'}
     RewardFood = {name="Pet Food Theta"}
     send_command('bind ^f8 gs c cycle RewardMode')
 
     -- Set up Monster Correlation Modes and keybind Alt-F8
-    options.CorrelationModes = {'Neutral','Favorable'}
-    state.CorrelationMode = 'Neutral'
+    state.CorrelationMode = M{['description']='Correlation Mode', 'Neutral','Favorable'}
     send_command('bind !f8 gs c cycle CorrelationMode')
     
-    
     -- Custom pet modes for engaged gear
-    options.PetModes = {'Normal', 'PetStance', 'PetTank'}
-    state.PetMode = 'Normal'
+    state.PetMode = M{['description']='Pet Mode', 'Normal', 'PetStance', 'PetTank'}
 
 
     ready_moves_to_check = S{'Sic','Whirl Claws','Dust Cloud','Foot Kick','Sheep Song','Sheep Charge','Lamb Chop',
@@ -60,17 +58,12 @@ end
 -------------------------------------------------------------------------------------------------------------------
 
 function user_setup()
-    -- Options: Override default values
-    options.OffenseModes = {'Normal', 'Acc'}
-    options.DefenseModes = {'Normal'}
-    options.WeaponskillModes = {'Normal', 'WSAcc'}
-    options.CastingModes = {'Normal'}
-    options.IdleModes = {'Normal', 'Refresh', 'Reraise'}
-    options.RestingModes = {'Normal'}
-    options.PhysicalDefenseModes = {'PDT', 'Hybrid', 'Killer'}
-    options.MagicalDefenseModes = {'MDT'}
+    state.OffenseMode:options('Normal', 'Acc')
+    state.WeaponskillMode:options('Normal', 'Acc')
+    state.IdleMode:options('Normal', 'Refresh', 'Reraise')
+    state.PhysicalDefenseMode:options('PDT', 'Hybrid', 'Killer')
 
-    state.Defense.PhysicalMode = 'PDT'
+    update_combat_form()
 end
 
 
@@ -305,7 +298,7 @@ end
 
 function job_pet_post_midcast(spell, action, spellMap, eventArgs)
     -- Equip monster correlation gear, as appropriate
-    equip(sets.midcast.Pet[state.CorrelationMode])
+    equip(sets.midcast.Pet[state.CorrelationMode.value])
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -314,7 +307,7 @@ end
 
 function job_buff_change(buff, gain)
     if buff == 'Killer Instinct' then
-        state.CombatForm = get_combat_form()
+        update_combat_form()
         handle_equipping_gear(player.status)
     end
 end
@@ -326,11 +319,11 @@ end
 
 -- Handle notifications of general user state change.
 function job_state_change(stateField, newValue, oldValue)
-    if stateField == 'RewardMode' then
+    if stateField == 'Reward Mode' then
         -- Thena, Zeta or Eta
         RewardFood.name = "Pet Food " .. newValue
-    elseif stateField == 'PetMode' then
-        state.CombatWeapon = newValue
+    elseif stateField == 'Pet Mode' then
+        state.CombatWeapon:set(newValue)
     end
 end
 
@@ -349,23 +342,37 @@ end
 -- Called by the 'update' self-command, for common needs.
 -- Set eventArgs.handled to true if we don't want automatic equipping of gear.
 function job_update(cmdParams, eventArgs)
-    state.CombatForm = get_combat_form()
+    update_combat_form()
 end
 
 
 -- Set eventArgs.handled to true if we don't want the automatic display to be run.
 function display_current_job_state(eventArgs)
-    local defenseString = ''
-    if state.Defense.Active then
-        local defMode = state.Defense.PhysicalMode
-        if state.Defense.Type == 'Magical' then
-            defMode = state.Defense.MagicalMode
-        end
-        defenseString = 'Defense: '..state.Defense.Type..' '..defMode..', '
+    local msg = 'Melee'
+    
+    if state.CombatForm.has_value then
+        msg = msg .. ' (' .. state.CombatForm.value .. ')'
+    end
+    
+    msg = msg .. ': '
+    
+    msg = msg .. state.OffenseMode.value
+    if state.HybridMode.value ~= 'Normal' then
+        msg = msg .. '/' .. state.HybridMode.value
+    end
+    msg = msg .. ', WS: ' .. state.WeaponskillMode.value
+    
+    if state.DefenseMode.value ~= 'None' then
+        msg = msg .. ', ' .. 'Defense: ' .. state.DefenseMode.value .. ' (' .. state[state.DefenseMode.value .. 'DefenseMode'].value .. ')'
+    end
+    
+    if state.Kiting.value then
+        msg = msg .. ', Kiting'
     end
 
-    add_to_chat(122,'Melee: '..state.OffenseMode..'/'..state.DefenseMode..', WS: '..state.WeaponskillMode..', '..defenseString..
-     'Kiting: '..on_off_names[state.Kiting]..', Reward: '..state.RewardMode..', Correlation: '..state.CorrelationMode)
+    msg = msg .. ', Reward: '..state.RewardMode.value..', Correlation: '..state.CorrelationMode.value
+
+    add_to_chat(122, msg)
 
     eventArgs.handled = true
 end
@@ -375,15 +382,17 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
-function get_combat_form()
+function update_combat_form()
     if buffactive['Killer Instinct'] then
         if (player.sub_job == 'NIN' or player.sub_job == 'DNC') and player.equipment.sub:endswith('Axe') then
-            return 'KillerDW'
+            state.CombatForm:set('KillerDW')
         else
-            return 'Killer'
+            state.CombatForm:set('Killer')
         end
     elseif (player.sub_job == 'NIN' or player.sub_job == 'DNC') and player.equipment.sub:endswith('Axe') then
-        return 'DW'
+        state.CombatForm:set('DW')
+    else
+        state.CombatForm:reset()
     end
 end
 

@@ -4,6 +4,8 @@
 
 -- Initialization function for this job file.
 function get_sets()
+    mote_include_version = 2
+
     -- Load and initialize the include file.
     include('Mote-Include.lua')
 end
@@ -12,7 +14,7 @@ end
 function job_setup()
     state.Buff.Sentinel = buffactive.sentinel or false
     state.Buff.Cover = buffactive.cover or false
-    state.Buff.Doomed = buffactive.doomed or false
+    state.Buff.Doom = buffactive.Doom or false
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -21,55 +23,62 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-    -- Options: Override default values
-    options.OffenseModes = {'Normal', 'Acc'}
-    options.DefenseModes = {'Normal', 'Shield', 'MP'}
-    options.WeaponskillModes = {'Normal', 'Acc'}
-    options.CastingModes = {'Normal'}
-    options.IdleModes = {'Normal'}
-    options.RestingModes = {'Normal'}
-    options.PhysicalDefenseModes = {'PDT', 'Shield', 'HP'}
-    options.MagicalDefenseModes = {'MDT'}
+    state.OffenseMode:options('Normal', 'Acc')
+    state.HybridMode:options('Normal', 'PDT', 'Reraise')
+    state.WeaponskillMode:options('Normal', 'Acc')
+    state.CastingMode:options('Normal', 'Resistant')
+    state.PhysicalDefenseMode:options('PDT', 'HP', 'Reraise', 'Charm')
+    state.MagicalDefenseMode:options('MDT', 'HP', 'Reraise', 'Charm')
+    
+    state.ExtraDefenseMode = M{['description']='Extra Defense Mode', 'None', 'MP', 'Knockback', 'MP_Knockback'}
+    state.EquipShield = M(false, 'Equip Shield w/Defense')
 
-    options.HybridDefenseModes = {'None', 'Repulse', 'Reraise', 'RepulseReraise'}
-
-    state.Defense.PhysicalMode = 'PDT'
-    state.HybridDefenseMode = 'None'
-
-	send_command('bind !f11 gs c cycle HybridDefenseMode')
+    update_defense_mode()
+    
+    send_command('bind ^f11 gs c cycle MagicalDefenseMode')
+    send_command('bind !f11 gs c cycle ExtraDefenseMode')
+    send_command('bind @f10 gs c toggle EquipShield')
+    send_command('bind @f11 gs c toggle EquipShield')
 
     select_default_macro_book()
+end
+
+function user_unload()
+    send_command('unbind ^f11')
+    send_command('unbind !f11')
+    send_command('unbind @f10')
+    send_command('unbind @f11')
 end
 
 
 -- Define sets and vars used by this job file.
 function init_gear_sets()
-	--------------------------------------
-	-- Precast sets
-	--------------------------------------
+    --------------------------------------
+    -- Precast sets
+    --------------------------------------
     
     -- Precast sets to enhance JAs
     sets.precast.JA['Invincible'] = {legs="Caballarius Breeches"}
-    sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings"}
-    --sets.precast.JA['Shield Bash'] = {hands="Valor Gauntlets +2"}
+    sets.precast.JA['Holy Circle'] = {feet="Reverence Leggings +1"}
+    sets.precast.JA['Shield Bash'] = {hands="Caballarius Gauntlets"}
     sets.precast.JA['Sentinel'] = {feet="Caballarius Leggings"}
-    sets.precast.JA['Rampart'] = {head="Valor Coronet +2"}
+    sets.precast.JA['Rampart'] = {head="Caballarius Coronet"}
     sets.precast.JA['Fealty'] = {body="Caballarius Surcoat"}
-    --sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
+    sets.precast.JA['Divine Emblem'] = {feet="Creed Sabatons +2"}
     sets.precast.JA['Cover'] = {head="Reverence Coronet +1"}
 
     -- add mnd for Chivalry
     sets.precast.JA['Chivalry'] = {
-        head="Yaoyotl Helm",
-        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="Aquasoul Ring",
-        legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
+        head="Reverence Coronet +1",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Leviathan Ring",ring2="Aquasoul Ring",
+        back="Weard Mantle",legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
     
 
     -- Waltz set (chr and vit)
-    sets.precast.Waltz = {
-        head="Yaoyotl Helm",
-        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",
-        back="Iximulew Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+    sets.precast.Waltz = {ammo="Sonia's Plectrum",
+        head="Reverence Coronet +1",
+        body="Gorney Haubert +1",hands="Reverence Gauntlets +1",ring2="Asklepian Ring",
+        back="Iximulew Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
         
     -- Don't need any special gear for Healing Waltz.
     sets.precast.Waltz['Healing Waltz'] = {}
@@ -80,69 +89,76 @@ function init_gear_sets()
     -- Fast cast sets for spells
     
     sets.precast.FC = {ammo="Incantor Stone",
-        head="Cizin Helm",ear2="Loquacious Earring",
-        ring1="Prolix Ring",
-        legs="Enif Cosciales"}
+        head="Cizin Helm",ear2="Loquacious Earring",ring2="Prolix Ring",legs="Enif Cosciales"}
 
     sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
-
-    sets.precast.FC.Cure = set_combine(sets.precast.FC,
-        {body="Twilight Mail",hands="Buremte Gloves",ring1="Defending Ring",ring2="Prolix Ring",
-        waist="Flume Belt",feet="Karieyh Sollerets +1"})
 
        
     -- Weaponskill sets
     -- Default set for any weaponskill that isn't any more specifically defined
-    sets.precast.WS = {
+    sets.precast.WS = {ammo="Ginsen",
+        head="Otomi Helm",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
+        body="Gorney Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="Cho'j Band",
+        back="Atheling Mantle",waist=gear.ElementalBelt,legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
+    sets.precast.WS.Acc = {ammo="Ginsen",
         head="Yaoyotl Helm",neck=gear.ElementalGorget,ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Atheling Mantle",waist=gear.ElementalBelt,legs="Cizin Breeches",feet="Cizin Greaves"}
+        body="Gorney Haubert +1",hands="Buremte Gloves",ring1="Rajas Ring",ring2="Patricius Ring",
+        back="Atheling Mantle",waist=gear.ElementalBelt,legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
     -- Specific weaponskill sets.  Uses the base set if an appropriate WSMod version isn't found.
-    sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Aquasoul Ring",ring2="Aquasoul Ring"})
+    sets.precast.WS['Requiescat'] = set_combine(sets.precast.WS, {ring1="Leviathan Ring",ring2="Aquasoul Ring"})
+    sets.precast.WS['Requiescat'].Acc = set_combine(sets.precast.WS.Acc, {ring1="Leviathan Ring"})
 
-    sets.precast.WS['Sanguine Blade'] = {
-        head="Yaoyotl Helm",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Toro Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+    sets.precast.WS['Chant du Cygne'] = set_combine(sets.precast.WS, {hands="Buremte Gloves",waist="Zoran's Belt"})
+    sets.precast.WS['Chant du Cygne'].Acc = set_combine(sets.precast.WS.Acc, {waist="Zoran's Belt"})
+
+    sets.precast.WS['Sanguine Blade'] = {ammo="Ginsen",
+        head="Reverence Coronet +1",neck="Eddy Necklace",ear1="Friomisi Earring",ear2="Hecate's Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Shiva Ring",ring2="K'ayres Ring",
+        back="Toro Cape",waist="Caudata Belt",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
     
+    sets.precast.WS['Atonement'] = {ammo="Iron Gobbet",
+        head="Reverence Coronet +1",neck=gear.ElementalGorget,ear1="Creed Earring",ear2="Steelflash Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Rajas Ring",ring2="Vexer Ring",
+        back="Fierabras's Mantle",waist=gear.ElementalBelt,legs="Reverence Breeches +1",feet="Caballarius Leggings"}
     
-	--------------------------------------
-	-- Midcast sets
-	--------------------------------------
+    --------------------------------------
+    -- Midcast sets
+    --------------------------------------
 
     sets.midcast.FastRecast = {
-        head="Yaoyotl Helm",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",
-        waist="Zoran's Belt",legs="Enif Cosciales",feet="Reverence Leggings"}
+        head="Reverence Coronet +1",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",
+        waist="Zoran's Belt",legs="Enif Cosciales",feet="Reverence Leggings +1"}
         
     sets.midcast.Enmity = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Invidia Torque",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Vexer Ring",
-        back="Fierabras's Mantle",waist="Goading Belt",legs="Reverence Breeches +1"}
+        back="Fierabras's Mantle",waist="Goading Belt",legs="Reverence Breeches +1",feet="Caballarius Leggings"}
 
-    sets.midcast.Flash = set_combine(sets.midcast.Enmity, {legs="Enif Cosciales",feet="Cizin Greaves"})
+    sets.midcast.Flash = set_combine(sets.midcast.Enmity, {legs="Enif Cosciales"})
     
     sets.midcast.Stun = sets.midcast.Flash
     
     sets.midcast.Cure = {ammo="Iron Gobbet",
         head="Adaman Barbuta",neck="Invidia Torque",ear1="Hospitaler Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="Kunaji Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+        body="Reverence Surcoat +1",hands="Buremte Gloves",ring1="Kunaji Ring",ring2="Asklepian Ring",
+        back="Fierabras's Mantle",waist="Chuq'aba Belt",legs="Reverence Breeches +1",feet="Caballarius Leggings"}
 
     sets.midcast['Enhancing Magic'] = {neck="Colossus's Torque",waist="Olympus Sash",legs="Reverence Breeches +1"}
     
     sets.midcast.Protect = {ring1="Sheltered Ring"}
     sets.midcast.Shell = {ring1="Sheltered Ring"}
     
-	--------------------------------------
-	-- Idle/resting/defense/etc sets
-	--------------------------------------
+    --------------------------------------
+    -- Idle/resting/defense/etc sets
+    --------------------------------------
 
     sets.Reraise = {head="Twilight Helm", body="Twilight Mail"}
     
-    sets.resting = {head="Twilight Helm",neck="Creed Collar",
-        body="Twilight Mail",ring1="Sheltered Ring",ring2="Paguroidea Ring",
+    sets.resting = {neck="Creed Collar",
+        ring1="Sheltered Ring",ring2="Paguroidea Ring",
         waist="Austerity Belt"}
     
 
@@ -150,127 +166,105 @@ function init_gear_sets()
     sets.idle = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
+        back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings +1"}
 
     sets.idle.Town = {main="Anahera Sword",ammo="Incantor Stone",
         head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
+        back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings +1"}
     
     sets.idle.Weak = {ammo="Iron Gobbet",
         head="Reverence Coronet +1",neck="Creed Collar",ear1="Creed Earring",ear2="Bloodgem Earring",
         body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Sheltered Ring",ring2="Meridian Ring",
-        back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings"}
+        back="Fierabras's Mantle",waist="Flume Belt",legs="Crimson Cuisses",feet="Reverence Leggings +1"}
     
     sets.idle.Weak.Reraise = set_combine(sets.idle.Weak, sets.Reraise)
     
-    
-    --   Physical
-    --     PDT
-    --     Shield
-    -- Defense sets
-    --     HP
-    --   Magical
-    --     MDT
-    --   Hybrid (on top of either physical or magical)
-    --     Repulse
-    --     Reraise
-    --     RepulseReraise
-    --   Custom
-    --     Kheshig Blade
-    
-    sets.Repulse = {back="Repulse Mantle"}
-    
-    sets.defense.PDT = {ammo="Iron Gobbet",
-        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Defending Ring",ring2=gear.DarkRing.physical,
-        back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Whirlpool Greaves"}
-    sets.defense.Shield = {main="Anahera Sword",ammo="Iron Gobbet",
-        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Cizin Mufflers",ring1="Defending Ring",ring2=gear.DarkRing.physical,
-        back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
-    sets.defense.HP = {ammo="Iron Gobbet",
-        head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="K'ayres Ring",ring2="Meridian Ring",
-        back="Weard Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings"}
-    -- To cap MDT with Shell IV (52/256), need 76/256 in gear. Current gear set is 77/256.
-    -- Shellra V can provide 75/256. Could drop 9% from this set.  Dark Ring > Vexer Ring
-    -- magic_breath_darkring1 vs vexer_ring
-    sets.defense.MDT = {main="Anahera Sword",ammo="Demonry Stone",
-        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
-        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Vexer Ring",ring2="Shadow Ring",
-        back="Engulfer Cape",waist="Creed Baudrier",legs="Osmium Cuisses",feet="Caballarius Leggings"}
-
-    sets.defense.PDT.Repulse = set_combine(sets.defense.PDT, sets.Repulse)
-    sets.defense.Shield.Repulse = set_combine(sets.defense.Shield, sets.Repulse)
-    sets.defense.HP.Repulse = set_combine(sets.defense.HP, sets.Repulse)
-    sets.defense.MDT.Repulse = set_combine(sets.defense.MDT, sets.Repulse)
-
-    sets.defense.PDT.Reraise = set_combine(sets.defense.PDT, sets.Reraise)
-    sets.defense.Shield.Reraise = set_combine(sets.defense.Shield, sets.Reraise)
-    sets.defense.HP.Reraise = set_combine(sets.defense.HP, sets.Reraise, {neck="Twilight Torque"})
-    sets.defense.MDT.Reraise = set_combine(sets.defense.MDT, sets.Reraise, {ring1="Defending Ring"})
-
-    sets.defense.PDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
-    sets.defense.Shield.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
-    sets.defense.HP.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse, {neck="Twilight Torque"})
-    sets.defense.MDT.RepulseReraise = set_combine(sets.defense.PDT, sets.Reraise, sets.Repulse)
-
-    -- If using Kheshig Blade, have 50% PDT without the second ring:
-    sets.defense.PDT['Kheshig Blade'] = set_combine(sets.defense.PDT, {ring2="Meridian Ring"})
-    sets.defense.PDT.Repulse['Kheshig Blade'] = set_combine(sets.defense.PDT.Repulse)
-    sets.defense.PDT.Reraise['Kheshig Blade'] = set_combine(sets.defense.PDT.Reraise)
-    sets.defense.PDT.RepulseReraise['Kheshig Blade'] = set_combine(sets.defense.PDT.RepulseReraise)
-    
-    
     sets.Kiting = {legs="Crimson Cuisses"}
 
-	sets.latent_refresh = {waist="Fucho-no-obi"}
+    sets.latent_refresh = {waist="Fucho-no-obi"}
 
-	--------------------------------------
-	-- Engaged sets
-	--------------------------------------
+
+    --------------------------------------
+    -- Defense sets
+    --------------------------------------
     
-    sets.engaged = {ammo="Jukukik Feather",
-        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+    -- Extra defense sets.  Apply these on top of melee or defense sets.
+    sets.Knockback = {back="Repulse Mantle"}
+    sets.MP = {neck="Creed Collar",waist="Flume Belt"}
+    sets.MP_Knockback = {neck="Creed Collar",waist="Flume Belt",back="Repulse Mantle"}
+    
+    -- If EquipShield toggle is on (Win+F10 or Win+F11), equip the weapon/shield combos here
+    -- when activating or changing defense mode:
+    sets.PhysicalShield = {main="Anahera Sword",sub="Killedar Shield"} -- Ochain
+    sets.MagicalShield = {main="Anahera Sword",sub="Beatific Shield +1"} -- Aegis
 
-    sets.engaged.MP = {ammo="Jukukik Feather",
-        head="Yaoyotl Helm",neck="Creed Collar",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Atheling Mantle",waist="Flume Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+    -- Basic defense sets.
+        
+    sets.defense.PDT = {ammo="Iron Gobbet",
+        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Buckler Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
+        back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
+    sets.defense.HP = {ammo="Iron Gobbet",
+        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2="Meridian Ring",
+        back="Weard Mantle",waist="Creed Baudrier",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
+    sets.defense.Reraise = {ammo="Iron Gobbet",
+        head="Twilight Helm",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+        body="Twilight Mail",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
+        back="Weard Mantle",waist="Nierenschutz",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
+    sets.defense.Charm = {ammo="Iron Gobbet",
+        head="Reverence Coronet +1",neck="Lavalier +1",ear1="Creed Earring",ear2="Buckler Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2=gear.DarkRing.physical,
+        back="Shadow Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings +1"}
+    -- To cap MDT with Shell IV (52/256), need 76/256 in gear.
+    -- Shellra V can provide 75/256, which would need another 53/256 in gear.
+    sets.defense.MDT = {ammo="Demonry Stone",
+        head="Reverence Coronet +1",neck="Twilight Torque",ear1="Creed Earring",ear2="Bloodgem Earring",
+        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Defending Ring",ring2="Shadow Ring",
+        back="Engulfer Cape",waist="Creed Baudrier",legs="Osmium Cuisses",feet="Reverence Leggings +1"}
 
-    sets.engaged.Acc = {ammo="Jukukik Feather",
+
+    --------------------------------------
+    -- Engaged sets
+    --------------------------------------
+    
+    sets.engaged = {ammo="Ginsen",
+        head="Otomi Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
+        body="Gorney Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Atheling Mantle",waist="Cetl Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
+
+    sets.engaged.Acc = {ammo="Ginsen",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+        body="Gorney Haubert +1",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
-    sets.engaged.Shield = {ammo="Iron Gobbet",
-        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Bladeborn Earring",ear2="Steelflash Earring",
-        body="Reverence Surcoat +1",hands="Reverence Gauntlets +1",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Weard Mantle",waist="Flume Belt",legs="Reverence Breeches +1",feet="Reverence Leggings"}
+    sets.engaged.DW = {ammo="Ginsen",
+        head="Otomi Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
+        body="Gorney Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
+        back="Atheling Mantle",waist="Cetl Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
-    sets.engaged.DW = {ammo="Jukukik Feather",
+    sets.engaged.DW.Acc = {ammo="Ginsen",
         head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Atheling Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
-
-    sets.engaged.DW.MP = {ammo="Jukukik Feather",
-        head="Yaoyotl Helm",neck="Creed Collar",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-        body="Karieyh Haubert +1",hands="Cizin Mufflers",ring1="Rajas Ring",ring2="K'ayres Ring",
-        back="Atheling Mantle",waist="Flume Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
-
-    sets.engaged.DW.Acc = {ammo="Jukukik Feather",
-        head="Yaoyotl Helm",neck="Asperity Necklace",ear1="Dudgeon Earring",ear2="Heartseeker Earring",
-        body="Cizin Mail",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
+        body="Gorney Haubert +1",hands="Buremte Gloves",ring1="Rajas Ring",ring2="K'ayres Ring",
         back="Weard Mantle",waist="Zoran's Belt",legs="Cizin Breeches",feet="Whirlpool Greaves"}
 
-	--------------------------------------
-	-- Custom buff sets
-	--------------------------------------
+    sets.engaged.PDT = set_combine(sets.engaged, {body="Reverence Surcoat +1",neck="Twilight Torque",ring1="Defending Ring"})
+    sets.engaged.Acc.PDT = set_combine(sets.engaged.Acc, {body="Reverence Surcoat +1",neck="Twilight Torque",ring1="Defending Ring"})
+    sets.engaged.Reraise = set_combine(sets.engaged, sets.Reraise)
+    sets.engaged.Acc.Reraise = set_combine(sets.engaged.Acc, sets.Reraise)
 
-	sets.buff.Doomed = {ring2="Saida Ring"}
+    sets.engaged.DW.PDT = set_combine(sets.engaged.DW, {body="Reverence Surcoat +1",neck="Twilight Torque",ring1="Defending Ring"})
+    sets.engaged.DW.Acc.PDT = set_combine(sets.engaged.DW.Acc, {body="Reverence Surcoat +1",neck="Twilight Torque",ring1="Defending Ring"})
+    sets.engaged.DW.Reraise = set_combine(sets.engaged.DW, sets.Reraise)
+    sets.engaged.DW.Acc.Reraise = set_combine(sets.engaged.DW.Acc, sets.Reraise)
+
+
+    --------------------------------------
+    -- Custom buff sets
+    --------------------------------------
+
+    sets.buff.Doom = {ring2="Saida Ring"}
     sets.buff.Cover = {head="Reverence Coronet +1", body="Caballarius Surcoat"}
 end
 
@@ -279,11 +273,16 @@ end
 -- Job-specific hooks for standard casting events.
 -------------------------------------------------------------------------------------------------------------------
 
--- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
--- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
-function job_precast(spell, action, spellMap, eventArgs)
-    -- Don't gearswap for weaponskills when Defense is on.
-    if spell.type == 'WeaponSkill' and state.Defense.Active then
+function job_midcast(spell, action, spellMap, eventArgs)
+    -- If DefenseMode is active, apply that gear over midcast
+    -- choices.  Precast is allowed through for fast cast on
+    -- spells, but we want to return to def gear before there's
+    -- time for anything to hit us.
+    -- Exclude Job Abilities from this restriction, as we probably want
+    -- the enhanced effect of whatever item of gear applies to them,
+    -- and only one item should be swapped out.
+    if state.DefenseMode.value ~= 'None' and spell.type ~= 'JobAbility' then
+        handle_equipping_gear(player.status)
         eventArgs.handled = true
     end
 end
@@ -294,10 +293,14 @@ end
 
 -- Called when the player's status changes.
 function job_state_change(field, new_value, old_value)
-    if field == 'HybridDefenseMode' then
-        classes.CustomDefenseGroups:clear()
-        classes.CustomDefenseGroups:append(new_value)
+    classes.CustomDefenseGroups:clear()
+    classes.CustomDefenseGroups:append(state.ExtraDefenseMode.current)
+    if state.EquipShield.value == true then
+        classes.CustomDefenseGroups:append(state.DefenseMode.current .. 'Shield')
     end
+
+    classes.CustomMeleeGroups:clear()
+    classes.CustomMeleeGroups:append(state.ExtraDefenseMode.current)
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -312,16 +315,84 @@ end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
-	if player.mpp < 51 then
-	    idleSet = set_combine(idleSet, sets.latent_refresh)
-	end
-	
-	return idleSet
+    if player.mpp < 51 then
+        idleSet = set_combine(idleSet, sets.latent_refresh)
+    end
+    if state.Buff.Doom then
+        idleSet = set_combine(idleSet, sets.buff.Doom)
+    end
+    
+    return idleSet
 end
 
 -- Modify the default melee set after it was constructed.
 function customize_melee_set(meleeSet)
+    if state.Buff.Doom then
+        meleeSet = set_combine(meleeSet, sets.buff.Doom)
+    end
+    
     return meleeSet
+end
+
+function customize_defense_set(defenseSet)
+    if state.ExtraDefenseMode.value ~= 'None' then
+        defenseSet = set_combine(defenseSet, sets[state.ExtraDefenseMode.value])
+    end
+    
+    if state.EquipShield.value == true then
+        defenseSet = set_combine(defenseSet, sets[state.DefenseMode.current .. 'Shield'])
+    end
+    
+    if state.Buff.Doom then
+        defenseSet = set_combine(defenseSet, sets.buff.Doom)
+    end
+    
+    return defenseSet
+end
+
+
+function display_current_job_state(eventArgs)
+    local msg = 'Melee'
+    
+    if state.CombatForm.has_value then
+        msg = msg .. ' (' .. state.CombatForm.value .. ')'
+    end
+    
+    msg = msg .. ': '
+    
+    msg = msg .. state.OffenseMode.value
+    if state.HybridMode.value ~= 'Normal' then
+        msg = msg .. '/' .. state.HybridMode.value
+    end
+    msg = msg .. ', WS: ' .. state.WeaponskillMode.value
+    
+    if state.DefenseMode.value ~= 'None' then
+        msg = msg .. ', Defense: ' .. state.DefenseMode.value .. ' (' .. state[state.DefenseMode.value .. 'DefenseMode'].value .. ')'
+    end
+
+    if state.ExtraDefenseMode.value ~= 'None' then
+        msg = msg .. ', Extra: ' .. state.ExtraDefenseMode.value
+    end
+    
+    if state.EquipShield.value == true then
+        msg = msg .. ', Force Equip Shield'
+    end
+    
+    if state.Kiting.value == true then
+        msg = msg .. ', Kiting'
+    end
+
+    if state.PCTargetMode.value ~= 'default' then
+        msg = msg .. ', Target PC: '..state.PCTargetMode.value
+    end
+
+    if state.SelectNPCTargets.value == true then
+        msg = msg .. ', Target NPCs'
+    end
+
+    add_to_chat(122, msg)
+
+    eventArgs.handled = true
 end
 
 -------------------------------------------------------------------------------------------------------------------
@@ -334,11 +405,11 @@ function update_defense_mode()
     end
     
     if player.sub_job == 'NIN' or player.sub_job == 'DNC' then
-        if player.equipment.sub and not player.equipment.sub:endswith('Shield') and
+        if player.equipment.sub and not player.equipment.sub:contains('Shield') and
            player.equipment.sub ~= 'Aegis' and player.equipment.sub ~= 'Ochain' then
-            state.CombatForm = 'DW'
+            state.CombatForm:set('DW')
         else
-            state.CombatForm = nil
+            state.CombatForm:reset()
         end
     end
 end
