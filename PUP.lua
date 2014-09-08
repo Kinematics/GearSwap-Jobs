@@ -292,6 +292,8 @@ end
 function get_pet_mode()
     if pet.isvalid then
         return petModes[pet.head] or 'None'
+    else
+        return 'None'
     end
 end
 
