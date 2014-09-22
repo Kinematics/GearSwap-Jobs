@@ -43,7 +43,7 @@ function job_setup()
     -- Physical spells with Str stat mod
     blue_magic_maps.PhysicalStr = S{
         'Battle Dance','Bloodrake','Death Scissors','Dimensional Death',
-        'Empty Thrash','Quadrastrike','Spinal Cleave',
+        'Empty Thrash','Quadrastrike','Sinker Drill','Spinal Cleave',
         'Uppercut','Vertical Cleave'
     }
         
@@ -92,9 +92,9 @@ function job_setup()
     -- Magical spells with the typical Int mod
     blue_magic_maps.Magical = S{
         'Blastbomb','Blazing Bound','Bomb Toss','Cursed Sphere','Dark Orb','Death Ray',
-        'Droning Whirlwind','Embalming Earth','Firespit','Foul Waters','Ice Break',
-        'Leafstorm','Maelstrom','Regurgitation','Rending Deluge','Retinal Glare',
-        'Subduction','Tem. Upheaval','Water Bomb'
+        'Diffusion Ray','Droning Whirlwind','Embalming Earth','Firespit','Foul Waters',
+        'Ice Break','Leafstorm','Maelstrom','Rail Cannon','Regurgitation','Rending Deluge',
+        'Retinal Glare','Subduction','Tem. Upheaval','Water Bomb'
     }
 
     -- Magical spells with a primary Mnd mod
@@ -145,7 +145,7 @@ function job_setup()
         
     -- Healing spells
     blue_magic_maps.Healing = S{
-        'Healing Breeze','Magic Fruit','Plenilune Embrace','Pollen','White Wind',
+        'Healing Breeze','Magic Fruit','Plenilune Embrace','Pollen','Restoral','White Wind',
         'Wild Carrot'
     }
     
@@ -188,7 +188,8 @@ function user_setup()
 
     -- Additional local binds
     send_command('bind ^` input /ja "Chain Affinity" <me>')
-    send_command('bind !` input /ja "Burst Affinity" <me>')
+    send_command('bind !` input /ja "Efflux" <me>')
+    send_command('bind @` input /ja "Burst Affinity" <me>')
 
     update_combat_form()
     select_default_macro_book()
@@ -199,6 +200,7 @@ end
 function user_unload()
     send_command('unbind ^`')
     send_command('unbind !`')
+    send_command('unbind @`')
 end
 
 

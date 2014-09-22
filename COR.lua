@@ -3,12 +3,12 @@
 -------------------------------------------------------------------------------------------------------------------
 
 --[[
-    gs c toggle luzaf -- Toggles use of Luzaf Ring on and off
+    gs c toggle LuzafRing -- Toggles use of Luzaf Ring on and off
     
     Offense mode is melee or ranged.  Used ranged offense mode if you are engaged
     for ranged weaponskills, but not actually meleeing.
-    Acc on offense mode (which is intended for melee) will currently use .Acc weaponskill
-    mode for both melee and ranged weaponskills.  Need to fix that in core.
+    
+    Weaponskill mode, if set to 'Normal', is handled separately for melee and ranged weaponskills.
 --]]
 
 

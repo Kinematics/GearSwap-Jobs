@@ -386,7 +386,7 @@ end
 function get_song_class(spell)
     -- Can't use spell.targets:contains() because this is being pulled from resources
     if set.contains(spell.targets, 'Enemy') then
-        if state.CastingMode == 'Resistant' then
+        if state.CastingMode.value == 'Resistant' then
             return 'ResistantSongDebuff'
         else
             return 'SongDebuff'
