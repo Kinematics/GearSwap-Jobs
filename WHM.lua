@@ -52,8 +52,9 @@ function init_gear_sets()
     sets.precast.FC.StatusRemoval = sets.precast.FC['Healing Magic']
 
     sets.precast.FC.Cure = set_combine(sets.precast.FC['Healing Magic'], {main="Tamaxchi",sub="Genbu's Shield",ammo="Impatiens"})
-
     sets.precast.FC.Curaga = sets.precast.FC.Cure
+    sets.precast.FC.CureSolace = sets.precast.FC.Cure
+    -- CureMelee spell map should default back to Healing Magic.
     
     -- Precast sets to enhance JAs
     sets.precast.JA.Benediction = {body="Piety Briault"}
