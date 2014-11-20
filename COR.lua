@@ -339,7 +339,7 @@ function display_current_job_state(eventArgs)
         msg = msg .. ', Target NPCs'
     end
 
-    msg = msg .. ', Roll Size: ' .. (state.LuzafRing.value and 'Large') or 'Small'
+    msg = msg .. ', Roll Size: ' .. ((state.LuzafRing.value and 'Large') or 'Small')
     
     add_to_chat(122, msg)
 
