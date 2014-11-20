@@ -168,8 +168,8 @@ function job_setup()
     -- Spells that require Unbridled Learning to cast.
     unbridled_spells = S{
         'Absolute Terror','Bilgestorm','Blistering Roar','Bloodrake','Carcharian Verve',
-        'Droning Whirlwind','Gates of Hades','Harden Shell','Pyric Bulwark','Thunderbolt',
-        'Tourbillion'
+        'Crashing Thunder','Droning Whirlwind','Gates of Hades','Harden Shell','Polar Roar',
+        'Pyric Bulwark','Thunderbolt','Tourbillion','Uproot'
     }
 end
 
